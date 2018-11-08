@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import Home from '../home/containers'
 import About from '../about'
+import Login from '../login/containers'
 
 const App = () => (
   <div>
@@ -13,6 +14,7 @@ const App = () => (
     <main>
       <Route exact path="/" component={Home} />
       <Route exact path="/about-us" component={About} />
+      <Route exact path="/login" component={Login} />
     </main>
   </div>
 )
