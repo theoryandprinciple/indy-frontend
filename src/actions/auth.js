@@ -3,7 +3,7 @@ import WebClient from '../utils/web-client'
 
 const internals = {}
 
-export const login = (email, password, path) => { // email, password, path
+export const login = (email, password, path) => {
 
     return (dispatch) => {
 
@@ -14,19 +14,16 @@ export const login = (email, password, path) => { // email, password, path
 
             if (!path){
                 // if no path provided to the login
-                // consider the role of the user and push them around
-                if (data.credentials.role === 'admin'){
-                    History.push('/admin');
-                }
-                else {
-                    History.push('/');
-                }
+                // consider the role of the user and push them around accordingly
+                console.log('success')
             }
             else { // if a path is provided, bring them there
-                History.push(path);
+                console.log('success, with redirect:', path)
             }
         })
-        .catch(console.warn('error'));
+        .catch((error) => {
+            console.warn('error', error)
+        })
     };
 };
 
@@ -34,8 +31,8 @@ export const logout = () => {
 
     return (dispatch) => {
 
-        dispatch(internals.strangeActions.logout());
-        return History.push('/');
+        dispatch(internals.auth.logout());
+        return console.log('logout')
     };
 };
 
