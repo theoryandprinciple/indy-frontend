@@ -18,12 +18,15 @@
     "react-scripts": "2.0.5"
   },
   "dependencies": {
+    "@material-ui/core": "^3.6.0",
     "connected-react-router": "4.5.0",
     "inert": "^5.1.2",
+    "jss": "latest",
     "keymirror": "^0.1.1",
     "path": "^0.12.7",
     "react": "16.5.2",
     "react-dom": "16.5.2",
+    "react-jss": "latest",
     "react-redux": "5.0.7",
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",

@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import Home from '../home/containers'
 import About from '../about'
+import withRoot from '../../wiring/withRoot'
 
 const App = () => (
   <div>
@@ -17,4 +18,4 @@ const App = () => (
   </div>
 )
 
-export default App
+export default withRoot(App)
