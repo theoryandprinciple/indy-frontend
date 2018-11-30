@@ -1,5 +1,8 @@
 {
+  "name": "cra-plugin",
   "private": true,
+  "version": "0.0.1",
+  "main": "plugin.js",
   "homepage": "https://create-react-app-redux.now.sh",
   "scripts": {
     "deploy": "now && now alias",
@@ -18,6 +21,9 @@
     "axios": "latest",
     "keymirror": "^0.1.1",
     "connected-react-router": "4.5.0",
+    "inert": "^5.1.2",
+    "keymirror": "^0.1.1",
+    "path": "^0.12.7",
     "react": "16.5.2",
     "react-dom": "16.5.2",
     "react-redux": "5.0.7",
