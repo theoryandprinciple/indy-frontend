@@ -1,5 +1,8 @@
 {
+  "name": "cra-plugin",
   "private": true,
+  "version": "0.0.1",
+  "main": "plugin.js",
   "homepage": "https://create-react-app-redux.now.sh",
   "scripts": {
     "deploy": "now && now alias",
@@ -15,17 +18,29 @@
     "react-scripts": "2.0.5"
   },
   "dependencies": {
+    "@material-ui/core": "^3.6.0",
+    "axios": "latest",
     "keymirror": "^0.1.1",
     "connected-react-router": "4.5.0",
+    "inert": "^5.1.2",
+    "jss": "latest",
+    "keymirror": "^0.1.1",
+    "path": "^0.12.7",
     "react": "16.5.2",
     "react-dom": "16.5.2",
+    "react-jss": "latest",
     "react-redux": "5.0.7",
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
     "redux": "4.0.1",
     "redux-thunk": "2.3.0",
     "sanitize.css": "7.0.3",
-    "serve": "10.0.2"
+    "serve": "10.0.2",
+    "enzyme": "3.7.0",
+    "enzyme-adapter-react-16": "1.6.0",
+    "redux-mock-store": "latest",
+    "fetch-mock": "latest",
+    "node-fetch": "latest"
   },
   "browserslist": [
     ">0.2%",

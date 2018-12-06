@@ -1,8 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Styles from './styles';
 
 class Home extends React.Component {
   static propTypes = {
+    classes: PropTypes.object.isRequired,
     count: PropTypes.number,
     isIncrementing: PropTypes.bool.isRequired,
     isDecrementing: PropTypes.bool.isRequired,
@@ -14,8 +17,9 @@ class Home extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.wrapper}>
         <h1>Home</h1>
         <p>Count: {this.props.count}</p>
 
@@ -24,6 +28,7 @@ class Home extends React.Component {
             onClick={this.props.increment}
             disabled={this.props.isIncrementing}>
             Increment
+            id="increment"
           </button>
           <button
             onClick={this.props.incrementAsync}
@@ -55,4 +60,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default withStyles(Styles)(Home)
