@@ -5,14 +5,14 @@ import {
   incrementAsync,
   decrement,
   decrementAsync
-} from '../../../actions/counter';
+} from '../../../actions/counter'
 
-import { connect } from 'react-redux';
-import Home from '../components/';
+import { connect } from 'react-redux'
+import Home from '../components/'
 
 const internals = {};
 
-internals.connectStuff = connect(
+internals.connect = connect(
   state => ({
     count: state.counter.count,
     isIncrementing: state.counter.isIncrementing,
@@ -27,4 +27,4 @@ internals.connectStuff = connect(
   }
 );
 
-export default internals.connectStuff(Home)
+export default internals.connect(Home);
