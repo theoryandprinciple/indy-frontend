@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@material-ui/core": "^3.6.0",
+    "axios": "latest",
+    "keymirror": "^0.1.1",
     "connected-react-router": "4.5.0",
     "inert": "^5.1.2",
     "jss": "latest",
