@@ -18,6 +18,8 @@
     "react-scripts": "2.0.5"
   },
   "dependencies": {
+    "axios": "latest",
+    "keymirror": "^0.1.1",
     "connected-react-router": "4.5.0",
     "inert": "^5.1.2",
     "keymirror": "^0.1.1",
