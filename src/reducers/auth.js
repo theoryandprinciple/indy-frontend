@@ -20,6 +20,16 @@ export default (state = initialState, action) => {
 
     switch (type) {
 
+        case AuthActions.NO_TOKEN:
+
+            // the user has hit the application without a token in local storage
+            // so let's tell the app they are not logged in
+            // this represents their first pass into our application
+            return Object.assign({}, state, {
+                status: Statuses.FINISHED,
+                isAuthenticated: false
+            });
+
         case AuthActions.LOGIN_ATTEMPT:
             return Object.assign({}, state, {
                 status: Statuses.WAITING

@@ -1,7 +1,27 @@
 import BackgroundAuth from './boilerplate-auth'
 import WebClient from '../utils/web-client'
+import AuthActions from '../action-types/auth'
 
 const internals = {}
+
+export const noToken = () => {
+    console.log('no token shit')
+  return dispatch => {
+    dispatch({
+      type: AuthActions.NO_TOKEN
+    });
+  };
+};
+
+
+/*
+export const noToken = () => {
+
+    return {
+        type: AuthActions.LOGIN_FAIL
+    };
+};
+*/
 
 export const login = (email, password, path) => {
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount, shallow, simulate, update, dive, debug } from 'enzyme'
-import Counter from '../../../containers/home'
+import Counter from '../../../routes/home'
 
 import { Provider } from 'react-redux'
 import store from '../../../store'
