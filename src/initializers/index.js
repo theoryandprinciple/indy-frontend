@@ -1,7 +1,6 @@
 const internals = {
     initializers: [
         require('./auth-token'),
-        require('./persist'),
         require('./checkAuthStatus')
     ]
 };

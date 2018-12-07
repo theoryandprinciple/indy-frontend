@@ -31,10 +31,6 @@ export default (store) => {
     else if (token) {
 
         // we have a token in local storage, so exit this checkpoint
-        console.log('token.isAuthenticated', token.isAuthenticated)
-        if(!token.isAuthenticated){
-            console.log('token, but not authenticated, how do we fail now?')
-        }
         return;
     }
 };

@@ -9,9 +9,8 @@ import withRoot from '../wiring/withRoot'
 import Authenticate_Admin from '../wiring/authAdmin'
 
 const Authenticated_ProtectedRoute = withRouter(Authenticate_Admin(ProtectedRoute))
-console.log('render?')
-const App = () => (
 
+const App = () => (
     <Route
         render={({ location }) => (
             <React.Fragment>

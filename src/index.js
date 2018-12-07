@@ -1,8 +1,9 @@
 import React from 'react'
-import { render } from 'react-dom'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
-import store, { history } from './store'
+import { PersistGate } from 'redux-persist/integration/react'
+import { store, persistor, history } from './store'
 import App from './routes'
 import Initializers from './initializers'
 
@@ -12,15 +13,15 @@ import './index.css'
 // Run initializers... anything that will need to use or subscribe to the store
 Initializers(store);
 
-const target = document.querySelector('#root')
-
-render(
+ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <div>
-        <App />
-      </div>
-    </ConnectedRouter>
+      <PersistGate loading={null} persistor={persistor}>
+        <ConnectedRouter history={history}>
+          <div>
+            <App />
+          </div>
+          </ConnectedRouter>
+    </PersistGate>
   </Provider>,
-  target
+  document.getElementById('root')
 )
