@@ -7,7 +7,7 @@ const internals = {}
 export const noToken = () => {
 
     return {
-        type: AuthActions.LOGIN_FAIL
+        type: AuthActions.NO_TOKEN
     };
 };
 
