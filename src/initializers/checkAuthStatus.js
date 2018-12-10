@@ -21,7 +21,8 @@ export default (store) => {
     }
 
     const checkLocalKey = (key) => JSON.parse(localStorage.getItem(key) || 'null');
-    const token = checkLocalKey('reduxPersist:auth');
+    const token = checkLocalKey('persist:root');
+
     if (!token) {
 
         // no items in local storage, so likely the first time coming to the app
@@ -30,7 +31,12 @@ export default (store) => {
     }
     else if (token) {
 
-        // we have a token in local storage, so exit this checkpoint
+        // TODO: currently if the user had errors logging in, those errors will persist on their next visit
+        // we should clear those errors, so they don't arrive with a error note on the login
+
+        //let adjustToken = JSON.parse(localStorage.getItem("persist:root"));
+        // adjustToken comes back as an object (auth) but all it's contents are a string and unaccessible
+
         return;
     }
 };

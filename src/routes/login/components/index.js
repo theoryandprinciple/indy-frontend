@@ -35,7 +35,7 @@ class Login extends React.Component {
     render() {
         const { errored, isLoggedIn, isLoginPending } = this.props;
       return (
-          <React.Fragment>
+          <form>
                 {errored &&
                     <p style={{ color: 'red' }}>Error: Failed Login</p>
                 }
@@ -45,18 +45,19 @@ class Login extends React.Component {
                 {isLoginPending &&
                     <p style={{ color: 'orange' }}>Waiting: Login Processing</p>
                 }
-
               <input
                 placeholder='Username'
+                autoComplete="username"
                 onChange={evt => this.onChange('username', evt.target.value)}
               />
               <input
                 placeholder='Password'
                 type='password'
+                autoComplete="current-password"
                 onChange={evt => this.onChange('password', evt.target.value)}
               />
               <button onClick={isLoggedIn ? this._boundLogoutUser : this._boundLoginUser}>{isLoggedIn ? 'Logout' : 'Login'}</button>
-        </React.Fragment>
+        </form>
       )
   }
 }
