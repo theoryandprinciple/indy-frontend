@@ -26,9 +26,9 @@ class Home extends React.Component {
         <p>
           <button
             onClick={this.props.increment}
-            disabled={this.props.isIncrementing}>
+            disabled={this.props.isIncrementing}
+            id="increment">
             Increment
-            id="increment"
           </button>
           <button
             onClick={this.props.incrementAsync}
