@@ -6,6 +6,7 @@ export default (store) => {
     // CHECK IN APP AUTH
     const auth = store.getState().auth;
     const newToken = (auth.isAuthenticated && auth.credentials && auth.credentials.token) || null;
+
     if (newToken !== null) {
 
         // we have auth creds in the app, so no need to keep checking
@@ -30,12 +31,6 @@ export default (store) => {
         return;
     }
     else if (token) {
-
-        // TODO: currently if the user had errors logging in, those errors will persist on their next visit
-        // we should clear those errors, so they don't arrive with a error note on the login
-
-        //let adjustToken = JSON.parse(localStorage.getItem("persist:root"));
-        // adjustToken comes back as an object (auth) but all it's contents are a string and unaccessible
 
         return;
     }

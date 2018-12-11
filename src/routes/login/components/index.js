@@ -25,17 +25,19 @@ class Login extends React.Component {
     onChange = (key, value) => {
         this.setState({ [key]: value })
     }
-    loginUser = () => {
+    loginUser = (event) => {
         this.props.login(this.state.username, this.state.password)
+        event.preventDefault();
     }
-    logoutUser = () => {
+    logoutUser = (event) => {
         this.props.logout()
+        event.preventDefault();
     }
 
     render() {
         const { errored, isLoggedIn, isLoginPending } = this.props;
       return (
-          <form>
+          <form onSubmit={isLoggedIn ? this._boundLogoutUser : this._boundLoginUser}>
                 {errored &&
                     <p style={{ color: 'red' }}>Error: Failed Login</p>
                 }
@@ -56,7 +58,7 @@ class Login extends React.Component {
                 autoComplete="current-password"
                 onChange={evt => this.onChange('password', evt.target.value)}
               />
-              <button onClick={isLoggedIn ? this._boundLogoutUser : this._boundLoginUser}>{isLoggedIn ? 'Logout' : 'Login'}</button>
+              <button type="submit" value="Submit">{isLoggedIn ? 'Logout' : 'Login'}</button>
         </form>
       )
   }

@@ -4,6 +4,13 @@ import AuthActions from '../action-types/auth'
 
 const internals = {}
 
+export const clearErrors = () => {
+
+    return {
+        type: AuthActions.CLEAR_ERRORS
+    };
+};
+
 export const noToken = () => {
 
     return {

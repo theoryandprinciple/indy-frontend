@@ -7,7 +7,8 @@ const Actions = KeyMirror({
     LOGOUT_ATTEMPT: true,
     LOGOUT_SUCCESS: true,
     LOGOUT_FAIL: true,
-    NO_TOKEN: true
+    NO_TOKEN: true,
+    CLEAR_ERRORS: true
 });
 
 export default Actions;

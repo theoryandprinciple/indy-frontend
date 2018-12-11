@@ -20,6 +20,18 @@ export default (state = initialState, action) => {
 
     switch (type) {
 
+        case AuthActions.CLEAR_ERRORS:
+
+            // clear out error object in local state
+            // this overrides the local objects which may contain errors
+            // preventing them from hydrating onto the front end
+            return Object.assign({}, state, {
+                error: {
+                    login: false,
+                    logout: false
+                }
+            });
+
         case AuthActions.NO_TOKEN:
 
             // the user has hit the application without a token in local storage

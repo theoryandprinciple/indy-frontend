@@ -10,12 +10,19 @@ import Initializers from './initializers'
 import 'sanitize.css/sanitize.css'
 import './index.css'
 
+import { clearErrors } from './actions/auth'
+
 // Run initializers... anything that will need to use or subscribe to the store
 Initializers(store);
 
+const onBeforeLift = () => {
+  // clear login/logout errors that may be in local state
+  store.dispatch(clearErrors());
+}
+
 ReactDOM.render(
   <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={null} persistor={persistor} onBeforeLift={onBeforeLift}>
         <ConnectedRouter history={history}>
           <div>
             <App />
