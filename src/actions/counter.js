@@ -1,13 +1,13 @@
-import counterActions from '../action-types/counter'
+import CounterActions from '../action-types/counter'
 
 export const increment = () => {
   return dispatch => {
     dispatch({
-      type: counterActions.INCREMENT_REQUESTED
+      type: CounterActions.INCREMENT_REQUESTED
     });
 
     dispatch({
-      type: counterActions.INCREMENT
+      type: CounterActions.INCREMENT
     });
   };
 };
@@ -15,12 +15,12 @@ export const increment = () => {
 export const incrementAsync = () => {
   return dispatch => {
     dispatch({
-      type: counterActions.INCREMENT_REQUESTED
+      type: CounterActions.INCREMENT_REQUESTED
     });
 
     return setTimeout(() => {
       dispatch({
-        type: counterActions.INCREMENT
+        type: CounterActions.INCREMENT
       });
     }, 3000);
   };
@@ -29,11 +29,11 @@ export const incrementAsync = () => {
 export const decrement = () => {
   return dispatch => {
     dispatch({
-      type: counterActions.DECREMENT_REQUESTED
+      type: CounterActions.DECREMENT_REQUESTED
     });
 
     dispatch({
-      type: counterActions.DECREMENT
+      type: CounterActions.DECREMENT
     });
   };
 };
@@ -41,12 +41,12 @@ export const decrement = () => {
 export const decrementAsync = () => {
   return dispatch => {
     dispatch({
-      type: counterActions.DECREMENT_REQUESTED
+      type: CounterActions.DECREMENT_REQUESTED
     });
 
     return setTimeout(() => {
       dispatch({
-        type: counterActions.DECREMENT
+        type: CounterActions.DECREMENT
       });
     }, 3000);
   };

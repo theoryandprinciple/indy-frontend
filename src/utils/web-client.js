@@ -1,7 +1,7 @@
 import Axios from 'axios'
 
 const internals = {
-    host: process.env.API_HOST || 'http://domain.com/',
+    host: process.env.API_HOST || 'http://rentervention.theoryandprinciple.com/',
     prefix: process.env.API_PREFIX || 'api',
     getApiBase: () => {
 
