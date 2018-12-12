@@ -1,7 +1,6 @@
 import * as AuthActions from '../../../actions/auth';
 import { connect } from 'react-redux';
 import LoginPage from '../components/';
-import AuthStatuses from '../../../utils/auth-statuses'
 
 const internals = {};
 

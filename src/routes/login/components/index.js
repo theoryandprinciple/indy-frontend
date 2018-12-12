@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import LoginForm from './loginForm'
+import LoginForm from '../containers/loginForm'
 
 class LoginPage extends React.Component {
 
@@ -11,10 +11,6 @@ class LoginPage extends React.Component {
     constructor(props, context) {
 
         super(props, context);
-
-        this.state = {
-            resetPassword: false
-        }
 
         this._boundLogoutUser = this.logoutUser.bind(this);
     }
@@ -33,7 +29,6 @@ class LoginPage extends React.Component {
             }
             {isLoggedIn &&
                 <button onClick={this._boundLogoutUser}>Logout</button>
-
             }
         </React.Fragment>
       )

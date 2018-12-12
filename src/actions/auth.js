@@ -4,6 +4,53 @@ import AuthActions from '../action-types/auth'
 
 const internals = {}
 
+export const forgotPass = (email) => {
+
+    return (dispatch) => {
+
+        dispatch(forgotPassBegin());
+
+        WebClient.post('/users/request-reset', { email })
+        .then(() => {
+
+            dispatch(forgotPassSuccess());
+        })
+        .catch(({ status }) => {
+
+            let error;
+            if (status !== 404 && status !== 400) {
+                error = 'Something seems to have gone awry!  Try that again.'
+            }
+            else {
+                error = 'We couldn\'t find a user with that email address.'
+            }
+            dispatch(forgotPassFail(error));
+
+        });
+
+    };
+}
+const forgotPassBegin = () => {
+
+    return {
+        type: AuthActions.FORGOT_PASS_BEGIN
+    };
+}
+const forgotPassSuccess = () => {
+
+    return {
+        type: AuthActions.FORGOT_PASS_SUCCESS
+    };
+}
+const forgotPassFail = (error) => {
+
+    return {
+        type: AuthActions.FORGOT_PASS_FAIL,
+        payload: error
+    };
+}
+
+
 export const clearErrors = () => {
 
     return {
