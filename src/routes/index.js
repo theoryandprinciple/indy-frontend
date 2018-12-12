@@ -4,7 +4,7 @@ import { withRouter } from 'react-router'
 import Home from './home/containers'
 import About from './about'
 import Login from './login/containers'
-import ProtectedRoute from './login/containers'
+import ProtectedRoute from './admin'
 import withRoot from '../wiring/withRoot'
 import Authenticate_Admin from '../wiring/authAdmin'
 

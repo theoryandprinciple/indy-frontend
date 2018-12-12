@@ -4,7 +4,7 @@ import AuthStatuses from '../utils/auth-statuses'
 
 const AuthAdmin = connectedRouterRedirect({
     redirectPath: '/login',
-    authenticatedSelector: (state) => state.auth.isAuthenticated !== false && state.auth.credentials.role === 'admin',
+    authenticatedSelector: (state) => state.auth.isAuthenticated === true && state.auth.credentials.role === 'admin',
     authenticatingSelector: (state) => {
 
         return (state.auth.status === AuthStatuses.INIT) ||
