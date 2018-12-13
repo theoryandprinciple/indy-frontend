@@ -11,7 +11,9 @@ class LoginForm extends React.Component {
         isLoginPending: PropTypes.bool.isRequired,
         forgotPassError: PropTypes.bool.isRequired,
         forgotPassErrorMsg: PropTypes.string,
-        forgotPassComplete: PropTypes.bool.isRequired
+        forgotPassComplete: PropTypes.bool.isRequired,
+        forgotPass: PropTypes.func.isRequired,
+        forgotPassCancel: PropTypes.func.isRequired
     };
     constructor(props, context) {
 
@@ -20,6 +22,7 @@ class LoginForm extends React.Component {
         this.state = {
             username: '',
             password: '',
+            forgotPassEmail: '',
             forgotPassword: false
         }
 
@@ -41,10 +44,11 @@ class LoginForm extends React.Component {
     }
     forgotPassword = (event) => {
         this.setState({ forgotPassword: !this.state.forgotPassword })
+        this.props.forgotPassCancel() // clear any existing errors
         event.preventDefault();
     }
     forgotPasswordSubmit = (event) => {
-        this.props.forgotPass();
+        this.props.forgotPass(this.state.forgotPassEmail);
         event.preventDefault();
     }
 
@@ -59,8 +63,15 @@ class LoginForm extends React.Component {
                     <p style={{ color: 'red' }}>{forgotPassErrorMsg}</p>
                 }
                 <p>forgot password loop</p>
-                <button onClick={this._boundForgotPassword}>Cancel</button>
-                <button onClick={this._forgotPasswordSubmit}>Submit</button>
+                <form onSubmit={this._forgotPasswordSubmit}>
+                    <input
+                    placeholder='Email Address'
+                    type='email'
+                    onChange={evt => this.onChange('forgotPassEmail', evt.target.value)}
+                    />
+                    <button onClick={this._boundForgotPassword}>Cancel</button>
+                    <button type="submit" value="submit">Submit</button>
+                </form>
              </React.Fragment>
         }
         {!forgotPassword &&

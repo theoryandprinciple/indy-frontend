@@ -17,7 +17,8 @@ internals.connectStuff = connect(
   {
     login: AuthActions.login,
     logout: AuthActions.logout,
-    forgotPass: AuthActions.forgotPass
+    forgotPass: AuthActions.forgotPass,
+    forgotPassCancel: AuthActions.forgotPassCancel
   }
 );
 

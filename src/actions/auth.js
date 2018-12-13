@@ -15,8 +15,9 @@ export const forgotPass = (email) => {
 
             dispatch(forgotPassSuccess());
         })
-        .catch(({ status }) => {
-
+        .catch((status) => {
+            console.log('status', status)
+            // TODO: the status coming back appears the error message, oppose to the code
             let error;
             if (status !== 404 && status !== 400) {
                 error = 'Something seems to have gone awry!  Try that again.'
@@ -28,6 +29,12 @@ export const forgotPass = (email) => {
 
         });
 
+    };
+}
+export const forgotPassCancel = () => {
+
+    return {
+        type: AuthActions.FORGOT_PASS_BEGIN
     };
 }
 const forgotPassBegin = () => {
