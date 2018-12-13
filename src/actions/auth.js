@@ -16,10 +16,9 @@ export const forgotPass = (email) => {
             dispatch(forgotPassSuccess());
         })
         .catch((status) => {
-            console.log('status', status)
-            // TODO: the status coming back appears the error message, oppose to the code
+
             let error;
-            if (status !== 404 && status !== 400) {
+            if (status.response.status !== 404 && status.response.status !== 400) {
                 error = 'Something seems to have gone awry!  Try that again.'
             }
             else {
