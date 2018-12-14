@@ -1,7 +1,11 @@
 import Axios from 'axios'
 
 const internals = {
+<<<<<<< HEAD
     host: process.env.API_HOST || process.env.REACT_APP_API_HOST || 'http://domain.com/',
+=======
+    host: process.env.API_HOST || 'http://rentervention.theoryandprinciple.com/',
+>>>>>>> origin
     prefix: process.env.API_PREFIX || 'api',
     getApiBase: () => {
 

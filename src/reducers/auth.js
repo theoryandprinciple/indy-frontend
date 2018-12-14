@@ -20,6 +20,29 @@ export default (state = initialState, action) => {
 
     switch (type) {
 
+        case AuthActions.CLEAR_ERRORS:
+
+            // clear out error object in local state
+            // this overrides the local objects which may contain errors
+            // preventing them from hydrating onto the front end
+            return Object.assign({}, state, {
+                error: {
+                    login: false,
+                    logout: false
+                }
+            });
+
+        case AuthActions.NO_TOKEN:
+
+            // the user has hit the application without a token in local storage
+            // so let's tell the app they are not logged in
+            // this represents their first pass into our application
+            // notablly, leaves error state at false
+            return Object.assign({}, state, {
+                status: Statuses.FINISHED,
+                isAuthenticated: false
+            });
+
         case AuthActions.LOGIN_ATTEMPT:
             return Object.assign({}, state, {
                 status: Statuses.WAITING
