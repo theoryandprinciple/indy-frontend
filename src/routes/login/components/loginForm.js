@@ -35,25 +35,30 @@ class LoginForm extends React.Component {
         this.setState({ [key]: value })
     }
     loginUser = (event) => {
-        this.props.login(this.state.username, this.state.password)
+
         event.preventDefault();
+        this.props.login(this.state.username, this.state.password)
     }
     logoutUser = (event) => {
-        this.props.logout()
+
         event.preventDefault();
+        this.props.logout()
     }
     forgotPassword = (event) => {
+
+        event.preventDefault();
         this.setState({ forgotPassword: !this.state.forgotPassword })
         this.props.forgotPassCancel() // clear any existing errors
-        event.preventDefault();
     }
     forgotPasswordSubmit = (event) => {
-        this.props.forgotPass(this.state.forgotPassEmail);
+
         event.preventDefault();
+        this.props.forgotPass(this.state.forgotPassEmail);
     }
 
     render() {
-        const { errored, isLoggedIn, isLoginPending, forgotPassError, forgotPassErrorMsg } = this.props
+
+        const { errored, isLoggedIn, isLoginPending, forgotPassError, forgotPassErrorMsg, forgotPassComplete } = this.props
         const { forgotPassword } = this.state
       return (
           <React.Fragment>
@@ -76,30 +81,35 @@ class LoginForm extends React.Component {
         }
         {!forgotPassword &&
             <React.Fragment>
-            <form onSubmit={isLoggedIn ? this._boundLogoutUser : this._boundLoginUser}>
-                    {errored &&
-                        <p style={{ color: 'red' }}>Error: Failed Login</p>
-                    }
-                    {isLoggedIn &&
-                        <p style={{ color: 'green' }}>Success: You Are Logged In</p>
-                    }
-                    {isLoginPending &&
-                        <p style={{ color: 'orange' }}>Waiting: Login Processing</p>
-                    }
-                  <input
-                    placeholder='Username'
-                    autoComplete="username"
-                    onChange={evt => this.onChange('username', evt.target.value)}
-                  />
-                  <input
-                    placeholder='Password'
-                    type='password'
-                    autoComplete="current-password"
-                    onChange={evt => this.onChange('password', evt.target.value)}
-                  />
-                  <button type="submit" value="Submit">{isLoggedIn ? 'Logout' : 'Login'}</button>
-              </form>
-              <button onClick={this._boundForgotPassword}>Forgot Password</button>
+            {!forgotPassComplete && // form not submitted yet
+                <form onSubmit={isLoggedIn ? this._boundLogoutUser : this._boundLoginUser}>
+                        {errored &&
+                            <p style={{ color: 'red' }}>Error: Failed Login</p>
+                        }
+                        {isLoggedIn &&
+                            <p style={{ color: 'green' }}>Success: You Are Logged In</p>
+                        }
+                        {isLoginPending &&
+                            <p style={{ color: 'orange' }}>Waiting: Login Processing</p>
+                        }
+                      <input
+                        placeholder='Username'
+                        autoComplete="username"
+                        onChange={evt => this.onChange('username', evt.target.value)}
+                      />
+                      <input
+                        placeholder='Password'
+                        type='password'
+                        autoComplete="current-password"
+                        onChange={evt => this.onChange('password', evt.target.value)}
+                      />
+                      <button type="submit" value="Submit">{isLoggedIn ? 'Logout' : 'Login'}</button>
+                      <button onClick={this._boundForgotPassword}>Forgot Password</button>
+                  </form>
+              }
+              {forgotPassComplete &&
+                  <p>Please check your email for your reset password link</p>
+              }
               </React.Fragment>
         }
         </React.Fragment>

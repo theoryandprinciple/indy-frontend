@@ -10,6 +10,9 @@ const Actions = KeyMirror({
     FORGOT_PASS_BEGIN: true,
     FORGOT_PASS_FAIL: true,
     FORGOT_PASS_SUCCESS: true,
+    RESET_PASS_BEGIN: true,
+    RESET_PASS_SUCCESS: true,
+    RESET_PASS_FAIL: true,
     NO_TOKEN: true,
     CLEAR_ERRORS: true
 });

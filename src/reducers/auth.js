@@ -15,6 +15,10 @@ const initialState = {
         errorMsg: '',
         complete: false,
     },
+    resetPass: {
+        error: false,
+        errorMsg: ''
+    }
 
 }
 export default (state = initialState, action) => {
@@ -142,7 +146,7 @@ export default (state = initialState, action) => {
         }
         case AuthActions.FORGOT_PASS_FAIL:
         {
-            console.log('payload', payload)
+
             const forgotPass = Object.assign({}, state.forgotPass, {
                 error: true,
                 errorMsg: payload || 'Error',
@@ -151,6 +155,29 @@ export default (state = initialState, action) => {
 
             return Object.assign({}, state, {
                 forgotPass
+            });
+        }
+        case AuthActions.RESET_PASS_BEGIN:
+        {
+            const resetPass = Object.assign({}, state.forgotPass, {
+                error: false,
+                errorMsg: ''
+            });
+
+            return Object.assign({}, state, {
+                resetPass
+            });
+        }
+        case AuthActions.RESET_PASS_FAIL:
+        {
+
+            const resetPass = Object.assign({}, state.forgotPass, {
+                error: true,
+                errorMsg: payload || 'Error'
+            });
+
+            return Object.assign({}, state, {
+                resetPass
             });
         }
 
