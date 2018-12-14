@@ -14,17 +14,21 @@
     "precommit": "pretty-quick --staged"
   },
   "devDependencies": {
+    "jest-mock-axios": "^2.1.11",
     "prettier": "1.14.3",
     "react-scripts": "2.0.5"
   },
   "dependencies": {
     "@material-ui/core": "^3.6.0",
     "axios": "latest",
-    "keymirror": "^0.1.1",
     "connected-react-router": "4.5.0",
+    "enzyme": "3.7.0",
+    "enzyme-adapter-react-16": "1.6.0",
+    "fetch-mock": "latest",
     "inert": "^5.1.2",
     "jss": "latest",
     "keymirror": "^0.1.1",
+    "node-fetch": "latest",
     "path": "^0.12.7",
     "react": "16.5.2",
     "react-dom": "16.5.2",
@@ -33,14 +37,11 @@
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
     "redux": "4.0.1",
-    "redux-thunk": "2.3.0",
-    "sanitize.css": "7.0.3",
-    "serve": "10.0.2",
-    "enzyme": "3.7.0",
-    "enzyme-adapter-react-16": "1.6.0",
     "redux-mock-store": "latest",
-    "fetch-mock": "latest",
-    "node-fetch": "latest"
+    "redux-thunk": "2.3.0",
+    "rest": "^2.0.0",
+    "sanitize.css": "7.0.3",
+    "serve": "10.0.2"
   },
   "browserslist": [
     ">0.2%",

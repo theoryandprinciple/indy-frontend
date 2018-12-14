@@ -1,7 +1,7 @@
 import Axios from 'axios'
 
 const internals = {
-    host: process.env.API_HOST || 'http://domain.com/',
+    host: process.env.API_HOST || process.env.REACT_APP_API_HOST || 'http://domain.com/',
     prefix: process.env.API_PREFIX || 'api',
     getApiBase: () => {
 
@@ -10,6 +10,7 @@ const internals = {
         return `${host}${prefix}`;
     }
 };
+
 
 const client = Axios.create({
     baseURL: internals.getApiBase(),
