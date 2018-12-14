@@ -39,6 +39,15 @@ export default (state = initialState, action) => {
                 error: {
                     login: false,
                     logout: false
+                },
+                forgotPass: {
+                    error: false,
+                    errorMsg: '',
+                    complete: false,
+                },
+                resetPass: {
+                    error: false,
+                    errorMsg: ''
                 }
             });
 
