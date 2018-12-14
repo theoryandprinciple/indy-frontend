@@ -5,16 +5,18 @@ import { history } from '../store.js'
 
 const internals = {}
 
-export const resetPass = (newPassword, resetToken, email) => {
+export const resetPass = (email, resetToken, newPassword) => {
 
     return (dispatch) => {
 
         dispatch(resetPassBegin());
 
-        WebClient.post('/users/reset-password', { email, resetToken, newPassword })
+        WebClient.post('/users/reset-password', { email, newPassword, resetToken })
         .then(() => {
 
             dispatch(resetPassSuccess());
+            history.push('/');
+            // should provide some user feedback on the success/next steps
         })
         .catch((status) => {
 

@@ -30,7 +30,7 @@ class ResetPasswordForm  extends React.Component {
         token = token || '';
 
         return {
-            error: false,
+            presubmitError: false,
             tokenProvided: !!token,
             email: '',
             token,
@@ -49,13 +49,13 @@ class ResetPasswordForm  extends React.Component {
 
         event.preventDefault();
         if (this.state.password !== this.state.passwordConfirm) {
-            return this.setState({ error: 'Passwords do not match.' });
+            return this.setState({ presubmitError: 'Passwords do not match.' });
         }
         else if (this.state.password === ''){
-            return this.setState({ error: 'Passwords cannot be blank' });
+            return this.setState({ presubmitError: 'Passwords cannot be blank' });
         }
         else {
-            this.setState({ error: false });
+            this.setState({ presubmitError: false });
             this.props.resetPass(this.state.email, this.state.token, this.state.password)
         }
 
@@ -68,7 +68,18 @@ class ResetPasswordForm  extends React.Component {
 
     render() {
 
-        const { token, email, password, passwordConfirm, error, tokenProvided } = this.state
+        const { token, email, password, passwordConfirm, presubmitError, tokenProvided } = this.state
+        const { resetPassError, resetPassErrorMsg } = this.props
+
+        let errorMsg;
+
+        // prioritize pre-submit errors
+        if (presubmitError){
+            errorMsg = presubmitError
+        }
+        else if (resetPassError){
+            errorMsg = resetPassErrorMsg
+        }
         return (
             <form onSubmit={this._boundSubmit}>
                 <h2>Reset Password</h2>
@@ -104,8 +115,9 @@ class ResetPasswordForm  extends React.Component {
                 />
                 <br />
 
-                {error &&
-                    <div>{error}</div>}
+                {errorMsg &&
+                    <p>{errorMsg}</p>
+                }
 
                 <button onClick={this._boundCancel}>Cancel</button>
                 <button type="submit" value="submit">Reset Password</button>

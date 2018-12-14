@@ -67,21 +67,27 @@ class LoginForm extends React.Component {
                 {forgotPassError &&
                     <p style={{ color: 'red' }}>{forgotPassErrorMsg}</p>
                 }
-                <p>forgot password loop</p>
-                <form onSubmit={this._forgotPasswordSubmit}>
-                    <input
-                    placeholder='Email Address'
-                    type='email'
-                    onChange={evt => this.onChange('forgotPassEmail', evt.target.value)}
-                    />
-                    <button onClick={this._boundForgotPassword}>Cancel</button>
-                    <button type="submit" value="submit">Submit</button>
-                </form>
+                {forgotPassComplete &&
+                    <p>Please check your email for your reset password link</p>
+                }
+                {!forgotPassComplete &&
+                    <React.Fragment>
+                        <p>forgot password loop</p>
+                        <form onSubmit={this._forgotPasswordSubmit}>
+                            <input
+                            placeholder='Email Address'
+                            type='email'
+                            onChange={evt => this.onChange('forgotPassEmail', evt.target.value)}
+                            />
+                            <button onClick={this._boundForgotPassword}>Cancel</button>
+                            <button type="submit" value="submit">Submit</button>
+                        </form>
+                    </React.Fragment>
+                }
              </React.Fragment>
         }
         {!forgotPassword &&
             <React.Fragment>
-            {!forgotPassComplete && // form not submitted yet
                 <form onSubmit={isLoggedIn ? this._boundLogoutUser : this._boundLoginUser}>
                         {errored &&
                             <p style={{ color: 'red' }}>Error: Failed Login</p>
@@ -106,10 +112,6 @@ class LoginForm extends React.Component {
                       <button type="submit" value="Submit">{isLoggedIn ? 'Logout' : 'Login'}</button>
                       <button onClick={this._boundForgotPassword}>Forgot Password</button>
                   </form>
-              }
-              {forgotPassComplete &&
-                  <p>Please check your email for your reset password link</p>
-              }
               </React.Fragment>
         }
         </React.Fragment>
