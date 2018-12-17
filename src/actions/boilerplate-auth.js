@@ -20,7 +20,7 @@ export default ({ login, logout }) => {
         loginAttempt: (...args) => {
 
             return {
-                type: Types.LOGIN_ATTEMPT,
+                type: Types.LOGIN_BEGIN,
                 payload: args
             };
         },
@@ -66,7 +66,7 @@ export default ({ login, logout }) => {
         logoutAttempt: (...args) => {
 
             return {
-                type: Types.LOGOUT_ATTEMPT,
+                type: Types.LOGOUT_BEGIN,
                 payload: args
             };
         },
