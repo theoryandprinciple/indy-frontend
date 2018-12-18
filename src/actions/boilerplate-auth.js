@@ -36,7 +36,7 @@ export default ({ login, logout }) => {
 
             credentials = credentials || null;
             artifacts = artifacts || null;
-
+            //console.log({ credentials, artifacts });
             return {
                 type: Types.LOGIN_SUCCESS,
                 payload: { credentials, artifacts }

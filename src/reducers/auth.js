@@ -44,6 +44,7 @@ export default (state = initialState, action) => {
             });
 
         case AuthActions.LOGIN_ATTEMPT:
+
             return Object.assign({}, state, {
                 status: Statuses.WAITING
             });
@@ -53,7 +54,7 @@ export default (state = initialState, action) => {
                 const error = Object.assign({}, state.error, {
                     login: false
                 });
-
+                //console.log(payload);
                 return Object.assign({}, state, {
                     status: Statuses.FINISHED,
                     isAuthenticated: true,

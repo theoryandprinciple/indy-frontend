@@ -47,8 +47,8 @@ export const logout = () => {
 
     return (dispatch) => {
 
-        dispatch(internals.auth.logout());
-        return console.log('logout')
+        return dispatch(internals.auth.logout());
+        //return console.log('logout')
     };
 };
 
@@ -73,7 +73,7 @@ internals.auth = BackgroundAuth({
             });
         })
         .then(({ data, status }) => {
-
+          
             if (status !== 200) {
                 const err = new Error('Bad login');
                 err.info = data;

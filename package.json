@@ -18,6 +18,9 @@
     "prettier": "1.14.3",
     "react-scripts": "2.0.5"
   },
+  "pre-commit": [
+    "test"
+  ],
   "dependencies": {
     "@material-ui/core": "^3.6.0",
     "axios": "latest",
