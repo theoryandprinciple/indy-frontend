@@ -9,6 +9,6 @@ const Actions = KeyMirror({
     LOGOUT_FAIL: true,
     NO_TOKEN: true,
     CLEAR_ERRORS: true
-});
+})
 
-export default Actions;
+export default Actions

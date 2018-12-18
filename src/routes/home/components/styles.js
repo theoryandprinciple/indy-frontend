@@ -7,5 +7,5 @@ const styles = theme => ({
             marginTop: 30
         }
     }
-});
-export default styles;
+})
+export default styles

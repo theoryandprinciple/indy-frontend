@@ -8,21 +8,28 @@ import ProtectedRoute from './admin'
 import withRoot from '../wiring/withRoot'
 import Authenticate_Admin from '../wiring/authAdmin'
 
-const Authenticated_ProtectedRoute = withRouter(Authenticate_Admin(ProtectedRoute))
+const Authenticated_ProtectedRoute = withRouter(
+    Authenticate_Admin(ProtectedRoute)
+)
 
 const App = () => (
     <Route
         render={({ location }) => (
             <React.Fragment>
                 <header>
-                  <Link to="/">Home</Link> | <Link to="/about">About</Link> | <Link to="/login">Login</Link>
+                    <Link to="/">Home</Link> | <Link to="/about">About</Link> |{' '}
+                    <Link to="/login">Login</Link>
                 </header>
                 <main>
                     <Switch location={location}>
                         <Route exact path="/" component={Home} />
                         <Route exact path="/about" component={About} />
                         <Route exact path="/login" component={Login} />
-                        <Route exact path="/admin" component={Authenticated_ProtectedRoute} />
+                        <Route
+                            exact
+                            path="/admin"
+                            component={Authenticated_ProtectedRoute}
+                        />
                     </Switch>
                 </main>
             </React.Fragment>
