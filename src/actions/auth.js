@@ -117,21 +117,21 @@ export const noToken = () => {
 export const login = (email, password, path) => {
     return dispatch => {
         const strangeLogin = internals.auth.login(email, password)
-
-        return dispatch(strangeLogin)
-            .then(data => {
-                if (!path) {
-                    // if no path provided to the login
-                    // consider the role of the user and push them around accordingly
-                    console.log('success')
-                } else {
-                    // if a path is provided, bring them there
-                    console.log('success, with redirect:', path)
-                }
-            })
-            .catch(error => {
-                console.warn('error', error)
-            })
+        if(path)//TODO: Use Path
+        return dispatch(strangeLogin);
+            // .then(data => {
+            //     if (!path) {
+            //         // if no path provided to the login
+            //         // consider the role of the user and push them around accordingly
+            //         console.log('success')
+            //     } else {
+            //         // if a path is provided, bring them there
+            //         // console.log('success, with redirect:', path)
+            //     }
+            // })
+            // .catch(error => {
+            //     // console.warn('error', error)
+            // })
     }
 }
 

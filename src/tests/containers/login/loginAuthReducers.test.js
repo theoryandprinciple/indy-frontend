@@ -1,10 +1,7 @@
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import * as AuthActions from '../../../../src/actions/auth'
 import * as AuthReducers from '../../../../src/reducers/auth'
 import * as Types from '../../../../src/action-types/auth'
-import testHelper from '../../testHelper'
-import mockAxios from 'jest-mock-axios'
 
 export const mockStore = configureStore([thunk])
 const store = mockStore()

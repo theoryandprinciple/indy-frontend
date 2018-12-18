@@ -12,20 +12,24 @@
     "test": "CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "precommit": "pretty-quick --staged",
-    "pretty": "prettier --write --tab-width 4 \"src/**/*.js\""
+    "pretty": "prettier --write --tab-width 4 \"src/**/*.js\"",
+    "lint": "eslint 'src/**/*.js' --ignore-pattern node_modules/"
   },
   "devDependencies": {
+    "eslint": "^5.10.0",
+    "eslint-plugin-react": "^7.11.1",
     "jest-mock-axios": "^2.1.11",
     "prettier": "1.14.3",
     "react-scripts": "2.0.5"
   },
   "pre-commit": [
     "test",
-    "pretty"
+    "lint"
   ],
   "dependencies": {
     "@material-ui/core": "^3.6.0",
     "axios": "latest",
+    "babel-eslint": "^10.0.1",
     "connected-react-router": "4.5.0",
     "enzyme": "3.7.0",
     "enzyme-adapter-react-16": "1.6.0",
