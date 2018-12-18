@@ -2,6 +2,7 @@ import React from 'react'
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 import AuthStatuses from '../utils/auth-statuses'
 
+const Loading = <div>loading</div>
 const AuthAdmin = connectedRouterRedirect({
     redirectPath: '/login',
     authenticatedSelector: state =>
@@ -13,7 +14,7 @@ const AuthAdmin = connectedRouterRedirect({
             state.auth.status === AuthStatuses.WAITING
         )
     },
-    AuthenticatingComponent: () => <div>loading</div>,
+    AuthenticatingComponent: () => <Loading />, // eslint-disable-line react/display-name
     wrapperDisplayName: 'UserIsAuthenticated'
 })
 export default AuthAdmin
