@@ -9,8 +9,9 @@ import ResetPassword from './login/containers/resetPass'
 import withRoot from '../wiring/withRoot'
 import Authenticate_Admin from '../wiring/authAdmin'
 
-
-const Authenticated_ProtectedRoute = withRouter(Authenticate_Admin(ProtectedRoute))
+const Authenticated_ProtectedRoute = withRouter(
+    Authenticate_Admin(ProtectedRoute)
+)
 
 const App = () => (
     <Route
@@ -25,7 +26,11 @@ const App = () => (
                         <Route exact path="/" component={Home} />
                         <Route exact path="/about" component={About} />
                         <Route exact path="/login" component={Login} />
-                        <Route exact path="/admin" component={Authenticated_ProtectedRoute} />
+                        <Route
+                            exact
+                            path="/admin"
+                            component={Authenticated_ProtectedRoute}
+                        />
                         <Route path="/reset-pass" component={ResetPassword} />
                     </Switch>
                 </main>

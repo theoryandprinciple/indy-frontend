@@ -6,112 +6,101 @@ import { history } from '../store.js'
 const internals = {}
 
 export const resetPass = (email, resetToken, newPassword) => {
+    return dispatch => {
+        dispatch(resetPassBegin())
 
-    return (dispatch) => {
-
-        dispatch(resetPassBegin());
-
-        WebClient.post('/users/reset-password', { email, newPassword, resetToken })
-        .then(() => {
-
-            dispatch(resetPassSuccess());
-            history.push('/');
-            // should provide some user feedback on the success/next steps
+        WebClient.post('/users/reset-password', {
+            email,
+            newPassword,
+            resetToken
         })
-        .catch((status) => {
-
-            let error;
-            if (status.response.status !== 404 && status.response.status !== 400) {
-                error = 'Something seems to have gone awry!  Try that again.'
-            }
-            else {
-                error = 'We couldn\'t find a user with that email address.'
-            }
-            dispatch(resetPassFail(error));
-
-        });
-
-    };
+            .then(() => {
+                dispatch(resetPassSuccess())
+                history.push('/')
+                // should provide some user feedback on the success/next steps
+            })
+            .catch(status => {
+                let error
+                if (
+                    status.response.status !== 404 &&
+                    status.response.status !== 400
+                ) {
+                    error =
+                        'Something seems to have gone awry!  Try that again.'
+                } else {
+                    error = "We couldn't find a user with that email address."
+                }
+                dispatch(resetPassFail(error))
+            })
+    }
 }
 export const resetPassCancel = () => {
-
     history.push('/')
     return {
         type: AuthActions.RESET_PASS_BEGIN
-    };
+    }
 }
 const resetPassBegin = () => {
-
     return {
         type: AuthActions.RESET_PASS_BEGIN
-    };
+    }
 }
 const resetPassSuccess = () => {
-
     return {
         type: AuthActions.RESET_PASS_SUCCESS
-    };
+    }
 }
-const resetPassFail = (error) => {
-
+const resetPassFail = error => {
     return {
         type: AuthActions.RESET_PASS_FAIL,
         payload: error
-    };
+    }
 }
 
-export const forgotPass = (email) => {
-
-    return (dispatch) => {
-
-        dispatch(forgotPassBegin());
+export const forgotPass = email => {
+    return dispatch => {
+        dispatch(forgotPassBegin())
 
         WebClient.post('/users/request-reset', { email })
-        .then(() => {
-
-            dispatch(forgotPassSuccess());
-        })
-        .catch((status) => {
-
-            let error;
-            if (status.response.status !== 404 && status.response.status !== 400) {
-                error = 'Something seems to have gone awry!  Try that again.'
-            }
-            else {
-                error = 'We couldn\'t find a user with that email address.'
-            }
-            dispatch(forgotPassFail(error));
-
-        });
-
-    };
+            .then(() => {
+                dispatch(forgotPassSuccess())
+            })
+            .catch(status => {
+                let error
+                if (
+                    status.response.status !== 404 &&
+                    status.response.status !== 400
+                ) {
+                    error =
+                        'Something seems to have gone awry!  Try that again.'
+                } else {
+                    error = "We couldn't find a user with that email address."
+                }
+                dispatch(forgotPassFail(error))
+            })
+    }
 }
 export const forgotPassCancel = () => {
-
     return {
         type: AuthActions.FORGOT_PASS_BEGIN
-    };
+    }
 }
 const forgotPassBegin = () => {
-
     return {
         type: AuthActions.FORGOT_PASS_BEGIN
-    };
+    }
 }
 const forgotPassSuccess = () => {
-
     return {
         type: AuthActions.FORGOT_PASS_SUCCESS
-    };
+    }
 }
-const forgotPassFail = (error) => {
-
+const forgotPassFail = error => {
     return {
         type: AuthActions.FORGOT_PASS_FAIL,
         payload: error
-    };
+    }
 }
-
 
 export const clearErrors = () => {
     return {

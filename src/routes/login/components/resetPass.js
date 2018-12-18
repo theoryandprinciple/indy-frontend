@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import GetParameterByName from '../../../utils/getParam'
 
-class ResetPasswordForm  extends React.Component {
-
+class ResetPasswordForm extends React.Component {
     static propTypes = {
         location: PropTypes.object,
         resetPassCancel: PropTypes.func.isRequired,
@@ -13,21 +12,22 @@ class ResetPasswordForm  extends React.Component {
     }
 
     constructor(props) {
+        super(props)
 
-        super(props);
-
-        this._boundSubmit = this.submit.bind(this);
-        this._boundCancel = this.cancel.bind(this);
+        this._boundSubmit = this.submit.bind(this)
+        this._boundCancel = this.cancel.bind(this)
 
         // pull the token from the URL
-        const tokenFromHash = GetParameterByName('t', this.props.location.search);
+        const tokenFromHash = GetParameterByName(
+            't',
+            this.props.location.search
+        )
 
-        this.state = this.initialState(tokenFromHash);
+        this.state = this.initialState(tokenFromHash)
     }
 
     initialState(token) {
-
-        token = token || '';
+        token = token || ''
 
         return {
             presubmitError: false,
@@ -36,48 +36,53 @@ class ResetPasswordForm  extends React.Component {
             token,
             password: '',
             passwordConfirm: ''
-        };
+        }
     }
 
-    cancel = (event) => {
-
-        event.preventDefault();
-        this.props.resetPassCancel();
+    cancel = event => {
+        event.preventDefault()
+        this.props.resetPassCancel()
     }
 
-    submit = (event) => {
-
-        event.preventDefault();
+    submit = event => {
+        event.preventDefault()
         if (this.state.password !== this.state.passwordConfirm) {
-            return this.setState({ presubmitError: 'Passwords do not match.' });
+            return this.setState({ presubmitError: 'Passwords do not match.' })
+        } else if (this.state.password === '') {
+            return this.setState({
+                presubmitError: 'Passwords cannot be blank'
+            })
+        } else {
+            this.setState({ presubmitError: false })
+            this.props.resetPass(
+                this.state.email,
+                this.state.token,
+                this.state.password
+            )
         }
-        else if (this.state.password === ''){
-            return this.setState({ presubmitError: 'Passwords cannot be blank' });
-        }
-        else {
-            this.setState({ presubmitError: false });
-            this.props.resetPass(this.state.email, this.state.token, this.state.password)
-        }
-
     }
 
     onChange = (key, value) => {
-
         this.setState({ [key]: value })
     }
 
     render() {
-
-        const { token, email, password, passwordConfirm, presubmitError, tokenProvided } = this.state
+        const {
+            token,
+            email,
+            password,
+            passwordConfirm,
+            presubmitError,
+            tokenProvided
+        } = this.state
         const { resetPassError, resetPassErrorMsg } = this.props
 
-        let errorMsg;
+        let errorMsg
 
         // prioritize pre-submit errors
-        if (presubmitError){
+        if (presubmitError) {
             errorMsg = presubmitError
-        }
-        else if (resetPassError){
+        } else if (resetPassError) {
             errorMsg = resetPassErrorMsg
         }
         return (
@@ -85,45 +90,49 @@ class ResetPasswordForm  extends React.Component {
                 <h2>Reset Password</h2>
                 <input
                     disabled={tokenProvided}
-                    placeholder='Reset Code'
+                    placeholder="Reset Code"
                     value={token}
                     onChange={evt => this.onChange('token', evt.target.value)}
                 />
                 <br />
                 <input
-                    placeholder='Email Address'
+                    placeholder="Email Address"
                     autoComplete="username"
-                    type='email'
+                    type="email"
                     value={email}
                     onChange={evt => this.onChange('email', evt.target.value)}
                 />
                 <br />
                 <input
-                    placeholder='New Password'
-                    type='password'
+                    placeholder="New Password"
+                    type="password"
                     autoComplete="new-password"
                     value={password}
-                    onChange={evt => this.onChange('password', evt.target.value)}
+                    onChange={evt =>
+                        this.onChange('password', evt.target.value)
+                    }
                 />
                 <br />
                 <input
-                    placeholder='Confirm Password'
+                    placeholder="Confirm Password"
                     autoComplete="new-password"
-                    type='password'
+                    type="password"
                     value={passwordConfirm}
-                    onChange={evt => this.onChange('passwordConfirm', evt.target.value)}
+                    onChange={evt =>
+                        this.onChange('passwordConfirm', evt.target.value)
+                    }
                 />
                 <br />
 
-                {errorMsg &&
-                    <p>{errorMsg}</p>
-                }
+                {errorMsg && <p>{errorMsg}</p>}
 
                 <button onClick={this._boundCancel}>Cancel</button>
-                <button type="submit" value="submit">Reset Password</button>
+                <button type="submit" value="submit">
+                    Reset Password
+                </button>
             </form>
-        );
+        )
     }
-};
+}
 
 export default ResetPasswordForm

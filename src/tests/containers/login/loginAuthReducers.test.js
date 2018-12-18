@@ -130,10 +130,12 @@ describe('Test the reducers for auth', () => {
             payload: { testData: 'Some test data' }
         }
 
-        let expectedReturn = {"error": {"login": false, "logout": false},
-        "forgotPass": {"complete": false, "error": false, "errorMsg": ""},
-        "resetPass": {"error": false, "errorMsg": ""}};
-        
+        let expectedReturn = {
+            error: { login: false, logout: false },
+            forgotPass: { complete: false, error: false, errorMsg: '' },
+            resetPass: { error: false, errorMsg: '' }
+        }
+
         let returnVal = AuthReducers.default(store.getState(), testType)
 
         return expect(returnVal).toEqual(expectedReturn)

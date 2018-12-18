@@ -9,18 +9,17 @@ const initialState = {
     error: {
         // For actual error handling write a separate reducer
         login: false,
-        logout: false,
+        logout: false
     },
     forgotPass: {
         error: false,
         errorMsg: '',
-        complete: false,
+        complete: false
     },
     resetPass: {
         error: false,
         errorMsg: ''
     }
-
 }
 export default (state = initialState, action) => {
     state = state || initialState
@@ -41,7 +40,7 @@ export default (state = initialState, action) => {
                 forgotPass: {
                     error: false,
                     errorMsg: '',
-                    complete: false,
+                    complete: false
                 },
                 resetPass: {
                     error: false,
@@ -122,63 +121,58 @@ export default (state = initialState, action) => {
             })
         }
 
-        case AuthActions.FORGOT_PASS_BEGIN:
-        {
+        case AuthActions.FORGOT_PASS_BEGIN: {
             const forgotPass = Object.assign({}, state.forgotPass, {
                 error: false,
                 errorMsg: '',
                 complete: false
-            });
+            })
 
             return Object.assign({}, state, {
                 forgotPass
-            });
+            })
         }
-        case AuthActions.FORGOT_PASS_SUCCESS:
-        {
+        case AuthActions.FORGOT_PASS_SUCCESS: {
             const forgotPass = Object.assign({}, state.forgotPass, {
                 error: false,
                 errorMsg: '',
                 complete: true
-            });
+            })
 
             return Object.assign({}, state, {
                 forgotPass
-            });
+            })
         }
-        case AuthActions.FORGOT_PASS_FAIL:
-        {
+        case AuthActions.FORGOT_PASS_FAIL: {
             const forgotPass = Object.assign({}, state.forgotPass, {
                 error: true,
                 errorMsg: payload || 'Error',
                 complete: false
-            });
+            })
 
             return Object.assign({}, state, {
                 forgotPass
-            });
+            })
         }
-        case AuthActions.RESET_PASS_BEGIN:
-        {
+        case AuthActions.RESET_PASS_BEGIN: {
             const resetPass = Object.assign({}, state.resetPass, {
                 error: false,
                 errorMsg: ''
-            });
+            })
 
             return Object.assign({}, state, {
                 resetPass
-            });
+            })
         }
-        case AuthActions.RESET_PASS_FAIL:
-        {
+        case AuthActions.RESET_PASS_FAIL: {
             const resetPass = Object.assign({}, state.resetPass, {
                 error: true,
                 errorMsg: payload || 'Error'
-            });
+            })
 
             return Object.assign({}, state, {
                 resetPass
-            });
+            })
         }
 
         default: // do nothing
