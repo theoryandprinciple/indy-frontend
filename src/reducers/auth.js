@@ -9,8 +9,18 @@ const initialState = {
     error: {
         // For actual error handling write a separate reducer
         login: false,
-        logout: false
+        logout: false,
+    },
+    forgotPass: {
+        error: false,
+        errorMsg: '',
+        complete: false,
+    },
+    resetPass: {
+        error: false,
+        errorMsg: ''
     }
+
 }
 export default (state = initialState, action) => {
     state = state || initialState
@@ -27,6 +37,15 @@ export default (state = initialState, action) => {
                 error: {
                     login: false,
                     logout: false
+                },
+                forgotPass: {
+                    error: false,
+                    errorMsg: '',
+                    complete: false,
+                },
+                resetPass: {
+                    error: false,
+                    errorMsg: ''
                 }
             })
 
@@ -40,7 +59,7 @@ export default (state = initialState, action) => {
                 isAuthenticated: false
             })
 
-        case AuthActions.LOGIN_ATTEMPT:
+        case AuthActions.LOGIN_BEGIN:
             return Object.assign({}, state, {
                 status: Statuses.WAITING
             })
@@ -70,7 +89,7 @@ export default (state = initialState, action) => {
             })
         }
 
-        case AuthActions.LOGOUT_ATTEMPT:
+        case AuthActions.LOGOUT_BEGIN:
             return Object.assign({}, state, {
                 status: Statuses.WAITING_LOGOUT,
                 isAuthenticated: false // Immediately considered not authenticated
@@ -101,6 +120,65 @@ export default (state = initialState, action) => {
                 status: Statuses.FINISHED,
                 error
             })
+        }
+
+        case AuthActions.FORGOT_PASS_BEGIN:
+        {
+            const forgotPass = Object.assign({}, state.forgotPass, {
+                error: false,
+                errorMsg: '',
+                complete: false
+            });
+
+            return Object.assign({}, state, {
+                forgotPass
+            });
+        }
+        case AuthActions.FORGOT_PASS_SUCCESS:
+        {
+            const forgotPass = Object.assign({}, state.forgotPass, {
+                error: false,
+                errorMsg: '',
+                complete: true
+            });
+
+            return Object.assign({}, state, {
+                forgotPass
+            });
+        }
+        case AuthActions.FORGOT_PASS_FAIL:
+        {
+            const forgotPass = Object.assign({}, state.forgotPass, {
+                error: true,
+                errorMsg: payload || 'Error',
+                complete: false
+            });
+
+            return Object.assign({}, state, {
+                forgotPass
+            });
+        }
+        case AuthActions.RESET_PASS_BEGIN:
+        {
+            const resetPass = Object.assign({}, state.resetPass, {
+                error: false,
+                errorMsg: ''
+            });
+
+            return Object.assign({}, state, {
+                resetPass
+            });
+        }
+        case AuthActions.RESET_PASS_FAIL:
+        {
+            const resetPass = Object.assign({}, state.resetPass, {
+                error: true,
+                errorMsg: payload || 'Error'
+            });
+
+            return Object.assign({}, state, {
+                resetPass
+            });
         }
 
         default: // do nothing

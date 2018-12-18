@@ -20,7 +20,7 @@ export default ({ login, logout }) => {
     const actions = {
         loginAttempt: (...args) => {
             return {
-                type: Types.LOGIN_ATTEMPT,
+                type: Types.LOGIN_BEGIN,
                 payload: args
             }
         },
@@ -62,7 +62,7 @@ export default ({ login, logout }) => {
         // Whatever args taken by logoutCb, minus final callback
         logoutAttempt: (...args) => {
             return {
-                type: Types.LOGOUT_ATTEMPT,
+                type: Types.LOGOUT_BEGIN,
                 payload: args
             }
         },

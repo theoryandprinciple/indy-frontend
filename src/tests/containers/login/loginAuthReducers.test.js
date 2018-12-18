@@ -13,7 +13,7 @@ const store = mockStore()
 describe('Test the reducers for auth', () => {
     it('test login attempt', async () => {
         let testType = {
-            type: Types.default.LOGIN_ATTEMPT,
+            type: Types.default.LOGIN_BEGIN,
             payload: { testData: 'Some test data' }
         }
 
@@ -94,7 +94,7 @@ describe('Test the reducers for auth', () => {
 
     it('test logout attempt', async () => {
         let testType = {
-            type: Types.default.LOGOUT_ATTEMPT,
+            type: Types.default.LOGOUT_BEGIN,
             payload: { testData: 'Some test data' }
         }
 
@@ -130,8 +130,10 @@ describe('Test the reducers for auth', () => {
             payload: { testData: 'Some test data' }
         }
 
-        let expectedReturn = { error: { login: false, logout: false } }
-
+        let expectedReturn = {"error": {"login": false, "logout": false},
+        "forgotPass": {"complete": false, "error": false, "errorMsg": ""},
+        "resetPass": {"error": false, "errorMsg": ""}};
+        
         let returnVal = AuthReducers.default(store.getState(), testType)
 
         return expect(returnVal).toEqual(expectedReturn)
