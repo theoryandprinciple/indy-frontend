@@ -1,25 +1,25 @@
 // https://github.com/mui-org/material-ui/tree/master/examples/create-react-app-with-jss/src
-import React from 'react'
-import { create } from 'jss'
-import JssProvider from 'react-jss/lib/JssProvider'
+import React from 'react';
+import { create } from 'jss';
+import JssProvider from 'react-jss/lib/JssProvider';
 import {
     MuiThemeProvider,
     createGenerateClassName,
     jssPreset
-} from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
+} from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 // A theme with custom primary and secondary color.
 // It's optional.
-import theme from '../styles/materialTheme'
+import theme from '../styles/materialTheme';
 
 // Create a JSS instance with the default preset of plugins.
 // It's optional.
-const jss = create(jssPreset())
+const jss = create(jssPreset());
 
 // The standard class name generator.
 // It's optional.
-const generateClassName = createGenerateClassName()
+const generateClassName = createGenerateClassName();
 
 function withRoot(Component) {
     function WithRoot(props) {
@@ -34,10 +34,10 @@ function withRoot(Component) {
                     <Component {...props} />
                 </MuiThemeProvider>
             </JssProvider>
-        )
+        );
     }
 
-    return WithRoot
+    return WithRoot;
 }
 
-export default withRoot
+export default withRoot;

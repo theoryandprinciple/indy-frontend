@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import GetParameterByName from '../../../utils/getParam'
+import React from 'react';
+import PropTypes from 'prop-types';
+import GetParameterByName from '../../../utils/getParam';
 
 class ResetPasswordForm extends React.Component {
     static propTypes = {
@@ -9,25 +9,25 @@ class ResetPasswordForm extends React.Component {
         resetPass: PropTypes.func.isRequired,
         resetPassError: PropTypes.bool.isRequired,
         resetPassErrorMsg: PropTypes.string.isRequired
-    }
+    };
 
     constructor(props) {
-        super(props)
+        super(props);
 
-        this._boundSubmit = this.submit.bind(this)
-        this._boundCancel = this.cancel.bind(this)
+        this._boundSubmit = this.submit.bind(this);
+        this._boundCancel = this.cancel.bind(this);
 
         // pull the token from the URL
         const tokenFromHash = GetParameterByName(
             't',
             this.props.location.search
-        )
+        );
 
-        this.state = this.initialState(tokenFromHash)
+        this.state = this.initialState(tokenFromHash);
     }
 
     initialState(token) {
-        token = token || ''
+        token = token || '';
 
         return {
             presubmitError: false,
@@ -36,35 +36,35 @@ class ResetPasswordForm extends React.Component {
             token,
             password: '',
             passwordConfirm: ''
-        }
+        };
     }
 
-    cancel = event => {
-        event.preventDefault()
-        this.props.resetPassCancel()
-    }
+    cancel = (event) => {
+        event.preventDefault();
+        this.props.resetPassCancel();
+    };
 
-    submit = event => {
-        event.preventDefault()
+    submit = (event) => {
+        event.preventDefault();
         if (this.state.password !== this.state.passwordConfirm) {
-            return this.setState({ presubmitError: 'Passwords do not match.' })
+            return this.setState({ presubmitError: 'Passwords do not match.' });
         } else if (this.state.password === '') {
             return this.setState({
                 presubmitError: 'Passwords cannot be blank'
-            })
+            });
         } else {
-            this.setState({ presubmitError: false })
+            this.setState({ presubmitError: false });
             this.props.resetPass(
                 this.state.email,
                 this.state.token,
                 this.state.password
-            )
+            );
         }
-    }
+    };
 
     onChange = (key, value) => {
-        this.setState({ [key]: value })
-    }
+        this.setState({ [key]: value });
+    };
 
     render() {
         const {
@@ -74,16 +74,16 @@ class ResetPasswordForm extends React.Component {
             passwordConfirm,
             presubmitError,
             tokenProvided
-        } = this.state
-        const { resetPassError, resetPassErrorMsg } = this.props
+        } = this.state;
+        const { resetPassError, resetPassErrorMsg } = this.props;
 
-        let errorMsg
+        let errorMsg;
 
         // prioritize pre-submit errors
         if (presubmitError) {
-            errorMsg = presubmitError
+            errorMsg = presubmitError;
         } else if (resetPassError) {
-            errorMsg = resetPassErrorMsg
+            errorMsg = resetPassErrorMsg;
         }
         return (
             <form onSubmit={this._boundSubmit}>
@@ -92,7 +92,7 @@ class ResetPasswordForm extends React.Component {
                     disabled={tokenProvided}
                     placeholder="Reset Code"
                     value={token}
-                    onChange={evt => this.onChange('token', evt.target.value)}
+                    onChange={(evt) => this.onChange('token', evt.target.value)}
                 />
                 <br />
                 <input
@@ -100,7 +100,7 @@ class ResetPasswordForm extends React.Component {
                     autoComplete="username"
                     type="email"
                     value={email}
-                    onChange={evt => this.onChange('email', evt.target.value)}
+                    onChange={(evt) => this.onChange('email', evt.target.value)}
                 />
                 <br />
                 <input
@@ -108,7 +108,7 @@ class ResetPasswordForm extends React.Component {
                     type="password"
                     autoComplete="new-password"
                     value={password}
-                    onChange={evt =>
+                    onChange={(evt) =>
                         this.onChange('password', evt.target.value)
                     }
                 />
@@ -118,7 +118,7 @@ class ResetPasswordForm extends React.Component {
                     autoComplete="new-password"
                     type="password"
                     value={passwordConfirm}
-                    onChange={evt =>
+                    onChange={(evt) =>
                         this.onChange('passwordConfirm', evt.target.value)
                     }
                 />
@@ -131,8 +131,8 @@ class ResetPasswordForm extends React.Component {
                     Reset Password
                 </button>
             </form>
-        )
+        );
     }
 }
 
-export default ResetPasswordForm
+export default ResetPasswordForm;

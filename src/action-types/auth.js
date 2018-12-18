@@ -1,4 +1,4 @@
-import KeyMirror from 'keymirror'
+import KeyMirror from 'keymirror';
 
 const Actions = KeyMirror({
     LOGIN_BEGIN: true,
@@ -15,6 +15,6 @@ const Actions = KeyMirror({
     RESET_PASS_FAIL: true,
     NO_TOKEN: true,
     CLEAR_ERRORS: true
-})
+});
 
-export default Actions
+export default Actions;

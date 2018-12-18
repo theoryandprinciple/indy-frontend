@@ -3,18 +3,18 @@
 
 const getParameterByName = (name, url) => {
     if (!url) {
-        url = window.location.href
+        url = window.location.href;
     }
-    name = name.replace(/[[\]]/g, '\\$&')
-    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
-    const results = regex.exec(url)
+    name = name.replace(/[[\]]/g, '\\$&');
+    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    const results = regex.exec(url);
     if (!results) {
-        return null
+        return null;
     }
     if (!results[2]) {
-        return ''
+        return '';
     }
-    return decodeURIComponent(results[2].replace(/\+/g, ' '))
-}
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+};
 
-export default getParameterByName
+export default getParameterByName;

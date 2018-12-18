@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import Styles from './styles'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Styles from './styles';
 
 class Home extends React.Component {
     static propTypes = {
@@ -14,10 +14,10 @@ class Home extends React.Component {
         decrement: PropTypes.func.isRequired,
         decrementAsync: PropTypes.func.isRequired,
         changePage: PropTypes.func.isRequired
-    }
+    };
 
     render() {
-        const { classes } = this.props
+        const { classes } = this.props;
         return (
             <div className={classes.wrapper}>
                 <h1>Home</h1>
@@ -56,8 +56,8 @@ class Home extends React.Component {
                     </button>
                 </p>
             </div>
-        )
+        );
     }
 }
 
-export default withStyles(Styles)(Home)
+export default withStyles(Styles)(Home);

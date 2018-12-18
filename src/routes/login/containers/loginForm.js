@@ -1,12 +1,12 @@
-import * as AuthActions from '../../../actions/auth'
-import { connect } from 'react-redux'
-import LoginForm from '../components/loginForm'
-import AuthStatuses from '../../../utils/auth-statuses'
+import * as AuthActions from '../../../actions/auth';
+import { connect } from 'react-redux';
+import LoginForm from '../components/loginForm';
+import AuthStatuses from '../../../utils/auth-statuses';
 
-const internals = {}
+const internals = {};
 
 internals.connectStuff = connect(
-    state => ({
+    (state) => ({
         errored: state.auth.error.login,
         isLoggedIn: state.auth.isAuthenticated,
         isLoginPending: state.auth.status === AuthStatuses.WAITING,
@@ -20,6 +20,6 @@ internals.connectStuff = connect(
         forgotPass: AuthActions.forgotPass,
         forgotPassCancel: AuthActions.forgotPassCancel
     }
-)
+);
 
-export default internals.connectStuff(LoginForm)
+export default internals.connectStuff(LoginForm);
