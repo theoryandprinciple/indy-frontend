@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import GetParameterByName from '../../../utils/getParam';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 class ResetPasswordForm extends React.Component {
     static propTypes = {
@@ -88,14 +90,14 @@ class ResetPasswordForm extends React.Component {
         return (
             <form onSubmit={this._boundSubmit}>
                 <h2>Reset Password</h2>
-                <input
+                <TextField
                     disabled={tokenProvided}
                     placeholder="Reset Code"
                     value={token}
                     onChange={(evt) => this.onChange('token', evt.target.value)}
                 />
                 <br />
-                <input
+                <TextField
                     placeholder="Email Address"
                     autoComplete="username"
                     type="email"
@@ -103,7 +105,7 @@ class ResetPasswordForm extends React.Component {
                     onChange={(evt) => this.onChange('email', evt.target.value)}
                 />
                 <br />
-                <input
+                <TextField
                     placeholder="New Password"
                     type="password"
                     autoComplete="new-password"
@@ -113,7 +115,7 @@ class ResetPasswordForm extends React.Component {
                     }
                 />
                 <br />
-                <input
+                <TextField
                     placeholder="Confirm Password"
                     autoComplete="new-password"
                     type="password"
@@ -126,10 +128,10 @@ class ResetPasswordForm extends React.Component {
 
                 {errorMsg && <p>{errorMsg}</p>}
 
-                <button onClick={this._boundCancel}>Cancel</button>
-                <button type="submit" value="submit">
+                <Button onClick={this._boundCancel}>Cancel</Button>
+                <Button type="submit" value="submit">
                     Reset Password
-                </button>
+                </Button>
             </form>
         );
     }
