@@ -1,26 +1,26 @@
-import WebClient from '../utils/web-client'
+import WebClient from '../utils/web-client';
 
 const internals = {
     lastToken: null
-}
+};
 
-export default store => {
-    internals.maintainAuthToken(store)
+export default (store) => {
+    internals.maintainAuthToken(store);
 
-    return store.subscribe(() => internals.maintainAuthToken(store))
-}
+    return store.subscribe(() => internals.maintainAuthToken(store));
+};
 
-internals.maintainAuthToken = store => {
-    const auth = store.getState().auth
+internals.maintainAuthToken = (store) => {
+    const auth = store.getState().auth;
     const newToken =
         (auth.isAuthenticated && auth.credentials && auth.credentials.token) ||
-        null
+        null;
 
     if (newToken === internals.lastToken) {
-        return
+        return;
     }
 
-    WebClient.updateAuth(newToken)
+    WebClient.updateAuth(newToken);
 
-    internals.lastToken = newToken
-}
+    internals.lastToken = newToken;
+};

@@ -1,11 +1,11 @@
-import * as AuthActions from '../../../actions/auth'
-import { connect } from 'react-redux'
-import ResetPasswordForm from '../components/resetPass'
+import * as AuthActions from '../../../actions/auth';
+import { connect } from 'react-redux';
+import ResetPasswordForm from '../components/resetPass';
 
-const internals = {}
+const internals = {};
 
 internals.connectStuff = connect(
-    state => ({
+    (state) => ({
         resetPassError: state.auth.resetPass.error,
         resetPassErrorMsg: state.auth.resetPass.errorMsg
     }),
@@ -13,6 +13,6 @@ internals.connectStuff = connect(
         resetPassCancel: AuthActions.resetPassCancel,
         resetPass: AuthActions.resetPass
     }
-)
+);
 
-export default internals.connectStuff(ResetPasswordForm)
+export default internals.connectStuff(ResetPasswordForm);

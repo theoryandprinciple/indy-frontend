@@ -1,5 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 class LoginForm extends React.Component {
     static propTypes = {
@@ -13,42 +13,42 @@ class LoginForm extends React.Component {
         forgotPassComplete: PropTypes.bool.isRequired,
         forgotPass: PropTypes.func.isRequired,
         forgotPassCancel: PropTypes.func.isRequired
-    }
+    };
     constructor(props, context) {
-        super(props, context)
+        super(props, context);
 
         this.state = {
             username: '',
             password: '',
             forgotPassEmail: '',
             forgotPassword: false
-        }
+        };
 
-        this._boundLoginUser = this.loginUser.bind(this)
-        this._boundLogoutUser = this.logoutUser.bind(this)
-        this._boundForgotPassword = this.forgotPassword.bind(this)
-        this._forgotPasswordSubmit = this.forgotPasswordSubmit.bind(this)
+        this._boundLoginUser = this.loginUser.bind(this);
+        this._boundLogoutUser = this.logoutUser.bind(this);
+        this._boundForgotPassword = this.forgotPassword.bind(this);
+        this._forgotPasswordSubmit = this.forgotPasswordSubmit.bind(this);
     }
     onChange = (key, value) => {
-        this.setState({ [key]: value })
-    }
-    loginUser = event => {
-        event.preventDefault()
-        this.props.login(this.state.username, this.state.password)
-    }
-    logoutUser = event => {
-        event.preventDefault()
-        this.props.logout()
-    }
-    forgotPassword = event => {
-        event.preventDefault()
-        this.setState({ forgotPassword: !this.state.forgotPassword })
-        this.props.forgotPassCancel() // clear any existing errors
-    }
-    forgotPasswordSubmit = event => {
-        event.preventDefault()
-        this.props.forgotPass(this.state.forgotPassEmail)
-    }
+        this.setState({ [key]: value });
+    };
+    loginUser = (event) => {
+        event.preventDefault();
+        this.props.login(this.state.username, this.state.password);
+    };
+    logoutUser = (event) => {
+        event.preventDefault();
+        this.props.logout();
+    };
+    forgotPassword = (event) => {
+        event.preventDefault();
+        this.setState({ forgotPassword: !this.state.forgotPassword });
+        this.props.forgotPassCancel(); // clear any existing errors
+    };
+    forgotPasswordSubmit = (event) => {
+        event.preventDefault();
+        this.props.forgotPass(this.state.forgotPassEmail);
+    };
 
     render() {
         const {
@@ -58,8 +58,8 @@ class LoginForm extends React.Component {
             forgotPassError,
             forgotPassErrorMsg,
             forgotPassComplete
-        } = this.props
-        const { forgotPassword } = this.state
+        } = this.props;
+        const { forgotPassword } = this.state;
         return (
             <React.Fragment>
                 {forgotPassword && (
@@ -80,7 +80,7 @@ class LoginForm extends React.Component {
                                     <input
                                         placeholder="Email Address"
                                         type="email"
-                                        onChange={evt =>
+                                        onChange={(evt) =>
                                             this.onChange(
                                                 'forgotPassEmail',
                                                 evt.target.value
@@ -124,7 +124,7 @@ class LoginForm extends React.Component {
                             <input
                                 placeholder="Username"
                                 autoComplete="username"
-                                onChange={evt =>
+                                onChange={(evt) =>
                                     this.onChange('username', evt.target.value)
                                 }
                             />
@@ -132,7 +132,7 @@ class LoginForm extends React.Component {
                                 placeholder="Password"
                                 type="password"
                                 autoComplete="current-password"
-                                onChange={evt =>
+                                onChange={(evt) =>
                                     this.onChange('password', evt.target.value)
                                 }
                             />
@@ -146,8 +146,8 @@ class LoginForm extends React.Component {
                     </React.Fragment>
                 )}
             </React.Fragment>
-        )
+        );
     }
 }
 
-export default LoginForm
+export default LoginForm;

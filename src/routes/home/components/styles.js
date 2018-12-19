@@ -1,4 +1,4 @@
-const styles = theme => ({
+const styles = (theme) => ({
     wrapper: {
         marginTop: 50,
         width: '100%',
@@ -7,5 +7,5 @@ const styles = theme => ({
             marginTop: 30
         }
     }
-})
-export default styles
+});
+export default styles;

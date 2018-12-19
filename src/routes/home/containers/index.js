@@ -1,19 +1,19 @@
-import { push } from 'connected-react-router'
+import { push } from 'connected-react-router';
 
 import {
     increment,
     incrementAsync,
     decrement,
     decrementAsync
-} from '../../../actions/counter'
+} from '../../../actions/counter';
 
-import { connect } from 'react-redux'
-import Home from '../components/'
+import { connect } from 'react-redux';
+import Home from '../components/';
 
-const internals = {}
+const internals = {};
 
 internals.connect = connect(
-    state => ({
+    (state) => ({
         count: state.counter.count,
         isIncrementing: state.counter.isIncrementing,
         isDecrementing: state.counter.isDecrementing
@@ -25,6 +25,6 @@ internals.connect = connect(
         decrementAsync: decrementAsync,
         changePage: () => push('/about-us')
     }
-)
+);
 
-export default internals.connect(Home)
+export default internals.connect(Home);

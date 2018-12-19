@@ -1,16 +1,16 @@
-import * as AuthActions from '../../../actions/auth'
-import { connect } from 'react-redux'
-import LoginPage from '../components/'
+import * as AuthActions from '../../../actions/auth';
+import { connect } from 'react-redux';
+import LoginPage from '../components/';
 
-const internals = {}
+const internals = {};
 
 internals.connectStuff = connect(
-    state => ({
+    (state) => ({
         isLoggedIn: state.auth.isAuthenticated
     }),
     {
         logout: AuthActions.logout
     }
-)
+);
 
-export default internals.connectStuff(LoginPage)
+export default internals.connectStuff(LoginPage);

@@ -1,12 +1,12 @@
 const LocalStorageAvailable = () => {
-    const test = 'test'
+    const test = 'test';
     try {
-        localStorage.setItem(test, test)
-        localStorage.removeItem(test)
-        return true
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
     } catch (e) {
-        return false
+        return false;
     }
-}
+};
 
-export default LocalStorageAvailable
+export default LocalStorageAvailable;
