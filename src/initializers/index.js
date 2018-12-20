@@ -1,7 +1,10 @@
+import AuthToken from './auth-token'
+import CheckAuthStatus from './checkAuthStatus'
+
 const internals = {
-    initializers: [require('./auth-token'), require('./checkAuthStatus')]
+    initializers: [AuthToken, CheckAuthStatus]
 };
 
 export default (store) => {
-    internals.initializers.forEach((init) => init.default(store));
+    internals.initializers.forEach((init) => init(store));
 };
