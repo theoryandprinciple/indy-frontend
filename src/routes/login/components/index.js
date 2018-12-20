@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import LoginForm from '../containers/loginForm';
+import Button from '@material-ui/core/Button';
 
 class LoginPage extends React.Component {
     static propTypes = {
@@ -24,7 +25,7 @@ class LoginPage extends React.Component {
             <React.Fragment>
                 {!isLoggedIn && <LoginForm />}
                 {isLoggedIn && (
-                    <button onClick={this._boundLogoutUser}>Logout</button>
+                    <Button onClick={this._boundLogoutUser}>Logout</Button>
                 )}
             </React.Fragment>
         );

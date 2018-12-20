@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 class LoginForm extends React.Component {
     static propTypes = {
@@ -77,7 +79,7 @@ class LoginForm extends React.Component {
                             <React.Fragment>
                                 <p>forgot password loop</p>
                                 <form onSubmit={this._forgotPasswordSubmit}>
-                                    <input
+                                    <TextField
                                         placeholder="Email Address"
                                         type="email"
                                         onChange={(evt) =>
@@ -87,12 +89,12 @@ class LoginForm extends React.Component {
                                             )
                                         }
                                     />
-                                    <button onClick={this._boundForgotPassword}>
+                                    <Button onClick={this._boundForgotPassword}>
                                         Cancel
-                                    </button>
-                                    <button type="submit" value="submit">
+                                    </Button>
+                                    <Button type="submit" value="submit">
                                         Submit
-                                    </button>
+                                    </Button>
                                 </form>
                             </React.Fragment>
                         )}
@@ -121,14 +123,14 @@ class LoginForm extends React.Component {
                                     Waiting: Login Processing
                                 </p>
                             )}
-                            <input
+                            <TextField
                                 placeholder="Username"
                                 autoComplete="username"
                                 onChange={(evt) =>
                                     this.onChange('username', evt.target.value)
                                 }
                             />
-                            <input
+                            <TextField
                                 placeholder="Password"
                                 type="password"
                                 autoComplete="current-password"
@@ -136,12 +138,12 @@ class LoginForm extends React.Component {
                                     this.onChange('password', evt.target.value)
                                 }
                             />
-                            <button type="submit" value="Submit">
+                            <Button variant="contained" color="primary" type="submit" value="Submit">
                                 {isLoggedIn ? 'Logout' : 'Login'}
-                            </button>
-                            <button onClick={this._boundForgotPassword}>
+                            </Button>
+                            <Button onClick={this._boundForgotPassword}>
                                 Forgot Password
-                            </button>
+                            </Button>
                         </form>
                     </React.Fragment>
                 )}
