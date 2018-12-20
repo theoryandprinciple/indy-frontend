@@ -1,4 +1,4 @@
-const styles = theme => ({
+const styles = (theme) => ({
     wrapper: {
         marginTop: 50,
         width: '100%',

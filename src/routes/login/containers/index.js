@@ -5,12 +5,12 @@ import LoginPage from '../components/';
 const internals = {};
 
 internals.connectStuff = connect(
-  state => ({
-    isLoggedIn: state.auth.isAuthenticated
-  }),
-  {
-    logout: AuthActions.logout
-  }
+    (state) => ({
+        isLoggedIn: state.auth.isAuthenticated
+    }),
+    {
+        logout: AuthActions.logout
+    }
 );
 
-export default internals.connectStuff(LoginPage)
+export default internals.connectStuff(LoginPage);

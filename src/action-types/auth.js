@@ -1,4 +1,4 @@
-import KeyMirror from 'keymirror'
+import KeyMirror from 'keymirror';
 
 const Actions = KeyMirror({
     LOGIN_BEGIN: true,

@@ -1,32 +1,34 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import GetParameterByName from '../../../utils/getParam'
+import React from 'react';
+import PropTypes from 'prop-types';
+import GetParameterByName from '../../../utils/getParam';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
-class ResetPasswordForm  extends React.Component {
-
+class ResetPasswordForm extends React.Component {
     static propTypes = {
         location: PropTypes.object,
         resetPassCancel: PropTypes.func.isRequired,
         resetPass: PropTypes.func.isRequired,
         resetPassError: PropTypes.bool.isRequired,
         resetPassErrorMsg: PropTypes.string.isRequired
-    }
+    };
 
     constructor(props) {
-
         super(props);
 
         this._boundSubmit = this.submit.bind(this);
         this._boundCancel = this.cancel.bind(this);
 
         // pull the token from the URL
-        const tokenFromHash = GetParameterByName('t', this.props.location.search);
+        const tokenFromHash = GetParameterByName(
+            't',
+            this.props.location.search
+        );
 
         this.state = this.initialState(tokenFromHash);
     }
 
     initialState(token) {
-
         token = token || '';
 
         return {
@@ -40,90 +42,99 @@ class ResetPasswordForm  extends React.Component {
     }
 
     cancel = (event) => {
-
         event.preventDefault();
         this.props.resetPassCancel();
-    }
+    };
 
     submit = (event) => {
-
         event.preventDefault();
         if (this.state.password !== this.state.passwordConfirm) {
             return this.setState({ presubmitError: 'Passwords do not match.' });
-        }
-        else if (this.state.password === ''){
-            return this.setState({ presubmitError: 'Passwords cannot be blank' });
-        }
-        else {
+        } else if (this.state.password === '') {
+            return this.setState({
+                presubmitError: 'Passwords cannot be blank'
+            });
+        } else {
             this.setState({ presubmitError: false });
-            this.props.resetPass(this.state.email, this.state.token, this.state.password)
+            this.props.resetPass(
+                this.state.email,
+                this.state.token,
+                this.state.password
+            );
         }
-
-    }
+    };
 
     onChange = (key, value) => {
-
-        this.setState({ [key]: value })
-    }
+        this.setState({ [key]: value });
+    };
 
     render() {
-
-        const { token, email, password, passwordConfirm, presubmitError, tokenProvided } = this.state
-        const { resetPassError, resetPassErrorMsg } = this.props
+        const {
+            token,
+            email,
+            password,
+            passwordConfirm,
+            presubmitError,
+            tokenProvided
+        } = this.state;
+        const { resetPassError, resetPassErrorMsg } = this.props;
 
         let errorMsg;
 
         // prioritize pre-submit errors
-        if (presubmitError){
-            errorMsg = presubmitError
-        }
-        else if (resetPassError){
-            errorMsg = resetPassErrorMsg
+        if (presubmitError) {
+            errorMsg = presubmitError;
+        } else if (resetPassError) {
+            errorMsg = resetPassErrorMsg;
         }
         return (
             <form onSubmit={this._boundSubmit}>
                 <h2>Reset Password</h2>
-                <input
+                <TextField
                     disabled={tokenProvided}
-                    placeholder='Reset Code'
+                    placeholder="Reset Code"
                     value={token}
-                    onChange={evt => this.onChange('token', evt.target.value)}
+                    onChange={(evt) => this.onChange('token', evt.target.value)}
                 />
                 <br />
-                <input
-                    placeholder='Email Address'
+                <TextField
+                    placeholder="Email Address"
                     autoComplete="username"
-                    type='email'
+                    type="email"
                     value={email}
-                    onChange={evt => this.onChange('email', evt.target.value)}
+                    onChange={(evt) => this.onChange('email', evt.target.value)}
                 />
                 <br />
-                <input
-                    placeholder='New Password'
-                    type='password'
+                <TextField
+                    placeholder="New Password"
+                    type="password"
                     autoComplete="new-password"
                     value={password}
-                    onChange={evt => this.onChange('password', evt.target.value)}
+                    onChange={(evt) =>
+                        this.onChange('password', evt.target.value)
+                    }
                 />
                 <br />
-                <input
-                    placeholder='Confirm Password'
+                <TextField
+                    placeholder="Confirm Password"
                     autoComplete="new-password"
-                    type='password'
+                    type="password"
                     value={passwordConfirm}
-                    onChange={evt => this.onChange('passwordConfirm', evt.target.value)}
+                    onChange={(evt) =>
+                        this.onChange('passwordConfirm', evt.target.value)
+                    }
                 />
                 <br />
 
-                {errorMsg &&
-                    <p>{errorMsg}</p>
-                }
+                {errorMsg && <p>{errorMsg}</p>}
 
-                <button onClick={this._boundCancel}>Cancel</button>
-                <button type="submit" value="submit">Reset Password</button>
+                <Button onClick={this._boundCancel}>Cancel</Button>
+                <Button type="submit" value="submit">
+                    Reset Password
+                </Button>
             </form>
         );
     }
-};
+}
 
-export default ResetPasswordForm
+export default ResetPasswordForm;

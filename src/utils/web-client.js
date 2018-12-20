@@ -1,10 +1,12 @@
-import Axios from 'axios'
+import Axios from 'axios';
 
 const internals = {
-    host: process.env.API_HOST || 'http://rentervention.theoryandprinciple.com/',
+    host:
+        process.env.API_HOST ||
+        process.env.REACT_APP_API_HOST ||
+        'http://domain.com/',
     prefix: process.env.API_PREFIX || 'api',
     getApiBase: () => {
-
         const { host, prefix } = internals;
 
         return `${host}${prefix}`;
@@ -16,14 +18,12 @@ const client = Axios.create({
     responseType: 'json',
     headers: { common: {} }
 });
-export default client
+export default client;
 
 client.batch = (requests) => {
-
     const prefix = internals.prefix;
 
     requests = requests.map((request) => {
-
         return {
             ...request,
             path: `${prefix}${request.path}`
@@ -34,7 +34,6 @@ client.batch = (requests) => {
 };
 
 client.updateAuth = (newToken) => {
-
     const headers = client.defaults.headers.common;
 
     if (!newToken) {

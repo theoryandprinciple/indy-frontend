@@ -8,24 +8,23 @@ was lifted from strange-auth:
 https://github.com/BigRoomStudios/strange-auth/
 */
 export default ({ login, logout }) => {
-
     if (!login) {
         throw new Error('You must at least specify a login callback.');
     }
 
     const loginCb = internals.wrapToUseCallback(login);
-    const logoutCb = logout ? internals.wrapToUseCallback(logout) : (cb) => cb(null);
+    const logoutCb = logout
+        ? internals.wrapToUseCallback(logout)
+        : (cb) => cb(null);
 
     const actions = {
         loginAttempt: (...args) => {
-
             return {
                 type: Types.LOGIN_BEGIN,
                 payload: args
             };
         },
         loginFail: (error) => {
-
             return {
                 type: Types.LOGIN_FAIL,
                 payload: error,
@@ -33,10 +32,9 @@ export default ({ login, logout }) => {
             };
         },
         loginSuccess: ({ credentials, artifacts }) => {
-
             credentials = credentials || null;
             artifacts = artifacts || null;
-
+            //console.log({ credentials, artifacts });
             return {
                 type: Types.LOGIN_SUCCESS,
                 payload: { credentials, artifacts }
@@ -44,34 +42,31 @@ export default ({ login, logout }) => {
         },
         // Whatever args taken by loginCb, minus final callback
         login: (...args) => {
-
             return (dispatch) => {
-
                 dispatch(actions.loginAttempt(...args));
 
                 return loginCb(...args, (err, result) => {
-
                     if (err) {
                         return dispatch(actions.loginFail(err));
                     }
 
-                    return dispatch(actions.loginSuccess({
-                        credentials: result.credentials,
-                        artifacts: result.artifacts
-                    }));
+                    return dispatch(
+                        actions.loginSuccess({
+                            credentials: result.credentials,
+                            artifacts: result.artifacts
+                        })
+                    );
                 });
             };
         },
         // Whatever args taken by logoutCb, minus final callback
         logoutAttempt: (...args) => {
-
             return {
                 type: Types.LOGOUT_BEGIN,
                 payload: args
             };
         },
         logoutFail: (error) => {
-
             return {
                 type: Types.LOGOUT_FAIL,
                 payload: error,
@@ -79,7 +74,6 @@ export default ({ login, logout }) => {
             };
         },
         logoutSuccess: (info) => {
-
             return {
                 type: Types.LOGOUT_SUCCESS,
                 payload: info
@@ -87,13 +81,10 @@ export default ({ login, logout }) => {
         },
         // Whatever args taken by logoutCb, minus final callback
         logout: (...args) => {
-
             return (dispatch) => {
-
                 dispatch(actions.logoutAttempt(...args));
 
                 return logoutCb(...args, (err, info) => {
-
                     if (err) {
                         return dispatch(actions.logoutFail(err));
                     }
@@ -108,16 +99,15 @@ export default ({ login, logout }) => {
 };
 
 internals.wrapToUseCallback = (fn) => {
-
     return (...args) => {
-
         const cb = args.pop(); // Pop last param off args– will be the callback
 
         let called = false;
         const onceCb = (err, result) => {
-
             if (called) {
-                throw new Error('You might be doing something weird.  The login or logout callback was called twice.');
+                throw new Error(
+                    'You might be doing something weird.  The login or logout callback was called twice.'
+                );
             }
 
             called = true;
@@ -131,13 +121,11 @@ internals.wrapToUseCallback = (fn) => {
         }
 
         const success = (result) => {
-
             onceCb(null, result);
             return result;
         };
 
         const fail = (err) => {
-
             onceCb(err);
             return Promise.reject(err);
         };
