@@ -12,6 +12,7 @@ export default (store) => {
 
 internals.maintainAuthToken = (store) => {
     const auth = store.getState().auth;
+    if(!auth) { return; }
     const newToken =
         (auth.isAuthenticated && auth.credentials && auth.credentials.token) ||
         null;

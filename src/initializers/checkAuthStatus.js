@@ -4,6 +4,7 @@ import LocalStorageAvailable from '../utils/check-local-storage';
 export default (store) => {
     // CHECK IN APP AUTH
     const auth = store.getState().auth;
+    if(!auth) { return; }
     const newToken =
         (auth.isAuthenticated && auth.credentials && auth.credentials.token) ||
         null;

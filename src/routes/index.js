@@ -8,6 +8,10 @@ import ProtectedRoute from './admin';
 import ResetPassword from './login/containers/resetPass';
 import withRoot from '../wiring/withRoot';
 import Authenticate_Admin from '../wiring/authAdmin';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 
 const Authenticated_ProtectedRoute = withRouter(
     Authenticate_Admin(ProtectedRoute)
@@ -17,10 +21,14 @@ const App = () => (
     <Route
         render={({ location }) => (
             <React.Fragment>
-                <header>
-                    <Link to="/">Home</Link> | <Link to="/about">About</Link> |{' '}
-                    <Link to="/login">Login</Link>
-                </header>
+            <MuiThemeProvider>
+            <AppBar position="static" showMenuIconButton={false} color="default">
+              <Toolbar>
+                <Typography variant="h6" color="inherit">
+                  Nice Looking App
+                </Typography>
+              </Toolbar>
+            </AppBar>
                 <main>
                     <Switch location={location}>
                         <Route exact path="/" component={Home} />
@@ -34,6 +42,7 @@ const App = () => (
                         <Route path="/reset-pass" component={ResetPassword} />
                     </Switch>
                 </main>
+                </MuiThemeProvider>
             </React.Fragment>
         )}
     />
