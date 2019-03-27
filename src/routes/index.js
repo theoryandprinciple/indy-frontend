@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import Home from './home/containers';
 import About from './about';
@@ -8,7 +8,7 @@ import ProtectedRoute from './admin';
 import ResetPassword from './login/containers/resetPass';
 import withRoot from '../wiring/withRoot';
 import Authenticate_Admin from '../wiring/authAdmin';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -17,12 +17,18 @@ const Authenticated_ProtectedRoute = withRouter(
     Authenticate_Admin(ProtectedRoute)
 );
 
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
+});
+
 const App = () => (
     <Route
         render={({ location }) => (
             <React.Fragment>
-            <MuiThemeProvider>
-            <AppBar position="static" showMenuIconButton={false} color="default">
+            <MuiThemeProvider theme={theme}>
+            <AppBar position="static" color="default">
               <Toolbar>
                 <Typography variant="h6" color="inherit">
                   Nice Looking App
