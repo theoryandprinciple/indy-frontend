@@ -32,6 +32,7 @@
     "connected-react-router": "6.3.2",
     "enzyme": "3.7.0",
     "enzyme-adapter-react-16": "1.6.0",
+    "eslint-config-airbnb": "^17.1.0",
     "inert": "^5.1.2",
     "jss": "latest",
     "keymirror": "^0.1.1",
