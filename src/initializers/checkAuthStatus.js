@@ -3,10 +3,10 @@ import LocalStorageAvailable from '../utils/check-local-storage';
 
 export default (store) => {
     // CHECK IN APP AUTH
-    const auth = store.getState().auth;
-    const newToken =
-        (auth.isAuthenticated && auth.credentials && auth.credentials.token) ||
-        null;
+    const { auth } = store.getState();
+    if (!auth) { return; }
+    const newToken = (auth.isAuthenticated && auth.credentials && auth.credentials.token)
+        || null;
 
     if (newToken !== null) {
         // we have auth creds in the app, so no need to keep checking
@@ -20,15 +20,11 @@ export default (store) => {
         return;
     }
 
-    const checkLocalKey = (key) =>
-        JSON.parse(localStorage.getItem(key) || 'null');
+    const checkLocalKey = key => JSON.parse(localStorage.getItem(key) || 'null');
     const token = checkLocalKey('persist:root');
 
     if (!token) {
         // no items in local storage, so likely the first time coming to the app
         store.dispatch(noToken());
-        return;
-    } else if (token) {
-        return;
     }
 };

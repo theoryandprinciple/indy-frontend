@@ -15,121 +15,106 @@ export default ({ login, logout }) => {
     const loginCb = internals.wrapToUseCallback(login);
     const logoutCb = logout
         ? internals.wrapToUseCallback(logout)
-        : (cb) => cb(null);
+        : cb => cb(null);
 
     const actions = {
-        loginAttempt: (...args) => {
-            return {
-                type: Types.LOGIN_BEGIN,
-                payload: args
-            };
-        },
-        loginFail: (error) => {
-            return {
-                type: Types.LOGIN_FAIL,
-                payload: error,
-                error: true
-            };
-        },
+        loginAttempt: (...args) => ({
+            type: Types.LOGIN_BEGIN,
+            payload: args,
+        }),
+        loginFail: error => ({
+            type: Types.LOGIN_FAIL,
+            payload: error,
+            error: true,
+        }),
         loginSuccess: ({ credentials, artifacts }) => {
-            credentials = credentials || null;
-            artifacts = artifacts || null;
-            //console.log({ credentials, artifacts });
+            const creds = credentials || null;
+            const arts = artifacts || null;
+            // console.log({ credentials, artifacts });
             return {
                 type: Types.LOGIN_SUCCESS,
-                payload: { credentials, artifacts }
+                payload: { credentials: creds, artifacts: arts },
             };
         },
         // Whatever args taken by loginCb, minus final callback
-        login: (...args) => {
-            return (dispatch) => {
-                dispatch(actions.loginAttempt(...args));
+        login: (...args) => (dispatch) => {
+            dispatch(actions.loginAttempt(...args));
 
-                return loginCb(...args, (err, result) => {
-                    if (err) {
-                        return dispatch(actions.loginFail(err));
-                    }
+            return loginCb(...args, (err, result) => {
+                if (err) {
+                    return dispatch(actions.loginFail(err));
+                }
 
-                    return dispatch(
-                        actions.loginSuccess({
-                            credentials: result.credentials,
-                            artifacts: result.artifacts
-                        })
-                    );
-                });
-            };
+                return dispatch(
+                    actions.loginSuccess({
+                        credentials: result.credentials,
+                        artifacts: result.artifacts,
+                    }),
+                );
+            });
         },
         // Whatever args taken by logoutCb, minus final callback
-        logoutAttempt: (...args) => {
-            return {
-                type: Types.LOGOUT_BEGIN,
-                payload: args
-            };
-        },
-        logoutFail: (error) => {
-            return {
-                type: Types.LOGOUT_FAIL,
-                payload: error,
-                error: true
-            };
-        },
-        logoutSuccess: (info) => {
-            return {
-                type: Types.LOGOUT_SUCCESS,
-                payload: info
-            };
-        },
+        logoutAttempt: (...args) => ({
+            type: Types.LOGOUT_BEGIN,
+            payload: args,
+        }),
+        logoutFail: error => ({
+            type: Types.LOGOUT_FAIL,
+            payload: error,
+            error: true,
+        }),
+        logoutSuccess: info => ({
+            type: Types.LOGOUT_SUCCESS,
+            payload: info,
+        }),
         // Whatever args taken by logoutCb, minus final callback
-        logout: (...args) => {
-            return (dispatch) => {
-                dispatch(actions.logoutAttempt(...args));
+        logout: (...args) => (dispatch) => {
+            dispatch(actions.logoutAttempt(...args));
 
-                return logoutCb(...args, (err, info) => {
-                    if (err) {
-                        return dispatch(actions.logoutFail(err));
-                    }
+            return logoutCb(...args, (err, info) => {
+                if (err) {
+                    return dispatch(actions.logoutFail(err));
+                }
 
-                    return dispatch(actions.logoutSuccess(info || null));
-                });
-            };
-        }
+                return dispatch(actions.logoutSuccess(info || null));
+            });
+        },
     };
 
     return actions;
 };
 
-internals.wrapToUseCallback = (fn) => {
-    return (...args) => {
-        const cb = args.pop(); // Pop last param off args– will be the callback
+internals.wrapToUseCallback = fn => (...args) => {
+    const cb = args.pop(); // Pop last param off args– will be the callback
 
-        let called = false;
-        const onceCb = (err, result) => {
-            if (called) {
-                throw new Error(
-                    'You might be doing something weird.  The login or logout callback was called twice.'
-                );
-            }
-
-            called = true;
-            cb(err, result);
-        };
-
-        const maybePromise = fn(...args, onceCb);
-
-        if (!maybePromise || typeof maybePromise.then !== 'function') {
-            return;
+    let called = false;
+    const onceCb = (err, result) => {
+        if (called) {
+            throw new Error(
+                'You might be doing something weird.  The login or logout callback was called twice.',
+            );
         }
 
-        const success = (result) => {
-            onceCb(null, result);
-            return result;
-        };
-
-        const fail = (err) => {
-            onceCb(err);
-            return Promise.reject(err);
-        };
-
-        return maybePromise.then(success, fail);
+        called = true;
+        cb(err, result);
     };
+
+    const maybePromise = fn(...args, onceCb);
+
+    if (!maybePromise || typeof maybePromise.then !== 'function') {
+        return;
+    }
+
+    const success = (result) => {
+        onceCb(null, result);
+        return result;
+    };
+
+    const fail = (err) => {
+        onceCb(err);
+        return Promise.reject(err);
+    };
+    /* eslint-disable consistent-return */
+    return maybePromise.then(success, fail);
+    /* eslint-disable consistent-return */
 };
