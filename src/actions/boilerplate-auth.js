@@ -114,6 +114,7 @@ internals.wrapToUseCallback = fn => (...args) => {
         onceCb(err);
         return Promise.reject(err);
     };
-
+    /* eslint-disable consistent-return */
     return maybePromise.then(success, fail);
+    /* eslint-disable consistent-return */
 };
