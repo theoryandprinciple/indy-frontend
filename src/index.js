@@ -25,7 +25,8 @@ ReactDOM.render(
         <PersistGate
             loading={null}
             persistor={persistor}
-            onBeforeLift={onBeforeLift}>
+            onBeforeLift={onBeforeLift}
+        >
             <ConnectedRouter history={history}>
                 <div>
                     <App />
@@ -33,5 +34,5 @@ ReactDOM.render(
             </ConnectedRouter>
         </PersistGate>
     </Provider>,
-    document.getElementById('root')
+    document.getElementById('root'),
 );

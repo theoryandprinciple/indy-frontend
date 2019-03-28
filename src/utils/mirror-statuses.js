@@ -1,6 +1,5 @@
-export default (namespace, obj) => {
-    return Object.keys(obj).reduce((collector, key) => {
-        collector[key] = `${namespace}/${key}`;
-        return collector;
-    }, {});
-};
+export default (namespace, obj) => Object.keys(obj).reduce((c, key) => {
+    const collector = c;
+    collector[key] = `${namespace}/${key}`;
+    return collector;
+}, {});

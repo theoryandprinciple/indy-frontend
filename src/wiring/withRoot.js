@@ -5,7 +5,7 @@ import JssProvider from 'react-jss/lib/JssProvider';
 import {
     MuiThemeProvider,
     createGenerateClassName,
-    jssPreset
+    jssPreset,
 } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -29,7 +29,12 @@ function withRoot(Component) {
                 {/* MuiThemeProvider makes the theme available down the React tree
           thanks to React context. */}
                 <MuiThemeProvider theme={theme}>
-                    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                    {
+                        /*
+                          CssBaseline kickstart an elegant,
+                          consistent, and simple baseline to build upon.
+                        */
+                    }
                     <CssBaseline />
                     <Component {...props} />
                 </MuiThemeProvider>

@@ -14,7 +14,7 @@ const Actions = KeyMirror({
     RESET_PASS_SUCCESS: true,
     RESET_PASS_FAIL: true,
     NO_TOKEN: true,
-    CLEAR_ERRORS: true
+    CLEAR_ERRORS: true,
 });
 
 export default Actions;
