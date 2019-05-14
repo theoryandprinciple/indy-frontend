@@ -7,11 +7,12 @@
   "plugins": ["babel"],
   "parser": "babel-eslint",
   "rules": {
+    "max-len": 0,
+    "react/forbid-prop-types": [0],
     "indent": ["error", 4],
     "react/jsx-indent": ["error", 4],
     "react/jsx-indent-props": ["error", 4],
     "no-underscore-dangle": ["error", { "allow": ["__REDUX_DEVTOOLS_EXTENSION__"] }],
-    "max-len": ["error", { "code": 125 }],
     "class-methods-use-this": 0,
     "import/no-named-as-default": 0,
     "react/jsx-filename-extension": [
