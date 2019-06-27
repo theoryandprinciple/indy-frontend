@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web and AsyncStorage for react-native
-import { connectRouter, routerMiddleware } from 'connected-react-router';
 import thunk from 'redux-thunk';
 // import createHistory from 'history/createBrowserHistory';
 import { createBrowserHistory } from 'history';
@@ -12,7 +11,7 @@ export const history = createBrowserHistory();
 
 const initialState = {};
 const enhancers = [];
-const middleware = [thunk, routerMiddleware(history)];
+const middleware = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
     const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
@@ -32,11 +31,10 @@ const persistConfig = {
     storage,
     whitelist: ['auth'],
 };
-const persistedReducer = persistReducer(persistConfig, rootReducer(history));
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = createStore(
-    connectRouter(history)(persistedReducer),
-    // rootReducer(history),
+    persistedReducer,
     initialState,
     composedEnhancers,
 );

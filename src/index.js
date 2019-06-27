@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'connected-react-router';
+import { Router } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
+
 import { store, persistor, history } from './store';
 import App from './routes';
 import Initializers from './initializers';
@@ -20,6 +21,7 @@ const onBeforeLift = () => {
     store.dispatch(clearErrors());
 };
 
+
 ReactDOM.render(
     <Provider store={store}>
         <PersistGate
@@ -27,11 +29,9 @@ ReactDOM.render(
             persistor={persistor}
             onBeforeLift={onBeforeLift}
         >
-            <ConnectedRouter history={history}>
-                <div>
-                    <App />
-                </div>
-            </ConnectedRouter>
+            <Router history={history}>
+                <App />
+            </Router>
         </PersistGate>
     </Provider>,
     document.getElementById('root'),
