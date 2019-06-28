@@ -184,6 +184,7 @@ class LoginForm extends React.Component {
                                         <div className={classes.containerBorder}>
                                             <FormControl className={classes.formControlEmail} error={emailError}>
                                                 <Input
+                                                    autoComplete="username"
                                                     id="email"
                                                     placeholder="Email Address"
                                                     type="email"
@@ -199,6 +200,7 @@ class LoginForm extends React.Component {
                                             <div className="form-group form-inline">
                                                 <FormControl className={classes.formControl}>
                                                     <Input
+                                                        autoComplete="current-password"
                                                         id="password"
                                                         placeholder="Password"
                                                         type="password"
