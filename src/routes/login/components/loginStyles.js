@@ -1,4 +1,4 @@
-const styles = theme => ({
+const styles = () => ({
     formWrapper: {
         display: 'flex',
         flexDirection: 'column',
@@ -22,14 +22,10 @@ const styles = theme => ({
         width: '100%',
     },
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
         width: '50%',
         padding: 40,
     },
     newUserTextField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
         width: '50%',
         padding: 15,
     },

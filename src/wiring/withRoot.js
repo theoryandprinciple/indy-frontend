@@ -3,10 +3,10 @@ import React from 'react';
 import { create } from 'jss';
 import JssProvider from 'react-jss/lib/JssProvider';
 import {
-    MuiThemeProvider,
     createGenerateClassName,
     jssPreset,
-} from '@material-ui/core/styles';
+} from '@material-ui/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 // A theme with custom primary and secondary color.
