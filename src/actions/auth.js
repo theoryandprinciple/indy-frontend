@@ -133,8 +133,7 @@ internals.auth = BackgroundAuth({
                     err.info = data;
                     return Promise.reject(err);
                 }
-
-                token = data;
+                ({ token } = data); // this is dumb syntax
                 return WebClient.get('/user', {
                     headers: { authorization: token },
                 });

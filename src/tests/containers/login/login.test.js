@@ -35,6 +35,8 @@ it('test login', async () => {
             AuthActions.login(testHelper.loginEmail, testHelper.loginPassword),
         )
         .then(async () => {
+            console.log('store.getActions()', store.getActions());
+            console.log('expectedActions', expectedActions);
             expect(store.getActions()).toEqual(expectedActions);
             expect(mockAxios.post).toHaveBeenCalledWith(
                 '/login',
