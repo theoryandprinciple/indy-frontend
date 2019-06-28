@@ -22,7 +22,7 @@ class LoginForm extends React.Component {
         forgotPassComplete: PropTypes.bool.isRequired,
         forgotPass: PropTypes.func.isRequired,
         forgotPassCancel: PropTypes.func.isRequired,
-        classes: PropTypes.shape({ button: PropTypes.string.isRequired }).isRequired,
+        classes: PropTypes.object.isRequired,
     };
 
     constructor(props, context) {
