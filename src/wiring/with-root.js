@@ -11,7 +11,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 // A theme with custom primary and secondary color.
 // It's optional.
-import theme from '../styles/materialTheme';
+import theme from '../styles/material-theme';
 
 // Create a JSS instance with the default preset of plugins.
 // It's optional.

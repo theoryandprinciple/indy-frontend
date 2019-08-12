@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import * as AuthActions from '../../../actions/auth';
-import LoginForm from '../components/loginForm';
+import LoginForm from '../components/login-form';
 import AuthStatuses from '../../../utils/auth-statuses';
 
 const internals = {};

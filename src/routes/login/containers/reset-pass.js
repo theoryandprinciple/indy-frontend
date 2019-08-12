@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import * as AuthActions from '../../../actions/auth';
-import ResetPasswordForm from '../components/resetPass';
+import ResetPasswordForm from '../components/reset-pass';
 
 const internals = {};
 
