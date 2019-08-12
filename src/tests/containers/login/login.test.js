@@ -30,6 +30,7 @@ it('test login', async () => {
         },
     ];
 
+
     await store
         .dispatch(
             AuthActions.login(testHelper.loginEmail, testHelper.loginPassword),
