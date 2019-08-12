@@ -8,7 +8,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import { history } from '../../../store';
 
-import Styles from './loginStyles';
+import Styles from './login-styles';
 
 class LoginForm extends React.Component {
     static propTypes = {

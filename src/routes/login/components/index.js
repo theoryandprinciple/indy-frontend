@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import LoginForm from '../containers/loginForm';
+import LoginForm from '../containers/login-form';
 
 const LoginPage = () => {
     const isLoggedIn = useSelector(state => state.isLoggedIn);

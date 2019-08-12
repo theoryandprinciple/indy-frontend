@@ -6,9 +6,9 @@ import Home from './home/containers';
 import About from './about';
 import Login from './login/components';
 import ProtectedRoute from './admin';
-import ResetPassword from './login/containers/resetPass';
-import withRoot from '../wiring/withRoot';
-import AuthenticateAdmin from '../wiring/authAdmin';
+import ResetPassword from './login/containers/reset-pass';
+import withRoot from '../wiring/with-root';
+import AuthenticateAdmin from '../wiring/auth-admin';
 
 const AuthenticatedProtectedRoute = AuthenticateAdmin(ProtectedRoute);
 

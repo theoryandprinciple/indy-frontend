@@ -1,5 +1,5 @@
 import AuthToken from './auth-token';
-import CheckAuthStatus from './checkAuthStatus';
+import CheckAuthStatus from './check-auth-status';
 
 const internals = {
     initializers: [AuthToken, CheckAuthStatus],
