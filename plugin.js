@@ -1,6 +1,6 @@
 'use strict';
 
-const Inert = require('inert');
+const Inert = require('@hapi/inert');
 const Url = require('url');
 const Path = require('path');
 const Package = require('./package.json');
@@ -9,7 +9,7 @@ const internals = {};
 
 module.exports = {
     name: Package.name,
-    register: async (server, options) => {
+    register: async (server) => {
         await server.register(Inert);
 
         server.route({
