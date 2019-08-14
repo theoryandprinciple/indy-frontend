@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import GetParameterByName from '../../../utils/getParam';
+import GetParameterByName from '../../../utils/get-param';
 
 class ResetPasswordForm extends React.Component {
     static propTypes = {
