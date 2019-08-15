@@ -92,6 +92,7 @@ export const noToken = () => ({
 
 export const login = (email, password, path) => (dispatch) => {
     const strangeLogin = internals.auth.login(email, password);
+    console.log('we in HERE?')
     return (
         dispatch(strangeLogin)
         // .then(data => {
@@ -108,8 +109,8 @@ export const login = (email, password, path) => (dispatch) => {
                 }
             })
         // .catch(error => {
-            .catch(() => {
-                // console.warn('error', error)
+            .catch((error) => {
+                console.warn('error', error);
             })
     );
 };

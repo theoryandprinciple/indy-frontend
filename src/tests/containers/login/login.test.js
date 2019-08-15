@@ -30,12 +30,14 @@ it('test login', async () => {
         },
     ];
 
-
     await store
         .dispatch(
             AuthActions.login(testHelper.loginEmail, testHelper.loginPassword),
         )
         .then(async () => {
+            console.log('STORE.GETACTIONS', store.getActions());
+            console.log('##############');
+            console.log('MOCKED RESULTS', expectedActions);
             expect(store.getActions()).toEqual(expectedActions);
             expect(mockAxios.post).toHaveBeenCalledWith(
                 '/login',
