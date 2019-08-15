@@ -37,10 +37,10 @@ export const resetPass = (email, resetToken, newPassword) => (dispatch) => {
         })
         .catch((status) => {
             let error;
-            if (
+            if (status.response && (
                 status.response.status !== 404
                     && status.response.status !== 400
-            ) {
+            )) {
                 error = 'Something seems to have gone awry!  Try that again.';
             } else {
                 error = "We couldn't find a user with that email address.";
@@ -72,10 +72,8 @@ export const forgotPass = email => (dispatch) => {
         })
         .catch((status) => {
             let error;
-            if (
-                status.response.status !== 404
-                    && status.response.status !== 400
-            ) {
+            // make sure we have a response object, then check to value of the status
+            if (status.response && (status.response.status !== 404 && status.response.status !== 400)) {
                 error = 'Something seems to have gone awry!  Try that again.';
             } else {
                 error = "We couldn't find a user with that email address.";
