@@ -1,14 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { history } from '../../../store';
+import { DndProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import Question from './question';
+import Section from './section';
 
 const Admin = () => (
     <div>
-        <h1>Basic Home Page</h1>
-        <p>stuffs</p>
-        <button type="button" onClick={() => history.push('/admin')}>Admin</button>
-        <br />
-        <Link to="/about">Admin Link</Link>
+        <DndProvider backend={HTML5Backend}>
+            <h1>Basic Home Page</h1>
+            <div style={{ display: 'inline-block', width: '49%' }}>
+                <Question />
+            </div>
+            <div style={{ display: 'inline-block', width: '49%' }}>
+                <Section />
+                {/* Demo reodering: https://react-dnd.github.io/react-dnd/examples/sortable/simple */}
+            </div>
+        </DndProvider>
     </div>
 );
 
