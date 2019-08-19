@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
+import ElementTypes from './element-types';
 
 const handleWrapperStyle = {
     border: '1px dashed gray',
@@ -19,7 +20,7 @@ const handleStyle = {
 
 const BoxWithHandle = () => {
     const [{ opacity }, drag, preview] = useDrag({
-        item: { type: 'question' },
+        item: { type: ElementTypes.QUESTION },
         collect: monitor => ({
             opacity: monitor.isDragging() ? 0.4 : 1,
         }),

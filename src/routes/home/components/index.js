@@ -2,7 +2,7 @@ import React from 'react';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Question from './question';
-import Section from './section';
+import SectionWrapper from './section-wrapper';
 
 const Admin = () => (
     <div>
@@ -12,7 +12,7 @@ const Admin = () => (
                 <Question />
             </div>
             <div style={{ display: 'inline-block', width: '49%' }}>
-                <Section />
+                <SectionWrapper />
                 {/* Demo reodering: https://react-dnd.github.io/react-dnd/examples/sortable/simple */}
             </div>
         </DndProvider>

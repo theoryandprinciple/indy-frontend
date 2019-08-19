@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
+import ElementTypes from './element-types';
 
 const style = {
     border: '1px dashed gray',
@@ -8,13 +9,14 @@ const style = {
     marginBottom: '.5rem',
     backgroundColor: 'white',
     cursor: 'move',
+    color: 'black',
 };
 const Card = ({
     id, text, index, moveCard,
 }) => {
     const ref = useRef(null);
     const [, drop] = useDrop({
-        accept: 'card',
+        accept: ElementTypes.CARD,
         hover(item, monitor) {
             if (!ref.current) {
                 return;
@@ -54,7 +56,7 @@ const Card = ({
         },
     });
     const [{ isDragging }, drag] = useDrag({
-        item: { type: 'card', id, index },
+        item: { type: ElementTypes.CARD, id, index },
         collect: monitor => ({
             isDragging: monitor.isDragging(),
         }),
