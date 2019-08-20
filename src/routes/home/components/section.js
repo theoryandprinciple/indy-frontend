@@ -92,6 +92,7 @@ const Section = ({
             moveCard={moveCard}
         />
     );
+
     // THIS IS BEING ADDED SO THE SECTION IS DRAGGABLE
     const ref = useRef(null);
     const [{ canDrop, isOver }, drop] = useDrop({
@@ -101,8 +102,10 @@ const Section = ({
             if (!ref.current) {
                 return;
             }
-            console.log('section item:hover', item);
-            console.log('section monitor:hover', monitor)
+            // if we are not trying to "moveSection", then we should stop now
+            if (item.type !== ElementTypes.SECTION) {
+                return;
+            }
             const dragIndex = item.index;
             const hoverIndex = index;
             // Don't replace items with themselves
@@ -150,9 +153,8 @@ const Section = ({
         backgroundColor = 'darkkhaki';
     }
 
-    // Make Section Draggable
     const handleStyle = {
-        backgroundColor: 'green',
+        backgroundColor: 'black',
         width: '1rem',
         height: '1rem',
         display: 'inline-block',
@@ -167,12 +169,13 @@ const Section = ({
     });
 
     // this is used to create a reference to the current section being dragged
-    drag(drop(ref));
+    // TODO: this is causing the entire block to be draggable, not just the handle
+    // drag(drop(ref));
 
     return (
         <div ref={ref} style={{ ...sectionStyle, backgroundColor, opacity }}>
             <div ref={drag} style={handleStyle} />
-            {isActive ? 'Release to drop' : 'Drag a box here'}
+            {isActive ? 'Release to drop' : 'Draggable Section'}
             <div style={{ width: 400 }}>{cards.map((card, i) => renderElement(card, i))}</div>
         </div>
     );
