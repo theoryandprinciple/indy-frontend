@@ -12,7 +12,7 @@ const style = {
     color: 'black',
 };
 const Card = ({
-    id, text, index, moveCard,
+    id, text, index, moveCard, currentSectionIndex,
 }) => {
     const ref = useRef(null);
     const [, drop] = useDrop({
@@ -21,12 +21,19 @@ const Card = ({
             if (!ref.current) {
                 return;
             }
+
             const dragIndex = item.index;
             const hoverIndex = index;
             // Don't replace items with themselves
             if (dragIndex === hoverIndex) {
                 return;
             }
+
+            // we aren't yet supporting dragging between sections
+            if (item.currentSectionIndex !== currentSectionIndex) {
+                return;
+            }
+
             // Determine rectangle on screen
             const hoverBoundingRect = ref.current.getBoundingClientRect();
             // Get vertical middle
@@ -52,11 +59,17 @@ const Card = ({
             // Generally it's better to avoid mutations,
             // but it's good here for the sake of performance
             // to avoid expensive index searches.
+            // eslint-disable-next-line no-param-reassign
             item.index = hoverIndex;
         },
     });
     const [{ isDragging }, drag] = useDrag({
-        item: { type: ElementTypes.CARD, id, index },
+        item: {
+            type: ElementTypes.CARD,
+            id,
+            index,
+            currentSectionIndex, // we use this to track which section a card is in
+        },
         collect: monitor => ({
             isDragging: monitor.isDragging(),
         }),
@@ -75,5 +88,6 @@ Card.propTypes = {
     text: PropTypes.string.isRequired,
     index: PropTypes.number.isRequired,
     moveCard: PropTypes.func.isRequired,
+    currentSectionIndex: PropTypes.number.isRequired,
 };
 export default Card;

@@ -18,6 +18,14 @@ const sectionStyle = {
     float: 'left',
 };
 
+const handleStyle = {
+    backgroundColor: 'black',
+    width: '1rem',
+    height: '1rem',
+    display: 'inline-block',
+    marginRight: '0.75rem',
+    cursor: 'move',
+};
 
 const Section = ({
     id,
@@ -28,41 +36,44 @@ const Section = ({
         {
             id: 1,
             text: 'Write a cool JS library',
+            section: id,
         },
         {
             id: 2,
             text: 'Make it generic enough',
+            section: id,
         },
         {
             id: 3,
             text: 'Write README',
+            section: id,
         },
         {
             id: 4,
             text: 'Create some examples',
+            section: id,
         },
         {
             id: 5,
             text: 'Spam in Twitter and IRC to promote it (note that this element is taller than the others)',
+            section: id,
         },
     ]);
-    const onDrop = (item) => {
-        // TODO:  Determin the type of element that just got dropped in this section
-        // add that element to the top of the list
 
-        // FUTURE TODO: Add the item to the place in the list where it was hovering before drop
-        console.log('section drop', item)
+    // this monitors the dropping of things into the section.
+    // we are only listing for QUESTIONS || SECTIONS
+    const onDrop = (item) => {
+        // TODO: Add the new question to the place in the list where it was hovering before drop
+        // TODO: make the section accept "CARD" (or existing questions), so we can move them between sections
         let newElement;
         if (item.type === 'question') {
             newElement = {
                 id: cards.length + 1,
                 text: 'QUESTION',
             };
-        } else if (item.type === 'card') {
-            // this is a drag situation, no need for updating
-            return;
         } else {
-            return;
+            // we just a section drop on top of a section, do nothing with the list
+            return item;
         }
 
         setCards(
@@ -70,7 +81,8 @@ const Section = ({
                 $push: [newElement],
             }),
         );
-        return { name: 'Dustbin' };
+        // TODO: unclear why we'd need a return value
+        return { name: `Section${id}` };
     };
     const moveCard = useCallback(
         (dragIndex, hoverIndex) => {
@@ -90,6 +102,7 @@ const Section = ({
             id={card.id}
             text={card.text}
             moveCard={moveCard}
+            currentSectionIndex={index}
         />
     );
 
@@ -137,6 +150,7 @@ const Section = ({
             // Generally it's better to avoid mutations,
             // but it's good here for the sake of performance
             // to avoid expensive index searches.
+            // eslint-disable-next-line no-param-reassign
             item.index = hoverIndex;
         },
         drop: (item, monitor) => (onDrop(item, monitor)),
@@ -153,25 +167,19 @@ const Section = ({
         backgroundColor = 'darkkhaki';
     }
 
-    const handleStyle = {
-        backgroundColor: 'black',
-        width: '1rem',
-        height: '1rem',
-        display: 'inline-block',
-        marginRight: '0.75rem',
-        cursor: 'move',
-    };
-    const [{ opacity }, drag] = useDrag({
+    const [{ isDragging }, drag] = useDrag({
         item: { type: ElementTypes.SECTION, id, index },
         collect: monitor => ({
-            opacity: monitor.isDragging() ? 0.4 : 1,
+            // opacity: monitor.isDragging() ? 0.4 : 1, // (this consolidates the logic)
+            isDragging: monitor.isDragging(),
         }),
     });
+    const opacity = isDragging ? 0.4 : 1;
 
     // this is used to create a reference to the current section being dragged
     // TODO: this is causing the entire block to be draggable, not just the handle
     // drag(drop(ref));
-
+    drop(ref);
     return (
         <div ref={ref} style={{ ...sectionStyle, backgroundColor, opacity }}>
             <div ref={drag} style={handleStyle} />

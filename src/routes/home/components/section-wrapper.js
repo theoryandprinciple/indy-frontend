@@ -17,25 +17,19 @@ const sectionStyle = {
     float: 'left',
 };
 
-
 const SectionWrapper = () => {
     const [sections, setSections] = useState([
         {
             id: 1,
-            node: Section,
         },
         {
             id: 2,
-            text: Section,
         },
     ]);
-    const onDrop = (item) => {
-        console.log('section-wrapper drop', item);
-        return { name: 'Section-Wrapper' };
-    };
+    // the return value currently has no value
+    const onDrop = () => ({ name: 'Section-Wrapper' });
     const moveSection = useCallback(
         (dragIndex, hoverIndex) => {
-            console.log('moveSection');
             const dragSection = sections[dragIndex];
             setSections(
                 update(sections, {
