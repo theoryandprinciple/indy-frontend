@@ -66,10 +66,11 @@ const Section = ({
         // TODO: Add the new question to the place in the list where it was hovering before drop
         // TODO: make the section accept "CARD" (or existing questions), so we can move them between sections
         let newElement;
+        // TODO: Add different components based on dropped question type (or some other param)
         if (item.type === 'question') {
             newElement = {
                 id: cards.length + 1,
-                text: 'QUESTION',
+                text: item.text,
             };
         } else {
             // we just a section drop on top of a section, do nothing with the list
@@ -167,7 +168,7 @@ const Section = ({
         backgroundColor = 'darkkhaki';
     }
 
-    const [{ isDragging }, drag] = useDrag({
+    const [{ isDragging }, drag, preview] = useDrag({
         item: { type: ElementTypes.SECTION, id, index },
         collect: monitor => ({
             // opacity: monitor.isDragging() ? 0.4 : 1, // (this consolidates the logic)
@@ -184,7 +185,9 @@ const Section = ({
         <div ref={ref} style={{ ...sectionStyle, backgroundColor, opacity }}>
             <div ref={drag} style={handleStyle} />
             {isActive ? 'Release to drop' : 'Draggable Section'}
-            <div style={{ width: 400 }}>{cards.map((card, i) => renderElement(card, i))}</div>
+            <div ref={preview}>
+                <div style={{ width: 400 }}>{cards.map((card, i) => renderElement(card, i))}</div>
+            </div>
         </div>
     );
 };
