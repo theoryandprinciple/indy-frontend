@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { ForgotPass } from '../../utils/auth-api';
+import ValidateEmail from '../../utils/valid-email';
 
 const ForgotPassword = () => {
     const [error, setError] = useState(null);
@@ -11,6 +12,13 @@ const ForgotPassword = () => {
     const emailInput = useRef();
 
     const handleSubmit = () => {
+        // Validatation
+        if (!ValidateEmail(emailInput.current.value)) {
+            setError(true);
+            setErrorMsg('Error: Email appears invalid');
+            return;
+        }
+
         ForgotPass(emailInput.current.value)
             .then((data) => {
                 // we get here with or without errors

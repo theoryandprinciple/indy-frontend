@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useAuthDataContext } from '../../utils/auth-provider';
 import { Login, Logout } from '../../utils/auth-api';
+import ValidateEmail from '../../utils/valid-email';
 
 const SignInForm = () => {
     const { onLogin, onLogout } = useAuthDataContext();
@@ -15,6 +16,18 @@ const SignInForm = () => {
     const pswInput = useRef();
 
     const handleSubmit = () => {
+        // Validatation
+        if (!ValidateEmail(emailInput.current.value)) {
+            setError(true);
+            setErrorMsg('Error: Email appears invalid');
+            return;
+        }
+        if (pswInput.current.value === '') {
+            setError(true);
+            setErrorMsg('Error: Password appears invalid');
+            return;
+        }
+
         const currentFormValue = {
             email: emailInput.current.value,
             password: pswInput.current.value,

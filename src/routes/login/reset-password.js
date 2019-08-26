@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { ResetPass } from '../../utils/auth-api';
 import GetParameterByName from '../../utils/get-param';
+import ValidateEmail from '../../utils/valid-email';
 
 const ResetPassword = ({ location }) => {
     const [error, setError] = useState(null);
@@ -24,6 +25,21 @@ const ResetPassword = ({ location }) => {
     }, [location]);
 
     const handleSubmit = () => {
+        // Validatation
+        if (!ValidateEmail(emailInput.current.value)) {
+            setError(true);
+            setErrorMsg('Error: Email appears invalid');
+            return;
+        }
+        if (newPassword.current.value === '') {
+            setErrorMsg('Error: Password appears invalid');
+            return;
+        }
+        if (!resetToken) {
+            setErrorMsg('Error: The URL you used to get here appears invalid');
+            return;
+        }
+
         const currentFormValue = {
             email: emailInput.current.value,
             resetToken,
