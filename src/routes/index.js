@@ -5,7 +5,9 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Home from './home';
 import About from './about';
-import Login from './new-login';
+import Login from './login';
+import ForgotPassword from './login/forgot-password';
+import ResetPassword from './login/reset-password';
 import ProtectedRoute from './admin';
 // import ResetPassword from './login/containers/reset-pass';
 import withRoot from '../wiring/with-root';
@@ -41,6 +43,8 @@ const App = () => (
                             <Route exact path="/" component={Home} />
                             <Route exact path="/about" component={About} />
                             <Route exact path="/login" component={Login} />
+                            <Route exact path="/login/forgot-password" component={ForgotPassword} />
+                            <Route path="/login/reset-password" component={ResetPassword} />
                             <PrivateRoute
                                 exact
                                 path="/admin"

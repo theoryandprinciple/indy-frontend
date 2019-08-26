@@ -6,6 +6,7 @@ const SignInForm = () => {
     const { onLogin, onLogout } = useAuthDataContext();
 
     const [error, setError] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
 
     /*
    * We use uncontrolled inputs to simplify the example
@@ -22,12 +23,13 @@ const SignInForm = () => {
         Login(currentFormValue)
             .then((data) => {
                 // we get here with or without errors
-                setError(data.error ? data.errorMsg : null);
+                setError(data.error);
+                setErrorMsg(data.error ? data.errorMsg : null);
                 // update the app's auth context regardless of success or error
                 onLogin(data);
             });
     };
-    const handleLogOut = () => {
+    const handleLogout = () => {
         // use the values contained in the Logout function
         // pass those values to auth data context
         onLogout(Logout());
@@ -35,11 +37,12 @@ const SignInForm = () => {
 
     return (
         <div>
-            {error ? (<span>{error}</span>) : null}
+            {error ? (<span>{errorMsg}</span>) : null}
+            {error === false ? (<span>success</span>) : null}
             <input ref={emailInput} type="text" name="email" />
             <input ref={pswInput} type="password" name="password" />
             <button type="button" onClick={handleSubmit}>Sign in</button>
-            <button type="button" onClick={handleLogOut}>Sign out</button>
+            <button type="button" onClick={handleLogout}>Sign out</button>
         </div>
     );
 };
