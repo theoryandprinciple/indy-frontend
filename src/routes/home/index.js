@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { history } from '../../../store';
+import { history } from '../../wiring/history';
 
 const Admin = () => (
     <div>
@@ -8,7 +8,7 @@ const Admin = () => (
         <p>stuffs</p>
         <button type="button" onClick={() => history.push('/admin')}>Admin</button>
         <br />
-        <Link to="/about">Admin Link</Link>
+        <Link to="/admin">Admin Link</Link>
     </div>
 );
 

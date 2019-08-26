@@ -1,22 +1,34 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Home from './home/containers';
+import Home from './home';
 import About from './about';
-import Login from './login/components';
+import Login from './login';
+import ForgotPassword from './login/forgot-password';
+import ResetPassword from './login/reset-password';
 import ProtectedRoute from './admin';
-import ResetPassword from './login/containers/reset-pass';
+// import ResetPassword from './login/containers/reset-pass';
 import withRoot from '../wiring/with-root';
-import AuthenticateAdmin from '../wiring/auth-admin';
+import { useAuthDataContext } from '../utils/auth-provider';
 
-const AuthenticatedProtectedRoute = AuthenticateAdmin(ProtectedRoute);
 
 const theme = createMuiTheme({
     typography: {
         useNextVariants: true,
     },
 });
+
+const PrivateRoute = ({ component, ...options }) => {
+    const { authData } = useAuthDataContext();
+    const finalComponent = authData.isAuthenticated ? component : Login;
+
+    return <Route {...options} component={finalComponent} />;
+};
+PrivateRoute.propTypes = {
+    component: PropTypes.func.isRequired,
+};
 
 const App = () => (
     <Route
@@ -31,12 +43,14 @@ const App = () => (
                             <Route exact path="/" component={Home} />
                             <Route exact path="/about" component={About} />
                             <Route exact path="/login" component={Login} />
-                            <Route
+                            <Route exact path="/login/forgot-password" component={ForgotPassword} />
+                            <Route path="/login/reset-password" component={ResetPassword} />
+                            <PrivateRoute
                                 exact
                                 path="/admin"
-                                component={AuthenticatedProtectedRoute}
+                                component={ProtectedRoute}
                             />
-                            <Route path="/reset-pass" component={ResetPassword} />
+                            {/* <Route path="/reset-pass" component={ResetPassword} /> */}
                         </Switch>
                     </main>
                 </MuiThemeProvider>
