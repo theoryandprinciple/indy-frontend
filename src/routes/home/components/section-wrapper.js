@@ -2,8 +2,10 @@ import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
 import update from 'immutability-helper';
+import { cloneDeep } from 'lodash';
 import ElementTypes from './element-types';
 import Section from './section';
+import { useFlowDataContext } from '../../../utils/flow-provider';
 
 const sectionStyle = {
     height: '100%',
@@ -20,24 +22,25 @@ const sectionStyle = {
 
 const SectionWrapper = ({ data }) => {
     const [sections, setSections] = useState([]);
+    const { localFlowData, updateLocalFlowData } = useFlowDataContext();
 
     useEffect(() => {
-        // populate internal state with external props
+        // populate internal state with data in useFlowDataContext
+        // this will either be from our API or local state, depending on when data is coming down
         setSections(data);
     }, [data]);
 
-    // the return value currently has no value
     const onDrop = (item) => {
         // -1 is assigned as an id in element-section.js
         if (item.type === 'section' && item.id === -1) {
             setSections(
                 update(sections, {
-                    $push: [{ id: sections.length + 1 }],
+                    $push: [{ ...item, id: sections.length + 1 }],
                 }),
             );
         }
 
-        return { name: 'Section-Wrapper' };
+        return { name: 'Section-Wrapper' }; // the return value currently has no value
     };
     const moveSection = useCallback(
         (dragIndex, hoverIndex) => {
@@ -50,6 +53,17 @@ const SectionWrapper = ({ data }) => {
         },
         [sections],
     );
+
+    const sectionGetter = () => {
+        const tempFlowData = cloneDeep(localFlowData);
+        const tempSections = cloneDeep(sections);
+        tempFlowData.sections = tempSections;
+        updateLocalFlowData(tempFlowData);
+    };
+    useEffect(() => {
+        // TODO: update updateFlowData with new info
+        sectionGetter();
+    }, [sections]);
     const renderElement = (section, index) => (
         <Section
             key={section.id}
@@ -58,6 +72,7 @@ const SectionWrapper = ({ data }) => {
             moveSection={moveSection}
             sectionTitle={section.title}
             initialContent={section.contents}
+            sectionGetter={sectionGetter}
         />
     );
 
@@ -84,11 +99,9 @@ const SectionWrapper = ({ data }) => {
         </div>
     );
 };
-SectionWrapper.defaultProps = {
-    data: [],
-};
+
 SectionWrapper.propTypes = {
-    data: PropTypes.array,
+    data: PropTypes.array.isRequired,
 };
 
 export default SectionWrapper;

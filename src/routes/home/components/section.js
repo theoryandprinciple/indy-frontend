@@ -38,13 +38,23 @@ const Section = ({
     moveSection,
     sectionTitle,
     initialContent,
+    sectionGetter,
 }) => {
-    const [cards, setCards] = useState([]);
+    const [cards, setCards] = useState(null);
+
+    useEffect(() => {
+        // tell parent to update local state
+        // don't update if cards are null (first run)
+        if (cards) {
+            sectionGetter();
+        }
+    }, [cards]);
 
     useEffect(() => {
         // populate internal state with external props
         setCards(initialContent);
     }, [initialContent]);
+
 
     // this monitors the dropping of things into the section.
     // we are only listing for QUESTIONS || SECTIONS
@@ -183,7 +193,7 @@ const Section = ({
             {isActive ? 'Release to drop' : 'Draggable Section'}
             <p>{sectionTitle}</p>
             <div ref={preview}>
-                <div style={{ width: 400 }}>{cards.map((card, i) => renderElement(card, i))}</div>
+                <div style={{ width: 400 }}>{cards && cards.map((card, i) => renderElement(card, i))}</div>
             </div>
         </div>
     );
@@ -198,6 +208,7 @@ Section.propTypes = {
     moveSection: PropTypes.func.isRequired,
     sectionTitle: PropTypes.string,
     initialContent: PropTypes.array,
+    sectionGetter: PropTypes.func.isRequired,
 };
 
 export default Section;

@@ -76,6 +76,7 @@ const Card = ({
             id,
             index,
             currentSectionIndex, // we use this to track which section a card is in
+            contents: [],
         },
         collect: monitor => ({
             isDragging: monitor.isDragging(),

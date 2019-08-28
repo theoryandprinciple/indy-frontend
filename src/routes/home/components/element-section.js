@@ -21,7 +21,12 @@ const handleStyle = {
 
 const ElementSection = ({ text }) => {
     const [{ opacity }, drag, preview] = useDrag({
-        item: { type: ElementTypes.SECTION, text, id: -1 },
+        item: {
+            type: ElementTypes.SECTION,
+            text,
+            id: -1,
+            contents: [],
+        },
         collect: monitor => ({
             opacity: monitor.isDragging() ? 0.4 : 1,
         }),
