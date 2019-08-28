@@ -12,7 +12,12 @@ const style = {
     color: 'black',
 };
 const Card = ({
-    id, text, index, moveCard, currentSectionIndex,
+    id,
+    title,
+    index,
+    moveCard,
+    monitorCardDrop,
+    currentSectionIndex,
 }) => {
     const ref = useRef(null);
     const [, drop] = useDrop({
@@ -62,7 +67,9 @@ const Card = ({
             // eslint-disable-next-line no-param-reassign
             item.index = hoverIndex;
         },
+        drop: () => (monitorCardDrop()), // only need if we want to bubble data up
     });
+
     const [{ isDragging }, drag] = useDrag({
         item: {
             type: ElementTypes.CARD,
@@ -78,16 +85,17 @@ const Card = ({
     drag(drop(ref));
     return (
         <div ref={ref} style={{ ...style, opacity }}>
-            {text}
+            {title}
         </div>
     );
 };
 
 Card.propTypes = {
     id: PropTypes.number.isRequired,
-    text: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     index: PropTypes.number.isRequired,
     moveCard: PropTypes.func.isRequired,
+    monitorCardDrop: PropTypes.func.isRequired,
     currentSectionIndex: PropTypes.number.isRequired,
 };
 export default Card;

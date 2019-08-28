@@ -1,4 +1,9 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, {
+    useState,
+    useCallback,
+    useRef,
+    useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
 import update from 'immutability-helper';
@@ -31,34 +36,15 @@ const Section = ({
     id,
     index,
     moveSection,
+    sectionTitle,
+    initialContent,
 }) => {
-    const [cards, setCards] = useState([
-        {
-            id: 1,
-            text: 'Write a cool JS library',
-            section: id,
-        },
-        {
-            id: 2,
-            text: 'Make it generic enough',
-            section: id,
-        },
-        {
-            id: 3,
-            text: 'Write README',
-            section: id,
-        },
-        {
-            id: 4,
-            text: 'Create some examples',
-            section: id,
-        },
-        {
-            id: 5,
-            text: 'Spam in Twitter and IRC to promote it (note that this element is taller than the others)',
-            section: id,
-        },
-    ]);
+    const [cards, setCards] = useState([]);
+
+    useEffect(() => {
+        // populate internal state with external props
+        setCards(initialContent);
+    }, [initialContent]);
 
     // this monitors the dropping of things into the section.
     // we are only listing for QUESTIONS || SECTIONS
@@ -70,7 +56,7 @@ const Section = ({
         if (item.type === 'question') {
             newElement = {
                 id: cards.length + 1,
-                text: item.text,
+                title: item.text,
             };
         } else {
             // we just a section drop on top of a section, do nothing with the list
@@ -84,6 +70,9 @@ const Section = ({
         );
         // TODO: unclear why we'd need a return value
         return { name: `Section${id}` };
+    };
+    const monitorCardDrop = () => {
+        // if we want to bubble data up for storage in parent, this is a logical way to do it
     };
     const moveCard = useCallback(
         (dragIndex, hoverIndex) => {
@@ -101,8 +90,9 @@ const Section = ({
             key={card.id}
             index={cardIndex}
             id={card.id}
-            text={card.text}
+            title={card.title}
             moveCard={moveCard}
+            monitorCardDrop={monitorCardDrop}
             currentSectionIndex={index}
         />
     );
@@ -118,6 +108,12 @@ const Section = ({
             }
             // if we are not trying to "moveSection", then we should stop now
             if (item.type !== ElementTypes.SECTION) {
+                return;
+            }
+            // if we are trying to drag a NEW section in, it wont have an index setup yet
+            // TODO: dynamically manage indexes for new cards?
+            if (item.type === ElementTypes.SECTION && !item.index) {
+                // console.log('TODO: Allow for dynamic insertion of new sections');
                 return;
             }
             const dragIndex = item.index;
@@ -185,16 +181,23 @@ const Section = ({
         <div ref={ref} style={{ ...sectionStyle, backgroundColor, opacity }}>
             <div ref={drag} style={handleStyle} />
             {isActive ? 'Release to drop' : 'Draggable Section'}
+            <p>{sectionTitle}</p>
             <div ref={preview}>
                 <div style={{ width: 400 }}>{cards.map((card, i) => renderElement(card, i))}</div>
             </div>
         </div>
     );
 };
+Section.defaultProps = {
+    initialContent: [],
+    sectionTitle: 'default title',
+};
 Section.propTypes = {
     id: PropTypes.number.isRequired,
     index: PropTypes.number.isRequired,
     moveSection: PropTypes.func.isRequired,
+    sectionTitle: PropTypes.string,
+    initialContent: PropTypes.array,
 };
 
 export default Section;

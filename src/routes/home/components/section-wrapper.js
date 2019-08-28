@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
 import update from 'immutability-helper';
 import ElementTypes from './element-types';
@@ -17,17 +18,27 @@ const sectionStyle = {
     float: 'left',
 };
 
-const SectionWrapper = () => {
-    const [sections, setSections] = useState([
-        {
-            id: 1,
-        },
-        {
-            id: 2,
-        },
-    ]);
+const SectionWrapper = ({ data }) => {
+    const [sections, setSections] = useState([]);
+
+    useEffect(() => {
+        // populate internal state with external props
+        setSections(data);
+    }, [data]);
+
     // the return value currently has no value
-    const onDrop = () => ({ name: 'Section-Wrapper' });
+    const onDrop = (item) => {
+        // -1 is assigned as an id in element-section.js
+        if (item.type === 'section' && item.id === -1) {
+            setSections(
+                update(sections, {
+                    $push: [{ id: sections.length + 1 }],
+                }),
+            );
+        }
+
+        return { name: 'Section-Wrapper' };
+    };
     const moveSection = useCallback(
         (dragIndex, hoverIndex) => {
             const dragSection = sections[dragIndex];
@@ -45,6 +56,8 @@ const SectionWrapper = () => {
             index={index}
             id={section.id}
             moveSection={moveSection}
+            sectionTitle={section.title}
+            initialContent={section.contents}
         />
     );
 
@@ -70,6 +83,12 @@ const SectionWrapper = () => {
             <div style={{ width: 400 }}>{sections.map((section, i) => renderElement(section, i))}</div>
         </div>
     );
+};
+SectionWrapper.defaultProps = {
+    data: [],
+};
+SectionWrapper.propTypes = {
+    data: PropTypes.array,
 };
 
 export default SectionWrapper;
