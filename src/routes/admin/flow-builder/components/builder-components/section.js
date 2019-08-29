@@ -9,7 +9,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import update from 'immutability-helper';
 import { cloneDeep } from 'lodash';
 import Card from './card';
-import ElementTypes from './element-types';
+import ElementTypes from '../starter-elements/element-types';
 
 const sectionStyle = {
     height: '100%',

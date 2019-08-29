@@ -253,11 +253,20 @@ const FlowDataProvider = (props) => {
 
     const updateLocalFlowData = newFlowData => setLocalFlowData(newFlowData);
     const updateRemoteFlowData = () => {
-        console.log('flow updater!', SampleFlowData2);
         setRemoteFlowData(SampleFlowData2);
     };
 
-    return <FlowDataContext.Provider value={{ localFlowData, remoteFlowData, updateLocalFlowData, updateRemoteFlowData }} {...props} />;
+    return (
+        <FlowDataContext.Provider
+            value={{
+                localFlowData,
+                remoteFlowData,
+                updateLocalFlowData,
+                updateRemoteFlowData,
+            }}
+            {...props}
+        />
+    );
 };
 
 export const useFlowDataContext = () => useContext(FlowDataContext);

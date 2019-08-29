@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
 import AuthDataProvider from './utils/auth-provider';
-import FlowDataProvider from './utils/flow-provider'; // move this down the tree at some point
+import FlowDataProvider from './routes/admin/flow-builder/wiring/flow-provider'; // move this down the tree at some point
 
 import { history } from './wiring/history';
 import App from './routes';

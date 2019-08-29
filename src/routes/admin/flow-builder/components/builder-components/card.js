@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
-import ElementTypes from './element-types';
-import RadioQuestion from './question-inputs/question-type-radio';
+import ElementTypes from '../starter-elements/element-types';
+import RadioQuestion from '../question-inputs/question-type-radio';
 
 const style = {
     border: '1px dashed gray',

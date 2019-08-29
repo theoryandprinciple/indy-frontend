@@ -8,7 +8,8 @@ import About from './about';
 import Login from './login';
 import ForgotPassword from './login/forgot-password';
 import ResetPassword from './login/reset-password';
-import ProtectedRoute from './admin';
+import AdminHome from './admin';
+import FlowBuilder from './admin/flow-builder';
 // import ResetPassword from './login/containers/reset-pass';
 import withRoot from '../wiring/with-root';
 import { useAuthDataContext } from '../utils/auth-provider';
@@ -48,7 +49,12 @@ const App = () => (
                             <PrivateRoute
                                 exact
                                 path="/admin"
-                                component={ProtectedRoute}
+                                component={AdminHome}
+                            />
+                            <PrivateRoute
+                                exact
+                                path="/admin/flow-builder"
+                                component={FlowBuilder}
                             />
                             {/* <Route path="/reset-pass" component={ResetPassword} /> */}
                         </Switch>

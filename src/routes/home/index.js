@@ -1,34 +1,11 @@
-/* eslint quote-props: 0 */
 import React from 'react';
-import { DndProvider } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
-import Question from './components/element-question';
-import Section from './components/element-section';
-import SectionWrapper from './components/section-wrapper';
-import { useFlowDataContext } from '../../utils/flow-provider';
-import Header from './components/header';
+import { Link } from 'react-router-dom';
 
-const Flow = () => {
-    const { remoteFlowData } = useFlowDataContext();
+const Home = () => (
+    <div>
+        <h1>Home Page</h1>
+        <Link to="/admin/flow-builder">Goto Flow Builder</Link>
+    </div>
+);
 
-    return (
-        <div>
-            <DndProvider backend={HTML5Backend}>
-                <h1>Basic Home Page</h1>
-                <Header />
-                <div>
-                    <div style={{ display: 'inline-block', width: '49%', verticalAlign: 'top' }}>
-                        <Question text="Radio Question" />
-                        <Question text="Checkbox Question" />
-                        <Section text="Default Section Header" />
-                    </div>
-                    <div style={{ display: 'inline-block', width: '49%' }}>
-                        <SectionWrapper data={remoteFlowData.sections} />
-                    </div>
-                </div>
-            </DndProvider>
-        </div>
-    );
-};
-
-export default Flow;
+export default Home;

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
 import update from 'immutability-helper';
 import { cloneDeep } from 'lodash';
-import ElementTypes from './element-types';
+import ElementTypes from '../starter-elements/element-types';
 import Section from './section';
-import { useFlowDataContext } from '../../../utils/flow-provider';
+import { useFlowDataContext } from '../../wiring/flow-provider';
 
 const sectionStyle = {
     height: '100%',
