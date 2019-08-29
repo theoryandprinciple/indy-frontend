@@ -6,18 +6,16 @@ import Question from './components/element-question';
 import Section from './components/element-section';
 import SectionWrapper from './components/section-wrapper';
 import { useFlowDataContext } from '../../utils/flow-provider';
+import Header from './components/header';
 
 const Flow = () => {
     const { remoteFlowData } = useFlowDataContext();
 
-    const save = () => {
-        // do something
-    };
     return (
         <div>
             <DndProvider backend={HTML5Backend}>
                 <h1>Basic Home Page</h1>
-                <button type="button" onClick={save}>Save</button>
+                <Header />
                 <div>
                     <div style={{ display: 'inline-block', width: '49%', verticalAlign: 'top' }}>
                         <Question text="Radio Question" />

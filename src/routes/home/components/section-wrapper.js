@@ -54,16 +54,25 @@ const SectionWrapper = ({ data }) => {
         [sections],
     );
 
-    const sectionGetter = () => {
+    const handleCardUpdates = (sectionIndex, updatedCards) => {
+        // go into affected section, and replace cards
+        const tempFlowData = cloneDeep(localFlowData);
+        const tempSections = cloneDeep(sections);
+        tempFlowData.sections = tempSections;
+        tempFlowData.sections[sectionIndex].contents = updatedCards;
+        updateLocalFlowData(tempFlowData);
+    };
+    const handleSectionUpdates = () => {
+        // just replace sections
         const tempFlowData = cloneDeep(localFlowData);
         const tempSections = cloneDeep(sections);
         tempFlowData.sections = tempSections;
         updateLocalFlowData(tempFlowData);
     };
     useEffect(() => {
-        // TODO: update updateFlowData with new info
-        sectionGetter();
+        handleSectionUpdates();
     }, [sections]);
+
     const renderElement = (section, index) => (
         <Section
             key={section.id}
@@ -72,7 +81,7 @@ const SectionWrapper = ({ data }) => {
             moveSection={moveSection}
             sectionTitle={section.title}
             initialContent={section.contents}
-            sectionGetter={sectionGetter}
+            handleCardUpdates={handleCardUpdates}
         />
     );
 

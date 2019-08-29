@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import ElementTypes from './element-types';
+import RadioQuestion from './question-inputs/question-type-radio';
 
 const style = {
     border: '1px dashed gray',
@@ -12,13 +13,14 @@ const style = {
     color: 'black',
 };
 const Card = ({
-    id,
-    title,
+    initialValues,
     index,
     moveCard,
-    monitorCardDrop,
+    // monitorCardDrop,
     currentSectionIndex,
+    handleContentUpdates,
 }) => {
+    // Manage Question Dragging
     const ref = useRef(null);
     const [, drop] = useDrop({
         accept: ElementTypes.CARD,
@@ -67,13 +69,13 @@ const Card = ({
             // eslint-disable-next-line no-param-reassign
             item.index = hoverIndex;
         },
-        drop: () => (monitorCardDrop()), // only need if we want to bubble data up
+        // drop: () => (monitorCardDrop()), // only need if we want to bubble data up
     });
 
     const [{ isDragging }, drag] = useDrag({
         item: {
             type: ElementTypes.CARD,
-            id,
+            id: initialValues.id,
             index,
             currentSectionIndex, // we use this to track which section a card is in
             contents: [],
@@ -84,19 +86,26 @@ const Card = ({
     });
     const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
+
+    // Manage Form Inputs
+    const updateAnswers = (formValues) => {
+        handleContentUpdates('answers', index, formValues);
+    };
+
     return (
         <div ref={ref} style={{ ...style, opacity }}>
-            {title}
+            {initialValues.title}
+            <RadioQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />
         </div>
     );
 };
 
 Card.propTypes = {
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
+    initialValues: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
     moveCard: PropTypes.func.isRequired,
-    monitorCardDrop: PropTypes.func.isRequired,
+    // monitorCardDrop: PropTypes.func.isRequired,
     currentSectionIndex: PropTypes.number.isRequired,
+    handleContentUpdates: PropTypes.func.isRequired,
 };
 export default Card;
