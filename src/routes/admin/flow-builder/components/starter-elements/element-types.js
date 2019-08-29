@@ -1,6 +1,6 @@
 export default {
     QUESTION: 'question',
-    SECTIONBREAK: 'section-break',
-    CARD: 'card',
+    SECTION_BREAK: 'section-break',
+    SECTION_ELEMENT: 'section-element',
     SECTION: 'section',
 };

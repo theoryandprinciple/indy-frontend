@@ -12,10 +12,10 @@ const style = {
     cursor: 'move',
     color: 'black',
 };
-const Card = ({
+const SectionElement = ({
     initialValues,
     index,
-    moveCard,
+    moveSectionElement,
     // monitorCardDrop,
     currentSectionIndex,
     handleContentUpdates,
@@ -23,7 +23,7 @@ const Card = ({
     // Manage Question Dragging
     const ref = useRef(null);
     const [, drop] = useDrop({
-        accept: ElementTypes.CARD,
+        accept: ElementTypes.SECTION_ELEMENT,
         hover(item, monitor) {
             if (!ref.current) {
                 return;
@@ -61,7 +61,7 @@ const Card = ({
                 return;
             }
             // Time to actually perform the action
-            moveCard(dragIndex, hoverIndex);
+            moveSectionElement(dragIndex, hoverIndex);
             // Note: we're mutating the monitor item here!
             // Generally it's better to avoid mutations,
             // but it's good here for the sake of performance
@@ -74,7 +74,7 @@ const Card = ({
 
     const [{ isDragging }, drag] = useDrag({
         item: {
-            type: ElementTypes.CARD,
+            type: ElementTypes.SECTION_ELEMENT,
             id: initialValues.id,
             index,
             currentSectionIndex, // we use this to track which section a card is in
@@ -100,12 +100,12 @@ const Card = ({
     );
 };
 
-Card.propTypes = {
+SectionElement.propTypes = {
     initialValues: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
-    moveCard: PropTypes.func.isRequired,
+    moveSectionElement: PropTypes.func.isRequired,
     // monitorCardDrop: PropTypes.func.isRequired,
     currentSectionIndex: PropTypes.number.isRequired,
     handleContentUpdates: PropTypes.func.isRequired,
 };
-export default Card;
+export default SectionElement;

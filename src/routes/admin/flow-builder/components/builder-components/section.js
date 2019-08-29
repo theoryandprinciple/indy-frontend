@@ -8,15 +8,18 @@ import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
 import update from 'immutability-helper';
 import { cloneDeep } from 'lodash';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 import SectionElement from './section-element';
 import ElementTypes from '../starter-elements/element-types';
+import Colors from '../../../../../styles/colors';
+import Styles from './styles';
 
 const sectionStyle = {
     height: '100%',
     width: '100%',
     marginRight: '1.5rem',
     marginBottom: '1.5rem',
-    color: 'white',
     padding: '1rem',
     textAlign: 'center',
     fontSize: '1rem',
@@ -24,16 +27,8 @@ const sectionStyle = {
     float: 'left',
 };
 
-const handleStyle = {
-    backgroundColor: 'black',
-    width: '1rem',
-    height: '1rem',
-    display: 'inline-block',
-    marginRight: '0.75rem',
-    cursor: 'move',
-};
-
 const Section = ({
+    classes,
     id,
     index,
     moveSection,
@@ -174,11 +169,11 @@ const Section = ({
         }),
     });
     const isActive = canDrop && isOver;
-    let backgroundColor = '#222';
+    let backgroundColor = Colors.darkGrey;
     if (isActive) {
-        backgroundColor = 'darkgreen';
+        backgroundColor = '#666';
     } else if (canDrop) {
-        backgroundColor = 'darkkhaki';
+        backgroundColor = Colors.darkGrey;
     }
 
     const [{ isDragging }, drag, preview] = useDrag({
@@ -190,15 +185,14 @@ const Section = ({
     });
     const opacity = isDragging ? 0.4 : 1;
 
-    // this is used to create a reference to the current section being dragged
-    // TODO: this is causing the entire block to be draggable, not just the handle
-    // drag(drop(ref));
     drop(ref);
+
     return (
         <div ref={ref} style={{ ...sectionStyle, backgroundColor, opacity }}>
-            <div ref={drag} style={handleStyle} />
-            {isActive ? 'Release to drop' : 'Draggable Section'}
-            <p>{sectionTitle}</p>
+            <div ref={drag} className={classes.sectionTabStyle} />
+            <Typography variant="h5">
+                {isActive ? 'Release to drop' : `${sectionTitle} (${sectionElements ? sectionElements.length : 0})`}
+            </Typography>
             <div ref={preview}>
                 <div style={{ width: 400 }}>{sectionElements && sectionElements.map((sectionElement, i) => renderElement(sectionElement, i))}</div>
             </div>
@@ -210,6 +204,7 @@ Section.defaultProps = {
     sectionTitle: 'default title',
 };
 Section.propTypes = {
+    classes: PropTypes.object.isRequired,
     id: PropTypes.number.isRequired,
     index: PropTypes.number.isRequired,
     moveSection: PropTypes.func.isRequired,
@@ -218,4 +213,4 @@ Section.propTypes = {
     handleSectionElementUpdates: PropTypes.func.isRequired,
 };
 
-export default Section;
+export default withStyles(Styles)(Section);

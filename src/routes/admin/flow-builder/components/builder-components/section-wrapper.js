@@ -12,11 +12,7 @@ const sectionStyle = {
     width: '100%',
     marginRight: '1.5rem',
     marginBottom: '1.5rem',
-    color: 'white',
     padding: '1rem',
-    textAlign: 'center',
-    fontSize: '1rem',
-    lineHeight: 'normal',
     float: 'left',
 };
 
@@ -54,12 +50,14 @@ const SectionWrapper = ({ data }) => {
         [sections],
     );
 
-    const handleSectionElementUpdates = (sectionIndex, updatedCards) => {
+    const handleSectionElementUpdates = (sectionIndex, updatedSectionElements) => {
         // go into affected section, and replace cards
         const tempFlowData = cloneDeep(localFlowData);
+
+        // TODO: can we avoid cloning all of sections, and just clone the section we are updating
         const tempSections = cloneDeep(sections);
         tempFlowData.sections = tempSections;
-        tempFlowData.sections[sectionIndex].contents = updatedCards;
+        tempFlowData.sections[sectionIndex].contents = updatedSectionElements;
         updateLocalFlowData(tempFlowData);
     };
     const handleSectionUpdates = () => {
@@ -94,16 +92,16 @@ const SectionWrapper = ({ data }) => {
         }),
     });
     const isActive = canDrop && isOver;
-    let backgroundColor = 'blue';
+    let border = 'none';
     if (isActive) {
-        backgroundColor = 'yellow';
+        border = 'dashed 1px grey';
     } else if (canDrop) {
-        backgroundColor = 'pink';
+        border = 'dashed 1px black';
     }
 
     return (
-        <div ref={drop} style={{ ...sectionStyle, backgroundColor }}>
-            {isActive ? 'Release to drop' : 'Drag a box here'}
+        <div ref={drop} style={{ ...sectionStyle, border }}>
+            {isActive ? `${sections.length === 0 ? 'Release to drop' : ''}` : `${sections.length === 0 ? 'Start the party' : ''}`}
             <div style={{ width: 400 }}>{sections.map((section, i) => renderElement(section, i))}</div>
         </div>
     );
