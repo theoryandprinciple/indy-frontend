@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
 import update from 'immutability-helper';
 import { cloneDeep } from 'lodash';
-import Card from './card';
+import SectionElement from './section-element';
 import ElementTypes from '../starter-elements/element-types';
 
 const sectionStyle = {
@@ -39,41 +39,41 @@ const Section = ({
     moveSection,
     sectionTitle,
     initialContent,
-    handleCardUpdates,
+    handleSectionElementUpdates,
 }) => {
-    const [cards, setCards] = useState(null);
+    const [sectionElements, setSectionElements] = useState(null);
 
     useEffect(() => {
         // tell parent to update local state
-        // don't update if cards are null (first run)
-        if (cards) {
-            handleCardUpdates(index, cards);
+        // don't update if sectionElements are null (first run)
+        if (sectionElements) {
+            handleSectionElementUpdates(index, sectionElements);
         }
-    }, [cards]);
+    }, [sectionElements]);
 
     useEffect(() => {
         // populate internal state with external props
-        setCards(initialContent);
+        setSectionElements(initialContent);
     }, [initialContent]);
 
-    const handleContentUpdates = (type, cardIndex, values) => {
-        const tempCards = cloneDeep(cards);
+    const handleContentUpdates = (type, sectionElementIndex, values) => {
+        const tempSectionElements = cloneDeep(sectionElements);
         if (type === 'answers') {
-            tempCards[cardIndex].answers = values;
+            tempSectionElements[sectionElementIndex].answers = values;
         }
-        setCards(tempCards);
+        setSectionElements(tempSectionElements);
     };
 
     // this monitors the dropping of things into the section.
     // we are only listing for QUESTIONS || SECTIONS
     const onDrop = (item) => {
         // TODO: Add the new question to the place in the list where it was hovering before drop
-        // TODO: make the section accept "CARD" (or existing questions), so we can move them between sections
+        // TODO: make the section accept "sectionElement" (or existing questions), so we can move them between sections
         let newElement;
         // TODO: Add different components based on dropped question type (or some other param)
         if (item.type === 'question') {
             newElement = {
-                id: cards.length + 1,
+                id: sectionElements.length + 1,
                 title: item.text,
                 answers: [],
             };
@@ -82,33 +82,33 @@ const Section = ({
             return item;
         }
 
-        setCards(
-            update(cards, {
+        setSectionElements(
+            update(sectionElements, {
                 $push: [newElement],
             }),
         );
         // TODO: unclear why we'd need a return value
         return { name: `Section${id}` };
     };
-    // const monitorCardDrop = () => {}; // if we want to bubble data up for storage in parent, this is a logical way to do it
-    const moveCard = useCallback(
+    // const monitorSectionElementDrop = () => {}; // if we want to bubble data up for storage in parent, this is a logical way to do it
+    const moveSectionElement = useCallback(
         (dragIndex, hoverIndex) => {
-            const dragCard = cards[dragIndex];
-            setCards(
-                update(cards, {
-                    $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]],
+            const dragSectionElement = sectionElements[dragIndex];
+            setSectionElements(
+                update(sectionElements, {
+                    $splice: [[dragIndex, 1], [hoverIndex, 0, dragSectionElement]],
                 }),
             );
         },
-        [cards],
+        [sectionElements],
     );
-    const renderElement = (card, cardIndex) => (
-        <Card
-            key={card.id}
-            index={cardIndex}
-            initialValues={card}
-            moveCard={moveCard}
-            // monitorCardDrop={monitorCardDrop}
+    const renderElement = (sectionElement, sectionElementIndex) => (
+        <SectionElement
+            key={sectionElement.id}
+            index={sectionElementIndex}
+            initialValues={sectionElement}
+            moveSectionElement={moveSectionElement}
+            // monitorSectionElementDrop={monitorSectionElementDrop}
             currentSectionIndex={index}
             handleContentUpdates={handleContentUpdates}
         />
@@ -128,7 +128,7 @@ const Section = ({
                 return;
             }
             // if we are trying to drag a NEW section in, it wont have an index setup yet
-            // TODO: dynamically manage indexes for new cards?
+            // TODO: dynamically manage indexes for new sectionElements?
             if (item.type === ElementTypes.SECTION && !item.index) {
                 // console.log('TODO: Allow for dynamic insertion of new sections');
                 return;
@@ -200,7 +200,7 @@ const Section = ({
             {isActive ? 'Release to drop' : 'Draggable Section'}
             <p>{sectionTitle}</p>
             <div ref={preview}>
-                <div style={{ width: 400 }}>{cards && cards.map((card, i) => renderElement(card, i))}</div>
+                <div style={{ width: 400 }}>{sectionElements && sectionElements.map((sectionElement, i) => renderElement(sectionElement, i))}</div>
             </div>
         </div>
     );
@@ -215,7 +215,7 @@ Section.propTypes = {
     moveSection: PropTypes.func.isRequired,
     sectionTitle: PropTypes.string,
     initialContent: PropTypes.array,
-    handleCardUpdates: PropTypes.func.isRequired,
+    handleSectionElementUpdates: PropTypes.func.isRequired,
 };
 
 export default Section;

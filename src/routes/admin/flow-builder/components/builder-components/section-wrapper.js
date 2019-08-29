@@ -54,7 +54,7 @@ const SectionWrapper = ({ data }) => {
         [sections],
     );
 
-    const handleCardUpdates = (sectionIndex, updatedCards) => {
+    const handleSectionElementUpdates = (sectionIndex, updatedCards) => {
         // go into affected section, and replace cards
         const tempFlowData = cloneDeep(localFlowData);
         const tempSections = cloneDeep(sections);
@@ -81,7 +81,7 @@ const SectionWrapper = ({ data }) => {
             moveSection={moveSection}
             sectionTitle={section.title}
             initialContent={section.contents}
-            handleCardUpdates={handleCardUpdates}
+            handleSectionElementUpdates={handleSectionElementUpdates}
         />
     );
 
