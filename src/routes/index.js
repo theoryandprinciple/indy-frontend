@@ -36,9 +36,6 @@ const App = () => (
         render={({ location }) => (
             <React.Fragment>
                 <MuiThemeProvider theme={theme}>
-                    <Typography variant="h1">
-                        h1 header
-                    </Typography>
                     <main>
                         <Switch location={location}>
                             <Route exact path="/" component={Home} />

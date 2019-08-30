@@ -10,22 +10,16 @@ import update from 'immutability-helper';
 import { cloneDeep } from 'lodash';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+
+import DragIcon from '@material-ui/icons/ZoomOutMap';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 import SectionElement from './section-element';
 import ElementTypes from '../starter-elements/element-types';
 import Colors from '../../../../../styles/colors';
 import Styles from './styles';
-
-const sectionStyle = {
-    height: '100%',
-    width: '100%',
-    marginRight: '1.5rem',
-    marginBottom: '1.5rem',
-    padding: '1rem',
-    textAlign: 'center',
-    fontSize: '1rem',
-    lineHeight: 'normal',
-    float: 'left',
-};
 
 const Section = ({
     classes,
@@ -37,7 +31,10 @@ const Section = ({
     handleSectionElementUpdates,
 }) => {
     const [sectionElements, setSectionElements] = useState(null);
+    const [sectionOpen, setSectionOpen] = useState(true);
 
+
+    // MANAGE FLOW DATA
     useEffect(() => {
         // tell parent to update local state
         // don't update if sectionElements are null (first run)
@@ -59,9 +56,10 @@ const Section = ({
         setSectionElements(tempSectionElements);
     };
 
+    // MANAGE ELEMENT DRAG
     // this monitors the dropping of things into the section.
-    // we are only listing for QUESTIONS || SECTIONS
     const onDrop = (item) => {
+        // we are only listing for QUESTIONS || SECTIONS
         // TODO: Add the new question to the place in the list where it was hovering before drop
         // TODO: make the section accept "sectionElement" (or existing questions), so we can move them between sections
         let newElement;
@@ -109,7 +107,7 @@ const Section = ({
         />
     );
 
-    // THIS IS BEING ADDED SO THE SECTION IS DRAGGABLE
+    // MANAGE SECTION DRAG
     const ref = useRef(null);
     const [{ canDrop, isOver }, drop] = useDrop({
         // accept needs to cascading set of types
@@ -187,14 +185,38 @@ const Section = ({
 
     drop(ref);
 
+    // Manage UI
+
     return (
-        <div ref={ref} style={{ ...sectionStyle, backgroundColor, opacity }}>
-            <div ref={drag} className={classes.sectionTabStyle} />
-            <Typography variant="h5">
-                {isActive ? 'Release to drop' : `${sectionTitle} (${sectionElements ? sectionElements.length : 0})`}
-            </Typography>
-            <div ref={preview}>
-                <div style={{ width: 400 }}>{sectionElements && sectionElements.map((sectionElement, i) => renderElement(sectionElement, i))}</div>
+        <div ref={ref} style={{ opacity, backgroundColor, marginBottom: 30 }}>
+            <div className="row no-gutters" style={{ backgroundColor: Colors.pageBackground }}>
+                <div className="col text-left">
+                    <div ref={drag} className={`${classes.sectionTabStyle} ${classes.dragHandleStyle}`}>
+                        <DragIcon />
+                    </div>
+                </div>
+                <div className="col text-right">
+                    <div className={classes.sectionTabStyle} style={{ marginRight: 2 }}>
+                        <button type="button" onClick={() => setSectionOpen(!sectionOpen)}>
+                            <ExpandLessIcon />
+                        </button>
+                    </div>
+                    <div className={classes.sectionTabStyle}>
+                        <DeleteIcon />
+                    </div>
+                </div>
+            </div>
+
+            <div className="row no-gutters" style={{ padding: '15px 30px' }}>
+                <Typography variant="h5">
+                    {`${sectionTitle} (${sectionElements ? sectionElements.length : 0})`}
+                </Typography>
+            </div>
+
+            <div className={`row no-gutters ${sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}`} style={{ padding: '15px 30px' }}>
+                <div ref={preview}>
+                    {sectionElements && sectionElements.map((sectionElement, i) => renderElement(sectionElement, i))}
+                </div>
             </div>
         </div>
     );
