@@ -1,24 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import Home from './home';
 import About from './about';
 import Login from './login';
 import ForgotPassword from './login/forgot-password';
 import ResetPassword from './login/reset-password';
-import ProtectedRoute from './admin';
+import AdminHome from './admin';
+import FlowBuilder from './admin/flow-builder';
 // import ResetPassword from './login/containers/reset-pass';
 import withRoot from '../wiring/with-root';
 import { useAuthDataContext } from '../utils/auth-provider';
 
 
-const theme = createMuiTheme({
-    typography: {
-        useNextVariants: true,
-    },
-});
+import themer from '../styles/material-theme';
 
 const PrivateRoute = ({ component, ...options }) => {
     const { authData } = useAuthDataContext();
@@ -34,11 +30,8 @@ const App = () => (
     <Route
         render={({ location }) => (
             <React.Fragment>
-                <MuiThemeProvider theme={theme}>
-                    <Typography variant="h1">
-                        h1 header
-                    </Typography>
-                    <main>
+                <MuiThemeProvider theme={themer}>
+                    <main className="container">
                         <Switch location={location}>
                             <Route exact path="/" component={Home} />
                             <Route exact path="/about" component={About} />
@@ -48,7 +41,12 @@ const App = () => (
                             <PrivateRoute
                                 exact
                                 path="/admin"
-                                component={ProtectedRoute}
+                                component={AdminHome}
+                            />
+                            <PrivateRoute
+                                exact
+                                path="/admin/flow-builder"
+                                component={FlowBuilder}
                             />
                             {/* <Route path="/reset-pass" component={ResetPassword} /> */}
                         </Switch>

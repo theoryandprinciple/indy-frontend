@@ -1,27 +1,32 @@
 import React, { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
-import ElementTypes from './element-types';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
-const style = {
-    border: '1px dashed gray',
-    padding: '0.5rem 1rem',
-    marginBottom: '.5rem',
-    backgroundColor: 'white',
-    cursor: 'move',
-    color: 'black',
-};
-const Card = ({
-    id,
-    title,
+import ElementTypes from '../../wiring/element-types';
+import QuestionTypes from '../../wiring/question-types';
+import IconList from '../../wiring/icon-list';
+
+import RadioQuestion from '../question-inputs/question-type-radio';
+import CheckboxQuestion from '../question-inputs/question-type-checkbox';
+import QuestionSettings from '../question-inputs/question-settings';
+
+import Styles from './styles';
+
+const SectionElement = ({
+    classes,
+    initialValues,
     index,
-    moveCard,
-    monitorCardDrop,
+    moveSectionElement,
+    // monitorCardDrop,
     currentSectionIndex,
+    handleContentUpdates,
 }) => {
+    // Manage Question Dragging
     const ref = useRef(null);
     const [, drop] = useDrop({
-        accept: ElementTypes.CARD,
+        accept: ElementTypes.SECTION_ELEMENT,
         hover(item, monitor) {
             if (!ref.current) {
                 return;
@@ -59,7 +64,7 @@ const Card = ({
                 return;
             }
             // Time to actually perform the action
-            moveCard(dragIndex, hoverIndex);
+            moveSectionElement(dragIndex, hoverIndex);
             // Note: we're mutating the monitor item here!
             // Generally it's better to avoid mutations,
             // but it's good here for the sake of performance
@@ -67,15 +72,16 @@ const Card = ({
             // eslint-disable-next-line no-param-reassign
             item.index = hoverIndex;
         },
-        drop: () => (monitorCardDrop()), // only need if we want to bubble data up
+        // drop: () => (monitorCardDrop()), // only need if we want to bubble data up
     });
 
     const [{ isDragging }, drag] = useDrag({
         item: {
-            type: ElementTypes.CARD,
-            id,
+            type: ElementTypes.SECTION_ELEMENT,
+            id: initialValues.id,
             index,
             currentSectionIndex, // we use this to track which section a card is in
+            contents: [],
         },
         collect: monitor => ({
             isDragging: monitor.isDragging(),
@@ -83,19 +89,42 @@ const Card = ({
     });
     const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
+
+    // Manage Form Inputs
+    const updateAnswers = (formValues) => {
+        handleContentUpdates('answers', index, formValues);
+    };
+
     return (
-        <div ref={ref} style={{ ...style, opacity }}>
-            {title}
+        <div ref={ref} style={{ opacity }} className={`row ${classes.sectionElementWrapper}`}>
+            <div className="col-auto">
+                <div className={classes.sectionElementIconWrapper}>
+                    {IconList[initialValues.questionType]}
+                </div>
+            </div>
+            <div className="col">
+                <Typography variant="body2">{initialValues.title}</Typography>
+                {initialValues.type === ElementTypes.QUESTION && (
+                    <>
+                        {initialValues.questionType === QuestionTypes.RADIO && <RadioQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />}
+                        {initialValues.questionType === QuestionTypes.CHECKBOX && <CheckboxQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />}
+                        <hr className={classes.sectionElementBR} />
+                        <QuestionSettings handleUpdate={updateAnswers} initialValues={initialValues.settings} />
+                    </>
+                )}
+            </div>
         </div>
     );
 };
 
-Card.propTypes = {
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
+SectionElement.propTypes = {
+    classes: PropTypes.object.isRequired,
+    initialValues: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
-    moveCard: PropTypes.func.isRequired,
-    monitorCardDrop: PropTypes.func.isRequired,
+    moveSectionElement: PropTypes.func.isRequired,
+    // monitorCardDrop: PropTypes.func.isRequired,
     currentSectionIndex: PropTypes.number.isRequired,
+    handleContentUpdates: PropTypes.func.isRequired,
 };
-export default Card;
+
+export default withStyles(Styles)(SectionElement);

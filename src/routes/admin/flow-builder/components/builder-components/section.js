@@ -7,97 +7,109 @@ import React, {
 import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
 import update from 'immutability-helper';
-import Card from './card';
-import ElementTypes from './element-types';
+import { cloneDeep } from 'lodash';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 
-const sectionStyle = {
-    height: '100%',
-    width: '100%',
-    marginRight: '1.5rem',
-    marginBottom: '1.5rem',
-    color: 'white',
-    padding: '1rem',
-    textAlign: 'center',
-    fontSize: '1rem',
-    lineHeight: 'normal',
-    float: 'left',
-};
+import DragIcon from '@material-ui/icons/ZoomOutMap';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-const handleStyle = {
-    backgroundColor: 'black',
-    width: '1rem',
-    height: '1rem',
-    display: 'inline-block',
-    marginRight: '0.75rem',
-    cursor: 'move',
-};
+import SectionElement from './section-element';
+import ElementTypes from '../../wiring/element-types';
+import Colors from '../../../../../styles/colors';
+import Styles from './styles';
 
 const Section = ({
+    classes,
     id,
     index,
     moveSection,
     sectionTitle,
     initialContent,
+    handleSectionElementUpdates,
 }) => {
-    const [cards, setCards] = useState([]);
+    const [sectionElements, setSectionElements] = useState(null);
+    const [sectionOpen, setSectionOpen] = useState(true);
+
+
+    // MANAGE FLOW DATA
+    useEffect(() => {
+        // tell parent to update local state
+        // don't update if sectionElements are null (first run)
+        if (sectionElements) {
+            handleSectionElementUpdates(index, sectionElements);
+        }
+    }, [sectionElements]);
 
     useEffect(() => {
         // populate internal state with external props
-        setCards(initialContent);
+        setSectionElements(initialContent);
     }, [initialContent]);
 
+    const handleContentUpdates = (type, sectionElementIndex, values) => {
+        const tempSectionElements = cloneDeep(sectionElements);
+        if (type === 'answers') {
+            tempSectionElements[sectionElementIndex].answers = values;
+        }
+        setSectionElements(tempSectionElements);
+    };
+
+    // MANAGE ELEMENT DRAG
     // this monitors the dropping of things into the section.
-    // we are only listing for QUESTIONS || SECTIONS
     const onDrop = (item) => {
+        // we are only listing for QUESTIONS || SECTIONS
         // TODO: Add the new question to the place in the list where it was hovering before drop
-        // TODO: make the section accept "CARD" (or existing questions), so we can move them between sections
+        // TODO: make the section accept "sectionElement" (or existing questions), so we can move them between sections
         let newElement;
         // TODO: Add different components based on dropped question type (or some other param)
         if (item.type === 'question') {
             newElement = {
-                id: cards.length + 1,
+                id: sectionElements.length + 1,
                 title: item.text,
+                answers: [],
+                type: item.type,
+                questionType: item.questionType,
             };
         } else {
             // we just a section drop on top of a section, do nothing with the list
             return item;
         }
 
-        setCards(
-            update(cards, {
+        setSectionElements(
+            update(sectionElements, {
                 $push: [newElement],
             }),
         );
         // TODO: unclear why we'd need a return value
         return { name: `Section${id}` };
     };
-    const monitorCardDrop = () => {
-        // if we want to bubble data up for storage in parent, this is a logical way to do it
-    };
-    const moveCard = useCallback(
+    // const monitorSectionElementDrop = () => {}; // if we want to bubble data up for storage in parent, this is a logical way to do it
+    const moveSectionElement = useCallback(
         (dragIndex, hoverIndex) => {
-            const dragCard = cards[dragIndex];
-            setCards(
-                update(cards, {
-                    $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]],
+            const dragSectionElement = sectionElements[dragIndex];
+            setSectionElements(
+                update(sectionElements, {
+                    $splice: [[dragIndex, 1], [hoverIndex, 0, dragSectionElement]],
                 }),
             );
         },
-        [cards],
+        [sectionElements],
     );
-    const renderElement = (card, cardIndex) => (
-        <Card
-            key={card.id}
-            index={cardIndex}
-            id={card.id}
-            title={card.title}
-            moveCard={moveCard}
-            monitorCardDrop={monitorCardDrop}
+    const renderElement = (sectionElement, sectionElementIndex) => (
+        <SectionElement
+            key={sectionElement.id}
+            index={sectionElementIndex}
+            initialValues={sectionElement}
+            moveSectionElement={moveSectionElement}
+            // monitorSectionElementDrop={monitorSectionElementDrop}
             currentSectionIndex={index}
+            handleContentUpdates={handleContentUpdates}
         />
     );
 
-    // THIS IS BEING ADDED SO THE SECTION IS DRAGGABLE
+    // MANAGE SECTION DRAG
     const ref = useRef(null);
     const [{ canDrop, isOver }, drop] = useDrop({
         // accept needs to cascading set of types
@@ -111,7 +123,7 @@ const Section = ({
                 return;
             }
             // if we are trying to drag a NEW section in, it wont have an index setup yet
-            // TODO: dynamically manage indexes for new cards?
+            // TODO: dynamically manage indexes for new sectionElements?
             if (item.type === ElementTypes.SECTION && !item.index) {
                 // console.log('TODO: Allow for dynamic insertion of new sections');
                 return;
@@ -157,11 +169,11 @@ const Section = ({
         }),
     });
     const isActive = canDrop && isOver;
-    let backgroundColor = '#222';
+    let backgroundColor = Colors.darkGrey;
     if (isActive) {
-        backgroundColor = 'darkgreen';
+        backgroundColor = '#666';
     } else if (canDrop) {
-        backgroundColor = 'darkkhaki';
+        backgroundColor = Colors.darkGrey;
     }
 
     const [{ isDragging }, drag, preview] = useDrag({
@@ -173,17 +185,40 @@ const Section = ({
     });
     const opacity = isDragging ? 0.4 : 1;
 
-    // this is used to create a reference to the current section being dragged
-    // TODO: this is causing the entire block to be draggable, not just the handle
-    // drag(drop(ref));
     drop(ref);
+
+    // Manage UI
+
     return (
-        <div ref={ref} style={{ ...sectionStyle, backgroundColor, opacity }}>
-            <div ref={drag} style={handleStyle} />
-            {isActive ? 'Release to drop' : 'Draggable Section'}
-            <p>{sectionTitle}</p>
-            <div ref={preview}>
-                <div style={{ width: 400 }}>{cards.map((card, i) => renderElement(card, i))}</div>
+        <div ref={ref} style={{ opacity, backgroundColor, marginBottom: 30 }}>
+            <div className="row no-gutters" style={{ backgroundColor: Colors.pageBackground }}>
+                <div className="col text-left">
+                    <div ref={drag} className={`${classes.sectionTabStyle} ${classes.dragHandleStyle}`}>
+                        <DragIcon />
+                    </div>
+                </div>
+                <div className="col text-right">
+                    <div className={classes.sectionTabStyle} style={{ marginRight: 2 }}>
+                        <button type="button" onClick={() => setSectionOpen(!sectionOpen)}>
+                            { sectionOpen ? <ExpandLessIcon /> : <ExpandMoreIcon /> }
+                        </button>
+                    </div>
+                    <div className={classes.sectionTabStyle}>
+                        <DeleteIcon />
+                    </div>
+                </div>
+            </div>
+
+            <div className="row no-gutters" style={{ padding: '15px 30px' }}>
+                <Typography variant="h5">
+                    {`${sectionTitle} (${sectionElements ? sectionElements.length : 0})`}
+                </Typography>
+            </div>
+
+            <div className={`row no-gutters ${sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}`} style={{ padding: '15px 30px' }}>
+                <div ref={preview}>
+                    {sectionElements && sectionElements.map((sectionElement, i) => renderElement(sectionElement, i))}
+                </div>
             </div>
         </div>
     );
@@ -193,11 +228,13 @@ Section.defaultProps = {
     sectionTitle: 'default title',
 };
 Section.propTypes = {
+    classes: PropTypes.object.isRequired,
     id: PropTypes.number.isRequired,
     index: PropTypes.number.isRequired,
     moveSection: PropTypes.func.isRequired,
     sectionTitle: PropTypes.string,
     initialContent: PropTypes.array,
+    handleSectionElementUpdates: PropTypes.func.isRequired,
 };
 
-export default Section;
+export default withStyles(Styles)(Section);
