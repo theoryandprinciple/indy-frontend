@@ -3,20 +3,13 @@ import PropTypes from 'prop-types';
 import { useDrop } from 'react-dnd';
 import update from 'immutability-helper';
 import { cloneDeep } from 'lodash';
-import ElementTypes from '../starter-elements/element-types';
+import { withStyles } from '@material-ui/core/styles';
+import ElementTypes from '../../wiring/element-types';
 import Section from './section';
 import { useFlowDataContext } from '../../wiring/flow-provider';
+import Styles from './styles';
 
-const sectionStyle = {
-    height: '100%',
-    width: '100%',
-    marginRight: '1.5rem',
-    marginBottom: '1.5rem',
-    padding: '1rem',
-    float: 'left',
-};
-
-const SectionWrapper = ({ data }) => {
+const SectionWrapper = ({ data, classes }) => {
     const [sections, setSections] = useState([]);
     const { localFlowData, updateLocalFlowData } = useFlowDataContext();
 
@@ -100,15 +93,16 @@ const SectionWrapper = ({ data }) => {
     }
 
     return (
-        <div ref={drop} style={{ ...sectionStyle, border }}>
+        <div ref={drop} style={{ border }} className={classes.sectionWrapperWrapper}>
             {isActive ? `${sections.length === 0 ? 'Release to drop' : ''}` : `${sections.length === 0 ? 'Start the party' : ''}`}
-            <div style={{ width: 400 }}>{sections.map((section, i) => renderElement(section, i))}</div>
+            <div>{sections.map((section, i) => renderElement(section, i))}</div>
         </div>
     );
 };
 
 SectionWrapper.propTypes = {
+    classes: PropTypes.object.isRequired,
     data: PropTypes.array.isRequired,
 };
 
-export default SectionWrapper;
+export default withStyles(Styles)(SectionWrapper);

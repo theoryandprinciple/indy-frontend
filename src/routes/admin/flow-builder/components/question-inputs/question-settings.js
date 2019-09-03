@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 import Styles from './styles';
 
-const QuestionTypeRadio = ({
+const QuestionSettings = ({
     classes,
     handleUpdate,
     initialValues,
@@ -20,39 +20,34 @@ const QuestionTypeRadio = ({
     // if we do this, it causes an infinite loop, cause those changes want to come back down
     // useEffect(() => {// send updates to parent}, [formValues]);
 
-    const renderElement = (element, index) => (
-        <div key={index}>
-            <input disabled name="answer-set" type="radio" value={element.value} />
-            <Typography variant="body1" className={classes.inputLabel}>{element.value}</Typography>
-        </div>
-    );
-
-    const addElement = () => {
-        const temp = [...formValues];
-        temp.push({
-            id: temp.length + 1,
-            value: 'maybe',
-        });
+    const handleFormUpdate = (key, value) => {
+    //    console.log('key, value',key, value)
 
         // send parent to update
-        handleUpdate(temp);
+        // handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
+    if(formValues.validation){
+        console.log('formValues', formValues.validation.required)
+    }
 
     return (
         <div>
-            {formValues && formValues.map((element, i) => renderElement(element, i))}
-            <button type="button" onClick={addElement}>Add Answer</button>
+            <Typography variant="body2">Settings</Typography>
+            <input onChange={handleFormUpdate('required', true)} name="required" type="checkbox" checked={formValues.validation && formValues.validation.required} />
+            <Typography variant="body1" className={classes.inputLabel}>Reqiured</Typography>
+
+            <Typography variant="body2">Advanced</Typography>
         </div>
     );
 };
 
-QuestionTypeRadio.propTypes = {
+QuestionSettings.propTypes = {
     classes: PropTypes.object.isRequired,
     handleUpdate: PropTypes.func.isRequired,
-    initialValues: PropTypes.array.isRequired,
+    initialValues: PropTypes.object.isRequired,
 };
 
-export default withStyles(Styles)(QuestionTypeRadio);
+export default withStyles(Styles)(QuestionSettings);

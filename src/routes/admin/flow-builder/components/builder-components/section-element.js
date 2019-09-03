@@ -1,18 +1,21 @@
 import React, { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
-import ElementTypes from '../starter-elements/element-types';
-import RadioQuestion from '../question-inputs/question-type-radio';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
-const style = {
-    border: '1px dashed gray',
-    padding: '0.5rem 1rem',
-    marginBottom: '.5rem',
-    backgroundColor: 'white',
-    cursor: 'move',
-    color: 'black',
-};
+import ElementTypes from '../../wiring/element-types';
+import QuestionTypes from '../../wiring/question-types';
+import IconList from '../../wiring/icon-list';
+
+import RadioQuestion from '../question-inputs/question-type-radio';
+import CheckboxQuestion from '../question-inputs/question-type-checkbox';
+import QuestionSettings from '../question-inputs/question-settings';
+
+import Styles from './styles';
+
 const SectionElement = ({
+    classes,
     initialValues,
     index,
     moveSectionElement,
@@ -93,14 +96,29 @@ const SectionElement = ({
     };
 
     return (
-        <div ref={ref} style={{ ...style, opacity }}>
-            {initialValues.title}
-            <RadioQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />
+        <div ref={ref} style={{ opacity }} className={`row ${classes.sectionElementWrapper}`}>
+            <div className="col-auto">
+                <div className={classes.sectionElementIconWrapper}>
+                    {IconList[initialValues.questionType]}
+                </div>
+            </div>
+            <div className="col">
+                <Typography variant="body2">{initialValues.title}</Typography>
+                {initialValues.type === ElementTypes.QUESTION && (
+                    <>
+                        {initialValues.questionType === QuestionTypes.RADIO && <RadioQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />}
+                        {initialValues.questionType === QuestionTypes.CHECKBOX && <CheckboxQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />}
+                        <hr className={classes.sectionElementBR} />
+                        <QuestionSettings handleUpdate={updateAnswers} initialValues={initialValues.settings} />
+                    </>
+                )}
+            </div>
         </div>
     );
 };
 
 SectionElement.propTypes = {
+    classes: PropTypes.object.isRequired,
     initialValues: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
     moveSectionElement: PropTypes.func.isRequired,
@@ -108,4 +126,5 @@ SectionElement.propTypes = {
     currentSectionIndex: PropTypes.number.isRequired,
     handleContentUpdates: PropTypes.func.isRequired,
 };
-export default SectionElement;
+
+export default withStyles(Styles)(SectionElement);

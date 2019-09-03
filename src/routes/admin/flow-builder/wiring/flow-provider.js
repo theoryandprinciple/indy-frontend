@@ -21,11 +21,8 @@ const SampleFlowData = {
                 'title': 'Title of question',
                 'id': 0,
                 'type': 'question',
-                'questionType': 'Radio Question',
-                'advanced': [{
-                    'populateDynamically': true,
-                }],
-                'settings': [{
+                'questionType': 'radio',
+                'settings': {
                     'showDescription': true,
                     'descrition': 'this is my long description',
                     'variableName': 'donuts',
@@ -33,7 +30,10 @@ const SampleFlowData = {
                         'required': false,
                         'email': true,
                     },
-                }],
+                    'advanced': [{
+                        'populateDynamically': true,
+                    }],
+                },
                 'answers': [{
                     'id': 0,
                     'value': 'yes',
@@ -46,11 +46,8 @@ const SampleFlowData = {
                 'title': 'Are Dogs Cool?',
                 'id': 1,
                 'type': 'question',
-                'questionType': 'Checkbox Question',
-                'advanced': [{
-                    'populateDynamically': true,
-                }],
-                'settings': [{
+                'questionType': 'checkbox',
+                'settings': {
                     'showDescription': true,
                     'descrition': 'this is my long description',
                     'variableName': 'donuts',
@@ -58,7 +55,10 @@ const SampleFlowData = {
                         'required': false,
                         'email': true,
                     },
-                }],
+                    'advanced': [{
+                        'populateDynamically': true,
+                    }],
+                },
                 'answers': [{
                     'id': 0,
                     'value': 'yes',
@@ -75,19 +75,19 @@ const SampleFlowData = {
                 'title': 'question 1 title',
                 'id': 0,
                 'type': 'question',
-                'questionType': 'Radio Question',
-                'advanced': [{
-                    'populateDynamically': true,
-                }],
-                'settings': [{
+                'questionType': 'radio',
+                'settings': {
                     'showDescription': true,
                     'descrition': 'this is my long description',
                     'variableName': 'donuts',
                     'validation': {
-                        'required': false,
+                        'required': true,
                         'email': true,
                     },
-                }],
+                    'advanced': [{
+                        'populateDynamically': true,
+                    }],
+                },
                 'answers': [{
                     'id': 0,
                     'value': 'yes',
@@ -100,11 +100,8 @@ const SampleFlowData = {
                 'title': 'question 2 title',
                 'id': 1,
                 'type': 'question',
-                'questionType': 'Checkbox Question',
-                'advanced': [{
-                    'populateDynamically': true,
-                }],
-                'settings': [{
+                'questionType': 'checkbox',
+                'settings': {
                     'showDescription': true,
                     'descrition': 'this is my long description',
                     'variableName': 'donuts',
@@ -112,7 +109,10 @@ const SampleFlowData = {
                         'required': false,
                         'email': true,
                     },
-                }],
+                    'advanced': [{
+                        'populateDynamically': true,
+                    }],
+                },
                 'answers': [{
                     'id': 0,
                     'value': 'yes',
@@ -135,11 +135,8 @@ const SampleFlowData2 = {
                 'title': 'Title of question',
                 'id': 0,
                 'type': 'question',
-                'questionType': 'Radio Question',
-                'advanced': [{
-                    'populateDynamically': true,
-                }],
-                'settings': [{
+                'questionType': 'radio',
+                'settings': {
                     'showDescription': true,
                     'descrition': 'this is my long description',
                     'variableName': 'donuts',
@@ -147,7 +144,10 @@ const SampleFlowData2 = {
                         'required': false,
                         'email': true,
                     },
-                }],
+                    'advanced': [{
+                        'populateDynamically': true,
+                    }],
+                },
                 'answers': [{
                     'id': 0,
                     'value': 'yes',
@@ -160,11 +160,8 @@ const SampleFlowData2 = {
                 'title': 'Are Dogs Cool?',
                 'id': 1,
                 'type': 'question',
-                'questionType': 'Checkbox Question',
-                'advanced': [{
-                    'populateDynamically': true,
-                }],
-                'settings': [{
+                'questionType': 'checkbox',
+                'settings': {
                     'showDescription': true,
                     'descrition': 'this is my long description',
                     'variableName': 'donuts',
@@ -172,7 +169,10 @@ const SampleFlowData2 = {
                         'required': false,
                         'email': true,
                     },
-                }],
+                    'advanced': [{
+                        'populateDynamically': true,
+                    }],
+                },
                 'answers': [{
                     'id': 0,
                     'value': 'yes',
@@ -189,11 +189,8 @@ const SampleFlowData2 = {
                 'title': 'question 1 title',
                 'id': 0,
                 'type': 'question',
-                'questionType': 'Radio Question',
-                'advanced': [{
-                    'populateDynamically': true,
-                }],
-                'settings': [{
+                'questionType': 'radio',
+                'settings': {
                     'showDescription': true,
                     'descrition': 'this is my long description',
                     'variableName': 'donuts',
@@ -201,7 +198,10 @@ const SampleFlowData2 = {
                         'required': false,
                         'email': true,
                     },
-                }],
+                    'advanced': [{
+                        'populateDynamically': true,
+                    }],
+                },
                 'answers': [{
                     'id': 0,
                     'value': 'yes',
@@ -214,11 +214,8 @@ const SampleFlowData2 = {
                 'title': 'question 2 title',
                 'id': 1,
                 'type': 'question',
-                'questionType': 'Checkbox Question',
-                'advanced': [{
-                    'populateDynamically': true,
-                }],
-                'settings': [{
+                'questionType': 'checkbox',
+                'settings': {
                     'showDescription': true,
                     'descrition': 'this is my long description',
                     'variableName': 'donuts',
@@ -226,7 +223,10 @@ const SampleFlowData2 = {
                         'required': false,
                         'email': true,
                     },
-                }],
+                    'advanced': [{
+                        'populateDynamically': true,
+                    }],
+                },
                 'answers': [{
                     'id': 0,
                     'value': 'yes',

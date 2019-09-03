@@ -22,7 +22,7 @@ const QuestionTypeRadio = ({
 
     const renderElement = (element, index) => (
         <div key={index}>
-            <input disabled name="answer-set" type="radio" value={element.value} />
+            <input disabled name="answer-set" type="checkbox" value={element.value} />
             <Typography variant="body1" className={classes.inputLabel}>{element.value}</Typography>
         </div>
     );

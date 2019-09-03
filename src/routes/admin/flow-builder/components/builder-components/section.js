@@ -17,7 +17,7 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import SectionElement from './section-element';
-import ElementTypes from '../starter-elements/element-types';
+import ElementTypes from '../../wiring/element-types';
 import Colors from '../../../../../styles/colors';
 import Styles from './styles';
 
@@ -69,6 +69,8 @@ const Section = ({
                 id: sectionElements.length + 1,
                 title: item.text,
                 answers: [],
+                type: item.type,
+                questionType: item.questionType,
             };
         } else {
             // we just a section drop on top of a section, do nothing with the list
@@ -198,7 +200,7 @@ const Section = ({
                 <div className="col text-right">
                     <div className={classes.sectionTabStyle} style={{ marginRight: 2 }}>
                         <button type="button" onClick={() => setSectionOpen(!sectionOpen)}>
-                            <ExpandLessIcon />
+                            { sectionOpen ? <ExpandLessIcon /> : <ExpandMoreIcon /> }
                         </button>
                     </div>
                     <div className={classes.sectionTabStyle}>

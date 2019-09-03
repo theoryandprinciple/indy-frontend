@@ -1,41 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
-import ElementTypes from './element-types';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
-const handleWrapperStyle = {
-    border: '1px dashed gray',
-    padding: '0.5rem 1rem',
-    marginBottom: '.5rem',
-    backgroundColor: 'white',
-    width: '20rem',
-};
-const handleStyle = {
-    backgroundColor: 'green',
-    width: '1rem',
-    height: '1rem',
-    display: 'inline-block',
-    marginRight: '0.75rem',
-    cursor: 'move',
-};
+import ElementTypes from '../../wiring/element-types';
+import IconList from '../../wiring/icon-list';
+import Styles from './styles';
 
-const BoxWithHandle = ({ text }) => {
-    const [{ opacity }, drag, preview] = useDrag({
-        item: { type: ElementTypes.QUESTION, text },
+const BoxWithHandle = ({ text, questionType, classes }) => {
+    const [{ opacity }, preview] = useDrag({
+        item: { type: ElementTypes.QUESTION, text, questionType },
         collect: monitor => ({
             opacity: monitor.isDragging() ? 0.4 : 1,
         }),
     });
     return (
-        <div ref={preview} style={{ ...handleWrapperStyle, opacity }}>
-            <div ref={drag} style={handleStyle} />
-            {text}
+        <div ref={preview} className={`row no-gutters ${classes.elementQuestionWrapper}`} style={{ opacity }}>
+            <div className="col-3">
+                <div className={classes.elementQuestionIconWrapper}>
+                    {IconList[questionType]}
+                </div>
+            </div>
+            <div className="col-9" style={{ verticalAlign: 'center' }}>
+                <Typography variant="body1">{text}</Typography>
+            </div>
         </div>
     );
 };
 
 BoxWithHandle.propTypes = {
     text: PropTypes.string.isRequired,
+    questionType: PropTypes.string.isRequired,
+    classes: PropTypes.object.isRequired,
 };
 
-export default BoxWithHandle;
+export default withStyles(Styles)(BoxWithHandle);

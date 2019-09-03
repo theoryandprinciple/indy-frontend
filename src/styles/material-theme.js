@@ -4,6 +4,14 @@ import Colors from './colors';
 const theme = createMuiTheme({
     typography: {
         useNextVariants: true,
+        body1: {
+            fontSize: 13,
+            fontWeight: 400,
+        },
+        body2: {
+            fontSize: 14,
+            fontWeight: 800,
+        },
     },
     palette: {
         text: {
