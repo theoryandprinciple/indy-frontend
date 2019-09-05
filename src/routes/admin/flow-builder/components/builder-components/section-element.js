@@ -78,10 +78,11 @@ const SectionElement = ({
     const [{ isDragging }, drag] = useDrag({
         item: {
             type: ElementTypes.SECTION_ELEMENT,
-            id: initialValues.id,
+            id: initialValues.id || null,
             index,
             currentSectionIndex, // we use this to track which section a card is in
-            contents: [],
+            // TODO: figure out if we need to be setting defaults here
+            // contents: [{ settings: { validation: { required: false } } }],
         },
         collect: monitor => ({
             isDragging: monitor.isDragging(),
@@ -94,6 +95,16 @@ const SectionElement = ({
     const updateAnswers = (formValues) => {
         handleContentUpdates('answers', index, formValues);
     };
+    const updateSettings = (formValues) => {
+        handleContentUpdates('settings', index, formValues);
+    };
+
+    const duplicateElement = () => {
+        handleContentUpdates('duplicate', index)
+    }
+    const deleteElement = () => {
+        handleContentUpdates('delete', index)
+    }
 
     return (
         <div ref={ref} style={{ opacity }} className={`row ${classes.sectionElementWrapper}`}>
@@ -101,6 +112,8 @@ const SectionElement = ({
                 <div className={classes.sectionElementIconWrapper}>
                     {IconList[initialValues.questionType]}
                 </div>
+                <button type="button" onClick={duplicateElement}>Dup</button>
+                <button type="button" onClick={deleteElement}>Delete</button>
             </div>
             <div className="col">
                 <Typography variant="body2">{initialValues.title}</Typography>
@@ -109,7 +122,7 @@ const SectionElement = ({
                         {initialValues.questionType === QuestionTypes.RADIO && <RadioQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />}
                         {initialValues.questionType === QuestionTypes.CHECKBOX && <CheckboxQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />}
                         <hr className={classes.sectionElementBR} />
-                        <QuestionSettings handleUpdate={updateAnswers} initialValues={initialValues.settings} />
+                        <QuestionSettings handleUpdate={updateSettings} initialValues={initialValues.settings} />
                     </>
                 )}
             </div>

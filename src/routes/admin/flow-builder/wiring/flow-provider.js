@@ -27,7 +27,7 @@ const SampleFlowData = {
                     'descrition': 'this is my long description',
                     'variableName': 'donuts',
                     'validation': {
-                        'required': false,
+                        'required': true,
                         'email': true,
                     },
                     'advanced': [{
@@ -249,6 +249,7 @@ const FlowDataProvider = (props) => {
 
     useEffect(() => {
         // nothing to do when this updates (yet)
+        // console.log('update local flow', localFlowData);
     }, [localFlowData]);
 
     const updateLocalFlowData = newFlowData => setLocalFlowData(newFlowData);

@@ -50,25 +50,41 @@ const Section = ({
 
     const handleContentUpdates = (type, sectionElementIndex, values) => {
         const tempSectionElements = cloneDeep(sectionElements);
-        if (type === 'answers') {
-            tempSectionElements[sectionElementIndex].answers = values;
+        if (type === 'delete') { // 'delete' is a special type
+            // delete stuff
+            tempSectionElements.splice(sectionElementIndex, 1);
+        } else if (type === 'duplicate') { // 'duplicate' is a special type
+            // duplicate stuff
+            tempSectionElements.push(tempSectionElements[sectionElementIndex]);
+        } else { // content update
+            // update answers or settings (type) with new values
+            tempSectionElements[sectionElementIndex][type] = values;
+            /*
+                if (type === 'answers') {
+                    tempSectionElements[sectionElementIndex].answers = values;
+                } else if (type === 'settings') {
+                    tempSectionElements[sectionElementIndex].settings = values;
+                }
+            */
         }
+        // move updates up a level
         setSectionElements(tempSectionElements);
     };
 
     // MANAGE ELEMENT DRAG
     // this monitors the dropping of things into the section.
     const onDrop = (item) => {
-        // we are only listing for QUESTIONS || SECTIONS
+        // we are only listening for QUESTIONS || SECTIONS
         // TODO: Add the new question to the place in the list where it was hovering before drop
         // TODO: make the section accept "sectionElement" (or existing questions), so we can move them between sections
         let newElement;
-        // TODO: Add different components based on dropped question type (or some other param)
+        // Set default values used inside new question components (answers, settings)
         if (item.type === 'question') {
             newElement = {
-                id: sectionElements.length + 1,
+                id: null,
                 title: item.text,
                 answers: [],
+                settings: { validation: { required: false } },
                 type: item.type,
                 questionType: item.questionType,
             };
@@ -99,7 +115,7 @@ const Section = ({
     );
     const renderElement = (sectionElement, sectionElementIndex) => (
         <SectionElement
-            key={sectionElement.id}
+            key={sectionElementIndex}
             index={sectionElementIndex}
             initialValues={sectionElement}
             moveSectionElement={moveSectionElement}

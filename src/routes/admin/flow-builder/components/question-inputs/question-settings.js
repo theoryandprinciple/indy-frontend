@@ -10,7 +10,7 @@ const QuestionSettings = ({
     handleUpdate,
     initialValues,
 }) => {
-    const [formValues, setFormValues] = useState([]);
+    const [formValues, setFormValues] = useState({});
     useEffect(() => {
         // populate internal state with data in useFlowDataContext,
         // this should only happen when API data comes in
@@ -20,23 +20,19 @@ const QuestionSettings = ({
     // if we do this, it causes an infinite loop, cause those changes want to come back down
     // useEffect(() => {// send updates to parent}, [formValues]);
 
-    const handleFormUpdate = (key, value) => {
-    //    console.log('key, value',key, value)
-
+    const handleValidationUpdate = (key, value) => {
+        const temp = { ...formValues, validation: { ...formValues.validation, [key]: value } };
         // send parent to update
-        // handleUpdate(temp);
+        handleUpdate(temp);
 
         // update local state
-        // setFormValues(temp);
+        setFormValues({ ...formValues, validation: { ...formValues.validation, [key]: value } });
     };
-    if(formValues.validation){
-        console.log('formValues', formValues.validation.required)
-    }
 
     return (
         <div>
             <Typography variant="body2">Settings</Typography>
-            <input onChange={handleFormUpdate('required', true)} name="required" type="checkbox" checked={formValues.validation && formValues.validation.required} />
+            <input onClick={() => handleValidationUpdate('required', !formValues.validation.required)} name="required" type="checkbox" defaultChecked={formValues.validation && formValues.validation.required} />
             <Typography variant="body1" className={classes.inputLabel}>Reqiured</Typography>
 
             <Typography variant="body2">Advanced</Typography>
