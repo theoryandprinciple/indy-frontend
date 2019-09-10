@@ -2,20 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+
 import ElementTypes from '../../wiring/element-types';
+// import IconList from '../../wiring/icon-list';
 import Styles from './styles';
 
 const BoxWithHandle = ({ text, classes }) => {
-    const [{ opacity }, drag, preview] = useDrag({
-        item: { type: ElementTypes.SECTION, text },
+    // we use `id: -1` as an indicator to the section-wrapper to push a new section into the flow
+    const [{ opacity }, preview] = useDrag({
+        item: { type: ElementTypes.SECTION, text, id: -1 },
         collect: monitor => ({
             opacity: monitor.isDragging() ? 0.4 : 1,
         }),
     });
     return (
-        <div ref={preview} className={classes.handleWrapperStyle} style={{ opacity }}>
-            <div ref={drag} className={classes.handleStyle} />
-            {text}
+        <div ref={preview} className={`row no-gutters ${classes.elementQuestionWrapper}`} style={{ opacity }}>
+            <div className="col-3">
+                <div className={classes.elementQuestionIconWrapper}>
+                    {/* {IconList[questionType]} */}
+                </div>
+            </div>
+            <div className="col-9" style={{ verticalAlign: 'center' }}>
+                <Typography variant="body1">{text}</Typography>
+            </div>
         </div>
     );
 };

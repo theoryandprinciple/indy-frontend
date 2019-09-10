@@ -16,108 +16,128 @@ const SampleFlowData = {
     'sections': [
         {
             'title': 'section title',
-            'id': 0,
+            'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97xa',
             'contents': [{
                 'title': 'Title of question',
-                'id': 0,
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fa',
                 'type': 'question',
                 'questionType': 'radio',
                 'settings': {
-                    'showDescription': true,
-                    'descrition': 'this is my long description',
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
                     'variableName': 'donuts',
                     'validation': {
                         'required': true,
                         'email': true,
                     },
-                    'advanced': [{
+                    'advanced': {
                         'populateDynamically': true,
-                    }],
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'all',
+                        },
+                        'enableCalculation': false,
+                    },
                 },
                 'answers': [{
-                    'id': 0,
                     'value': 'yes',
                 }, {
-                    'id': 1,
                     'value': 'no',
                 }],
             },
             {
                 'title': 'Are Dogs Cool?',
-                'id': 1,
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
                 'type': 'question',
                 'questionType': 'checkbox',
                 'settings': {
-                    'showDescription': true,
-                    'descrition': 'this is my long description',
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
                     'variableName': 'donuts',
                     'validation': {
                         'required': false,
                         'email': true,
                     },
-                    'advanced': [{
+                    'advanced': {
                         'populateDynamically': true,
-                    }],
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'all',
+                        },
+                        'enableCalculation': false,
+                    },
                 },
                 'answers': [{
-                    'id': 0,
                     'value': 'yes',
                 }, {
-                    'id': 1,
                     'value': 'no',
                 }],
             }],
         },
         {
             'title': 'section title 2',
-            'id': 1,
+            'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97xb',
             'contents': [{
                 'title': 'question 1 title',
-                'id': 0,
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
                 'type': 'question',
                 'questionType': 'radio',
                 'settings': {
-                    'showDescription': true,
-                    'descrition': 'this is my long description',
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
                     'variableName': 'donuts',
                     'validation': {
                         'required': true,
                         'email': true,
                     },
-                    'advanced': [{
+                    'advanced': {
                         'populateDynamically': true,
-                    }],
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'all',
+                        },
+                        'enableCalculation': false,
+                    },
                 },
                 'answers': [{
-                    'id': 0,
                     'value': 'yes',
                 }, {
-                    'id': 1,
                     'value': 'no',
                 }],
             },
             {
                 'title': 'question 2 title',
-                'id': 1,
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fd',
                 'type': 'question',
                 'questionType': 'checkbox',
                 'settings': {
-                    'showDescription': true,
-                    'descrition': 'this is my long description',
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
                     'variableName': 'donuts',
                     'validation': {
                         'required': false,
                         'email': true,
                     },
-                    'advanced': [{
+                    'advanced': {
                         'populateDynamically': true,
-                    }],
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'some',
+                        },
+                        'enableCalculation': false,
+                    },
                 },
                 'answers': [{
-                    'id': 0,
                     'value': 'yes',
                 }, {
-                    'id': 1,
                     'value': 'no',
                 }],
             }],
@@ -130,108 +150,128 @@ const SampleFlowData2 = {
     'sections': [
         {
             'title': 'section title',
-            'id': 0,
+            'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97xc',
             'contents': [{
                 'title': 'Title of question',
-                'id': 0,
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fh',
                 'type': 'question',
                 'questionType': 'radio',
                 'settings': {
-                    'showDescription': true,
-                    'descrition': 'this is my long description',
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
                     'variableName': 'donuts',
                     'validation': {
                         'required': false,
                         'email': true,
                     },
-                    'advanced': [{
+                    'advanced': {
                         'populateDynamically': true,
-                    }],
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'hide',
+                            'visiblityCondition': 'none',
+                        },
+                        'enableCalculation': false,
+                    },
                 },
                 'answers': [{
-                    'id': 0,
                     'value': 'yes',
                 }, {
-                    'id': 1,
                     'value': 'no',
                 }],
             },
             {
                 'title': 'Are Dogs Cool?',
-                'id': 1,
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fe',
                 'type': 'question',
                 'questionType': 'checkbox',
                 'settings': {
-                    'showDescription': true,
-                    'descrition': 'this is my long description',
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
                     'variableName': 'donuts',
                     'validation': {
                         'required': false,
                         'email': true,
                     },
-                    'advanced': [{
+                    'advanced': {
                         'populateDynamically': true,
-                    }],
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'some',
+                        },
+                        'enableCalculation': false,
+                    },
                 },
                 'answers': [{
-                    'id': 0,
                     'value': 'yes',
                 }, {
-                    'id': 1,
                     'value': 'no',
                 }],
             }],
         },
         {
             'title': 'section title 2',
-            'id': 1,
+            'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97xd',
             'contents': [{
                 'title': 'question 1 title',
-                'id': 0,
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97ff',
                 'type': 'question',
                 'questionType': 'radio',
                 'settings': {
-                    'showDescription': true,
-                    'descrition': 'this is my long description',
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
                     'variableName': 'donuts',
                     'validation': {
                         'required': false,
                         'email': true,
                     },
-                    'advanced': [{
+                    'advanced': {
                         'populateDynamically': true,
-                    }],
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'hide',
+                            'visiblityCondition': 'all',
+                        },
+                        'enableCalculation': false,
+                    },
                 },
                 'answers': [{
-                    'id': 0,
                     'value': 'yes',
                 }, {
-                    'id': 1,
                     'value': 'no',
                 }],
             },
             {
                 'title': 'question 2 title',
-                'id': 1,
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fg',
                 'type': 'question',
                 'questionType': 'checkbox',
                 'settings': {
-                    'showDescription': true,
-                    'descrition': 'this is my long description',
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
                     'variableName': 'donuts',
                     'validation': {
                         'required': false,
                         'email': true,
                     },
-                    'advanced': [{
+                    'advanced': {
                         'populateDynamically': true,
-                    }],
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'all',
+                        },
+                        'enableCalculation': false,
+                    },
                 },
                 'answers': [{
-                    'id': 0,
                     'value': 'yes',
                 }, {
-                    'id': 1,
                     'value': 'no',
                 }],
             }],

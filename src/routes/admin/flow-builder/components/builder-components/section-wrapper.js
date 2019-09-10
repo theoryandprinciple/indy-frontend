@@ -8,6 +8,7 @@ import ElementTypes from '../../wiring/element-types';
 import Section from './section';
 import { useFlowDataContext } from '../../wiring/flow-provider';
 import Styles from './styles';
+import IdGenerator from '../../wiring/unique-id-generator';
 
 const SectionWrapper = ({ data, classes }) => {
     const [sections, setSections] = useState([]);
@@ -24,7 +25,7 @@ const SectionWrapper = ({ data, classes }) => {
         if (item.type === 'section' && item.id === -1) {
             setSections(
                 update(sections, {
-                    $push: [{ ...item, id: sections.length + 1 }],
+                    $push: [{ ...item, id: IdGenerator }],
                 }),
             );
         }

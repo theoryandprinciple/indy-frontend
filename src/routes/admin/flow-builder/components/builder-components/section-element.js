@@ -100,11 +100,11 @@ const SectionElement = ({
     };
 
     const duplicateElement = () => {
-        handleContentUpdates('duplicate', index)
-    }
+        handleContentUpdates('duplicate', index);
+    };
     const deleteElement = () => {
-        handleContentUpdates('delete', index)
-    }
+        handleContentUpdates('delete', index);
+    };
 
     return (
         <div ref={ref} style={{ opacity }} className={`row ${classes.sectionElementWrapper}`}>

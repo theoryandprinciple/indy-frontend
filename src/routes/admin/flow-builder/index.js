@@ -44,6 +44,7 @@ const Flow = () => {
                                 <Section text="Default Section Header" />
                             </div>
                             <div className="col-6">
+                                <p>stuffs</p>
                             </div>
                         </div>
                     </div>

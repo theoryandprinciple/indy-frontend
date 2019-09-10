@@ -18,6 +18,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import SectionElement from './section-element';
 import ElementTypes from '../../wiring/element-types';
+import IdGenerator from '../../wiring/unique-id-generator';
 import Colors from '../../../../../styles/colors';
 import Styles from './styles';
 
@@ -54,8 +55,10 @@ const Section = ({
             // delete stuff
             tempSectionElements.splice(sectionElementIndex, 1);
         } else if (type === 'duplicate') { // 'duplicate' is a special type
-            // duplicate stuff
-            tempSectionElements.push(tempSectionElements[sectionElementIndex]);
+            // duplicate stuff (no mutation of original object)
+            // need to replace id with new value, oppose to carrying it over
+            const newElement = Object.assign({}, tempSectionElements[sectionElementIndex], { id: IdGenerator });
+            tempSectionElements.push(newElement);
         } else { // content update
             // update answers or settings (type) with new values
             tempSectionElements[sectionElementIndex][type] = values;
@@ -81,7 +84,7 @@ const Section = ({
         // Set default values used inside new question components (answers, settings)
         if (item.type === 'question') {
             newElement = {
-                id: null,
+                id: IdGenerator,
                 title: item.text,
                 answers: [],
                 settings: { validation: { required: false } },
@@ -203,8 +206,6 @@ const Section = ({
 
     drop(ref);
 
-    // Manage UI
-
     return (
         <div ref={ref} style={{ opacity, backgroundColor, marginBottom: 30 }}>
             <div className="row no-gutters" style={{ backgroundColor: Colors.pageBackground }}>
@@ -245,7 +246,7 @@ Section.defaultProps = {
 };
 Section.propTypes = {
     classes: PropTypes.object.isRequired,
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     index: PropTypes.number.isRequired,
     moveSection: PropTypes.func.isRequired,
     sectionTitle: PropTypes.string,
