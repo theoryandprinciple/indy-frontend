@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { ResetPass } from '../../utils/auth-api';
+import { ResetPass } from './wiring/auth-api';
 import GetParameterByName from '../../utils/get-param';
 import ValidateEmail from '../../utils/valid-email';
 

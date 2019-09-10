@@ -1,5 +1,5 @@
 import React from 'react';
-import { Logout } from '../../utils/auth-api';
+import { Logout } from '../login/wiring/auth-api';
 
 const Admin = () => (
     <div>

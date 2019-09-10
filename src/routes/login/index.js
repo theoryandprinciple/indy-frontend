@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { useAuthDataContext } from '../../utils/auth-provider';
-import { Login, Logout } from '../../utils/auth-api';
+import { useAuthDataContext } from './wiring/auth-provider';
+import { Login, Logout } from './wiring/auth-api';
 import ValidateEmail from '../../utils/valid-email';
 
 const SignInForm = () => {

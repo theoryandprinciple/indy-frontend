@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { ForgotPass } from '../../utils/auth-api';
+import { ForgotPass } from './wiring/auth-api';
 import ValidateEmail from '../../utils/valid-email';
 
 const ForgotPassword = () => {
