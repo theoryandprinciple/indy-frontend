@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import DeleteIcon from '@material-ui/icons/Delete';
+import DuplicateIcon from '@material-ui/icons/AddToPhotos';
+import AddIcon from '@material-ui/icons/AddCircle';
 import Radio from '@material-ui/core/Radio';
 
 import Styles from './styles';
@@ -61,14 +64,14 @@ const QuestionTypeRadio = ({
             The radio element is really just a visual cue to the user, the important part of this element is the text TextField
             editing the text field updates the answer label that is presented in other areas of the app
         */
-        <div key={index} className="row">
+        <div key={index} className={`row ${classes.answerRow}`}>
             <div className="col">
                 <Radio disabled name="answer-set" value={element.value} />
                 <TextField className={classes.inputLabel} value={element.value} onChange={handleContentUpdates('value', index)} />
             </div>
-            <div className="col">
-                <button type="button" onClick={handleContentUpdates('delete', index)}>delete</button>
-                <button type="button" onClick={handleContentUpdates('duplicate', index)}>dup</button>
+            <div className={`col-auto ${classes.answerActions}`}>
+                <button type="button" onClick={handleContentUpdates('duplicate', index)}><DuplicateIcon /></button>
+                <button type="button" onClick={handleContentUpdates('delete', index)}><DeleteIcon /></button>
             </div>
         </div>
     );
@@ -76,7 +79,14 @@ const QuestionTypeRadio = ({
     return (
         <div>
             {formValues && formValues.map((element, i) => renderElement(element, i))}
-            <button type="button" onClick={addElement}>Add Answer</button>
+            <div className="row">
+                <div className="col">
+                    <button type="button" onClick={addElement} className={classes.addOptionBtn}>
+                        <AddIcon color="primary" className={classes.addOptionIcon} />
+                        Add option
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };

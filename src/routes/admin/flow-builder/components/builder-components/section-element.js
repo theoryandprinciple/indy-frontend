@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
+import DeleteIcon from '@material-ui/icons/Delete';
+import DuplicateIcon from '@material-ui/icons/AddToPhotos';
+
 import ElementTypes from '../../wiring/element-types';
 import QuestionTypes from '../../wiring/question-types';
 import IconList from '../../wiring/icon-list';
@@ -107,24 +110,34 @@ const SectionElement = ({
     };
 
     return (
-        <div ref={ref} style={{ opacity }} className={`row ${classes.sectionElementWrapper}`}>
+        <div ref={ref} style={{ opacity }} className={`row ${classes.sectionElementWrapper} no-gutters`}>
             <div className="col-auto">
                 <div className={classes.sectionElementIconWrapper}>
                     {IconList[initialValues.questionType]}
                 </div>
-                <button type="button" onClick={duplicateElement}>Dup</button>
-                <button type="button" onClick={deleteElement}>Delete</button>
             </div>
             <div className="col">
-                <Typography variant="body2">{initialValues.title}</Typography>
-                {initialValues.type === ElementTypes.QUESTION && (
-                    <>
-                        {initialValues.questionType === QuestionTypes.RADIO && <RadioQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />}
-                        {initialValues.questionType === QuestionTypes.CHECKBOX && <CheckboxQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />}
-                        <hr className={classes.sectionElementBR} />
-                        <QuestionSettings handleUpdate={updateSettings} initialValues={initialValues.settings} />
-                    </>
-                )}
+                <div className={`row ${classes.elementHeader}`}>
+                    <div className="col ml-3">
+                        <Typography variant="body2">{initialValues.title}</Typography>
+                    </div>
+                    <div className="col-auto">
+                        <button type="button" onClick={duplicateElement}><DuplicateIcon /></button>
+                        <button type="button" onClick={deleteElement}><DeleteIcon /></button>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                        {initialValues.type === ElementTypes.QUESTION && (
+                            <>
+                                {initialValues.questionType === QuestionTypes.RADIO && <RadioQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />}
+                                {initialValues.questionType === QuestionTypes.CHECKBOX && <CheckboxQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />}
+                                <hr className={classes.sectionElementBR} />
+                                <QuestionSettings handleUpdate={updateSettings} initialValues={initialValues.settings} />
+                            </>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     );

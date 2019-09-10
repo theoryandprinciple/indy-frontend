@@ -5,6 +5,26 @@ const styles = () => ({
         display: 'inline-block',
         paddingLeft: 15,
     },
+    answerActions: {
+        display: 'none',
+    },
+    answerRow: {
+        '&:hover': {
+            cursor: 'pointer', // overrides the drag handle that is default
+        },
+        '&:hover $answerActions': {
+            display: 'block',
+        },
+    },
+    elementSelectMenu: {
+        marginRight: 15,
+    },
+    addOptionBtn: {
+        padding: 9,
+    },
+    addOptionIcon: {
+        marginRight: 15,
+    },
 });
 
 export default styles;

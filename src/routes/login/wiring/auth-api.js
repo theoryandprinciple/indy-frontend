@@ -1,4 +1,4 @@
-import WebClient from './web-client';
+import WebClient from '../../../utils/web-client';
 
 export const Login = (FormValues) => {
     const { email, password } = FormValues;
