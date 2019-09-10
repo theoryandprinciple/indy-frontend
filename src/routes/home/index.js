@@ -1,15 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { history } from '../../wiring/history';
 
-const Admin = () => (
+const Home = () => (
     <div>
-        <h1>Basic Home Page</h1>
-        <p>stuffs</p>
-        <button type="button" onClick={() => history.push('/admin')}>Admin</button>
-        <br />
-        <Link to="/admin">Admin Link</Link>
+        <h1>Home Page</h1>
+        <Link to="/admin/flow-builder">Goto Flow Builder</Link>
     </div>
 );
 
-export default Admin;
+export default Home;
