@@ -7,7 +7,7 @@ import React, {
     useContext,
 } from 'react';
 
-import LocalStorageAvailable from './check-local-storage';
+import LocalStorageAvailable from '../../../utils/check-local-storage';
 
 const initialAuthData = {
     isAuthenticated: false,

@@ -11,7 +11,7 @@ import AdminHome from './admin';
 import FlowBuilder from './admin/flow-builder';
 // import ResetPassword from './login/containers/reset-pass';
 import withRoot from '../wiring/with-root';
-import { useAuthDataContext } from '../utils/auth-provider';
+import { useAuthDataContext } from './login/wiring/auth-provider';
 
 
 import themer from '../styles/material-theme';
