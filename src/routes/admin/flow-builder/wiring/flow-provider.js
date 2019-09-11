@@ -39,8 +39,13 @@ const SampleFlowData = {
                             'visiblityCondition': 'all',
                             'conditions': [
                                 {
-                                    'questionId': '',
-                                    'conditions': 'is',
+                                    'questionId': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
+                                    'condition': 'is',
+                                    'answer': 'yes',
+                                },
+                                {
+                                    'questionId': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
+                                    'condition': 'is not',
                                     'answer': 'yes',
                                 },
                             ],

@@ -11,8 +11,7 @@ import ElementTypes from '../../wiring/element-types';
 import QuestionTypes from '../../wiring/question-types';
 import IconList from '../../wiring/icon-list';
 
-import RadioQuestion from '../question-inputs/question-type-radio';
-import CheckboxQuestion from '../question-inputs/question-type-checkbox';
+import QuestionAnswers from '../question-inputs/question-answers';
 import QuestionSettings from '../question-inputs/question-settings';
 
 import Styles from './styles';
@@ -130,8 +129,9 @@ const SectionElement = ({
                     <div className="col">
                         {initialValues.type === ElementTypes.QUESTION && (
                             <>
-                                {initialValues.questionType === QuestionTypes.RADIO && <RadioQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />}
-                                {initialValues.questionType === QuestionTypes.CHECKBOX && <CheckboxQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />}
+                                {(initialValues.questionType === QuestionTypes.RADIO || initialValues.questionType === QuestionTypes.CHECKBOX)
+                                    && <QuestionAnswers questionType={initialValues.questionType} handleUpdate={updateAnswers} initialValues={initialValues.answers} />
+                                }
                                 <hr className={classes.sectionElementBR} />
                                 <QuestionSettings handleUpdate={updateSettings} initialValues={initialValues.settings} />
                             </>

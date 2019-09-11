@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { find } from 'lodash';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import AddIcon from '@material-ui/icons/AddCircle';
+
+import update from 'immutability-helper';
 
 import { useFlowDataContext } from '../../wiring/flow-provider';
 
@@ -28,6 +32,7 @@ const QuestionSettings = ({
                 }
             }
         }
+
         setFlowQuestions(questionArray);
     }, [localFlowData]);
 
@@ -57,8 +62,23 @@ const QuestionSettings = ({
         // update local state
         setFormValues(temp);
     };
-    const handleAdvancedConditionalLogicUpdate = (key, value) => {
-        const temp = { ...formValues, advanced: { ...formValues.advanced, conditionalLogic: { ...formValues.advanced.conditionalLogic, [key]: value } } };
+    const handleAdvancedConditionalLogicUpdate = (key, value, conditionalIndex = null) => {
+        let temp;
+        if (conditionalIndex !== null) {
+            temp = update(formValues, { advanced: { conditionalLogic: { conditions: { [conditionalIndex]: { [key]: { $set: value } } } } } });
+        } else {
+            temp = {
+                ...formValues,
+                advanced: {
+                    ...formValues.advanced,
+                    conditionalLogic: {
+                        ...formValues.advanced.conditionalLogic,
+                        [key]: value,
+                    },
+                },
+            };
+        }
+
         // send parent to update
         handleUpdate(temp);
 
@@ -74,11 +94,20 @@ const QuestionSettings = ({
         setFormValues(temp);
     };
 
+    const addAnotherCondition = () => {
+        const emptyCondition = {};
+        const temp = update(formValues, { advanced: { conditionalLogic: { conditions: { $push: [emptyCondition] } } } });
+
+        // send parent to update
+        handleUpdate(temp);
+
+        // update local state
+        setFormValues(temp);
+    }
+
     return (
         <div>
-
             <Typography variant="body2">Settings</Typography>
-
             <div>
                 <Checkbox
                     color="primary"
@@ -167,24 +196,60 @@ const QuestionSettings = ({
                             <Typography variant="body1" style={{ display: 'inline' }}>of the following match:</Typography>
                         </div>
                         <div>
-                            {formValues.advanced && formValues.advanced.conditionalLogic.conditions.map((logicBlock, i) => (
-                                <Select
-                                    key={`logicBlock-${i}`}
-                                    className={classes.elementSelectMenu}
-                                    color="primary"
-                                    value={logicBlock.questionId || '1'}
-                                    onChange={event => handleAdvancedConditionalLogicUpdate('questionId', event.target.value, i)}
-                                >
-                                    {flowQuestions.map((question, q) => (
-                                        <MenuItem
-                                            key={`${question.title}-${q}`}
-                                            value={question.id}
+                            {formValues.advanced && formValues.advanced.conditionalLogic.conditions.map((logicBlock, i) => {
+                                const selectedQuestion = find(flowQuestions, ['id', logicBlock.questionId]);
+                                let AddAnother;
+                                console.log('i', i);
+                                console.log('formValues.advanced.conditionalLogic.conditions.length', formValues.advanced.conditionalLogic.conditions.length)
+                                if ((i + 1) === formValues.advanced.conditionalLogic.conditions.length) {
+                                    AddAnother = <button type="button" onClick={addAnotherCondition}><AddIcon /></button>;
+                                }
+                                return (
+                                    <div key={`logicBlock-${i}`}>
+                                        <Select
+                                            className={classes.elementSelectMenu}
+                                            color="primary"
+                                            value={logicBlock.questionId || '1'}
+                                            onChange={event => handleAdvancedConditionalLogicUpdate('questionId', event.target.value, i)}
                                         >
-                                            {question.title}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            ))}
+                                            {flowQuestions.map((question, q) => (
+                                                <MenuItem
+                                                    key={`${question.title}-${q}`}
+                                                    value={question.id}
+                                                >
+                                                    {question.title}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                        <Select
+                                            style={{ marginLeft: 15 }}
+                                            className={classes.elementSelectMenu}
+                                            color="primary"
+                                            value={logicBlock.condition || 'is'}
+                                            onChange={event => handleAdvancedConditionalLogicUpdate('condition', event.target.value, i)}
+                                        >
+                                            <MenuItem value="is">Is</MenuItem>
+                                            <MenuItem value="is not">Is Not</MenuItem>
+                                        </Select>
+                                        <Select
+                                            className={classes.elementSelectMenu}
+                                            color="primary"
+                                            value={logicBlock.answer || ''}
+                                            onChange={event => handleAdvancedConditionalLogicUpdate('answer', event.target.value, i)}
+                                        >
+                                            {(logicBlock.questionId && selectedQuestion) && selectedQuestion.answers.map(answer => (
+                                                <MenuItem
+                                                    key={answer.value}
+                                                    value={answer.value}
+                                                >
+                                                    {answer.value}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                        {AddAnother}
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 )}
