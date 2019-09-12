@@ -25,6 +25,14 @@ const styles = () => ({
     addOptionIcon: {
         marginRight: 15,
     },
+    settingsConditionSetDelete: {
+        display: 'none',
+    },
+    settingsConditionSet: {
+        '&:hover $settingsConditionSetDelete': {
+            display: 'inline-block',
+        },
+    },
 });
 
 export default styles;

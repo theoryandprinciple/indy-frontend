@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import AddIcon from '@material-ui/icons/AddCircle';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import update from 'immutability-helper';
 
@@ -103,7 +104,16 @@ const QuestionSettings = ({
 
         // update local state
         setFormValues(temp);
-    }
+    };
+    const deleteCondition = (index) => {
+        const temp = update(formValues, { advanced: { conditionalLogic: { conditions: { $splice: [[index, 1]] } } } });
+
+        // send parent to update
+        handleUpdate(temp);
+
+        // update local state
+        setFormValues(temp);
+    };
 
     return (
         <div>
@@ -198,14 +208,14 @@ const QuestionSettings = ({
                         <div>
                             {formValues.advanced && formValues.advanced.conditionalLogic.conditions.map((logicBlock, i) => {
                                 const selectedQuestion = find(flowQuestions, ['id', logicBlock.questionId]);
+
+                                // only show `AddAnother` to the last condition in the list
                                 let AddAnother;
-                                console.log('i', i);
-                                console.log('formValues.advanced.conditionalLogic.conditions.length', formValues.advanced.conditionalLogic.conditions.length)
                                 if ((i + 1) === formValues.advanced.conditionalLogic.conditions.length) {
                                     AddAnother = <button type="button" onClick={addAnotherCondition}><AddIcon /></button>;
                                 }
                                 return (
-                                    <div key={`logicBlock-${i}`}>
+                                    <div key={`logicBlock-${i}`} className={classes.settingsConditionSet}>
                                         <Select
                                             className={classes.elementSelectMenu}
                                             color="primary"
@@ -247,6 +257,7 @@ const QuestionSettings = ({
                                             ))}
                                         </Select>
                                         {AddAnother}
+                                        <button className={classes.settingsConditionSetDelete} type="button" onClick={() => deleteCondition(i)}><DeleteIcon /></button>
                                     </div>
                                 );
                             })}
