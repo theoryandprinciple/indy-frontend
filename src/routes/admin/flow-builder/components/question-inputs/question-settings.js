@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { find } from 'lodash';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import AddIcon from '@material-ui/icons/AddCircle';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import update from 'immutability-helper';
+
+import { useFlowDataContext } from '../../wiring/flow-provider';
 
 import Styles from './styles';
 
@@ -14,6 +21,22 @@ const QuestionSettings = ({
     handleUpdate,
     initialValues,
 }) => {
+    const { localFlowData } = useFlowDataContext();
+    const [flowQuestions, setFlowQuestions] = useState({});
+    useEffect(() => {
+        // use local form data to create a list of questions within the current flow
+        const questionArray = [];
+        for (let i = 0; i < localFlowData.sections.length; i += 1) {
+            for (let q = 0; q < localFlowData.sections[i].contents.length; q += 1) {
+                if (localFlowData.sections[i].contents[q].type === 'question') {
+                    questionArray.push(localFlowData.sections[i].contents[q]);
+                }
+            }
+        }
+
+        setFlowQuestions(questionArray);
+    }, [localFlowData]);
+
     const [formValues, setFormValues] = useState({});
     useEffect(() => {
         // populate internal state with data in useFlowDataContext,
@@ -40,8 +63,23 @@ const QuestionSettings = ({
         // update local state
         setFormValues(temp);
     };
-    const handleAdvancedConditionalLogicUpdate = (key, value) => {
-        const temp = { ...formValues, advanced: { ...formValues.advanced, conditionalLogic: { ...formValues.advanced.conditionalLogic, [key]: value } } };
+    const handleAdvancedConditionalLogicUpdate = (key, value, conditionalIndex = null) => {
+        let temp;
+        if (conditionalIndex !== null) {
+            temp = update(formValues, { advanced: { conditionalLogic: { conditions: { [conditionalIndex]: { [key]: { $set: value } } } } } });
+        } else {
+            temp = {
+                ...formValues,
+                advanced: {
+                    ...formValues.advanced,
+                    conditionalLogic: {
+                        ...formValues.advanced.conditionalLogic,
+                        [key]: value,
+                    },
+                },
+            };
+        }
+
         // send parent to update
         handleUpdate(temp);
 
@@ -57,82 +95,185 @@ const QuestionSettings = ({
         setFormValues(temp);
     };
 
+    const addAnotherCondition = () => {
+        const emptyCondition = {};
+        const temp = update(formValues, { advanced: { conditionalLogic: { conditions: { $push: [emptyCondition] } } } });
+
+        // send parent to update
+        handleUpdate(temp);
+
+        // update local state
+        setFormValues(temp);
+    };
+    const deleteCondition = (index) => {
+        const temp = update(formValues, { advanced: { conditionalLogic: { conditions: { $splice: [[index, 1]] } } } });
+
+        // send parent to update
+        handleUpdate(temp);
+
+        // update local state
+        setFormValues(temp);
+    };
+
     return (
         <div>
             <Typography variant="body2">Settings</Typography>
-            <Checkbox
-                checked={formValues.validation ? formValues.validation.required : false}
-                onClick={() => handleValidationUpdate('required', !formValues.validation.required)}
-            />
-            <Typography variant="body1" className={classes.inputLabel}>Reqiured</Typography>
+            <div>
+                <Checkbox
+                    color="primary"
+                    checked={formValues.validation ? formValues.validation.required : false}
+                    onClick={() => handleValidationUpdate('required', !formValues.validation.required)}
+                />
+                <Typography variant="body1" className={classes.inputLabel}>Reqiured</Typography>
+            </div>
 
-            <Checkbox
-                checked={formValues.enableDescription || false}
-                onClick={() => handleRootLevelUpdate('enableDescription', !formValues.enableDescription)}
-            />
-            <Typography variant="body1" className={classes.inputLabel}>Enable Description</Typography>
-            {formValues.enableDescription
-                && <TextField className={classes.inputLabel} value={formValues.description} onChange={event => handleRootLevelUpdate('description', event.target.value)} />
-            }
+            <div>
+                <Checkbox
+                    color="primary"
+                    checked={formValues.enableDescription || false}
+                    onClick={() => handleRootLevelUpdate('enableDescription', !formValues.enableDescription)}
+                />
+                <Typography variant="body1" className={classes.inputLabel}>Enable Description</Typography>
+                {formValues.enableDescription && (
+                    <div>
+                        <TextField
+                            fullWidth
+                            multiline
+                            rowsMax="4"
+                            className={classes.inputLabel}
+                            value={formValues.description}
+                            onChange={event => handleRootLevelUpdate('description', event.target.value)}
+                        />
+                    </div>
+                )}
+            </div>
 
-            <Checkbox
-                checked={formValues.enableVariableName || false}
-                onClick={() => handleRootLevelUpdate('enableVariableName', !formValues.enableVariableName)}
-            />
-            <Typography variant="body1" className={classes.inputLabel}>Enable Varible Name</Typography>
-            {formValues.enableVariableName
-                && <TextField className={classes.inputLabel} value={formValues.variableName} onChange={event => handleRootLevelUpdate('variableName', event.target.value)} />
-            }
+            <div>
+                <Checkbox
+                    color="primary"
+                    checked={formValues.enableVariableName || false}
+                    onClick={() => handleRootLevelUpdate('enableVariableName', !formValues.enableVariableName)}
+                />
+                <Typography variant="body1" className={classes.inputLabel}>Enable Varible Name</Typography>
+                {formValues.enableVariableName && (
+                    <div>
+                        <TextField className={classes.inputLabel} value={formValues.variableName} onChange={event => handleRootLevelUpdate('variableName', event.target.value)} />
+                    </div>
+                )}
+            </div>
 
+            <div>
+                <Typography variant="body2">Advanced</Typography>
+                <Checkbox
+                    color="primary"
+                    checked={formValues.advanced ? formValues.advanced.populateDynamically : false}
+                    onClick={() => handleAdvancedUpdate('populateDynamically', !formValues.advanced.populateDynamically)}
+                />
+                <Typography variant="body1" className={classes.inputLabel}>Allow field to be populated dynamically</Typography>
+            </div>
 
-            <Typography variant="body2">Advanced</Typography>
-            <Checkbox
-                checked={formValues.advanced ? formValues.advanced.populateDynamically : false}
-                onClick={() => handleAdvancedUpdate('populateDynamically', !formValues.advanced.populateDynamically)}
-            />
-            <Typography variant="body1" className={classes.inputLabel}>Allow field to be populated dynamically</Typography>
+            <div>
+                <Checkbox
+                    color="primary"
+                    checked={formValues.advanced ? formValues.advanced.enableConditionalLogic : false}
+                    onClick={() => handleAdvancedUpdate('enableConditionalLogic', !formValues.advanced.enableConditionalLogic)}
+                />
+                <Typography variant="body1" className={classes.inputLabel}>Enable Conditional Logic</Typography>
+                {(formValues.advanced && formValues.advanced.enableConditionalLogic) && (
+                    <div>
+                        <div>
+                            <Select
+                                className={classes.elementSelectMenu}
+                                color="primary"
+                                value={formValues.advanced.conditionalLogic.visiblity || 'show'}
+                                onChange={event => handleAdvancedConditionalLogicUpdate('visiblity', event.target.value)}
+                            >
+                                <MenuItem value="show">Show</MenuItem>
+                                <MenuItem value="hide">Hide</MenuItem>
+                            </Select>
+                            <Typography variant="body1" style={{ display: 'inline' }}>this field if</Typography>
+                            <Select
+                                style={{ marginLeft: 15 }}
+                                className={classes.elementSelectMenu}
+                                color="primary"
+                                value={formValues.advanced.conditionalLogic.visiblityCondition || 'all'}
+                                onChange={event => handleAdvancedConditionalLogicUpdate('visiblityCondition', event.target.value)}
+                            >
+                                <MenuItem value="all">All</MenuItem>
+                                <MenuItem value="some">Some</MenuItem>
+                                <MenuItem value="none">None</MenuItem>
+                            </Select>
+                            <Typography variant="body1" style={{ display: 'inline' }}>of the following match:</Typography>
+                        </div>
+                        <div>
+                            {formValues.advanced && formValues.advanced.conditionalLogic.conditions.map((logicBlock, i) => {
+                                const selectedQuestion = find(flowQuestions, ['id', logicBlock.questionId]);
 
-            <Checkbox
-                checked={formValues.advanced ? formValues.advanced.enableConditionalLogic : false}
-                onClick={() => handleAdvancedUpdate('enableConditionalLogic', !formValues.advanced.enableConditionalLogic)}
-            />
-            <Typography variant="body1" className={classes.inputLabel}>Enable Conditional Logic</Typography>
-            {(formValues.advanced && formValues.advanced.enableConditionalLogic) && (
-                <>
-                    <Select
-                        value={formValues.advanced.conditionalLogic.visiblity || 'show'}
-                        onChange={event => handleAdvancedConditionalLogicUpdate('visiblity', event.target.value)}
-                    >
-                        <MenuItem value="show">Show</MenuItem>
-                        <MenuItem value="hide">Hide</MenuItem>
-                    </Select>
-                    <Typography variant="body1">this field if</Typography>
-                    <Select
-                        value={formValues.advanced.conditionalLogic.visiblityCondition || 'all'}
-                        onChange={event => handleAdvancedConditionalLogicUpdate('visiblityCondition', event.target.value)}
-                    >
-                        <MenuItem value="all">All</MenuItem>
-                        <MenuItem value="some">Some</MenuItem>
-                        <MenuItem value="none">None</MenuItem>
-                    </Select>
-                    <Typography variant="body1">of the following match:</Typography>
-                    <Select
-                        value={formValues.advanced.conditionalLogic.visiblityCondition || 'all'}
-                        onChange={event => handleAdvancedConditionalLogicUpdate('visiblityCondition', event.target.value)}
-                    >
-                        <MenuItem value="all">All</MenuItem>
-                        <MenuItem value="some">Some</MenuItem>
-                        <MenuItem value="none">None</MenuItem>
-                    </Select>
-                </>
-            )}
+                                // only show `AddAnother` to the last condition in the list
+                                let AddAnother;
+                                if ((i + 1) === formValues.advanced.conditionalLogic.conditions.length) {
+                                    AddAnother = <button type="button" onClick={addAnotherCondition}><AddIcon /></button>;
+                                }
+                                return (
+                                    <div key={`logicBlock-${i}`} className={classes.settingsConditionSet}>
+                                        <Select
+                                            className={classes.elementSelectMenu}
+                                            color="primary"
+                                            value={logicBlock.questionId || '1'}
+                                            onChange={event => handleAdvancedConditionalLogicUpdate('questionId', event.target.value, i)}
+                                        >
+                                            {flowQuestions.map((question, q) => (
+                                                <MenuItem
+                                                    key={`${question.title}-${q}`}
+                                                    value={question.id}
+                                                >
+                                                    {question.title}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                        <Select
+                                            style={{ marginLeft: 15 }}
+                                            className={classes.elementSelectMenu}
+                                            color="primary"
+                                            value={logicBlock.condition || 'is'}
+                                            onChange={event => handleAdvancedConditionalLogicUpdate('condition', event.target.value, i)}
+                                        >
+                                            <MenuItem value="is">Is</MenuItem>
+                                            <MenuItem value="is not">Is Not</MenuItem>
+                                        </Select>
+                                        <Select
+                                            className={classes.elementSelectMenu}
+                                            color="primary"
+                                            value={logicBlock.answer || ''}
+                                            onChange={event => handleAdvancedConditionalLogicUpdate('answer', event.target.value, i)}
+                                        >
+                                            {(logicBlock.questionId && selectedQuestion) && selectedQuestion.answers.map(answer => (
+                                                <MenuItem
+                                                    key={answer.value}
+                                                    value={answer.value}
+                                                >
+                                                    {answer.value}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                        {AddAnother}
+                                        <button className={classes.settingsConditionSetDelete} type="button" onClick={() => deleteCondition(i)}><DeleteIcon /></button>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+            </div>
 
-
-            <Checkbox
-                checked={formValues.advanced ? formValues.advanced.enableCalculation : false}
-                onClick={() => handleAdvancedUpdate('enableCalculation', !formValues.advanced.enableCalculation)}
-            />
-            <Typography variant="body1" className={classes.inputLabel}>Enable Calculation</Typography>
+            <div>
+                <Checkbox
+                    color="primary"
+                    checked={formValues.advanced ? formValues.advanced.enableCalculation : false}
+                    onClick={() => handleAdvancedUpdate('enableCalculation', !formValues.advanced.enableCalculation)}
+                />
+                <Typography variant="body1" className={classes.inputLabel}>Enable Calculation</Typography>
+            </div>
 
         </div>
     );

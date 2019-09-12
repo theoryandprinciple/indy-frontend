@@ -1,16 +1,21 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+
+import DeleteIcon from '@material-ui/icons/Delete';
+import DuplicateIcon from '@material-ui/icons/AddToPhotos';
 
 import ElementTypes from '../../wiring/element-types';
 import QuestionTypes from '../../wiring/question-types';
 import IconList from '../../wiring/icon-list';
 
-import RadioQuestion from '../question-inputs/question-type-radio';
-import CheckboxQuestion from '../question-inputs/question-type-checkbox';
+import QuestionAnswers from '../question-inputs/question-answers';
 import QuestionSettings from '../question-inputs/question-settings';
+
+import useDebounce from '../../../../../utils/use-debounce';
 
 import Styles from './styles';
 
@@ -23,6 +28,23 @@ const SectionElement = ({
     currentSectionIndex,
     handleContentUpdates,
 }) => {
+    // setup title useState
+    const [titleValue, setTitleValue] = useState('');
+    const debouncedTitleValue = useDebounce(titleValue, 1000);
+    useEffect(() => {
+        // more info on debounce setup, https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
+        if (debouncedTitleValue) {
+            handleContentUpdates('title', index, titleValue);
+        }
+    },
+    [debouncedTitleValue]);
+
+    useEffect(() => {
+        // populate internal state with data in useFlowDataContext,
+        // this should only happen when API data comes in
+        setTitleValue(initialValues.title);
+    }, [initialValues]);
+
     // Manage Question Dragging
     const ref = useRef(null);
     const [, drop] = useDrop({
@@ -107,24 +129,35 @@ const SectionElement = ({
     };
 
     return (
-        <div ref={ref} style={{ opacity }} className={`row ${classes.sectionElementWrapper}`}>
+        <div ref={ref} style={{ opacity }} className={`row ${classes.sectionElementWrapper} no-gutters`}>
             <div className="col-auto">
                 <div className={classes.sectionElementIconWrapper}>
                     {IconList[initialValues.questionType]}
                 </div>
-                <button type="button" onClick={duplicateElement}>Dup</button>
-                <button type="button" onClick={deleteElement}>Delete</button>
             </div>
             <div className="col">
-                <Typography variant="body2">{initialValues.title}</Typography>
-                {initialValues.type === ElementTypes.QUESTION && (
-                    <>
-                        {initialValues.questionType === QuestionTypes.RADIO && <RadioQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />}
-                        {initialValues.questionType === QuestionTypes.CHECKBOX && <CheckboxQuestion handleUpdate={updateAnswers} initialValues={initialValues.answers} />}
-                        <hr className={classes.sectionElementBR} />
-                        <QuestionSettings handleUpdate={updateSettings} initialValues={initialValues.settings} />
-                    </>
-                )}
+                <div className={`row ${classes.elementHeader}`}>
+                    <div className="col ml-3">
+                        <TextField className={classes.inputLabel} value={titleValue} onChange={event => setTitleValue(event.target.value)} />
+                    </div>
+                    <div className="col-auto">
+                        <button type="button" onClick={duplicateElement}><DuplicateIcon /></button>
+                        <button type="button" onClick={deleteElement}><DeleteIcon /></button>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                        {initialValues.type === ElementTypes.QUESTION && (
+                            <>
+                                {(initialValues.questionType === QuestionTypes.RADIO || initialValues.questionType === QuestionTypes.CHECKBOX)
+                                    && <QuestionAnswers questionType={initialValues.questionType} handleUpdate={updateAnswers} initialValues={initialValues.answers} />
+                                }
+                                <hr className={classes.sectionElementBR} />
+                                <QuestionSettings handleUpdate={updateSettings} initialValues={initialValues.settings} />
+                            </>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     );

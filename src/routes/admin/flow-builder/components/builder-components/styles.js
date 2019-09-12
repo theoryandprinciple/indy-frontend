@@ -28,8 +28,8 @@ const styles = () => ({
     // Section Element
     sectionElementWrapper: {
         border: '1px dashed gray',
-        padding: '0.5rem 1rem',
-        marginBottom: '.5rem',
+        padding: 15,
+        marginBottom: 30,
         backgroundColor: 'white',
         cursor: 'move',
         color: 'black',
@@ -55,6 +55,12 @@ const styles = () => ({
         borderTop: `${Colors.lightGrey} 1px solid`,
         padding: 0,
         margin: '15px 0',
+    },
+    // element (question/)
+    elementHeader: {
+        height: 30,
+        alignItems: 'center',
+        marginBottom: 15,
     },
 });
 

@@ -33,10 +33,22 @@ const SampleFlowData = {
                     },
                     'advanced': {
                         'populateDynamically': true,
-                        'enableConditionalLogic': false,
+                        'enableConditionalLogic': true,
                         'conditionalLogic': {
                             'visiblity': 'show',
                             'visiblityCondition': 'all',
+                            'conditions': [
+                                {
+                                    'questionId': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
+                                    'condition': 'is',
+                                    'answer': 'yes',
+                                },
+                                {
+                                    'questionId': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
+                                    'condition': 'is not',
+                                    'answer': 'yes',
+                                },
+                            ],
                         },
                         'enableCalculation': false,
                     },
@@ -67,6 +79,7 @@ const SampleFlowData = {
                         'conditionalLogic': {
                             'visiblity': 'show',
                             'visiblityCondition': 'all',
+                            'conditions': [],
                         },
                         'enableCalculation': false,
                     },
@@ -101,6 +114,7 @@ const SampleFlowData = {
                         'conditionalLogic': {
                             'visiblity': 'show',
                             'visiblityCondition': 'all',
+                            'conditions': [],
                         },
                         'enableCalculation': false,
                     },
@@ -131,6 +145,7 @@ const SampleFlowData = {
                         'conditionalLogic': {
                             'visiblity': 'show',
                             'visiblityCondition': 'some',
+                            'conditions': [],
                         },
                         'enableCalculation': false,
                     },
@@ -171,6 +186,7 @@ const SampleFlowData2 = {
                         'conditionalLogic': {
                             'visiblity': 'hide',
                             'visiblityCondition': 'none',
+                            'conditions': [],
                         },
                         'enableCalculation': false,
                     },
@@ -201,6 +217,7 @@ const SampleFlowData2 = {
                         'conditionalLogic': {
                             'visiblity': 'show',
                             'visiblityCondition': 'some',
+                            'conditions': [],
                         },
                         'enableCalculation': false,
                     },
@@ -235,6 +252,7 @@ const SampleFlowData2 = {
                         'conditionalLogic': {
                             'visiblity': 'hide',
                             'visiblityCondition': 'all',
+                            'conditions': [],
                         },
                         'enableCalculation': false,
                     },
@@ -265,6 +283,7 @@ const SampleFlowData2 = {
                         'conditionalLogic': {
                             'visiblity': 'show',
                             'visiblityCondition': 'all',
+                            'conditions': [],
                         },
                         'enableCalculation': false,
                     },
@@ -311,5 +330,6 @@ const FlowDataProvider = (props) => {
 };
 
 export const useFlowDataContext = () => useContext(FlowDataContext);
+
 
 export default FlowDataProvider;
