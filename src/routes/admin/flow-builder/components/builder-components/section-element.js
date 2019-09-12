@@ -1,8 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 import DuplicateIcon from '@material-ui/icons/AddToPhotos';
@@ -13,6 +14,8 @@ import IconList from '../../wiring/icon-list';
 
 import QuestionAnswers from '../question-inputs/question-answers';
 import QuestionSettings from '../question-inputs/question-settings';
+
+import useDebounce from '../../../../../utils/use-debounce';
 
 import Styles from './styles';
 
@@ -25,6 +28,23 @@ const SectionElement = ({
     currentSectionIndex,
     handleContentUpdates,
 }) => {
+    // setup title useState
+    const [titleValue, setTitleValue] = useState('');
+    const debouncedTitleValue = useDebounce(titleValue, 1000);
+    useEffect(() => {
+        // more info on debounce setup, https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
+        if (debouncedTitleValue) {
+            handleContentUpdates('title', index, titleValue);
+        }
+    },
+    [debouncedTitleValue]);
+
+    useEffect(() => {
+        // populate internal state with data in useFlowDataContext,
+        // this should only happen when API data comes in
+        setTitleValue(initialValues.title);
+    }, [initialValues]);
+
     // Manage Question Dragging
     const ref = useRef(null);
     const [, drop] = useDrop({
@@ -118,7 +138,7 @@ const SectionElement = ({
             <div className="col">
                 <div className={`row ${classes.elementHeader}`}>
                     <div className="col ml-3">
-                        <Typography variant="body2">{initialValues.title}</Typography>
+                        <TextField className={classes.inputLabel} value={titleValue} onChange={event => setTitleValue(event.target.value)} />
                     </div>
                     <div className="col-auto">
                         <button type="button" onClick={duplicateElement}><DuplicateIcon /></button>
