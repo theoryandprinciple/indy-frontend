@@ -62,15 +62,11 @@ const Section = ({
         } else { // content update
             // update answers or settings (type) with new values
             tempSectionElements[sectionElementIndex][type] = values;
-            /*
-                if (type === 'answers') {
-                    tempSectionElements[sectionElementIndex].answers = values;
-                } else if (type === 'settings') {
-                    tempSectionElements[sectionElementIndex].settings = values;
-                }
-            */
         }
-        // move updates up a level
+        // update the values that build the section elements
+        // this will cause updates to trickle down, and rerender all section elements
+        // updates to these values are being listened for in an effect above
+        // TODO: is this going to cause performance issues?
         setSectionElements(tempSectionElements);
     };
 

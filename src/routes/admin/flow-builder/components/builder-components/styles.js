@@ -58,7 +58,7 @@ const styles = () => ({
     },
     // element (question/)
     elementHeader: {
-        height: 30,
+        minHeight: 30,
         alignItems: 'center',
         marginBottom: 15,
     },

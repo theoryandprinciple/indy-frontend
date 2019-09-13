@@ -93,7 +93,7 @@ const SampleFlowData = {
         },
         {
             'title': 'section title 2',
-            'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97xb',
+            'id': '85ff9e7d-ac4f-4ac7-899e-3aceb91c97xb',
             'contents': [{
                 'title': 'question 1 title',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
@@ -127,7 +127,535 @@ const SampleFlowData = {
             },
             {
                 'title': 'question 2 title',
-                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fd',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3acfb91e97fd',
+                'type': 'question',
+                'questionType': 'checkbox',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': false,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'some',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            }],
+        },
+        {
+            'title': 'section title 2',
+            'id': '85ff9e7d-ac4f-4ac7-899f-3aceb91c97xb',
+            'contents': [{
+                'title': 'question 1 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
+                'type': 'question',
+                'questionType': 'radio',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': true,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'all',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            },
+            {
+                'title': 'question 2 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3acgb91e97fd',
+                'type': 'question',
+                'questionType': 'checkbox',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': false,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'some',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            }],
+        },
+        {
+            'title': 'section title 2',
+            'id': '85ff9e7d-ac4f-4ac7-899g-3aceb91c97xb',
+            'contents': [{
+                'title': 'question 1 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
+                'type': 'question',
+                'questionType': 'radio',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': true,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'all',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            },
+            {
+                'title': 'question 2 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3achb91e97fd',
+                'type': 'question',
+                'questionType': 'checkbox',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': false,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'some',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            }],
+        },
+        {
+            'title': 'section title 2',
+            'id': '85ff9e7d-ac4f-4ac7-899h-3aceb91c97xb',
+            'contents': [{
+                'title': 'question 1 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
+                'type': 'question',
+                'questionType': 'radio',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': true,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'all',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            },
+            {
+                'title': 'question 2 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3acib91e97fd',
+                'type': 'question',
+                'questionType': 'checkbox',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': false,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'some',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            }],
+        },
+        {
+            'title': 'section title 2',
+            'id': '85ff9e7d-ac4f-4ac7-899i-3aceb91c97xb',
+            'contents': [{
+                'title': 'question 1 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
+                'type': 'question',
+                'questionType': 'radio',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': true,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'all',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            },
+            {
+                'title': 'question 2 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3acjb91e97fd',
+                'type': 'question',
+                'questionType': 'checkbox',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': false,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'some',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            }],
+        },
+        {
+            'title': 'section title 2',
+            'id': '85ff9e7d-ac4f-4ac7-899j-3aceb91c97xb',
+            'contents': [{
+                'title': 'question 1 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
+                'type': 'question',
+                'questionType': 'radio',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': true,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'all',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            },
+            {
+                'title': 'question 2 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3ackb91e97fd',
+                'type': 'question',
+                'questionType': 'checkbox',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': false,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'some',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            }],
+        },
+        {
+            'title': 'section title 2',
+            'id': '85ff9e7d-ac4f-4ac7-899k-3aceb91c97xb',
+            'contents': [{
+                'title': 'question 1 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
+                'type': 'question',
+                'questionType': 'radio',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': true,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'all',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            },
+            {
+                'title': 'question 2 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aclb91e97fd',
+                'type': 'question',
+                'questionType': 'checkbox',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': false,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'some',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            }],
+        },
+        {
+            'title': 'section title 2',
+            'id': '85ff9e7d-ac4f-4ac7-899l-3aceb91c97xb',
+            'contents': [{
+                'title': 'question 1 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
+                'type': 'question',
+                'questionType': 'radio',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': true,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'all',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            },
+            {
+                'title': 'question 2 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3acmb91e97fd',
+                'type': 'question',
+                'questionType': 'checkbox',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': false,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'some',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            }],
+        },
+        {
+            'title': 'section title 2',
+            'id': '85ff9e7d-ac4f-4ac7-899d-3aceb91c97xb',
+            'contents': [{
+                'title': 'question 1 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
+                'type': 'question',
+                'questionType': 'radio',
+                'settings': {
+                    'enableDescription': true,
+                    'description': 'this is my long description',
+                    'enableVariableName': true,
+                    'variableName': 'donuts',
+                    'validation': {
+                        'required': true,
+                        'email': true,
+                    },
+                    'advanced': {
+                        'populateDynamically': true,
+                        'enableConditionalLogic': false,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'all',
+                            'conditions': [],
+                        },
+                        'enableCalculation': false,
+                    },
+                },
+                'answers': [{
+                    'value': 'yes',
+                }, {
+                    'value': 'no',
+                }],
+            },
+            {
+                'title': 'question 2 title',
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91d97fd',
                 'type': 'question',
                 'questionType': 'checkbox',
                 'settings': {

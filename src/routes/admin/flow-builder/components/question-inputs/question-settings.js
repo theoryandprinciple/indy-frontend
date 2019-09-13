@@ -134,20 +134,9 @@ const QuestionSettings = ({
                     onClick={() => handleRootLevelUpdate('enableDescription', !formValues.enableDescription)}
                 />
                 <Typography variant="body1" className={classes.inputLabel}>Enable Description</Typography>
-                {formValues.enableDescription && (
-                    <div>
-                        <TextField
-                            fullWidth
-                            multiline
-                            rowsMax="4"
-                            className={classes.inputLabel}
-                            value={formValues.description}
-                            onChange={event => handleRootLevelUpdate('description', event.target.value)}
-                        />
-                    </div>
-                )}
             </div>
 
+            {/* REMOVE FOR MVP
             <div>
                 <Checkbox
                     color="primary"
@@ -161,15 +150,18 @@ const QuestionSettings = ({
                     </div>
                 )}
             </div>
+            */}
 
             <div>
                 <Typography variant="body2">Advanced</Typography>
+                {/* REMOVE FOR MVP
                 <Checkbox
                     color="primary"
                     checked={formValues.advanced ? formValues.advanced.populateDynamically : false}
                     onClick={() => handleAdvancedUpdate('populateDynamically', !formValues.advanced.populateDynamically)}
                 />
                 <Typography variant="body1" className={classes.inputLabel}>Allow field to be populated dynamically</Typography>
+                */}
             </div>
 
             <div>
@@ -266,6 +258,7 @@ const QuestionSettings = ({
                 )}
             </div>
 
+            {/* REMOVE FOR MVP
             <div>
                 <Checkbox
                     color="primary"
@@ -274,6 +267,7 @@ const QuestionSettings = ({
                 />
                 <Typography variant="body1" className={classes.inputLabel}>Enable Calculation</Typography>
             </div>
+            */}
 
         </div>
     );

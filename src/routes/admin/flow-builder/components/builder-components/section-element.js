@@ -30,7 +30,12 @@ const SectionElement = ({
 }) => {
     // setup title useState
     const [titleValue, setTitleValue] = useState('');
+    const [descriptionValue, setDescriptionValue] = useState('');
+
+    // TODO: debounce is triggered on load after initial values are populated
+    // this causes the update cycle to occure twice, oppose to just on initial load
     const debouncedTitleValue = useDebounce(titleValue, 1000);
+    const debouncedDescriptionValue = useDebounce(titleValue, 1000);
     useEffect(() => {
         // more info on debounce setup, https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
         if (debouncedTitleValue) {
@@ -38,11 +43,21 @@ const SectionElement = ({
         }
     },
     [debouncedTitleValue]);
+    useEffect(() => {
+        // more info on debounce setup, https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
+        if (debouncedDescriptionValue) {
+            handleContentUpdates('description', index, descriptionValue);
+        }
+    },
+    [debouncedDescriptionValue]);
 
     useEffect(() => {
         // populate internal state with data in useFlowDataContext,
         // this should only happen when API data comes in
         setTitleValue(initialValues.title);
+        setDescriptionValue(initialValues.description);
+        console.count('render `section element` with new initial values')
+        console.log('initialValues', initialValues)
     }, [initialValues]);
 
     // Manage Question Dragging
@@ -138,7 +153,22 @@ const SectionElement = ({
             <div className="col">
                 <div className={`row ${classes.elementHeader}`}>
                     <div className="col ml-3">
-                        <TextField className={classes.inputLabel} value={titleValue} onChange={event => setTitleValue(event.target.value)} />
+                        <TextField
+                            placeholder="Question Title..."
+                            className={classes.inputLabel}
+                            value={titleValue}
+                            onChange={event => setTitleValue(event.target.value)}
+                        />
+                        {(initialValues.settings && initialValues.settings.enableDescription) && (
+                            <TextField
+                                placeholder="Question Description..."
+                                fullWidth
+                                multiline
+                                rowsMax="4"
+                                value={descriptionValue}
+                                onChange={event => setDescriptionValue(event.target.value)}
+                            />
+                        )}
                     </div>
                     <div className="col-auto">
                         <button type="button" onClick={duplicateElement}><DuplicateIcon /></button>

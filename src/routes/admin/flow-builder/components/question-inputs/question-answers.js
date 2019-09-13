@@ -69,7 +69,7 @@ const QuestionAnswers = ({
     const addElement = () => {
         const temp = [...formValues];
         temp.push({
-            value: 'New Answer',
+            value: '',
         });
 
         // send parent to update
@@ -92,7 +92,12 @@ const QuestionAnswers = ({
                 {questionType === 'checkbox'
                     && <Checkbox disabled name="answer-set" value={element.value} />
                 }
-                <TextField className={classes.inputLabel} value={element.value} onChange={handleContentUpdates('value', index)} />
+                <TextField
+                    placeholder="Answer Label..."
+                    className={classes.inputLabel}
+                    value={element.value}
+                    onChange={handleContentUpdates('value', index)}
+                />
             </div>
             <div className={`col-auto ${classes.answerActions}`}>
                 <button type="button" onClick={handleContentUpdates('duplicate', index)}><DuplicateIcon /></button>
