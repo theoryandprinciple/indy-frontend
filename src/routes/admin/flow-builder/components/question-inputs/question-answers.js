@@ -18,12 +18,29 @@ const QuestionAnswers = ({
     questionType,
 }) => {
     const [formValues, setFormValues] = useState([]);
+    // we only want to debounce when initial build is complete
     const [initialBuildComplete, setInitialBuildComplete] = useState(false);
+    const debouncedFormValues = useDebounce(formValues, 500, initialBuildComplete);
+
     useEffect(() => {
         // populate internal state with data in useFlowDataContext,
         // this should only happen when API data comes in
         setFormValues(initialValues);
     }, [initialValues]);
+
+    useEffect(() => {
+        // Make sure we have a value (user has entered something in input)
+        // Make sure the length is greater than 0, if it's 0 then it's the intial value
+        if (debouncedFormValues && formValues.length > 0) {
+            // send parent to update
+            handleUpdate(formValues);
+        }
+    },
+    // This is the useEffect input array
+    // Our useEffect function will only execute if this value changes ...
+    // ... and thanks to our hook it will only change if the original ...
+    // value (formValues) hasn't changed for more than 500ms.
+    [debouncedFormValues]);
 
     // if we do this, it causes an infinite loop, cause those changes want to come back down
     // useEffect(() => {// send updates to parent}, [formValues]);
@@ -48,23 +65,9 @@ const QuestionAnswers = ({
 
         // without this flag, we find outselves in a infinite loop
         // likely because of a race condition with initialValues and formValues getting into the debouncedFormValues
+        // for some reason setting an initial setTimeout wasnt able to address it
         setInitialBuildComplete(true);
     };
-
-    const debouncedFormValues = useDebounce(formValues, 500);
-    useEffect(() => {
-        // Make sure we have a value (user has entered something in input)
-        // Make sure the length is greater than 0, if it's 0 then it's the intial value
-        if (debouncedFormValues && formValues.length > 0 && initialBuildComplete) {
-            // send parent to update
-            handleUpdate(formValues);
-        }
-    },
-    // This is the useEffect input array
-    // Our useEffect function will only execute if this value changes ...
-    // ... and thanks to our hook it will only change if the original ...
-    // value (formValues) hasn't changed for more than 500ms.
-    [debouncedFormValues]);
 
     const addElement = () => {
         const temp = [...formValues];
