@@ -52,6 +52,9 @@ const SectionWrapper = ({ data, classes }) => {
         const tempSections = cloneDeep(sections);
         tempFlowData.sections = tempSections;
         tempFlowData.sections[sectionIndex].contents = updatedSectionElements;
+
+        console.log('handleSectionElementUpdates => updateLocalFlowData')
+        // ^^ need to figure out if we can avoid this on load
         updateLocalFlowData(tempFlowData);
     };
     const handleSectionUpdates = () => {
@@ -59,13 +62,24 @@ const SectionWrapper = ({ data, classes }) => {
         const tempFlowData = cloneDeep(localFlowData);
         const tempSections = cloneDeep(sections);
         tempFlowData.sections = tempSections;
+
+        console.log('handleSectionUpdates => updateLocalFlowData')
         updateLocalFlowData(tempFlowData);
     };
 
     const handleSectionTitleUpdate = (sectionIndex, titleValue) => {
         const tempFlowData = cloneDeep(localFlowData);
         tempFlowData.sections[sectionIndex].title = titleValue;
+
         updateLocalFlowData(tempFlowData);
+    };
+
+    const handleDeleteSection = (sectionIndex) => {
+        const tempFlowData = cloneDeep(localFlowData);
+        tempFlowData.sections.splice(sectionIndex, 1);
+
+        // need to rerender ui, so we don't send updates directly to context
+        setSections(tempFlowData.sections);
     };
 
     useEffect(() => {
@@ -82,6 +96,7 @@ const SectionWrapper = ({ data, classes }) => {
             initialContent={section.contents}
             handleSectionElementUpdates={handleSectionElementUpdates}
             handleSectionTitleUpdate={handleSectionTitleUpdate}
+            handleDeleteSection={handleDeleteSection}
         />
     );
 
@@ -104,7 +119,7 @@ const SectionWrapper = ({ data, classes }) => {
     return (
         <div ref={drop} style={{ border }} className={classes.sectionWrapperWrapper}>
             {isActive ? `${sections.length === 0 ? 'Release to drop' : ''}` : `${sections.length === 0 ? 'Start the party' : ''}`}
-            <div>{sections.map((section, i) => renderElement(section, i))}</div>
+            {sections.map((section, i) => renderElement(section, i))}
         </div>
     );
 };

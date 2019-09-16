@@ -831,12 +831,14 @@ const FlowDataProvider = (props) => {
     const [remoteFlowData, setRemoteFlowData] = useState(SampleFlowData);
 
     useEffect(() => {
+        console.log('remoteFlowData => updateLocalFlowData')
+        // ^^ can we avoid this on initial load, when remoteFlowData is default
         setLocalFlowData(remoteFlowData);
     }, [remoteFlowData]);
 
     useEffect(() => {
         // nothing to do when this updates (yet)
-        // console.log('update local flow', localFlowData);
+        console.log('update local flow', localFlowData);
     }, [localFlowData]);
 
     const updateLocalFlowData = newFlowData => setLocalFlowData(newFlowData);

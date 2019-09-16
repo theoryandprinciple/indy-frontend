@@ -35,9 +35,10 @@ const Section = ({
     initialContent,
     handleSectionElementUpdates,
     handleSectionTitleUpdate,
+    handleDeleteSection,
 }) => {
     const [sectionElements, setSectionElements] = useState(null);
-    const [sectionOpen, setSectionOpen] = useState(true);
+    const [sectionOpen, setSectionOpen] = useState(false);
     // setup title useState
     const [titleValue, setTitleValue] = useState('');
     const [initialBuildComplete, setInitialBuildComplete] = useState(false);
@@ -71,6 +72,7 @@ const Section = ({
         // populate internal state with external props
         setSectionElements(initialContent);
     }, [initialContent]);
+
     useEffect(() => {
         // populate title state with external props
         setTitleValue(sectionTitle);
@@ -244,7 +246,7 @@ const Section = ({
                         </button>
                     </div>
                     <div className={classes.sectionTabStyle}>
-                        <DeleteIcon />
+                        <DeleteIcon onClick={() => handleDeleteSection(index)} />
                     </div>
                 </div>
             </div>
@@ -261,10 +263,8 @@ const Section = ({
                 </Typography>
             </div>
 
-            <div className={`row no-gutters ${sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}`} style={{ padding: '15px 30px' }}>
-                <div ref={preview}>
-                    {sectionElements && sectionElements.map((sectionElement, i) => renderElement(sectionElement, i))}
-                </div>
+            <div ref={preview} className={`row no-gutters ${sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}`} style={{ padding: '15px 30px' }}>
+                {sectionElements && sectionElements.map((sectionElement, i) => renderElement(sectionElement, i))}
             </div>
         </div>
     );
@@ -282,6 +282,7 @@ Section.propTypes = {
     initialContent: PropTypes.array,
     handleSectionElementUpdates: PropTypes.func.isRequired,
     handleSectionTitleUpdate: PropTypes.func.isRequired,
+    handleDeleteSection: PropTypes.func.isRequired,
 };
 
 export default withStyles(Styles)(Section);
