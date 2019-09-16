@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -31,11 +30,11 @@ const SectionElement = ({
     // setup title useState
     const [titleValue, setTitleValue] = useState('');
     const [descriptionValue, setDescriptionValue] = useState('');
+    const [initialBuildComplete, setInitialBuildComplete] = useState(false);
 
-    // TODO: debounce is triggered on load after initial values are populated
-    // this causes the update cycle to occure twice, oppose to just on initial load
-    const debouncedTitleValue = useDebounce(titleValue, 1000);
-    const debouncedDescriptionValue = useDebounce(titleValue, 1000);
+    const debouncedTitleValue = useDebounce(titleValue, 1000, initialBuildComplete);
+    const debouncedDescriptionValue = useDebounce(descriptionValue, 1000, initialBuildComplete);
+
     useEffect(() => {
         // more info on debounce setup, https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
         if (debouncedTitleValue) {
@@ -43,6 +42,7 @@ const SectionElement = ({
         }
     },
     [debouncedTitleValue]);
+
     useEffect(() => {
         // more info on debounce setup, https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
         if (debouncedDescriptionValue) {
@@ -51,13 +51,19 @@ const SectionElement = ({
     },
     [debouncedDescriptionValue]);
 
+    useEffect(() => { // debounce setup function
+        const timer = setTimeout(() => {
+            // without this flag, the component will get rerenedered twice because the initail debounces will get fired off
+            setInitialBuildComplete(true);
+        }, 1100);
+        return () => clearTimeout(timer);
+    }, []);
+
     useEffect(() => {
-        // populate internal state with data in useFlowDataContext,
-        // this should only happen when API data comes in
+        // populate internal state with data in parent
+        // parent will update when values in this component are updated and set upward
         setTitleValue(initialValues.title);
         setDescriptionValue(initialValues.description);
-        console.count('render `section element` with new initial values')
-        console.log('initialValues', initialValues)
     }, [initialValues]);
 
     // Manage Question Dragging

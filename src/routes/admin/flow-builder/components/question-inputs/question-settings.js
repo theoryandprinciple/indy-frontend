@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { find } from 'lodash';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
-import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import AddIcon from '@material-ui/icons/AddCircle';
@@ -23,6 +22,8 @@ const QuestionSettings = ({
 }) => {
     const { localFlowData } = useFlowDataContext();
     const [flowQuestions, setFlowQuestions] = useState({});
+    const [formValues, setFormValues] = useState({});
+
     useEffect(() => {
         // use local form data to create a list of questions within the current flow
         const questionArray = [];
@@ -37,7 +38,6 @@ const QuestionSettings = ({
         setFlowQuestions(questionArray);
     }, [localFlowData]);
 
-    const [formValues, setFormValues] = useState({});
     useEffect(() => {
         // populate internal state with data in useFlowDataContext,
         // this should only happen when API data comes in
@@ -203,7 +203,7 @@ const QuestionSettings = ({
 
                                 // only show `AddAnother` to the last condition in the list
                                 let AddAnother;
-                                if ((i + 1) === formValues.advanced.conditionalLogic.conditions.length) {
+                                if ((i + 1) === formValues.advanced.conditionalLogic.conditions.length || formValues.advanced.conditionalLogic.conditions.length === 0) {
                                     AddAnother = <button type="button" onClick={addAnotherCondition}><AddIcon /></button>;
                                 }
                                 return (
@@ -253,6 +253,9 @@ const QuestionSettings = ({
                                     </div>
                                 );
                             })}
+                            {formValues.advanced && formValues.advanced.conditionalLogic.conditions.length === 0 && (
+                                <button type="button" onClick={addAnotherCondition}><AddIcon /></button>
+                            )}
                         </div>
                     </div>
                 )}
