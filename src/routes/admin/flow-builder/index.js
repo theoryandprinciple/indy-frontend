@@ -20,33 +20,52 @@ const Flow = () => {
                     <div className="col-auto">
                         <div className="row">
                             <div className="col">
-                                <h5>QUESTION FIELDS</h5>
+                                <h5>SECTION BREAK</h5>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-6">
-                                <Question text="Radio Buttons" questionType={QuestionTypes.RADIO} />
-                                <Question text="Checkboxes" questionType={QuestionTypes.CHECKBOX} />
-                                <Question text="Short Text" questionType={QuestionTypes.SHORT_TEXT} />
-                                <Question text="Long Text" questionType={QuestionTypes.LONG_TEXT} />
-                                <Question text="Number" questionType={QuestionTypes.NUMBER} />
+                                <Section text="New Section" />
                             </div>
-                            <div className="col-6">
-                                <Question text="Date" questionType={QuestionTypes.DATE} />
-                                <Question text="File Uploader" questionType={QuestionTypes.FILE_UPLOAD} />
-                                <Question text="Jurisdiction" questionType={QuestionTypes.JURISDICTION} />
-                                <Question text="Legal Disclaimer" questionType={QuestionTypes.LEGAL_DISCLAIMER} />
+                            <div className="col-6" />
+                        </div>
+
+                        <div className="row">
+                            <div className="col">
+                                <h5>QUESTION FIELDS</h5>
                             </div>
                         </div>
 
                         <div className="row">
                             <div className="col-6">
-                                <Section text="Default Section Header" />
+                                <Question text="Radio Buttons" questionType={QuestionTypes.RADIO} />
+                                <Question text="Checkboxes" questionType={QuestionTypes.CHECKBOX} />
+                                <Question text="Short Text" questionType={QuestionTypes.SHORT_TEXT} />
                             </div>
                             <div className="col-6">
-                                <p>stuffs</p>
+                                <Question text="Long Text" questionType={QuestionTypes.LONG_TEXT} />
+                                <Question text="Number" questionType={QuestionTypes.NUMBER} />
+                                {/* REMOVED FOR MVP
+                                <Question text="Date" questionType={QuestionTypes.DATE} />
+                                <Question text="File Uploader" questionType={QuestionTypes.FILE_UPLOAD} />
+                                <Question text="Jurisdiction" questionType={QuestionTypes.JURISDICTION} />
+                                <Question text="Legal Disclaimer" questionType={QuestionTypes.LEGAL_DISCLAIMER} />
+                                */}
                             </div>
                         </div>
+
+                        <div className="row">
+                            <div className="col">
+                                <h5>OUTPUT</h5>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-6">
+                                <Section text="New Section" />
+                            </div>
+                            <div className="col-6" />
+                        </div>
+
                     </div>
                     <div className="col">
                         <SectionWrapper data={remoteFlowData.sections} />

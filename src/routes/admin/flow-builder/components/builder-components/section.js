@@ -34,7 +34,6 @@ const Section = ({
     const [sectionElements, setSectionElements] = useState(null);
     const [sectionOpen, setSectionOpen] = useState(true);
 
-
     // MANAGE FLOW DATA
     useEffect(() => {
         // tell parent to update local state

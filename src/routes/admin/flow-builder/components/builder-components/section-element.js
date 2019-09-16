@@ -6,6 +6,8 @@ import TextField from '@material-ui/core/TextField';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 import DuplicateIcon from '@material-ui/icons/AddToPhotos';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import ElementTypes from '../../wiring/element-types';
 import QuestionTypes from '../../wiring/question-types';
@@ -31,12 +33,12 @@ const SectionElement = ({
     const [titleValue, setTitleValue] = useState('');
     const [descriptionValue, setDescriptionValue] = useState('');
     const [initialBuildComplete, setInitialBuildComplete] = useState(false);
+    const [sectionOpen, setSectionOpen] = useState(false);
 
     const debouncedTitleValue = useDebounce(titleValue, 1000, initialBuildComplete);
     const debouncedDescriptionValue = useDebounce(descriptionValue, 1000, initialBuildComplete);
 
     useEffect(() => {
-        // more info on debounce setup, https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
         if (debouncedTitleValue) {
             handleContentUpdates('title', index, titleValue);
         }
@@ -44,7 +46,6 @@ const SectionElement = ({
     [debouncedTitleValue]);
 
     useEffect(() => {
-        // more info on debounce setup, https://dev.to/gabe_ragland/debouncing-with-react-hooks-jci
         if (debouncedDescriptionValue) {
             handleContentUpdates('description', index, descriptionValue);
         }
@@ -177,11 +178,14 @@ const SectionElement = ({
                         )}
                     </div>
                     <div className="col-auto">
+                        <button type="button" onClick={() => setSectionOpen(!sectionOpen)}>
+                            { sectionOpen ? <ExpandLessIcon /> : <ExpandMoreIcon /> }
+                        </button>
                         <button type="button" onClick={duplicateElement}><DuplicateIcon /></button>
                         <button type="button" onClick={deleteElement}><DeleteIcon /></button>
                     </div>
                 </div>
-                <div className="row">
+                <div className={`row ${sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}`}>
                     <div className="col">
                         {initialValues.type === ElementTypes.QUESTION && (
                             <>
