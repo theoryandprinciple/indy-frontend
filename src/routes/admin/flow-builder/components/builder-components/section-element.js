@@ -185,15 +185,23 @@ const SectionElement = ({
                         <button type="button" onClick={deleteElement}><DeleteIcon /></button>
                     </div>
                 </div>
-                <div className={`row ${sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}`}>
+                <div className="row">
                     <div className="col">
                         {initialValues.type === ElementTypes.QUESTION && (
                             <>
                                 {(initialValues.questionType === QuestionTypes.RADIO || initialValues.questionType === QuestionTypes.CHECKBOX)
                                     && <QuestionAnswers questionType={initialValues.questionType} handleUpdate={updateAnswers} initialValues={initialValues.answers} />
                                 }
-                                <hr className={classes.sectionElementBR} />
-                                <QuestionSettings handleUpdate={updateSettings} initialValues={initialValues.settings} />
+                                {(initialValues.questionType === QuestionTypes.SHORT_TEXT || initialValues.questionType === QuestionTypes.LONG_TEXT) && (
+                                    <TextField
+                                        placeholder={initialValues.questionType === QuestionTypes.SHORT_TEXT ? 'Short answer text' : 'Long answer text'}
+                                        disabled
+                                    />
+                                )}
+                                <div className={sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}>
+                                    <hr className={classes.sectionElementBR} />
+                                    <QuestionSettings handleUpdate={updateSettings} initialValues={initialValues.settings} />
+                                </div>
                             </>
                         )}
                     </div>

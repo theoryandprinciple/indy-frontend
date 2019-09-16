@@ -55,12 +55,19 @@ const SectionWrapper = ({ data, classes }) => {
         updateLocalFlowData(tempFlowData);
     };
     const handleSectionUpdates = () => {
-        // just replace sections
+        // just replace sections, not root level params
         const tempFlowData = cloneDeep(localFlowData);
         const tempSections = cloneDeep(sections);
         tempFlowData.sections = tempSections;
         updateLocalFlowData(tempFlowData);
     };
+
+    const handleSectionTitleUpdate = (sectionIndex, titleValue) => {
+        const tempFlowData = cloneDeep(localFlowData);
+        tempFlowData.sections[sectionIndex].title = titleValue;
+        updateLocalFlowData(tempFlowData);
+    };
+
     useEffect(() => {
         handleSectionUpdates();
     }, [sections]);
@@ -74,6 +81,7 @@ const SectionWrapper = ({ data, classes }) => {
             sectionTitle={section.title}
             initialContent={section.contents}
             handleSectionElementUpdates={handleSectionElementUpdates}
+            handleSectionTitleUpdate={handleSectionTitleUpdate}
         />
     );
 
