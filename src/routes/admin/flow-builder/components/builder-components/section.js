@@ -63,7 +63,10 @@ const Section = ({
     useEffect(() => {
         // tell parent to update local state
         // don't update if sectionElements are null (first run)
-        if (sectionElements) {
+
+        // TODO: Keep an eye on this pain point, as the `initialBuildComplete` is a bit of a hack
+        // ... but that hack shaves 100-200ms of load by preventing this from being fired on every section when it receives data for the first time
+        if (sectionElements && initialBuildComplete) {
             handleSectionElementUpdates(index, sectionElements);
         }
     }, [sectionElements]);

@@ -53,8 +53,6 @@ const SectionWrapper = ({ data, classes }) => {
         tempFlowData.sections = tempSections;
         tempFlowData.sections[sectionIndex].contents = updatedSectionElements;
 
-        console.log('handleSectionElementUpdates => updateLocalFlowData')
-        // ^^ need to figure out if we can avoid this on load
         updateLocalFlowData(tempFlowData);
     };
     const handleSectionUpdates = () => {
@@ -63,7 +61,6 @@ const SectionWrapper = ({ data, classes }) => {
         const tempSections = cloneDeep(sections);
         tempFlowData.sections = tempSections;
 
-        console.log('handleSectionUpdates => updateLocalFlowData')
         updateLocalFlowData(tempFlowData);
     };
 
