@@ -34,6 +34,7 @@ const SectionElement = ({
     const [descriptionValue, setDescriptionValue] = useState('');
     const [initialBuildComplete, setInitialBuildComplete] = useState(false);
     const [sectionOpen, setSectionOpen] = useState(false);
+    const [numberDisplay, setNumberDisplay] = useState('0.00');
 
     const debouncedTitleValue = useDebounce(titleValue, 1000, initialBuildComplete);
     const debouncedDescriptionValue = useDebounce(descriptionValue, 1000, initialBuildComplete);
@@ -65,6 +66,14 @@ const SectionElement = ({
         // parent will update when values in this component are updated and set upward
         setTitleValue(initialValues.title);
         setDescriptionValue(initialValues.description);
+
+        if (initialValues.questionType === 'number') {
+            if (initialValues.settings.validation.numberType === 'currency') {
+                setNumberDisplay('0.00');
+            } else if (initialValues.settings.validation.numberType === 'phone') {
+                setNumberDisplay('(555) 555 - 5555');
+            }
+        }
     }, [initialValues]);
 
     // Manage Question Dragging
@@ -136,9 +145,12 @@ const SectionElement = ({
     drag(drop(ref));
 
     // Manage Form Inputs
+    // used by question-answer.js
     const updateAnswers = (formValues) => {
         handleContentUpdates('answers', index, formValues);
     };
+
+    // used by question-settings.js
     const updateSettings = (formValues) => {
         handleContentUpdates('settings', index, formValues);
     };
@@ -198,9 +210,17 @@ const SectionElement = ({
                                         disabled
                                     />
                                 )}
+                                {(initialValues.questionType === QuestionTypes.NUMBER && (
+                                    <TextField
+                                        disabled
+                                        placeholder={numberDisplay}
+                                        className={classes.inputLabel}
+                                        // value={element.value}
+                                    />
+                                ))}
                                 <div className={sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}>
                                     <hr className={classes.sectionElementBR} />
-                                    <QuestionSettings handleUpdate={updateSettings} initialValues={initialValues.settings} />
+                                    <QuestionSettings questionType={initialValues.questionType} handleUpdate={updateSettings} initialValues={initialValues.settings} />
                                 </div>
                             </>
                         )}

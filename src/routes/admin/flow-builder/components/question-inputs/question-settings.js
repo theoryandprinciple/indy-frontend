@@ -8,8 +8,10 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import AddIcon from '@material-ui/icons/AddCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
-
 import update from 'immutability-helper';
+
+import QuestionTypes from '../../wiring/question-types';
+import QuestionNumber from './question-type-number';
 
 import { useFlowDataContext } from '../../wiring/flow-provider';
 
@@ -17,6 +19,7 @@ import Styles from './styles';
 
 const QuestionSettings = ({
     classes,
+    questionType,
     handleUpdate,
     initialValues,
 }) => {
@@ -117,6 +120,9 @@ const QuestionSettings = ({
 
     return (
         <div>
+            {questionType === QuestionTypes.NUMBER && (
+                <QuestionNumber handleUpdate={handleValidationUpdate} initialValues={formValues.validation || {}} />
+            )}
             <Typography variant="body2">Settings</Typography>
             <div>
                 <Checkbox
@@ -124,7 +130,7 @@ const QuestionSettings = ({
                     checked={formValues.validation ? formValues.validation.required : false}
                     onClick={() => handleValidationUpdate('required', !formValues.validation.required)}
                 />
-                <Typography variant="body1" className={classes.inputLabel}>Reqiured</Typography>
+                <Typography variant="body1" className={classes.inputLabel}>Required</Typography>
             </div>
 
             <div>
@@ -278,6 +284,7 @@ const QuestionSettings = ({
 
 QuestionSettings.propTypes = {
     classes: PropTypes.object.isRequired,
+    questionType: PropTypes.string.isRequired,
     handleUpdate: PropTypes.func.isRequired,
     initialValues: PropTypes.object.isRequired,
 };

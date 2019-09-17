@@ -21,13 +21,14 @@ const SampleFlowData = {
                 'title': 'Title of question',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fa',
                 'type': 'question',
-                'questionType': 'radio',
+                'questionType': 'number',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
                     'enableVariableName': true,
                     'variableName': 'donuts',
                     'validation': {
+                        'numberType': 'currency',
                         'required': true,
                         'email': true,
                     },
@@ -836,6 +837,7 @@ const FlowDataProvider = (props) => {
 
     useEffect(() => {
         // nothing to do when this updates (yet)
+        // console.log('localFlowData', localFlowData)
     }, [localFlowData]);
 
     const updateLocalFlowData = newFlowData => setLocalFlowData(newFlowData);
