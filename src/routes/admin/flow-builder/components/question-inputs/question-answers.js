@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import DeleteIcon from '@material-ui/icons/Delete';
-import DuplicateIcon from '@material-ui/icons/AddToPhotos';
+import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/AddCircle';
 import Radio from '@material-ui/core/Radio';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -53,12 +52,15 @@ const QuestionAnswers = ({
         } else if (type === 'delete') { // 'delete' is a special type
             // delete stuff
             temp.splice(answerIndex, 1);
-        } else if (type === 'duplicate') { // 'duplicate' is a special type
+        }
+        /* REMOVE FROM MVP
+        else if (type === 'duplicate') { // 'duplicate' is a special type
             // duplicate stuff (no mutation of original object)
             // need to replace id with null value, oppose to carrying it over
             const newAnswer = Object.assign({}, temp[answerIndex], { id: null });
             temp.push(newAnswer);
         }
+        */
 
         // update local state
         setFormValues(temp);
@@ -103,8 +105,7 @@ const QuestionAnswers = ({
                 />
             </div>
             <div className={`col-auto ${classes.answerActions}`}>
-                <button type="button" onClick={handleContentUpdates('duplicate', index)}><DuplicateIcon /></button>
-                <button type="button" onClick={handleContentUpdates('delete', index)}><DeleteIcon /></button>
+                <button type="button" onClick={handleContentUpdates('delete', index)}><CloseIcon /></button>
             </div>
         </div>
     );

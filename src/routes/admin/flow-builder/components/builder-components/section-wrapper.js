@@ -52,15 +52,33 @@ const SectionWrapper = ({ data, classes }) => {
         const tempSections = cloneDeep(sections);
         tempFlowData.sections = tempSections;
         tempFlowData.sections[sectionIndex].contents = updatedSectionElements;
+
         updateLocalFlowData(tempFlowData);
     };
     const handleSectionUpdates = () => {
-        // just replace sections
+        // just replace sections, not root level params
         const tempFlowData = cloneDeep(localFlowData);
         const tempSections = cloneDeep(sections);
         tempFlowData.sections = tempSections;
+
         updateLocalFlowData(tempFlowData);
     };
+
+    const handleSectionTitleUpdate = (sectionIndex, titleValue) => {
+        const tempFlowData = cloneDeep(localFlowData);
+        tempFlowData.sections[sectionIndex].title = titleValue;
+
+        updateLocalFlowData(tempFlowData);
+    };
+
+    const handleDeleteSection = (sectionIndex) => {
+        const tempFlowData = cloneDeep(localFlowData);
+        tempFlowData.sections.splice(sectionIndex, 1);
+
+        // need to rerender ui, so we don't send updates directly to context
+        setSections(tempFlowData.sections);
+    };
+
     useEffect(() => {
         handleSectionUpdates();
     }, [sections]);
@@ -74,6 +92,8 @@ const SectionWrapper = ({ data, classes }) => {
             sectionTitle={section.title}
             initialContent={section.contents}
             handleSectionElementUpdates={handleSectionElementUpdates}
+            handleSectionTitleUpdate={handleSectionTitleUpdate}
+            handleDeleteSection={handleDeleteSection}
         />
     );
 
@@ -96,7 +116,7 @@ const SectionWrapper = ({ data, classes }) => {
     return (
         <div ref={drop} style={{ border }} className={classes.sectionWrapperWrapper}>
             {isActive ? `${sections.length === 0 ? 'Release to drop' : ''}` : `${sections.length === 0 ? 'Start the party' : ''}`}
-            <div>{sections.map((section, i) => renderElement(section, i))}</div>
+            {sections.map((section, i) => renderElement(section, i))}
         </div>
     );
 };

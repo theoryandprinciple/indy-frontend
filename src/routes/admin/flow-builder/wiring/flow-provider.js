@@ -827,7 +827,7 @@ const SampleFlowData2 = {
 };
 
 const FlowDataProvider = (props) => {
-    const [localFlowData, setLocalFlowData] = useState([]);
+    const [localFlowData, setLocalFlowData] = useState({ sections: [] });
     const [remoteFlowData, setRemoteFlowData] = useState(SampleFlowData);
 
     useEffect(() => {
@@ -836,7 +836,6 @@ const FlowDataProvider = (props) => {
 
     useEffect(() => {
         // nothing to do when this updates (yet)
-        // console.log('update local flow', localFlowData);
     }, [localFlowData]);
 
     const updateLocalFlowData = newFlowData => setLocalFlowData(newFlowData);

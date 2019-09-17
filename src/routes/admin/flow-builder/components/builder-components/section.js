@@ -9,6 +9,8 @@ import { useDrag, useDrop } from 'react-dnd';
 import update from 'immutability-helper';
 import { cloneDeep } from 'lodash';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+
 import { withStyles } from '@material-ui/core/styles';
 
 import DragIcon from '@material-ui/icons/ZoomOutMap';
@@ -19,6 +21,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import SectionElement from './section-element';
 import ElementTypes from '../../wiring/element-types';
 import IdGenerator from '../../wiring/unique-id-generator';
+import useDebounce from '../../../../../utils/use-debounce';
+
 import Colors from '../../../../../styles/colors';
 import Styles from './styles';
 
@@ -30,16 +34,39 @@ const Section = ({
     sectionTitle,
     initialContent,
     handleSectionElementUpdates,
+    handleSectionTitleUpdate,
+    handleDeleteSection,
 }) => {
     const [sectionElements, setSectionElements] = useState(null);
-    const [sectionOpen, setSectionOpen] = useState(true);
+    const [sectionOpen, setSectionOpen] = useState(false);
+    // setup title useState
+    const [titleValue, setTitleValue] = useState('');
+    const [initialBuildComplete, setInitialBuildComplete] = useState(false);
 
+    const debouncedTitleValue = useDebounce(titleValue, 500, initialBuildComplete);
+
+    useEffect(() => {
+        if (debouncedTitleValue) {
+            handleSectionTitleUpdate(index, debouncedTitleValue);
+        }
+    },
+    [debouncedTitleValue]);
+    useEffect(() => { // debounce setup function
+        const timer = setTimeout(() => {
+            // without this flag, the component will get rerenedered twice because the initail debounces will get fired off
+            setInitialBuildComplete(true);
+        }, 600);
+        return () => clearTimeout(timer);
+    }, []);
 
     // MANAGE FLOW DATA
     useEffect(() => {
         // tell parent to update local state
         // don't update if sectionElements are null (first run)
-        if (sectionElements) {
+
+        // TODO: Keep an eye on this pain point, as the `initialBuildComplete` is a bit of a hack
+        // ... but that hack shaves 100-200ms of load by preventing this from being fired on every section when it receives data for the first time
+        if (sectionElements && initialBuildComplete) {
             handleSectionElementUpdates(index, sectionElements);
         }
     }, [sectionElements]);
@@ -48,6 +75,11 @@ const Section = ({
         // populate internal state with external props
         setSectionElements(initialContent);
     }, [initialContent]);
+
+    useEffect(() => {
+        // populate title state with external props
+        setTitleValue(sectionTitle);
+    }, [sectionTitle]);
 
     const handleContentUpdates = (type, sectionElementIndex, values) => {
         const tempSectionElements = cloneDeep(sectionElements);
@@ -217,21 +249,25 @@ const Section = ({
                         </button>
                     </div>
                     <div className={classes.sectionTabStyle}>
-                        <DeleteIcon />
+                        <DeleteIcon onClick={() => handleDeleteSection(index)} />
                     </div>
                 </div>
             </div>
 
             <div className="row no-gutters" style={{ padding: '15px 30px' }}>
+                <TextField
+                    placeholder="Question Title..."
+                    className={classes.inputLabel}
+                    value={titleValue}
+                    onChange={event => setTitleValue(event.target.value)}
+                />
                 <Typography variant="h5">
-                    {`${sectionTitle} (${sectionElements ? sectionElements.length : 0})`}
+                    {sectionElements ? sectionElements.length : 0}
                 </Typography>
             </div>
 
-            <div className={`row no-gutters ${sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}`} style={{ padding: '15px 30px' }}>
-                <div ref={preview}>
-                    {sectionElements && sectionElements.map((sectionElement, i) => renderElement(sectionElement, i))}
-                </div>
+            <div ref={preview} className={`row no-gutters ${sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}`} style={{ padding: '15px 30px' }}>
+                {sectionElements && sectionElements.map((sectionElement, i) => renderElement(sectionElement, i))}
             </div>
         </div>
     );
@@ -248,6 +284,8 @@ Section.propTypes = {
     sectionTitle: PropTypes.string,
     initialContent: PropTypes.array,
     handleSectionElementUpdates: PropTypes.func.isRequired,
+    handleSectionTitleUpdate: PropTypes.func.isRequired,
+    handleDeleteSection: PropTypes.func.isRequired,
 };
 
 export default withStyles(Styles)(Section);
