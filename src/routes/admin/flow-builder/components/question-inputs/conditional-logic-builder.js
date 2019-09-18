@@ -19,7 +19,7 @@ const ConditionalLogicBuilder = ({
     initialValues,
 }) => {
     const { localFlowData } = useFlowDataContext();
-    const [flowQuestions, setFlowQuestions] = useState({});
+    const [flowQuestions, setFlowQuestions] = useState([]);
 
     useEffect(() => {
         // use local form data to create a list of questions within the current flow

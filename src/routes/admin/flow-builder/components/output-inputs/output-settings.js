@@ -9,7 +9,7 @@ import ConditionalLogicBuilder from '../question-inputs/conditional-logic-builde
 
 import Styles from './styles';
 
-const QuestionSettings = ({
+const OutputSettings = ({
     classes,
     handleUpdate,
     initialValues,
@@ -19,7 +19,7 @@ const QuestionSettings = ({
     useEffect(() => {
         // populate internal state with data in useFlowDataContext,
         // this should only happen when API data comes in
-        setFormValues(initialValues);
+        setFormValues(initialValues.settings);
     }, [initialValues]);
 
     // if we do this, it causes an infinite loop, cause those changes want to come back down
@@ -91,7 +91,7 @@ const QuestionSettings = ({
                 />
                 <Typography variant="body1" className={classes.inputLabel}>Enable Conditional Logic</Typography>
                 <ConditionalLogicBuilder
-                    initialValues={initialValues}
+                    initialValues={initialValues.settings}
                     addAnotherCondition={addAnotherCondition}
                     deleteCondition={deleteCondition}
                     handleAdvancedConditionalLogicUpdate={handleAdvancedConditionalLogicUpdate}
@@ -102,10 +102,10 @@ const QuestionSettings = ({
     );
 };
 
-QuestionSettings.propTypes = {
+OutputSettings.propTypes = {
     classes: PropTypes.object.isRequired,
     handleUpdate: PropTypes.func.isRequired,
     initialValues: PropTypes.object.isRequired,
 };
 
-export default withStyles(Styles)(QuestionSettings);
+export default withStyles(Styles)(OutputSettings);
