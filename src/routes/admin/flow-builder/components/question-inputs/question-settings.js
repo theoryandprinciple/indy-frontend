@@ -19,7 +19,7 @@ import Styles from './styles';
 
 const QuestionSettings = ({
     classes,
-    questionType,
+    inputType,
     handleUpdate,
     initialValues,
 }) => {
@@ -120,7 +120,7 @@ const QuestionSettings = ({
 
     return (
         <div>
-            {questionType === QuestionTypes.NUMBER && (
+            {inputType === QuestionTypes.NUMBER && (
                 <QuestionNumber handleUpdate={handleValidationUpdate} initialValues={formValues.validation || {}} />
             )}
             <Typography variant="body2">Settings</Typography>
@@ -161,12 +161,12 @@ const QuestionSettings = ({
             <div>
                 <Typography variant="body2">Advanced</Typography>
                 {/* REMOVE FOR MVP
-                <Checkbox
-                    color="primary"
-                    checked={formValues.advanced ? formValues.advanced.populateDynamically : false}
-                    onClick={() => handleAdvancedUpdate('populateDynamically', !formValues.advanced.populateDynamically)}
-                />
-                <Typography variant="body1" className={classes.inputLabel}>Allow field to be populated dynamically</Typography>
+                    <Checkbox
+                        color="primary"
+                        checked={formValues.advanced ? formValues.advanced.populateDynamically : false}
+                        onClick={() => handleAdvancedUpdate('populateDynamically', !formValues.advanced.populateDynamically)}
+                    />
+                    <Typography variant="body1" className={classes.inputLabel}>Allow field to be populated dynamically</Typography>
                 */}
             </div>
 
@@ -284,7 +284,7 @@ const QuestionSettings = ({
 
 QuestionSettings.propTypes = {
     classes: PropTypes.object.isRequired,
-    questionType: PropTypes.string.isRequired,
+    inputType: PropTypes.string.isRequired,
     handleUpdate: PropTypes.func.isRequired,
     initialValues: PropTypes.object.isRequired,
 };

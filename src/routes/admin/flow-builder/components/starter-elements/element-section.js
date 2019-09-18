@@ -20,7 +20,7 @@ const BoxWithHandle = ({ text, classes }) => {
         <div ref={preview} className={`row no-gutters ${classes.elementQuestionWrapper}`} style={{ opacity }}>
             <div className="col-3">
                 <div className={`${classes.elementIconWrapper} ${classes.elementSectionIcon}`}>
-                    {/* {IconList[questionType]} */}
+                    {/* {IconList[inputType]} */}
                 </div>
             </div>
             <div className="col-9" style={{ verticalAlign: 'center' }}>

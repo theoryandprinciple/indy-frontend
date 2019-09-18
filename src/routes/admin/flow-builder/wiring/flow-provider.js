@@ -18,10 +18,36 @@ const SampleFlowData = {
             'title': 'section title',
             'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97xa',
             'contents': [{
+                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fa',
+                'type': 'output',
+                'inputType': 'email',
+                'settings': {
+                    'advanced': {
+                        'enableConditionalLogic': true,
+                        'conditionalLogic': {
+                            'visiblity': 'show',
+                            'visiblityCondition': 'all',
+                            'conditions': [
+                                {
+                                    'questionId': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
+                                    'condition': 'is',
+                                    'answer': 'yes',
+                                },
+                                {
+                                    'questionId': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
+                                    'condition': 'is not',
+                                    'answer': 'yes',
+                                },
+                            ],
+                        },
+                    },
+                },
+            },
+            {
                 'title': 'Title of question',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fa',
                 'type': 'question',
-                'questionType': 'number',
+                'inputType': 'number',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -64,7 +90,7 @@ const SampleFlowData = {
                 'title': 'Are Dogs Cool?',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
                 'type': 'question',
-                'questionType': 'checkbox',
+                'inputType': 'checkbox',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description for are dogs cool',
@@ -99,7 +125,7 @@ const SampleFlowData = {
                 'title': 'question 1 title - 1',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
                 'type': 'question',
-                'questionType': 'radio',
+                'inputType': 'radio',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -130,7 +156,7 @@ const SampleFlowData = {
                 'title': 'question 2 title - 1',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3acfb91e97fd',
                 'type': 'question',
-                'questionType': 'checkbox',
+                'inputType': 'checkbox',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -165,7 +191,7 @@ const SampleFlowData = {
                 'title': 'question 1 title - 2',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
                 'type': 'question',
-                'questionType': 'radio',
+                'inputType': 'radio',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -196,7 +222,7 @@ const SampleFlowData = {
                 'title': 'question 2 title - 2',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3acgb91e97fd',
                 'type': 'question',
-                'questionType': 'checkbox',
+                'inputType': 'checkbox',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -231,7 +257,7 @@ const SampleFlowData = {
                 'title': 'question 1 title - 3',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
                 'type': 'question',
-                'questionType': 'radio',
+                'inputType': 'radio',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -262,7 +288,7 @@ const SampleFlowData = {
                 'title': 'question 2 title - 3',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3achb91e97fd',
                 'type': 'question',
-                'questionType': 'checkbox',
+                'inputType': 'checkbox',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -297,7 +323,7 @@ const SampleFlowData = {
                 'title': 'question 1 title - 4',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
                 'type': 'question',
-                'questionType': 'radio',
+                'inputType': 'radio',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -328,7 +354,7 @@ const SampleFlowData = {
                 'title': 'question 2 title - 4',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3acib91e97fd',
                 'type': 'question',
-                'questionType': 'checkbox',
+                'inputType': 'checkbox',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -363,7 +389,7 @@ const SampleFlowData = {
                 'title': 'question 1 title - 5',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
                 'type': 'question',
-                'questionType': 'radio',
+                'inputType': 'radio',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -394,7 +420,7 @@ const SampleFlowData = {
                 'title': 'question 2 title - 5',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3acjb91e97fd',
                 'type': 'question',
-                'questionType': 'checkbox',
+                'inputType': 'checkbox',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -429,7 +455,7 @@ const SampleFlowData = {
                 'title': 'question 1 title - 6',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
                 'type': 'question',
-                'questionType': 'radio',
+                'inputType': 'radio',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -460,7 +486,7 @@ const SampleFlowData = {
                 'title': 'question 2 title - 6',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3ackb91e97fd',
                 'type': 'question',
-                'questionType': 'checkbox',
+                'inputType': 'checkbox',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -495,7 +521,7 @@ const SampleFlowData = {
                 'title': 'question 1 title - 7',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
                 'type': 'question',
-                'questionType': 'radio',
+                'inputType': 'radio',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -526,7 +552,7 @@ const SampleFlowData = {
                 'title': 'question 2 title - 7',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aclb91e97fd',
                 'type': 'question',
-                'questionType': 'checkbox',
+                'inputType': 'checkbox',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -561,7 +587,7 @@ const SampleFlowData = {
                 'title': 'question 1 title - 8',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
                 'type': 'question',
-                'questionType': 'radio',
+                'inputType': 'radio',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -592,7 +618,7 @@ const SampleFlowData = {
                 'title': 'question 2 title - 8',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3acmb91e97fd',
                 'type': 'question',
-                'questionType': 'checkbox',
+                'inputType': 'checkbox',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -627,7 +653,7 @@ const SampleFlowData = {
                 'title': 'question 1 title - 9',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fc',
                 'type': 'question',
-                'questionType': 'radio',
+                'inputType': 'radio',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -658,7 +684,7 @@ const SampleFlowData = {
                 'title': 'question 2 title - 9',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91d97fd',
                 'type': 'question',
-                'questionType': 'checkbox',
+                'inputType': 'checkbox',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -699,7 +725,7 @@ const SampleFlowData2 = {
                 'title': 'Title of question',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fh',
                 'type': 'question',
-                'questionType': 'radio',
+                'inputType': 'radio',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -730,7 +756,7 @@ const SampleFlowData2 = {
                 'title': 'Are Dogs Cool?',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fe',
                 'type': 'question',
-                'questionType': 'checkbox',
+                'inputType': 'checkbox',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -765,7 +791,7 @@ const SampleFlowData2 = {
                 'title': 'question 1 title - 10',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97ff',
                 'type': 'question',
-                'questionType': 'radio',
+                'inputType': 'radio',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',
@@ -796,7 +822,7 @@ const SampleFlowData2 = {
                 'title': 'question 2 title - 10',
                 'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fg',
                 'type': 'question',
-                'questionType': 'checkbox',
+                'inputType': 'checkbox',
                 'settings': {
                     'enableDescription': true,
                     'description': 'this is my long description',

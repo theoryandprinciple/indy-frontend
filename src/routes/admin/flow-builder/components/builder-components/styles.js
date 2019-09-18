@@ -34,9 +34,8 @@ const styles = () => ({
         cursor: 'move',
         color: 'black',
     },
-    sectionElementIconWrapper: {
+    elementIconWrapper: {
         borderRadius: 5,
-        backgroundColor: Colors.blue,
         color: 'white',
         height: 32,
         width: 29,
@@ -47,6 +46,12 @@ const styles = () => ({
             height: 20,
             width: 20,
         },
+    },
+    elementQuestionIcon: {
+        backgroundColor: Colors.blue,
+    },
+    elementOutputIcon: {
+        backgroundColor: 'black',
     },
     sectionElementBR: {
         display: 'block',

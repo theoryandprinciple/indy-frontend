@@ -46,18 +46,18 @@ const Flow = ({ classes }) => {
 
                             <div className="row">
                                 <div className="col-6">
-                                    <Question text="Radio Buttons" questionType={QuestionTypes.RADIO} />
-                                    <Question text="Checkboxes" questionType={QuestionTypes.CHECKBOX} />
-                                    <Question text="Short Text" questionType={QuestionTypes.SHORT_TEXT} />
+                                    <Question text="Radio Buttons" inputType={QuestionTypes.RADIO} />
+                                    <Question text="Checkboxes" inputType={QuestionTypes.CHECKBOX} />
+                                    <Question text="Short Text" inputType={QuestionTypes.SHORT_TEXT} />
                                 </div>
                                 <div className="col-6">
-                                    <Question text="Long Text" questionType={QuestionTypes.LONG_TEXT} />
-                                    <Question text="Number" questionType={QuestionTypes.NUMBER} />
+                                    <Question text="Long Text" inputType={QuestionTypes.LONG_TEXT} />
+                                    <Question text="Number" inputType={QuestionTypes.NUMBER} />
                                     {/* REMOVED FOR MVP
-                                    <Question text="Date" questionType={QuestionTypes.DATE} />
-                                    <Question text="File Uploader" questionType={QuestionTypes.FILE_UPLOAD} />
-                                    <Question text="Jurisdiction" questionType={QuestionTypes.JURISDICTION} />
-                                    <Question text="Legal Disclaimer" questionType={QuestionTypes.LEGAL_DISCLAIMER} />
+                                    <Question text="Date" inputType={QuestionTypes.DATE} />
+                                    <Question text="File Uploader" inputType={QuestionTypes.FILE_UPLOAD} />
+                                    <Question text="Jurisdiction" inputType={QuestionTypes.JURISDICTION} />
+                                    <Question text="Legal Disclaimer" inputType={QuestionTypes.LEGAL_DISCLAIMER} />
                                     */}
                                 </div>
                             </div>
@@ -69,10 +69,10 @@ const Flow = ({ classes }) => {
                             </div>
                             <div className="row">
                                 <div className="col-6">
-                                    <Output text="Email Generation" questionType={OutputTypes.EMAIL} />
+                                    <Output text="Email Generation" inputType={OutputTypes.EMAIL} />
                                 </div>
                                 <div className="col-6">
-                                    <Output text="Content" questionType={OutputTypes.CONTENT} />
+                                    <Output text="Content" inputType={OutputTypes.CONTENT} />
                                 </div>
                             </div>
 
