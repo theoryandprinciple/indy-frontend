@@ -111,11 +111,20 @@ const Section = ({
         let newElement;
         // Set default values used inside new question components (answers, settings)
         if (item.type === 'question') {
+            console.log('question drop', item.type)
             newElement = {
                 id: IdGenerator,
                 title: item.text,
                 answers: [],
                 settings: { validation: { required: false } },
+                type: item.type,
+                questionType: item.questionType,
+            };
+        } else if (item.type === 'output') {
+            console.log('output drop', item.type)
+            newElement = {
+                id: IdGenerator,
+                title: item.text,
                 type: item.type,
                 questionType: item.questionType,
             };
@@ -160,7 +169,7 @@ const Section = ({
     const ref = useRef(null);
     const [{ canDrop, isOver }, drop] = useDrop({
         // accept needs to cascading set of types
-        accept: [ElementTypes.SECTION, ElementTypes.QUESTION],
+        accept: [ElementTypes.SECTION, ElementTypes.QUESTION, ElementTypes.OUTPUT],
         hover(item, monitor) {
             if (!ref.current) {
                 return;

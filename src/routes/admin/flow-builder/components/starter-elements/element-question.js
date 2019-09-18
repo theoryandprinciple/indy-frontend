@@ -18,7 +18,7 @@ const BoxWithHandle = ({ text, questionType, classes }) => {
     return (
         <div ref={preview} className={`row no-gutters ${classes.elementQuestionWrapper}`} style={{ opacity }}>
             <div className="col-3">
-                <div className={classes.elementQuestionIconWrapper}>
+                <div className={`${classes.elementIconWrapper} ${classes.elementQuestionIcon}`}>
                     {IconList[questionType]}
                 </div>
             </div>

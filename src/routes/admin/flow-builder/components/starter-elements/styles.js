@@ -11,9 +11,8 @@ const styles = theme => ({
         padding: 4,
         alignItems: 'center',
     },
-    elementQuestionIconWrapper: {
+    elementIconWrapper: {
         borderRadius: 5,
-        backgroundColor: Colors.blue,
         color: 'white',
         height: 32,
         width: 29,
@@ -24,6 +23,15 @@ const styles = theme => ({
             height: 20,
             width: 20,
         },
+    },
+    elementQuestionIcon: {
+        backgroundColor: Colors.blue,
+    },
+    elementSectionIcon: {
+        backgroundColor: Colors.orange,
+    },
+    elementOutputIcon: {
+        backgroundColor: 'black',
     },
 });
 

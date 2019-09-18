@@ -10,7 +10,10 @@ import FileUploaderIcon from '@material-ui/icons/CloudUpload';
 import JurisdictionIcon from '@material-ui/icons/Room';
 import LegalDisclaimerIcon from '@material-ui/icons/CheckBoxOutlined';
 
+import EmailIcon from '@material-ui/icons/Email';
+
 import QuestionTypes from './question-types';
+import OutputTypes from './output-types';
 
 export default {
     [QuestionTypes.RADIO]: <RadioIcon />,
@@ -22,4 +25,6 @@ export default {
     [QuestionTypes.FILE_UPLOAD]: <FileUploaderIcon />,
     [QuestionTypes.JURISDICTION]: <JurisdictionIcon />,
     [QuestionTypes.LEGAL_DISCLAIMER]: <LegalDisclaimerIcon />,
+    [OutputTypes.EMAIL]: <EmailIcon />,
+    [OutputTypes.CONTENT]: <LongTextIcon />,
 };

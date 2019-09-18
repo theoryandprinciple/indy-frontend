@@ -11,6 +11,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import ElementTypes from '../../wiring/element-types';
 import QuestionTypes from '../../wiring/question-types';
+import OutputTypes from '../../wiring/output-types';
 import IconList from '../../wiring/icon-list';
 
 import QuestionAnswers from '../question-inputs/question-answers';
@@ -215,13 +216,20 @@ const SectionElement = ({
                                         disabled
                                         placeholder={numberDisplay}
                                         className={classes.inputLabel}
-                                        // value={element.value}
                                     />
                                 ))}
                                 <div className={sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}>
                                     <hr className={classes.sectionElementBR} />
                                     <QuestionSettings questionType={initialValues.questionType} handleUpdate={updateSettings} initialValues={initialValues.settings} />
                                 </div>
+                            </>
+                        )}
+                        {initialValues.type === ElementTypes.OUTPUT && (
+                            <>
+                                <h3>OUTPUT</h3>
+                                {(initialValues.questionType === OutputTypes.EMAIL && (
+                                    <h2>EMAIL</h2>
+                                ))}
                             </>
                         )}
                     </div>
