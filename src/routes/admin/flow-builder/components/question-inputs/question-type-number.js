@@ -19,6 +19,7 @@ const QuestionTypeNumber = ({
 
         // update local state
         // setFormValues(key, value);
+        // NOTE: we take local updates from `useEffect`, oppose to setting them here.
     };
 
     useEffect(() => {
