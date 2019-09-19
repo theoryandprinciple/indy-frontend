@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import update from 'immutability-helper';
 
-import ConditionalLogicBuilder from '../question-inputs/conditional-logic-builder';
+import ConditionalLogicBuilder from './conditional-logic-builder';
 
 import Styles from './styles';
 

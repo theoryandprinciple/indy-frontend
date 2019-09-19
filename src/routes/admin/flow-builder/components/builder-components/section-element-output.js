@@ -14,7 +14,7 @@ import IconList from '../../wiring/icon-list';
 
 import Styles from './styles';
 
-import OutputSettings from '../output-inputs/output-settings';
+import OutputSettings from '../section-element-inputs/output-settings';
 
 const SectionElement = ({
     classes,

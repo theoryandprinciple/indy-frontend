@@ -13,8 +13,8 @@ import ElementTypes from '../../wiring/element-types';
 import QuestionTypes from '../../wiring/question-types';
 import IconList from '../../wiring/icon-list';
 
-import QuestionAnswers from '../question-inputs/question-answers';
-import QuestionSettings from '../question-inputs/question-settings';
+import QuestionAnswers from '../section-element-inputs/question-answers';
+import QuestionSettings from '../section-element-inputs/question-settings';
 
 import useDebounce from '../../../../../utils/use-debounce';
 

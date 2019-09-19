@@ -13,6 +13,8 @@ import update from 'immutability-helper';
 import QuestionTypes from '../../wiring/question-types';
 import QuestionNumber from './question-type-number';
 
+import ConditionalLogicBuilder from './conditional-logic-builder';
+
 import { useFlowDataContext } from '../../wiring/flow-provider';
 
 import Styles from './styles';
@@ -177,94 +179,12 @@ const QuestionSettings = ({
                     onClick={() => handleAdvancedUpdate('enableConditionalLogic', !formValues.advanced.enableConditionalLogic)}
                 />
                 <Typography variant="body1" className={classes.inputLabel}>Enable Conditional Logic</Typography>
-                {(formValues.advanced && formValues.advanced.enableConditionalLogic) && (
-                    <div>
-                        <div>
-                            <Select
-                                className={classes.elementSelectMenu}
-                                color="primary"
-                                value={formValues.advanced.conditionalLogic.visiblity || 'show'}
-                                onChange={event => handleAdvancedConditionalLogicUpdate('visiblity', event.target.value)}
-                            >
-                                <MenuItem value="show">Show</MenuItem>
-                                <MenuItem value="hide">Hide</MenuItem>
-                            </Select>
-                            <Typography variant="body1" style={{ display: 'inline' }}>this field if</Typography>
-                            <Select
-                                style={{ marginLeft: 15 }}
-                                className={classes.elementSelectMenu}
-                                color="primary"
-                                value={formValues.advanced.conditionalLogic.visiblityCondition || 'all'}
-                                onChange={event => handleAdvancedConditionalLogicUpdate('visiblityCondition', event.target.value)}
-                            >
-                                <MenuItem value="all">All</MenuItem>
-                                <MenuItem value="some">Some</MenuItem>
-                                <MenuItem value="none">None</MenuItem>
-                            </Select>
-                            <Typography variant="body1" style={{ display: 'inline' }}>of the following match:</Typography>
-                        </div>
-                        <div>
-                            {formValues.advanced && formValues.advanced.conditionalLogic.conditions.map((logicBlock, i) => {
-                                const selectedQuestion = find(flowQuestions, ['id', logicBlock.questionId]);
-
-                                // only show `AddAnother` to the last condition in the list
-                                let AddAnother;
-                                if ((i + 1) === formValues.advanced.conditionalLogic.conditions.length || formValues.advanced.conditionalLogic.conditions.length === 0) {
-                                    AddAnother = <button type="button" onClick={addAnotherCondition}><AddIcon /></button>;
-                                }
-                                return (
-                                    <div key={`logicBlock-${i}`} className={classes.settingsConditionSet}>
-                                        <Select
-                                            className={classes.elementSelectMenu}
-                                            color="primary"
-                                            value={logicBlock.questionId || '1'}
-                                            onChange={event => handleAdvancedConditionalLogicUpdate('questionId', event.target.value, i)}
-                                        >
-                                            {flowQuestions.map((question, q) => (
-                                                <MenuItem
-                                                    key={`${question.title}-${q}`}
-                                                    value={question.id}
-                                                >
-                                                    {question.title}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                        <Select
-                                            style={{ marginLeft: 15 }}
-                                            className={classes.elementSelectMenu}
-                                            color="primary"
-                                            value={logicBlock.condition || 'is'}
-                                            onChange={event => handleAdvancedConditionalLogicUpdate('condition', event.target.value, i)}
-                                        >
-                                            <MenuItem value="is">Is</MenuItem>
-                                            <MenuItem value="is not">Is Not</MenuItem>
-                                        </Select>
-                                        <Select
-                                            className={classes.elementSelectMenu}
-                                            color="primary"
-                                            value={logicBlock.answer || ''}
-                                            onChange={event => handleAdvancedConditionalLogicUpdate('answer', event.target.value, i)}
-                                        >
-                                            {(logicBlock.questionId && selectedQuestion) && selectedQuestion.answers.map(answer => (
-                                                <MenuItem
-                                                    key={answer.value}
-                                                    value={answer.value}
-                                                >
-                                                    {answer.value}
-                                                </MenuItem>
-                                            ))}
-                                        </Select>
-                                        {AddAnother}
-                                        <button className={classes.settingsConditionSetDelete} type="button" onClick={() => deleteCondition(i)}><DeleteIcon /></button>
-                                    </div>
-                                );
-                            })}
-                            {formValues.advanced && formValues.advanced.conditionalLogic.conditions.length === 0 && (
-                                <button type="button" onClick={addAnotherCondition}><AddIcon /></button>
-                            )}
-                        </div>
-                    </div>
-                )}
+                <ConditionalLogicBuilder
+                    initialValues={formValues}
+                    addAnotherCondition={addAnotherCondition}
+                    deleteCondition={deleteCondition}
+                    handleAdvancedConditionalLogicUpdate={handleAdvancedConditionalLogicUpdate}
+                />
             </div>
 
             {/* REMOVE FOR MVP
