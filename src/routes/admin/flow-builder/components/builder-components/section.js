@@ -18,7 +18,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import SectionElement from './section-element';
+import SectionElement from './section-element-question';
 import SectionElementOutput from './section-element-output';
 import ElementTypes from '../../wiring/element-types';
 import IdGenerator from '../../wiring/unique-id-generator';

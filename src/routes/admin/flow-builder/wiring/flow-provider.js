@@ -15,108 +15,109 @@ const SampleFlowData = {
     'title': 'flow title',
     'sections': [
         {
-            'title': 'section title',
             'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97xa',
-            'contents': [{
-                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fa',
-                'type': 'output',
-                'inputType': 'email',
-                'settings': {
-                    'advanced': {
-                        'enableConditionalLogic': true,
-                        'conditionalLogic': {
-                            'visiblity': 'show',
-                            'visiblityCondition': 'all',
-                            'conditions': [
-                                {
-                                    'questionId': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
-                                    'condition': 'is',
-                                    'answer': 'yes',
-                                },
-                                {
-                                    'questionId': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
-                                    'condition': 'is not',
-                                    'answer': 'yes',
-                                },
-                            ],
+            'title': 'this is a section',
+            'contents': [
+                {
+                    'type': 'output',
+                    'inputType': 'email',
+                    'selectedOutput': '85ff9e7d-ac4f-4ac7-800c-3aceb91c97fa',
+                    'settings': {
+                        'advanced': {
+                            'enableConditionalLogic': true,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [
+                                    {
+                                        'questionId': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
+                                        'condition': 'is',
+                                        'answer': 'yes',
+                                    },
+                                    {
+                                        'questionId': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
+                                        'condition': 'is not',
+                                        'answer': 'yes',
+                                    },
+                                ],
+                            },
                         },
                     },
                 },
-            },
-            {
-                'title': 'Title of question',
-                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fa',
-                'type': 'question',
-                'inputType': 'number',
-                'settings': {
-                    'enableDescription': true,
-                    'description': 'this is my long description',
-                    'enableVariableName': true,
-                    'variableName': 'donuts',
-                    'validation': {
-                        'numberType': 'currency',
-                        'required': true,
-                        'email': true,
-                    },
-                    'advanced': {
-                        'populateDynamically': true,
-                        'enableConditionalLogic': true,
-                        'conditionalLogic': {
-                            'visiblity': 'show',
-                            'visiblityCondition': 'all',
-                            'conditions': [
-                                {
-                                    'questionId': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
-                                    'condition': 'is',
-                                    'answer': 'yes',
-                                },
-                                {
-                                    'questionId': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
-                                    'condition': 'is not',
-                                    'answer': 'yes',
-                                },
-                            ],
+                {
+                    'title': 'Title of question',
+                    'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fa',
+                    'type': 'question',
+                    'inputType': 'number',
+                    'settings': {
+                        'enableDescription': true,
+                        'description': 'this is my long description',
+                        'enableVariableName': true,
+                        'variableName': 'donuts',
+                        'validation': {
+                            'numberType': 'currency',
+                            'required': true,
+                            'email': true,
                         },
-                        'enableCalculation': false,
+                        'advanced': {
+                            'populateDynamically': true,
+                            'enableConditionalLogic': true,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [
+                                    {
+                                        'questionId': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
+                                        'condition': 'is',
+                                        'answer': 'yes',
+                                    },
+                                    {
+                                        'questionId': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
+                                        'condition': 'is not',
+                                        'answer': 'yes',
+                                    },
+                                ],
+                            },
+                            'enableCalculation': false,
+                        },
                     },
+                    'answers': [{
+                        'value': 'yes',
+                    }, {
+                        'value': 'no',
+                    }],
                 },
-                'answers': [{
-                    'value': 'yes',
-                }, {
-                    'value': 'no',
+                {
+                    'title': 'Are Dogs Cool?',
+                    'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
+                    'type': 'question',
+                    'inputType': 'checkbox',
+                    'settings': {
+                        'enableDescription': true,
+                        'description': 'this is my long description for are dogs cool',
+                        'enableVariableName': true,
+                        'variableName': 'dog do nut',
+                        'validation': {
+                            'required': false,
+                            'email': true,
+                        },
+                        'advanced': {
+                            'populateDynamically': true,
+                            'enableConditionalLogic': false,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [],
+                            },
+                            'enableCalculation': false,
+                        },
+                    },
+                    'answers': [{
+                        'value': 'yes',
+                    }, {
+                        'value': 'no',
+                    }],
                 }],
-            },
-            {
-                'title': 'Are Dogs Cool?',
-                'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
-                'type': 'question',
-                'inputType': 'checkbox',
-                'settings': {
-                    'enableDescription': true,
-                    'description': 'this is my long description for are dogs cool',
-                    'enableVariableName': true,
-                    'variableName': 'dog do nut',
-                    'validation': {
-                        'required': false,
-                        'email': true,
-                    },
-                    'advanced': {
-                        'populateDynamically': true,
-                        'enableConditionalLogic': false,
-                        'conditionalLogic': {
-                            'visiblity': 'show',
-                            'visiblityCondition': 'all',
-                            'conditions': [],
-                        },
-                        'enableCalculation': false,
-                    },
-                },
-                'answers': [{
-                    'value': 'yes',
-                }, {
-                    'value': 'no',
-                }],
-            }],
         },
         {
             'title': 'section title 2',

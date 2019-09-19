@@ -20,7 +20,7 @@ import useDebounce from '../../../../../utils/use-debounce';
 
 import Styles from './styles';
 
-const SectionElement = ({
+const SectionElementQuestion = ({
     classes,
     initialValues,
     index,
@@ -227,7 +227,7 @@ const SectionElement = ({
     );
 };
 
-SectionElement.propTypes = {
+SectionElementQuestion.propTypes = {
     classes: PropTypes.object.isRequired,
     initialValues: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
@@ -237,4 +237,4 @@ SectionElement.propTypes = {
     handleContentUpdates: PropTypes.func.isRequired,
 };
 
-export default withStyles(Styles)(SectionElement);
+export default withStyles(Styles)(SectionElementQuestion);

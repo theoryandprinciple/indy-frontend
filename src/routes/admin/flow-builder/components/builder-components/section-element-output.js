@@ -19,7 +19,50 @@ import Styles from './styles';
 
 import OutputSettings from '../section-element-inputs/output-settings';
 
-const SectionElement = ({
+// mimics output data set (not flow data of type 'output')
+// needed to determin what should be in the select menu
+const SampleOutputData = [
+    {
+        'id': '85ff9e7d-ac4f-4ac7-800c-3aceb91c97fa',
+        'type': 'email',
+        'visiblity': 'published',
+        'lastUpdated': '(date here)',
+        'title': 'Engagement Email',
+        'emailContent': {
+            'shortDescription': '',
+            'longDescription': '',
+            'emailAddress': 'info@info.com',
+            'emailBody': '<p>tester</p>',
+        },
+    },
+    {
+        'id': '85ff9e7d-ac4f-4ac7-801c-3aceb91c97fa',
+        'type': 'email',
+        'visiblity': 'published',
+        'lastUpdated': '(date here)',
+        'title': 'Follow-up Email',
+        'emailContent': {
+            'shortDescription': '',
+            'longDescription': '',
+            'emailAddress': 'info@info.com',
+            'emailBody': '<p>tester</p>',
+        },
+    },
+    {
+        'id': '85ff9e7d-ac4f-4ac7-802c-3aceb91c97fa',
+        'type': 'content',
+        'visiblity': 'published',
+        'lastUpdated': '(date here)',
+        'title': 'Best Practices',
+        'emailContent': {
+            'shortDescription': 'Best Practices',
+            'website': 'http://google.com',
+            'content': '<p>tester</p>',
+        },
+    },
+];
+
+const SectionElementOutput = ({
     classes,
     initialValues,
     index,
@@ -99,9 +142,9 @@ const SectionElement = ({
     drag(drop(ref));
 
     // Manage Form Inputs
-    // used by question-settings.js
-    const updateSettings = (formValues) => {
-        handleContentUpdates('settings', index, formValues);
+    // used by output-settings.js
+    const updateSettings = (selectedId) => {
+        handleContentUpdates('selectedOutput', index, selectedId);
     };
 
     const duplicateElement = () => {
@@ -125,11 +168,14 @@ const SectionElement = ({
                             <Select
                                 className={classes.elementSelectMenu}
                                 color="primary"
-                                value="item1"
-                                // onChange={event => handleAdvancedConditionalLogicUpdate('visiblity', event.target.value)}
+                                value={initialValues.selectedOutput || ''}
+                                onChange={event => updateSettings(event.target.value)}
                             >
-                                <MenuItem value="item1">Item1</MenuItem>
-                                <MenuItem value="item2">Item2</MenuItem>
+                                {SampleOutputData.map((output, q) => (
+                                    <MenuItem key={output.id} value={output.id}>
+                                        {output.title}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         ))}
                     </div>
@@ -154,7 +200,7 @@ const SectionElement = ({
     );
 };
 
-SectionElement.propTypes = {
+SectionElementOutput.propTypes = {
     classes: PropTypes.object.isRequired,
     initialValues: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
@@ -164,4 +210,4 @@ SectionElement.propTypes = {
     handleContentUpdates: PropTypes.func.isRequired,
 };
 
-export default withStyles(Styles)(SectionElement);
+export default withStyles(Styles)(SectionElementOutput);

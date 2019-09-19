@@ -9,7 +9,7 @@ export default {
 
     // this is an established element in a section
     // - used for reordering during drag
-    SECTION_ELEMENT: 'section-element',
+    SECTION_ELEMENT: 'section-element-question',
 
     // used in drag/drop to represent new and established sections
     // new sections will carry an special id to indicate it's new
