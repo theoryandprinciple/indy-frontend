@@ -8,6 +8,9 @@ import DuplicateIcon from '@material-ui/icons/AddToPhotos';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import ElementTypes from '../../wiring/element-types';
 import OutputTypes from '../../wiring/output-types';
 import IconList from '../../wiring/icon-list';
@@ -118,7 +121,17 @@ const SectionElement = ({
             <div className="col">
                 <div className={`row ${classes.elementHeader}`}>
                     <div className="col ml-3">
-                        <p>input select menu</p>
+                        {(initialValues.inputType === OutputTypes.EMAIL && (
+                            <Select
+                                className={classes.elementSelectMenu}
+                                color="primary"
+                                value="item1"
+                                // onChange={event => handleAdvancedConditionalLogicUpdate('visiblity', event.target.value)}
+                            >
+                                <MenuItem value="item1">Item1</MenuItem>
+                                <MenuItem value="item2">Item2</MenuItem>
+                            </Select>
+                        ))}
                     </div>
                     <div className="col-auto">
                         <button type="button" onClick={() => setSectionOpen(!sectionOpen)}>
@@ -130,11 +143,10 @@ const SectionElement = ({
                 </div>
                 <div className="row">
                     <div className="col">
-                        <h3>OUTPUT</h3>
-                        {(initialValues.inputType === OutputTypes.EMAIL && (
-                            <h2>EMAIL</h2>
-                        ))}
-                        <OutputSettings handleUpdate={updateSettings} initialValues={initialValues} />
+                        <div className={sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}>
+                            <hr className={classes.sectionElementBR} />
+                            <OutputSettings handleUpdate={updateSettings} initialValues={initialValues} />
+                        </div>
                     </div>
                 </div>
             </div>

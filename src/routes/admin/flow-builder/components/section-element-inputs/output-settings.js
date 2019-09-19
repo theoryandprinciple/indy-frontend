@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
+
 import update from 'immutability-helper';
 
 import ConditionalLogicBuilder from './conditional-logic-builder';
@@ -80,7 +81,7 @@ const OutputSettings = ({
     return (
         <div>
             <div>
-                <Typography variant="body2">Advanced</Typography>
+                <Typography variant="body2">Advanced Settings</Typography>
             </div>
 
             <div>

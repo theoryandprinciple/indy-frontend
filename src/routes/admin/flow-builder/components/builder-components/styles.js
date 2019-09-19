@@ -67,6 +67,9 @@ const styles = () => ({
         alignItems: 'center',
         marginBottom: 15,
     },
+    elementSelectMenu: { // this is redundant to section-element-inputs
+        marginRight: 15,
+    },
 });
 
 export default styles;
