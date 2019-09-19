@@ -2,25 +2,26 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 import DuplicateIcon from '@material-ui/icons/AddToPhotos';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import ElementTypes from '../../wiring/element-types';
-import QuestionTypes from '../../wiring/question-types';
-import IconList from '../../wiring/icon-list';
+import OutputTypes from '../../wiring/output-types';
+import IconList from '../../../wiring/icon-list';
 
-import QuestionAnswers from '../section-element-inputs/question-answers';
-import QuestionSettings from '../section-element-inputs/question-settings';
-
-import useDebounce from '../../../../../utils/use-debounce';
+import OutputSettings from '../section-element-inputs/output-settings';
 
 import Styles from './styles';
 
-const SectionElementQuestion = ({
+import { useOutputDataContext } from '../../../wiring/output-provider'; // move this down the tree at some point
+
+const SectionElementOutput = ({
     classes,
     initialValues,
     index,
@@ -29,52 +30,13 @@ const SectionElementQuestion = ({
     currentSectionIndex,
     handleContentUpdates,
 }) => {
-    // setup title useState
-    const [titleValue, setTitleValue] = useState('');
-    const [descriptionValue, setDescriptionValue] = useState('');
-    const [initialBuildComplete, setInitialBuildComplete] = useState(false);
+    const { remoteOutputData } = useOutputDataContext();
+    const [outputData, setOutputData] = useState([]);
     const [sectionOpen, setSectionOpen] = useState(false);
-    const [numberDisplay, setNumberDisplay] = useState('0.00');
-
-    const debouncedTitleValue = useDebounce(titleValue, 1000, initialBuildComplete);
-    const debouncedDescriptionValue = useDebounce(descriptionValue, 1000, initialBuildComplete);
 
     useEffect(() => {
-        if (debouncedTitleValue) {
-            handleContentUpdates('title', index, titleValue);
-        }
-    },
-    [debouncedTitleValue]);
-
-    useEffect(() => {
-        if (debouncedDescriptionValue) {
-            handleContentUpdates('description', index, descriptionValue);
-        }
-    },
-    [debouncedDescriptionValue]);
-
-    useEffect(() => { // debounce setup function
-        const timer = setTimeout(() => {
-            // without this flag, the component will get rerenedered twice because the initail debounces will get fired off
-            setInitialBuildComplete(true);
-        }, 1100);
-        return () => clearTimeout(timer);
-    }, []);
-
-    useEffect(() => {
-        // populate internal state with data in parent
-        // parent will update when values in this component are updated and set upward
-        setTitleValue(initialValues.title);
-        setDescriptionValue(initialValues.description);
-
-        if (initialValues.inputType === 'number') {
-            if (initialValues.settings.validation.numberType === 'currency') {
-                setNumberDisplay('0.00');
-            } else if (initialValues.settings.validation.numberType === 'phone') {
-                setNumberDisplay('(555) 555 - 5555');
-            }
-        }
-    }, [initialValues]);
+        setOutputData(remoteOutputData);
+    }, [remoteOutputData]);
 
     // Manage Question Dragging
     const ref = useRef(null);
@@ -145,14 +107,9 @@ const SectionElementQuestion = ({
     drag(drop(ref));
 
     // Manage Form Inputs
-    // used by question-answer.js
-    const updateAnswers = (formValues) => {
-        handleContentUpdates('answers', index, formValues);
-    };
-
-    // used by question-settings.js
-    const updateSettings = (formValues) => {
-        handleContentUpdates('settings', index, formValues);
+    // used by output-settings.js
+    const updateSettings = (selectedId) => {
+        handleContentUpdates('selectedOutput', index, selectedId);
     };
 
     const duplicateElement = () => {
@@ -165,30 +122,27 @@ const SectionElementQuestion = ({
     return (
         <div ref={ref} style={{ opacity }} className={`row ${classes.sectionElementWrapper} no-gutters`}>
             <div className="col-auto">
-                {/* this conditional assumes we only have type QUESTION or OUTPUT */}
-                <div className={`${classes.elementIconWrapper} ${classes.elementQuestionIcon}`}>
+                <div className={`${classes.elementIconWrapper} ${classes.elementOutputIcon}`}>
                     {IconList[initialValues.inputType]}
                 </div>
             </div>
             <div className="col">
                 <div className={`row ${classes.elementHeader}`}>
                     <div className="col ml-3">
-                        <TextField
-                            placeholder="Question Title..."
-                            className={classes.inputLabel}
-                            value={titleValue}
-                            onChange={event => setTitleValue(event.target.value)}
-                        />
-                        {(initialValues.settings && initialValues.settings.enableDescription) && (
-                            <TextField
-                                placeholder="Question Description..."
-                                fullWidth
-                                multiline
-                                rowsMax="4"
-                                value={descriptionValue}
-                                onChange={event => setDescriptionValue(event.target.value)}
-                            />
-                        )}
+                        {(initialValues.inputType === OutputTypes.EMAIL && (
+                            <Select
+                                className={classes.elementSelectMenu}
+                                color="primary"
+                                value={initialValues.selectedOutput || ''}
+                                onChange={event => updateSettings(event.target.value)}
+                            >
+                                {outputData.map(output => (
+                                    <MenuItem key={output.id} value={output.id}>
+                                        {output.title}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        ))}
                     </div>
                     <div className="col-auto">
                         <button type="button" onClick={() => setSectionOpen(!sectionOpen)}>
@@ -200,25 +154,9 @@ const SectionElementQuestion = ({
                 </div>
                 <div className="row">
                     <div className="col">
-                        {(initialValues.inputType === QuestionTypes.RADIO || initialValues.inputType === QuestionTypes.CHECKBOX)
-                            && <QuestionAnswers inputType={initialValues.inputType} handleUpdate={updateAnswers} initialValues={initialValues.answers} />
-                        }
-                        {(initialValues.inputType === QuestionTypes.SHORT_TEXT || initialValues.inputType === QuestionTypes.LONG_TEXT) && (
-                            <TextField
-                                placeholder={initialValues.inputType === QuestionTypes.SHORT_TEXT ? 'Short answer text' : 'Long answer text'}
-                                disabled
-                            />
-                        )}
-                        {(initialValues.inputType === QuestionTypes.NUMBER && (
-                            <TextField
-                                disabled
-                                placeholder={numberDisplay}
-                                className={classes.inputLabel}
-                            />
-                        ))}
                         <div className={sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}>
                             <hr className={classes.sectionElementBR} />
-                            <QuestionSettings inputType={initialValues.inputType} handleUpdate={updateSettings} initialValues={initialValues.settings} />
+                            <OutputSettings handleUpdate={updateSettings} initialValues={initialValues} />
                         </div>
                     </div>
                 </div>
@@ -227,7 +165,7 @@ const SectionElementQuestion = ({
     );
 };
 
-SectionElementQuestion.propTypes = {
+SectionElementOutput.propTypes = {
     classes: PropTypes.object.isRequired,
     initialValues: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
@@ -237,4 +175,4 @@ SectionElementQuestion.propTypes = {
     handleContentUpdates: PropTypes.func.isRequired,
 };
 
-export default withStyles(Styles)(SectionElementQuestion);
+export default withStyles(Styles)(SectionElementOutput);

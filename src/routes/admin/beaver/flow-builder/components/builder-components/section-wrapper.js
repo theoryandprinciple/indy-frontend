@@ -6,9 +6,11 @@ import { cloneDeep } from 'lodash';
 import { withStyles } from '@material-ui/core/styles';
 import ElementTypes from '../../wiring/element-types';
 import Section from './section';
-import { useFlowDataContext } from '../../wiring/flow-provider';
+import { useFlowDataContext } from '../../../wiring/flow-provider';
 import Styles from './styles';
 import IdGenerator from '../../wiring/unique-id-generator';
+
+import OutputDataProvider from '../../../wiring/output-provider'; // move this down the tree at some point
 
 const SectionWrapper = ({ data, classes }) => {
     const [sections, setSections] = useState([]);
@@ -116,7 +118,9 @@ const SectionWrapper = ({ data, classes }) => {
     return (
         <div ref={drop} style={{ border }} className={classes.sectionWrapperWrapper}>
             {isActive ? `${sections.length === 0 ? 'Release to drop' : ''}` : `${sections.length === 0 ? 'Start the party' : ''}`}
-            {sections.map((section, i) => renderElement(section, i))}
+            <OutputDataProvider>
+                {sections.map((section, i) => renderElement(section, i))}
+            </OutputDataProvider>
         </div>
     );
 };

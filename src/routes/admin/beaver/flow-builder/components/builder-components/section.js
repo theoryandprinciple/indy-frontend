@@ -22,9 +22,9 @@ import SectionElement from './section-element-question';
 import SectionElementOutput from './section-element-output';
 import ElementTypes from '../../wiring/element-types';
 import IdGenerator from '../../wiring/unique-id-generator';
-import useDebounce from '../../../../../utils/use-debounce';
+import useDebounce from '../../../../../../utils/use-debounce';
 
-import Colors from '../../../../../styles/colors';
+import Colors from '../../../../../../styles/colors';
 import Styles from './styles';
 
 const Section = ({
@@ -123,7 +123,7 @@ const Section = ({
         } else if (item.type === 'output') {
             newElement = {
                 id: IdGenerator,
-                title: item.text,
+                settings: { advanced: { enableConditionalLogic: false, conditionalLogic: { conditions: [] } }, validation: { required: false } },
                 type: item.type,
                 inputType: item.inputType,
             };

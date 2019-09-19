@@ -9,7 +9,7 @@ import Output from './components/starter-elements/element-output';
 import Question from './components/starter-elements/element-question';
 import Section from './components/starter-elements/element-section';
 import SectionWrapper from './components/builder-components/section-wrapper';
-import { useFlowDataContext } from './wiring/flow-provider';
+import { useFlowDataContext } from '../wiring/flow-provider';
 import Header from './components/header';
 import QuestionTypes from './wiring/question-types';
 import OutputTypes from './wiring/output-types';

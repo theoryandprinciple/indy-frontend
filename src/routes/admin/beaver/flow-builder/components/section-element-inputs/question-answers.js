@@ -6,7 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/AddCircle';
 import Radio from '@material-ui/core/Radio';
 import Checkbox from '@material-ui/core/Checkbox';
-import useDebounce from '../../../../../utils/use-debounce';
+import useDebounce from '../../../../../../utils/use-debounce';
 
 import Styles from './styles';
 

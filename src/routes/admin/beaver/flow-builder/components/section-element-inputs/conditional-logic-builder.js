@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { find } from 'lodash';
 
-import { useFlowDataContext } from '../../wiring/flow-provider';
+import { useFlowDataContext } from '../../../wiring/flow-provider';
 import Styles from './styles';
 
 const ConditionalLogicBuilder = ({

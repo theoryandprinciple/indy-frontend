@@ -5,13 +5,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import ElementTypes from '../../wiring/element-types';
-// import IconList from '../../wiring/icon-list';
+import IconList from '../../../wiring/icon-list';
 import Styles from './styles';
 
-const BoxWithHandle = ({ text, classes }) => {
-    // we use `id: -1` as an indicator to the section-wrapper to push a new section into the flow
+const BoxWithHandle = ({ text, inputType, classes }) => {
     const [{ opacity }, preview] = useDrag({
-        item: { type: ElementTypes.SECTION, text, id: -1 },
+        item: { type: ElementTypes.OUTPUT, text, inputType },
         collect: monitor => ({
             opacity: monitor.isDragging() ? 0.4 : 1,
         }),
@@ -19,8 +18,8 @@ const BoxWithHandle = ({ text, classes }) => {
     return (
         <div ref={preview} className={`row no-gutters ${classes.elementQuestionWrapper}`} style={{ opacity }}>
             <div className="col-3">
-                <div className={`${classes.elementIconWrapper} ${classes.elementSectionIcon}`}>
-                    {/* {IconList[inputType]} */}
+                <div className={`${classes.elementIconWrapper} ${classes.elementOutputIcon}`}>
+                    {IconList[inputType]}
                 </div>
             </div>
             <div className="col-9" style={{ verticalAlign: 'center' }}>
@@ -32,6 +31,7 @@ const BoxWithHandle = ({ text, classes }) => {
 
 BoxWithHandle.propTypes = {
     text: PropTypes.string.isRequired,
+    inputType: PropTypes.string.isRequired,
     classes: PropTypes.object.isRequired,
 };
 

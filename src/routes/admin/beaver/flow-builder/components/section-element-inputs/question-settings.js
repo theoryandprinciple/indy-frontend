@@ -10,7 +10,7 @@ import QuestionNumber from './question-type-number';
 
 import ConditionalLogicBuilder from './conditional-logic-builder';
 
-import { useFlowDataContext } from '../../wiring/flow-provider';
+import { useFlowDataContext } from '../../../wiring/flow-provider';
 
 import Styles from './styles';
 

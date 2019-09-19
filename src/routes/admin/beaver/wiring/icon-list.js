@@ -12,8 +12,8 @@ import LegalDisclaimerIcon from '@material-ui/icons/CheckBoxOutlined';
 
 import EmailIcon from '@material-ui/icons/Email';
 
-import QuestionTypes from './question-types';
-import OutputTypes from './output-types';
+import QuestionTypes from '../flow-builder/wiring/question-types';
+import OutputTypes from '../flow-builder/wiring/output-types';
 
 export default {
     [QuestionTypes.RADIO]: <RadioIcon />,

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import { SaveFlow } from '../../wiring/flow-api';
-import { useFlowDataContext } from '../../wiring/flow-provider';
+import { SaveFlow } from '../../../wiring/flow-api';
+import { useFlowDataContext } from '../../../wiring/flow-provider';
 
 import Styles from './styles';
 

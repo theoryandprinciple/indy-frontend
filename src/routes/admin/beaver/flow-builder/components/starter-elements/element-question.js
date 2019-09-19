@@ -5,12 +5,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import ElementTypes from '../../wiring/element-types';
-import IconList from '../../wiring/icon-list';
+import IconList from '../../../wiring/icon-list';
 import Styles from './styles';
 
 const BoxWithHandle = ({ text, inputType, classes }) => {
     const [{ opacity }, preview] = useDrag({
-        item: { type: ElementTypes.OUTPUT, text, inputType },
+        item: { type: ElementTypes.QUESTION, text, inputType },
         collect: monitor => ({
             opacity: monitor.isDragging() ? 0.4 : 1,
         }),
@@ -18,7 +18,7 @@ const BoxWithHandle = ({ text, inputType, classes }) => {
     return (
         <div ref={preview} className={`row no-gutters ${classes.elementQuestionWrapper}`} style={{ opacity }}>
             <div className="col-3">
-                <div className={`${classes.elementIconWrapper} ${classes.elementOutputIcon}`}>
+                <div className={`${classes.elementIconWrapper} ${classes.elementQuestionIcon}`}>
                     {IconList[inputType]}
                 </div>
             </div>
