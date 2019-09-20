@@ -113,7 +113,7 @@ const Section = ({
         // Set default values used inside new question components (answers, settings)
         if (item.type === 'question') {
             newElement = {
-                id: IdGenerator,
+                id: IdGenerator(),
                 title: item.text,
                 answers: [],
                 settings: { advanced: { enableConditionalLogic: false, conditionalLogic: { conditions: [] } }, validation: { required: false } },
@@ -122,7 +122,7 @@ const Section = ({
             };
         } else if (item.type === 'output') {
             newElement = {
-                id: IdGenerator,
+                id: IdGenerator(),
                 settings: { advanced: { enableConditionalLogic: false, conditionalLogic: { conditions: [] } }, validation: { required: false } },
                 type: item.type,
                 inputType: item.inputType,
