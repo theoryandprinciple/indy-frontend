@@ -197,7 +197,7 @@ const Section = ({
             }
             // if we are trying to drag a NEW section in, it wont have an index setup yet
             // TODO: dynamically manage indexes for new sectionElements?
-            if (item.type === ElementTypes.SECTION && !item.index) {
+            if (item.type === ElementTypes.SECTION && item.id === -1) {
                 // console.log('TODO: Allow for dynamic insertion of new sections');
                 return;
             }

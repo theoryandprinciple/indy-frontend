@@ -108,7 +108,11 @@ const SectionElementOutput = ({
 
     // Manage Form Inputs
     // used by output-settings.js
-    const updateSettings = (selectedId) => {
+    const updateSettings = (formValues) => {
+        handleContentUpdates('settings', index, formValues);
+    };
+
+    const updateSelectedOutput = (selectedId) => {
         handleContentUpdates('selectedOutput', index, selectedId);
     };
 
@@ -134,7 +138,7 @@ const SectionElementOutput = ({
                                 className={classes.elementSelectMenu}
                                 color="primary"
                                 value={initialValues.selectedOutput || ''}
-                                onChange={event => updateSettings(event.target.value)}
+                                onChange={event => updateSelectedOutput(event.target.value)}
                             >
                                 {outputData.map(output => (
                                     <MenuItem key={output.id} value={output.id}>

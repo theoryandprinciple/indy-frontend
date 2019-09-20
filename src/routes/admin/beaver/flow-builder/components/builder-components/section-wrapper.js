@@ -24,6 +24,7 @@ const SectionWrapper = ({ data, classes }) => {
 
     const onDrop = (item) => {
         // -1 is assigned as an id in element-section.js
+        // used in section.js 'useDrop'
         if (item.type === 'section' && item.id === -1) {
             setSections(
                 update(sections, {

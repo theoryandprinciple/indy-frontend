@@ -65,8 +65,8 @@ const OutputSettings = ({
         // send parent to update
         handleUpdate(temp);
 
-        // update local state
-        setFormValues(temp);
+        // update local state (this is now handed by useEffect)
+        // setFormValues(temp);
     };
     const deleteCondition = (index) => {
         const temp = update(formValues, { advanced: { conditionalLogic: { conditions: { $splice: [[index, 1]] } } } });
@@ -92,7 +92,7 @@ const OutputSettings = ({
                 />
                 <Typography variant="body1" className={classes.inputLabel}>Enable Conditional Logic</Typography>
                 <ConditionalLogicBuilder
-                    initialValues={initialValues.settings}
+                    initialValues={formValues}
                     addAnotherCondition={addAnotherCondition}
                     deleteCondition={deleteCondition}
                     handleAdvancedConditionalLogicUpdate={handleAdvancedConditionalLogicUpdate}

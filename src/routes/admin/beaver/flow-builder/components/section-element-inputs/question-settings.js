@@ -10,8 +10,6 @@ import QuestionNumber from './question-type-number';
 
 import ConditionalLogicBuilder from './conditional-logic-builder';
 
-import { useFlowDataContext } from '../../../wiring/flow-provider';
-
 import Styles from './styles';
 
 const QuestionSettings = ({
@@ -20,23 +18,7 @@ const QuestionSettings = ({
     handleUpdate,
     initialValues,
 }) => {
-    const { localFlowData } = useFlowDataContext();
-    const [flowQuestions, setFlowQuestions] = useState({});
     const [formValues, setFormValues] = useState({});
-
-    useEffect(() => {
-        // use local form data to create a list of questions within the current flow
-        const questionArray = [];
-        for (let i = 0; i < localFlowData.sections.length; i += 1) {
-            for (let q = 0; q < localFlowData.sections[i].contents.length; q += 1) {
-                if (localFlowData.sections[i].contents[q].type === 'question') {
-                    questionArray.push(localFlowData.sections[i].contents[q]);
-                }
-            }
-        }
-
-        setFlowQuestions(questionArray);
-    }, [localFlowData]);
 
     useEffect(() => {
         // populate internal state with data in useFlowDataContext,
@@ -103,7 +85,7 @@ const QuestionSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
     const deleteCondition = (index) => {
         const temp = update(formValues, { advanced: { conditionalLogic: { conditions: { $splice: [[index, 1]] } } } });
