@@ -32,7 +32,7 @@ const OutputSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
     const handleAdvancedConditionalLogicUpdate = (key, value, conditionalIndex = null) => {
         let temp;
