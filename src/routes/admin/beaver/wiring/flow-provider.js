@@ -1236,7 +1236,7 @@ const FlowDataProvider = (props) => {
 
     useEffect(() => {
         // nothing to do when this updates (yet)
-        // console.log('localFlowData', localFlowData)
+        console.log('localFlowData', localFlowData)
     }, [localFlowData]);
 
     const updateLocalFlowData = newFlowData => setLocalFlowData(newFlowData);

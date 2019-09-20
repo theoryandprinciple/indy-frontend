@@ -291,10 +291,12 @@ const Section = ({
                     {sectionElements ? sectionElements.length : 0}
                 </Typography>
             </div>
-
-            <div ref={preview} className={`row no-gutters ${sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}`} style={{ padding: '15px 30px' }}>
-                {sectionElements && sectionElements.map((sectionElement, i) => renderElement(sectionElement, i))}
-            </div>
+            {/* PERFORMANCE UPDATE don't render things that aren't being shown */}
+            {sectionOpen && (
+                <div ref={preview} className="row no-gutters" style={{ padding: '15px 30px' }}>
+                    {sectionElements && sectionElements.map((sectionElement, i) => renderElement(sectionElement, i))}
+                </div>
+            )}
         </div>
     );
 };

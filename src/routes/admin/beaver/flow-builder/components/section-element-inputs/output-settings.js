@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -55,7 +55,7 @@ const OutputSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
 
     const addAnotherCondition = () => {
@@ -75,7 +75,7 @@ const OutputSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
 
     return (
@@ -109,4 +109,4 @@ OutputSettings.propTypes = {
     initialValues: PropTypes.object.isRequired,
 };
 
-export default withStyles(Styles)(OutputSettings);
+export default React.memo(withStyles(Styles)(OutputSettings));

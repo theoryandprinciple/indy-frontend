@@ -38,7 +38,7 @@ const ConditionalLogicBuilder = ({
 
         setFlowQuestions(questionArray);
     }, [localFlowData]);
-
+console.log('conditional logic builder')
     return (
         <>
             {(initialValues.advanced && initialValues.advanced.enableConditionalLogic) && (

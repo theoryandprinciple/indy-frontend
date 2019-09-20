@@ -1,4 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, {
+    useRef,
+    useEffect,
+    useState,
+    useCallback,
+} from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -108,9 +113,9 @@ const SectionElementOutput = ({
 
     // Manage Form Inputs
     // used by output-settings.js
-    const updateSettings = (formValues) => {
+    const updateSettings = useCallback((formValues) => {
         handleContentUpdates('settings', index, formValues);
-    };
+    }, [initialValues]);
 
     const updateSelectedOutput = (selectedId) => {
         handleContentUpdates('selectedOutput', index, selectedId);

@@ -132,4 +132,4 @@ QuestionAnswers.propTypes = {
     inputType: PropTypes.string.isRequired,
 };
 
-export default withStyles(Styles)(QuestionAnswers);
+export default React.memo(withStyles(Styles)(QuestionAnswers));

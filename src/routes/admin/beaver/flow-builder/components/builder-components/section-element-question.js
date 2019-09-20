@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -146,14 +146,15 @@ const SectionElementQuestion = ({
 
     // Manage Form Inputs
     // used by question-answer.js
-    const updateAnswers = (formValues) => {
+    // useCallback prevent rerender when intialvalues haven't changed
+    const updateAnswers = useCallback((formValues) => {
         handleContentUpdates('answers', index, formValues);
-    };
+    }, [initialValues]);
 
     // used by question-settings.js
-    const updateSettings = (formValues) => {
+    const updateSettings = useCallback((formValues) => {
         handleContentUpdates('settings', index, formValues);
-    };
+    }, [initialValues]);
 
     const duplicateElement = () => {
         handleContentUpdates('duplicate', index);
@@ -216,10 +217,13 @@ const SectionElementQuestion = ({
                                 className={classes.inputLabel}
                             />
                         ))}
-                        <div className={sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}>
-                            <hr className={classes.sectionElementBR} />
-                            <QuestionSettings inputType={initialValues.inputType} handleUpdate={updateSettings} initialValues={initialValues.settings} />
-                        </div>
+                        {/* PERFORMANCE UPDATE don't render things that aren't being shown */}
+                        {sectionOpen && (
+                            <>
+                                <hr className={classes.sectionElementBR} />
+                                <QuestionSettings inputType={initialValues.inputType} handleUpdate={updateSettings} initialValues={initialValues.settings} />
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

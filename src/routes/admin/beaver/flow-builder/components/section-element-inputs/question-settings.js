@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -35,7 +35,7 @@ const QuestionSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
     const handleAdvancedUpdate = (key, value) => {
         const temp = { ...formValues, advanced: { ...formValues.advanced, [key]: value } };
@@ -43,7 +43,7 @@ const QuestionSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
     const handleAdvancedConditionalLogicUpdate = (key, value, conditionalIndex = null) => {
         let temp;
@@ -66,8 +66,9 @@ const QuestionSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
+
     const handleRootLevelUpdate = (key, value) => {
         const temp = { ...formValues, [key]: value };
         // send parent to update
@@ -94,7 +95,7 @@ const QuestionSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
 
     return (
@@ -156,12 +157,14 @@ const QuestionSettings = ({
                     onClick={() => handleAdvancedUpdate('enableConditionalLogic', !formValues.advanced.enableConditionalLogic)}
                 />
                 <Typography variant="body1" className={classes.inputLabel}>Enable Conditional Logic</Typography>
-                <ConditionalLogicBuilder
-                    initialValues={formValues}
-                    addAnotherCondition={addAnotherCondition}
-                    deleteCondition={deleteCondition}
-                    handleAdvancedConditionalLogicUpdate={handleAdvancedConditionalLogicUpdate}
-                />
+                {(formValues.advanced && formValues.advanced.enableConditionalLogic) && (
+                    <ConditionalLogicBuilder
+                        initialValues={formValues}
+                        addAnotherCondition={addAnotherCondition}
+                        deleteCondition={deleteCondition}
+                        handleAdvancedConditionalLogicUpdate={handleAdvancedConditionalLogicUpdate}
+                    />
+                )}
             </div>
 
             {/* REMOVE FOR MVP
@@ -186,4 +189,4 @@ QuestionSettings.propTypes = {
     initialValues: PropTypes.object.isRequired,
 };
 
-export default withStyles(Styles)(QuestionSettings);
+export default React.memo(withStyles(Styles)(QuestionSettings));
