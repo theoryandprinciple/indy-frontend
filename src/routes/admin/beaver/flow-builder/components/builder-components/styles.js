@@ -1,4 +1,4 @@
-import Colors from '../../../../../styles/colors';
+import Colors from '../../../../../../styles/colors';
 
 const styles = () => ({
     // Section Wrapper
@@ -34,9 +34,8 @@ const styles = () => ({
         cursor: 'move',
         color: 'black',
     },
-    sectionElementIconWrapper: {
+    elementIconWrapper: {
         borderRadius: 5,
-        backgroundColor: Colors.blue,
         color: 'white',
         height: 32,
         width: 29,
@@ -47,6 +46,12 @@ const styles = () => ({
             height: 20,
             width: 20,
         },
+    },
+    elementQuestionIcon: {
+        backgroundColor: Colors.blue,
+    },
+    elementOutputIcon: {
+        backgroundColor: 'black',
     },
     sectionElementBR: {
         display: 'block',
@@ -61,6 +66,9 @@ const styles = () => ({
         minHeight: 30,
         alignItems: 'center',
         marginBottom: 15,
+    },
+    elementSelectMenu: { // this is redundant to section-element-inputs
+        marginRight: 15,
     },
 });
 

@@ -6,7 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/AddCircle';
 import Radio from '@material-ui/core/Radio';
 import Checkbox from '@material-ui/core/Checkbox';
-import useDebounce from '../../../../../utils/use-debounce';
+import useDebounce from '../../../../../../utils/use-debounce';
 
 import Styles from './styles';
 
@@ -14,7 +14,7 @@ const QuestionAnswers = ({
     classes,
     handleUpdate,
     initialValues,
-    questionType,
+    inputType,
 }) => {
     const [formValues, setFormValues] = useState([]);
     // we only want to debounce when initial build is complete
@@ -91,10 +91,10 @@ const QuestionAnswers = ({
         */
         <div key={index} className={`row ${classes.answerRow}`}>
             <div className="col">
-                {questionType === 'radio'
+                {inputType === 'radio'
                     && <Radio disabled name="answer-set" value={element.value} />
                 }
-                {questionType === 'checkbox'
+                {inputType === 'checkbox'
                     && <Checkbox disabled name="answer-set" value={element.value} />
                 }
                 <TextField
@@ -129,7 +129,7 @@ QuestionAnswers.propTypes = {
     classes: PropTypes.object.isRequired,
     handleUpdate: PropTypes.func.isRequired,
     initialValues: PropTypes.array.isRequired,
-    questionType: PropTypes.string.isRequired,
+    inputType: PropTypes.string.isRequired,
 };
 
 export default withStyles(Styles)(QuestionAnswers);

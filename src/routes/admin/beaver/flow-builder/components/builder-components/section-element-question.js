@@ -11,17 +11,16 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import ElementTypes from '../../wiring/element-types';
 import QuestionTypes from '../../wiring/question-types';
-import OutputTypes from '../../wiring/output-types';
-import IconList from '../../wiring/icon-list';
+import IconList from '../../../wiring/icon-list';
 
-import QuestionAnswers from '../question-inputs/question-answers';
-import QuestionSettings from '../question-inputs/question-settings';
+import QuestionAnswers from '../section-element-inputs/question-answers';
+import QuestionSettings from '../section-element-inputs/question-settings';
 
-import useDebounce from '../../../../../utils/use-debounce';
+import useDebounce from '../../../../../../utils/use-debounce';
 
 import Styles from './styles';
 
-const SectionElement = ({
+const SectionElementQuestion = ({
     classes,
     initialValues,
     index,
@@ -68,7 +67,7 @@ const SectionElement = ({
         setTitleValue(initialValues.title);
         setDescriptionValue(initialValues.description);
 
-        if (initialValues.questionType === 'number') {
+        if (initialValues.inputType === 'number') {
             if (initialValues.settings.validation.numberType === 'currency') {
                 setNumberDisplay('0.00');
             } else if (initialValues.settings.validation.numberType === 'phone') {
@@ -166,8 +165,9 @@ const SectionElement = ({
     return (
         <div ref={ref} style={{ opacity }} className={`row ${classes.sectionElementWrapper} no-gutters`}>
             <div className="col-auto">
-                <div className={classes.sectionElementIconWrapper}>
-                    {IconList[initialValues.questionType]}
+                {/* this conditional assumes we only have type QUESTION or OUTPUT */}
+                <div className={`${classes.elementIconWrapper} ${classes.elementQuestionIcon}`}>
+                    {IconList[initialValues.inputType]}
                 </div>
             </div>
             <div className="col">
@@ -200,38 +200,26 @@ const SectionElement = ({
                 </div>
                 <div className="row">
                     <div className="col">
-                        {initialValues.type === ElementTypes.QUESTION && (
-                            <>
-                                {(initialValues.questionType === QuestionTypes.RADIO || initialValues.questionType === QuestionTypes.CHECKBOX)
-                                    && <QuestionAnswers questionType={initialValues.questionType} handleUpdate={updateAnswers} initialValues={initialValues.answers} />
-                                }
-                                {(initialValues.questionType === QuestionTypes.SHORT_TEXT || initialValues.questionType === QuestionTypes.LONG_TEXT) && (
-                                    <TextField
-                                        placeholder={initialValues.questionType === QuestionTypes.SHORT_TEXT ? 'Short answer text' : 'Long answer text'}
-                                        disabled
-                                    />
-                                )}
-                                {(initialValues.questionType === QuestionTypes.NUMBER && (
-                                    <TextField
-                                        disabled
-                                        placeholder={numberDisplay}
-                                        className={classes.inputLabel}
-                                    />
-                                ))}
-                                <div className={sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}>
-                                    <hr className={classes.sectionElementBR} />
-                                    <QuestionSettings questionType={initialValues.questionType} handleUpdate={updateSettings} initialValues={initialValues.settings} />
-                                </div>
-                            </>
+                        {(initialValues.inputType === QuestionTypes.RADIO || initialValues.inputType === QuestionTypes.CHECKBOX)
+                            && <QuestionAnswers inputType={initialValues.inputType} handleUpdate={updateAnswers} initialValues={initialValues.answers} />
+                        }
+                        {(initialValues.inputType === QuestionTypes.SHORT_TEXT || initialValues.inputType === QuestionTypes.LONG_TEXT) && (
+                            <TextField
+                                placeholder={initialValues.inputType === QuestionTypes.SHORT_TEXT ? 'Short answer text' : 'Long answer text'}
+                                disabled
+                            />
                         )}
-                        {initialValues.type === ElementTypes.OUTPUT && (
-                            <>
-                                <h3>OUTPUT</h3>
-                                {(initialValues.questionType === OutputTypes.EMAIL && (
-                                    <h2>EMAIL</h2>
-                                ))}
-                            </>
-                        )}
+                        {(initialValues.inputType === QuestionTypes.NUMBER && (
+                            <TextField
+                                disabled
+                                placeholder={numberDisplay}
+                                className={classes.inputLabel}
+                            />
+                        ))}
+                        <div className={sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}>
+                            <hr className={classes.sectionElementBR} />
+                            <QuestionSettings inputType={initialValues.inputType} handleUpdate={updateSettings} initialValues={initialValues.settings} />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -239,7 +227,7 @@ const SectionElement = ({
     );
 };
 
-SectionElement.propTypes = {
+SectionElementQuestion.propTypes = {
     classes: PropTypes.object.isRequired,
     initialValues: PropTypes.object.isRequired,
     index: PropTypes.number.isRequired,
@@ -249,4 +237,4 @@ SectionElement.propTypes = {
     handleContentUpdates: PropTypes.func.isRequired,
 };
 
-export default withStyles(Styles)(SectionElement);
+export default withStyles(Styles)(SectionElementQuestion);

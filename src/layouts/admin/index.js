@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import AdminHome from '../../routes/admin';
-import FlowBuilder from '../../routes/admin/flow-builder';
+import FlowBuilder from '../../routes/admin/beaver/flow-builder';
 import withRoot from '../../wiring/with-root';
 import AdminHeader from '../../components/admin/header';
 

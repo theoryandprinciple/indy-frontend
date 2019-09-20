@@ -18,12 +18,13 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import SectionElement from './section-element';
+import SectionElement from './section-element-question';
+import SectionElementOutput from './section-element-output';
 import ElementTypes from '../../wiring/element-types';
 import IdGenerator from '../../wiring/unique-id-generator';
-import useDebounce from '../../../../../utils/use-debounce';
+import useDebounce from '../../../../../../utils/use-debounce';
 
-import Colors from '../../../../../styles/colors';
+import Colors from '../../../../../../styles/colors';
 import Styles from './styles';
 
 const Section = ({
@@ -111,22 +112,20 @@ const Section = ({
         let newElement;
         // Set default values used inside new question components (answers, settings)
         if (item.type === 'question') {
-            console.log('question drop', item.type)
             newElement = {
                 id: IdGenerator,
                 title: item.text,
                 answers: [],
-                settings: { validation: { required: false } },
+                settings: { advanced: { enableConditionalLogic: false, conditionalLogic: { conditions: [] } }, validation: { required: false } },
                 type: item.type,
-                questionType: item.questionType,
+                inputType: item.inputType,
             };
         } else if (item.type === 'output') {
-            console.log('output drop', item.type)
             newElement = {
                 id: IdGenerator,
-                title: item.text,
+                settings: { advanced: { enableConditionalLogic: false, conditionalLogic: { conditions: [] } }, validation: { required: false } },
                 type: item.type,
-                questionType: item.questionType,
+                inputType: item.inputType,
             };
         } else {
             // we just a section drop on top of a section, do nothing with the list
@@ -153,17 +152,35 @@ const Section = ({
         },
         [sectionElements],
     );
-    const renderElement = (sectionElement, sectionElementIndex) => (
-        <SectionElement
-            key={sectionElementIndex}
-            index={sectionElementIndex}
-            initialValues={sectionElement}
-            moveSectionElement={moveSectionElement}
-            // monitorSectionElementDrop={monitorSectionElementDrop}
-            currentSectionIndex={index}
-            handleContentUpdates={handleContentUpdates}
-        />
-    );
+    const renderElement = (sectionElement, sectionElementIndex) => {
+        let returnElement;
+        if (sectionElement.type === ElementTypes.QUESTION) {
+            returnElement = (
+                <SectionElement
+                    key={sectionElementIndex}
+                    index={sectionElementIndex}
+                    initialValues={sectionElement}
+                    moveSectionElement={moveSectionElement}
+                    // monitorSectionElementDrop={monitorSectionElementDrop}
+                    currentSectionIndex={index}
+                    handleContentUpdates={handleContentUpdates}
+                />
+            );
+        } else if (sectionElement.type === ElementTypes.OUTPUT) {
+            returnElement = (
+                <SectionElementOutput
+                    key={sectionElementIndex}
+                    index={sectionElementIndex}
+                    initialValues={sectionElement}
+                    moveSectionElement={moveSectionElement}
+                    // monitorSectionElementDrop={monitorSectionElementDrop}
+                    currentSectionIndex={index}
+                    handleContentUpdates={handleContentUpdates}
+                />
+            );
+        }
+        return returnElement;
+    };
 
     // MANAGE SECTION DRAG
     const ref = useRef(null);
