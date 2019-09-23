@@ -163,10 +163,12 @@ const SectionElementOutput = ({
                 </div>
                 <div className="row">
                     <div className="col">
-                        <div className={sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}>
-                            <hr className={classes.sectionElementBR} />
-                            <OutputSettings handleUpdate={updateSettings} initialValues={initialValues} />
-                        </div>
+                        {sectionOpen && (
+                            <>
+                                <hr className={classes.sectionElementBR} />
+                                <OutputSettings handleUpdate={updateSettings} initialValues={initialValues} />
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
