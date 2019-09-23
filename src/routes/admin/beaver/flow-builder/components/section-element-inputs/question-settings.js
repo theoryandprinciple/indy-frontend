@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -10,8 +10,6 @@ import QuestionNumber from './question-type-number';
 
 import ConditionalLogicBuilder from './conditional-logic-builder';
 
-import { useFlowDataContext } from '../../../wiring/flow-provider';
-
 import Styles from './styles';
 
 const QuestionSettings = ({
@@ -20,23 +18,7 @@ const QuestionSettings = ({
     handleUpdate,
     initialValues,
 }) => {
-    const { localFlowData } = useFlowDataContext();
-    const [flowQuestions, setFlowQuestions] = useState({});
     const [formValues, setFormValues] = useState({});
-
-    useEffect(() => {
-        // use local form data to create a list of questions within the current flow
-        const questionArray = [];
-        for (let i = 0; i < localFlowData.sections.length; i += 1) {
-            for (let q = 0; q < localFlowData.sections[i].contents.length; q += 1) {
-                if (localFlowData.sections[i].contents[q].type === 'question') {
-                    questionArray.push(localFlowData.sections[i].contents[q]);
-                }
-            }
-        }
-
-        setFlowQuestions(questionArray);
-    }, [localFlowData]);
 
     useEffect(() => {
         // populate internal state with data in useFlowDataContext,
@@ -53,7 +35,7 @@ const QuestionSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
     const handleAdvancedUpdate = (key, value) => {
         const temp = { ...formValues, advanced: { ...formValues.advanced, [key]: value } };
@@ -61,7 +43,7 @@ const QuestionSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
     const handleAdvancedConditionalLogicUpdate = (key, value, conditionalIndex = null) => {
         let temp;
@@ -84,8 +66,9 @@ const QuestionSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
+
     const handleRootLevelUpdate = (key, value) => {
         const temp = { ...formValues, [key]: value };
         // send parent to update
@@ -103,7 +86,7 @@ const QuestionSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
     const deleteCondition = (index) => {
         const temp = update(formValues, { advanced: { conditionalLogic: { conditions: { $splice: [[index, 1]] } } } });
@@ -112,7 +95,7 @@ const QuestionSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
 
     return (
@@ -174,12 +157,14 @@ const QuestionSettings = ({
                     onClick={() => handleAdvancedUpdate('enableConditionalLogic', !formValues.advanced.enableConditionalLogic)}
                 />
                 <Typography variant="body1" className={classes.inputLabel}>Enable Conditional Logic</Typography>
-                <ConditionalLogicBuilder
-                    initialValues={formValues}
-                    addAnotherCondition={addAnotherCondition}
-                    deleteCondition={deleteCondition}
-                    handleAdvancedConditionalLogicUpdate={handleAdvancedConditionalLogicUpdate}
-                />
+                {(formValues.advanced && formValues.advanced.enableConditionalLogic) && (
+                    <ConditionalLogicBuilder
+                        initialValues={formValues}
+                        addAnotherCondition={addAnotherCondition}
+                        deleteCondition={deleteCondition}
+                        handleAdvancedConditionalLogicUpdate={handleAdvancedConditionalLogicUpdate}
+                    />
+                )}
             </div>
 
             {/* REMOVE FOR MVP
@@ -204,4 +189,4 @@ QuestionSettings.propTypes = {
     initialValues: PropTypes.object.isRequired,
 };
 
-export default withStyles(Styles)(QuestionSettings);
+export default React.memo(withStyles(Styles)(QuestionSettings));

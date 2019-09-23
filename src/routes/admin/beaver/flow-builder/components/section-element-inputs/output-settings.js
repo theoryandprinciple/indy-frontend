@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -32,7 +32,7 @@ const OutputSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
     const handleAdvancedConditionalLogicUpdate = (key, value, conditionalIndex = null) => {
         let temp;
@@ -55,7 +55,7 @@ const OutputSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
 
     const addAnotherCondition = () => {
@@ -65,8 +65,8 @@ const OutputSettings = ({
         // send parent to update
         handleUpdate(temp);
 
-        // update local state
-        setFormValues(temp);
+        // update local state (this is now handed by useEffect)
+        // setFormValues(temp);
     };
     const deleteCondition = (index) => {
         const temp = update(formValues, { advanced: { conditionalLogic: { conditions: { $splice: [[index, 1]] } } } });
@@ -75,7 +75,7 @@ const OutputSettings = ({
         handleUpdate(temp);
 
         // update local state
-        setFormValues(temp);
+        // setFormValues(temp);
     };
 
     return (
@@ -92,7 +92,7 @@ const OutputSettings = ({
                 />
                 <Typography variant="body1" className={classes.inputLabel}>Enable Conditional Logic</Typography>
                 <ConditionalLogicBuilder
-                    initialValues={initialValues.settings}
+                    initialValues={formValues}
                     addAnotherCondition={addAnotherCondition}
                     deleteCondition={deleteCondition}
                     handleAdvancedConditionalLogicUpdate={handleAdvancedConditionalLogicUpdate}
@@ -109,4 +109,4 @@ OutputSettings.propTypes = {
     initialValues: PropTypes.object.isRequired,
 };
 
-export default withStyles(Styles)(OutputSettings);
+export default React.memo(withStyles(Styles)(OutputSettings));

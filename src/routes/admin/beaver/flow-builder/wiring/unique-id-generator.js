@@ -1,3 +1,5 @@
-const uuidv4 = require('uuid/v4');
+import uuidv4 from 'uuid/v4';
 
-export default uuidv4({ rng: uuidv4.nodeRNG });
+const IdGenerator = () => uuidv4({ rng: uuidv4.nodeRNG });
+
+export default IdGenerator;

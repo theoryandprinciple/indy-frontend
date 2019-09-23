@@ -25,6 +25,10 @@ const ConditionalLogicBuilder = ({
         // use local form data to create a list of questions within the current flow
         const questionArray = [];
         for (let i = 0; i < localFlowData.sections.length; i += 1) {
+            if (!localFlowData.sections[i].contents) {
+                // this is a new (or empty) section, so no contents to explore
+                break;
+            }
             for (let q = 0; q < localFlowData.sections[i].contents.length; q += 1) {
                 if (localFlowData.sections[i].contents[q].type === 'question') {
                     questionArray.push(localFlowData.sections[i].contents[q]);
@@ -34,7 +38,7 @@ const ConditionalLogicBuilder = ({
 
         setFlowQuestions(questionArray);
     }, [localFlowData]);
-
+console.log('conditional logic builder')
     return (
         <>
             {(initialValues.advanced && initialValues.advanced.enableConditionalLogic) && (

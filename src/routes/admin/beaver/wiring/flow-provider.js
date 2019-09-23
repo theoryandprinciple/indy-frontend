@@ -21,8 +21,8 @@ const SampleFlowData = {
                 {
                     'type': 'output',
                     'inputType': 'email',
-                    'selectedOutput': '85ff9e7d-ac4f-4ac7-800c-3aceb91c97fa',
                     'settings': {
+                        'selectedOutput': '85ff9e7d-ac4f-4ac7-800c-3aceb91c97fa',
                         'advanced': {
                             'enableConditionalLogic': true,
                             'conditionalLogic': {
@@ -90,6 +90,378 @@ const SampleFlowData = {
                 {
                     'title': 'Are Dogs Cool?',
                     'id': '85ff9e7d-ac4f-4ac7-899c-3aceb91c97fb',
+                    'type': 'question',
+                    'inputType': 'checkbox',
+                    'settings': {
+                        'enableDescription': true,
+                        'description': 'this is my long description for are dogs cool',
+                        'enableVariableName': true,
+                        'variableName': 'dog do nut',
+                        'validation': {
+                            'required': false,
+                            'email': true,
+                        },
+                        'advanced': {
+                            'populateDynamically': true,
+                            'enableConditionalLogic': false,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [],
+                            },
+                            'enableCalculation': false,
+                        },
+                    },
+                    'answers': [{
+                        'value': 'yes',
+                    }, {
+                        'value': 'no',
+                    }],
+                },
+                {
+                    'title': 'Question 1',
+                    'id': '85ff9e7d-ac4f-4ac7-129c-3aceb91c97fb',
+                    'type': 'question',
+                    'inputType': 'checkbox',
+                    'settings': {
+                        'enableDescription': true,
+                        'description': 'this is my long description for are dogs cool',
+                        'enableVariableName': true,
+                        'variableName': 'dog do nut',
+                        'validation': {
+                            'required': false,
+                            'email': true,
+                        },
+                        'advanced': {
+                            'populateDynamically': true,
+                            'enableConditionalLogic': false,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [],
+                            },
+                            'enableCalculation': false,
+                        },
+                    },
+                    'answers': [{
+                        'value': 'yes',
+                    }, {
+                        'value': 'no',
+                    }],
+                },
+                {
+                    'title': 'Question 2',
+                    'id': '8239e7d-ac4f-4ac7-899c-3aceb91c97fb',
+                    'type': 'question',
+                    'inputType': 'checkbox',
+                    'settings': {
+                        'enableDescription': true,
+                        'description': 'this is my long description for are dogs cool',
+                        'enableVariableName': true,
+                        'variableName': 'dog do nut',
+                        'validation': {
+                            'required': false,
+                            'email': true,
+                        },
+                        'advanced': {
+                            'populateDynamically': true,
+                            'enableConditionalLogic': false,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [],
+                            },
+                            'enableCalculation': false,
+                        },
+                    },
+                    'answers': [{
+                        'value': 'yes',
+                    }, {
+                        'value': 'no',
+                    }],
+                },
+                {
+                    'title': 'Question 3',
+                    'id': '85fweewe7d-ac4f-4ac7-899c-3aceb91c97fb',
+                    'type': 'question',
+                    'inputType': 'checkbox',
+                    'settings': {
+                        'enableDescription': true,
+                        'description': 'this is my long description for are dogs cool',
+                        'enableVariableName': true,
+                        'variableName': 'dog do nut',
+                        'validation': {
+                            'required': false,
+                            'email': true,
+                        },
+                        'advanced': {
+                            'populateDynamically': true,
+                            'enableConditionalLogic': false,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [],
+                            },
+                            'enableCalculation': false,
+                        },
+                    },
+                    'answers': [{
+                        'value': 'yes',
+                    }, {
+                        'value': 'no',
+                    }],
+                },
+                {
+                    'title': 'Question 4',
+                    'id': '85f1111d-ac4f-4ac7-899c-3aceb91c97fb',
+                    'type': 'question',
+                    'inputType': 'checkbox',
+                    'settings': {
+                        'enableDescription': true,
+                        'description': 'this is my long description for are dogs cool',
+                        'enableVariableName': true,
+                        'variableName': 'dog do nut',
+                        'validation': {
+                            'required': false,
+                            'email': true,
+                        },
+                        'advanced': {
+                            'populateDynamically': true,
+                            'enableConditionalLogic': false,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [],
+                            },
+                            'enableCalculation': false,
+                        },
+                    },
+                    'answers': [{
+                        'value': 'yes',
+                    }, {
+                        'value': 'no',
+                    }],
+                },
+                {
+                    'title': 'Question 5',
+                    'id': '85ff9e7d-a1212f-4ac7-899c-3aceb91c97fb',
+                    'type': 'question',
+                    'inputType': 'checkbox',
+                    'settings': {
+                        'enableDescription': true,
+                        'description': 'this is my long description for are dogs cool',
+                        'enableVariableName': true,
+                        'variableName': 'dog do nut',
+                        'validation': {
+                            'required': false,
+                            'email': true,
+                        },
+                        'advanced': {
+                            'populateDynamically': true,
+                            'enableConditionalLogic': false,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [],
+                            },
+                            'enableCalculation': false,
+                        },
+                    },
+                    'answers': [{
+                        'value': 'yes',
+                    }, {
+                        'value': 'no',
+                    }],
+                },
+                {
+                    'title': 'Question 6?',
+                    'id': '85ff9e7d-dsdssd-4ac7-899c-3aceb91c97fb',
+                    'type': 'question',
+                    'inputType': 'checkbox',
+                    'settings': {
+                        'enableDescription': true,
+                        'description': 'this is my long description for are dogs cool',
+                        'enableVariableName': true,
+                        'variableName': 'dog do nut',
+                        'validation': {
+                            'required': false,
+                            'email': true,
+                        },
+                        'advanced': {
+                            'populateDynamically': true,
+                            'enableConditionalLogic': false,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [],
+                            },
+                            'enableCalculation': false,
+                        },
+                    },
+                    'answers': [{
+                        'value': 'yes',
+                    }, {
+                        'value': 'no',
+                    }],
+                },
+                {
+                    'title': 'Question 7',
+                    'id': '85ff9e7d3333f-4ac7-899c-3aceb91c97fb',
+                    'type': 'question',
+                    'inputType': 'checkbox',
+                    'settings': {
+                        'enableDescription': true,
+                        'description': 'this is my long description for are dogs cool',
+                        'enableVariableName': true,
+                        'variableName': 'dog do nut',
+                        'validation': {
+                            'required': false,
+                            'email': true,
+                        },
+                        'advanced': {
+                            'populateDynamically': true,
+                            'enableConditionalLogic': false,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [],
+                            },
+                            'enableCalculation': false,
+                        },
+                    },
+                    'answers': [{
+                        'value': 'yes',
+                    }, {
+                        'value': 'no',
+                    }],
+                },
+                {
+                    'title': 'Quesiton 8',
+                    'id': '85ff9e7d-2323f-4ac7-899c-3aceb91c97fb',
+                    'type': 'question',
+                    'inputType': 'checkbox',
+                    'settings': {
+                        'enableDescription': true,
+                        'description': 'this is my long description for are dogs cool',
+                        'enableVariableName': true,
+                        'variableName': 'dog do nut',
+                        'validation': {
+                            'required': false,
+                            'email': true,
+                        },
+                        'advanced': {
+                            'populateDynamically': true,
+                            'enableConditionalLogic': false,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [],
+                            },
+                            'enableCalculation': false,
+                        },
+                    },
+                    'answers': [{
+                        'value': 'yes',
+                    }, {
+                        'value': 'no',
+                    }],
+                },
+                {
+                    'title': 'Question 9',
+                    'id': '85ff9e7d-11222f-4ac7-899c-3aceb91c97fb',
+                    'type': 'question',
+                    'inputType': 'checkbox',
+                    'settings': {
+                        'enableDescription': true,
+                        'description': 'this is my long description for are dogs cool',
+                        'enableVariableName': true,
+                        'variableName': 'dog do nut',
+                        'validation': {
+                            'required': false,
+                            'email': true,
+                        },
+                        'advanced': {
+                            'populateDynamically': true,
+                            'enableConditionalLogic': false,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [],
+                            },
+                            'enableCalculation': false,
+                        },
+                    },
+                    'answers': [{
+                        'value': 'yes',
+                    }, {
+                        'value': 'no',
+                    }],
+                },
+                {
+                    'title': 'Question 10',
+                    'id': '85ff9e7d-ac4444f-4ac7-899c-3aceb91c97fb',
+                    'type': 'question',
+                    'inputType': 'checkbox',
+                    'settings': {
+                        'enableDescription': true,
+                        'description': 'this is my long description for are dogs cool',
+                        'enableVariableName': true,
+                        'variableName': 'dog do nut',
+                        'validation': {
+                            'required': false,
+                            'email': true,
+                        },
+                        'advanced': {
+                            'populateDynamically': true,
+                            'enableConditionalLogic': false,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [],
+                            },
+                            'enableCalculation': false,
+                        },
+                    },
+                    'answers': [{
+                        'value': 'yes',
+                    }, {
+                        'value': 'no',
+                    }],
+                },
+                {
+                    'title': 'Question 11',
+                    'id': '85ff9e7dddd-4ac7-899c-3aceb91c97fb',
+                    'type': 'question',
+                    'inputType': 'checkbox',
+                    'settings': {
+                        'enableDescription': true,
+                        'description': 'this is my long description for are dogs cool',
+                        'enableVariableName': true,
+                        'variableName': 'dog do nut',
+                        'validation': {
+                            'required': false,
+                            'email': true,
+                        },
+                        'advanced': {
+                            'populateDynamically': true,
+                            'enableConditionalLogic': false,
+                            'conditionalLogic': {
+                                'visiblity': 'show',
+                                'visiblityCondition': 'all',
+                                'conditions': [],
+                            },
+                            'enableCalculation': false,
+                        },
+                    },
+                    'answers': [{
+                        'value': 'yes',
+                    }, {
+                        'value': 'no',
+                    }],
+                },
+                {
+                    'title': 'Question 12',
+                    'id': '85ff9e7d-555f-4ac7-899c-3aceb91c97fb',
                     'type': 'question',
                     'inputType': 'checkbox',
                     'settings': {
@@ -864,7 +1236,7 @@ const FlowDataProvider = (props) => {
 
     useEffect(() => {
         // nothing to do when this updates (yet)
-        // console.log('localFlowData', localFlowData)
+        console.log('localFlowData', localFlowData)
     }, [localFlowData]);
 
     const updateLocalFlowData = newFlowData => setLocalFlowData(newFlowData);

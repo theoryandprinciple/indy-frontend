@@ -24,15 +24,17 @@ const SectionWrapper = ({ data, classes }) => {
 
     const onDrop = (item) => {
         // -1 is assigned as an id in element-section.js
+        // used in section.js 'useDrop'
         if (item.type === 'section' && item.id === -1) {
+            const id = IdGenerator();
             setSections(
                 update(sections, {
-                    $push: [{ ...item, id: IdGenerator }],
+                    $push: [{ ...item, id }],
                 }),
             );
         }
 
-        return { name: 'Section-Wrapper' }; // the return value currently has no value
+        return { name: 'Section-Wrapper' }; // the return value currently has no purpose
     };
     const moveSection = useCallback(
         (dragIndex, hoverIndex) => {

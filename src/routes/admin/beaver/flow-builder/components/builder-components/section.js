@@ -113,7 +113,7 @@ const Section = ({
         // Set default values used inside new question components (answers, settings)
         if (item.type === 'question') {
             newElement = {
-                id: IdGenerator,
+                id: IdGenerator(),
                 title: item.text,
                 answers: [],
                 settings: { advanced: { enableConditionalLogic: false, conditionalLogic: { conditions: [] } }, validation: { required: false } },
@@ -122,7 +122,7 @@ const Section = ({
             };
         } else if (item.type === 'output') {
             newElement = {
-                id: IdGenerator,
+                id: IdGenerator(),
                 settings: { advanced: { enableConditionalLogic: false, conditionalLogic: { conditions: [] } }, validation: { required: false } },
                 type: item.type,
                 inputType: item.inputType,
@@ -197,7 +197,7 @@ const Section = ({
             }
             // if we are trying to drag a NEW section in, it wont have an index setup yet
             // TODO: dynamically manage indexes for new sectionElements?
-            if (item.type === ElementTypes.SECTION && !item.index) {
+            if (item.type === ElementTypes.SECTION && item.id === -1) {
                 // console.log('TODO: Allow for dynamic insertion of new sections');
                 return;
             }
@@ -291,10 +291,12 @@ const Section = ({
                     {sectionElements ? sectionElements.length : 0}
                 </Typography>
             </div>
-
-            <div ref={preview} className={`row no-gutters ${sectionOpen ? classes.sectionOpen : classes.sectionCollapsed}`} style={{ padding: '15px 30px' }}>
-                {sectionElements && sectionElements.map((sectionElement, i) => renderElement(sectionElement, i))}
-            </div>
+            {/* PERFORMANCE UPDATE don't render things that aren't being shown */}
+            {sectionOpen && (
+                <div ref={preview} className="row no-gutters" style={{ padding: '15px 30px' }}>
+                    {sectionElements && sectionElements.map((sectionElement, i) => renderElement(sectionElement, i))}
+                </div>
+            )}
         </div>
     );
 };

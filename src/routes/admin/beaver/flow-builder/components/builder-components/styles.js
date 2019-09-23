@@ -17,13 +17,6 @@ const styles = () => ({
     dragHandleStyle: {
         cursor: 'move',
     },
-    sectionOpen: {
-        // consider adding animation https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_collapsible_animate
-        display: 'block',
-    },
-    sectionCollapsed: {
-        display: 'none',
-    },
 
     // Section Element
     sectionElementWrapper: {
