@@ -20,6 +20,7 @@ const styles = () => ({
 
     // Section Element
     sectionElementWrapper: {
+        width: '100%',
         border: '1px dashed gray',
         padding: 15,
         marginBottom: 30,

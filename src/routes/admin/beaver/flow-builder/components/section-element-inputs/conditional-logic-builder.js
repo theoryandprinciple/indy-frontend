@@ -38,7 +38,7 @@ const ConditionalLogicBuilder = ({
 
         setFlowQuestions(questionArray);
     }, [localFlowData]);
-console.log('conditional logic builder')
+
     return (
         <>
             {(initialValues.advanced && initialValues.advanced.enableConditionalLogic) && (
@@ -77,16 +77,16 @@ console.log('conditional logic builder')
                                 AddAnother = <button type="button" onClick={addAnotherCondition}><AddIcon /></button>;
                             }
                             return (
-                                <div key={`logicBlock-${i}`} className={classes.settingsConditionSet}>
+                                <div key={`logicBlock-${logicBlock.questionId}`} className={classes.settingsConditionSet}>
                                     <Select
                                         className={classes.elementSelectMenu}
                                         color="primary"
                                         value={logicBlock.questionId || '1'}
                                         onChange={event => handleAdvancedConditionalLogicUpdate('questionId', event.target.value, i)}
                                     >
-                                        {flowQuestions.map((question, q) => (
+                                        {flowQuestions.map(question => (
                                             <MenuItem
-                                                key={`${question.title}-${q}`}
+                                                key={`menuitem-${logicBlock.questionId}-${question.id}`}
                                                 value={question.id}
                                             >
                                                 {question.title}
