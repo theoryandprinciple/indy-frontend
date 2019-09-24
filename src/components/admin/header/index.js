@@ -10,7 +10,7 @@ import Styles from './styles';
 const AdminHeader = ({ classes }) => {
     const LogoLink = React.forwardRef((props, ref) => <NavLink activeClassName={classes.primaryLinkActive} to="/admin" {...ref} {...props} />);
     const FlowBuilderLink = React.forwardRef((props, ref) => <NavLink activeClassName={classes.primaryLinkActive} to="/admin/flow-builder" {...ref} {...props} />);
-    const OutputBuilderLink = React.forwardRef((props, ref) => <NavLink activeClassName={classes.primaryLinkActive} to="/admin/output-builder/create" {...ref} {...props} />);
+    const OutputBuilderLink = React.forwardRef((props, ref) => <NavLink activeClassName={classes.primaryLinkActive} to="/admin/output-builder" {...ref} {...props} />);
 
 
     return (

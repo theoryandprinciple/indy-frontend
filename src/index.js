@@ -4,7 +4,7 @@ import { Router } from 'react-router-dom';
 import 'bootstrap-css-only/css/bootstrap-grid.min.css';
 import AuthDataProvider from './routes/login/wiring/auth-provider';
 
-import { history } from './wiring/history';
+import history from './wiring/history';
 import App from './routes';
 
 import 'sanitize.css/sanitize.css';
