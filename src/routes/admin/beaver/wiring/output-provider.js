@@ -40,11 +40,7 @@ const SampleOutputData = [
         'visiblity': 'published',
         'lastUpdated': '(date here)',
         'title': 'Best Practices',
-        'emailContent': {
-            'shortDescription': 'Best Practices',
-            'website': 'http://google.com',
-            'content': '<p>tester</p>',
-        },
+        'description': 'this is my description',
     },
 ];
 

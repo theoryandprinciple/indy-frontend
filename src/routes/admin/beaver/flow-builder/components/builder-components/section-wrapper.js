@@ -10,17 +10,15 @@ import { useFlowDataContext } from '../../../wiring/flow-provider';
 import Styles from './styles';
 import IdGenerator from '../../wiring/unique-id-generator';
 
-import OutputDataProvider from '../../../wiring/output-provider'; // move this down the tree at some point
-
-const SectionWrapper = ({ data, classes }) => {
-    const [sections, setSections] = useState([]);
-    const { localFlowData, updateLocalFlowData } = useFlowDataContext();
+const SectionWrapper = ({ classes }) => {
+    const [sections, setSections] = useState(undefined);
+    const { localFlowData, updateLocalFlowData, remoteFlowData } = useFlowDataContext();
 
     useEffect(() => {
         // populate internal state with data in useFlowDataContext
         // this will either be from our API or local state, depending on when data is coming down
-        setSections(data);
-    }, [data]);
+        setSections(remoteFlowData.sections);
+    }, [remoteFlowData]);
 
     const onDrop = (item) => {
         // -1 is assigned as an id in element-section.js
@@ -84,7 +82,9 @@ const SectionWrapper = ({ data, classes }) => {
     };
 
     useEffect(() => {
-        handleSectionUpdates();
+        if (sections) {
+            handleSectionUpdates();
+        }
     }, [sections]);
 
     const renderElement = (section, index) => (
@@ -118,18 +118,20 @@ const SectionWrapper = ({ data, classes }) => {
     }
 
     return (
-        <div ref={drop} style={{ border }} className={classes.sectionWrapperWrapper}>
-            {isActive ? `${sections.length === 0 ? 'Release to drop' : ''}` : `${sections.length === 0 ? 'Start the party' : ''}`}
-            <OutputDataProvider>
-                {sections.map((section, i) => renderElement(section, i))}
-            </OutputDataProvider>
-        </div>
+        <>
+            {!sections && <div />}
+            {sections && (
+                <div ref={drop} style={{ border }} className={classes.sectionWrapperWrapper}>
+                    {isActive ? `${sections.length === 0 ? 'Release to drop' : ''}` : `${sections.length === 0 ? 'Start the party' : ''}`}
+                    {sections.map((section, i) => renderElement(section, i))}
+                </div>
+            )}
+        </>
     );
 };
 
 SectionWrapper.propTypes = {
     classes: PropTypes.object.isRequired,
-    data: PropTypes.array.isRequired,
 };
 
 export default withStyles(Styles)(SectionWrapper);

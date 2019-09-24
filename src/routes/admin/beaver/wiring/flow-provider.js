@@ -19,10 +19,11 @@ const SampleFlowData = {
             'title': 'this is a section',
             'contents': [
                 {
+                    'id': '85ss9e7d-ac4f-4ac7-899c-3aceb91c97fa',
                     'type': 'output',
                     'inputType': 'email',
+                    'selectedOutput': '85ff9e7d-ac4f-4ac7-800c-3aceb91c97fa',
                     'settings': {
-                        'selectedOutput': '85ff9e7d-ac4f-4ac7-800c-3aceb91c97fa',
                         'advanced': {
                             'enableConditionalLogic': true,
                             'conditionalLogic': {
@@ -1227,22 +1228,21 @@ const SampleFlowData2 = {
 };
 
 const FlowDataProvider = (props) => {
-    const [localFlowData, setLocalFlowData] = useState({ sections: [] });
     const [remoteFlowData, setRemoteFlowData] = useState(SampleFlowData);
-
-    useEffect(() => {
-        setLocalFlowData(remoteFlowData);
-    }, [remoteFlowData]);
+    const [localFlowData, setLocalFlowData] = useState(undefined);
 
     useEffect(() => {
         // nothing to do when this updates (yet)
-        console.log('localFlowData', localFlowData)
+        console.log('localFlowData', localFlowData);
     }, [localFlowData]);
 
+    useEffect(() => {
+        console.log('removeFlowData');
+        setLocalFlowData(remoteFlowData);
+    }, [remoteFlowData]);
+
     const updateLocalFlowData = newFlowData => setLocalFlowData(newFlowData);
-    const updateRemoteFlowData = () => {
-        setRemoteFlowData(SampleFlowData2);
-    };
+    const updateRemoteFlowData = () => { setRemoteFlowData(SampleFlowData2); };
 
     return (
         <FlowDataContext.Provider
@@ -1258,6 +1258,5 @@ const FlowDataProvider = (props) => {
 };
 
 export const useFlowDataContext = () => useContext(FlowDataContext);
-
 
 export default FlowDataProvider;
