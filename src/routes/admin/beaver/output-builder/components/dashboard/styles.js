@@ -56,7 +56,7 @@ const styles = theme => ({
         backgroundColor: Colors.pageBackground,
         '&:hover': {
             backgroundColor: 'white',
-            borderLeft: `3px ${Colors.blue} solid`,
+            borderLeft: `3px ${Colors.darkGrey2} solid`,
             paddingLeft: 12,
         },
     },
@@ -64,6 +64,9 @@ const styles = theme => ({
         backgroundColor: 'white',
         borderLeft: `3px ${Colors.blue} solid`,
         paddingLeft: 12,
+        '&:hover': {
+            borderLeft: `3px ${Colors.blue} solid`,
+        },
     },
     // Dialog
     dialogWrapper: {},

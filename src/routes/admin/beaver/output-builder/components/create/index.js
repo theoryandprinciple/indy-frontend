@@ -5,6 +5,7 @@ import { find } from 'lodash';
 
 import history from '../../../../../../wiring/history';
 import { useOutputDataContext } from '../../../wiring/output-provider';
+import { SaveOutput } from '../../../wiring/output-api';
 import GetParameterByName from '../../../../../../utils/get-param';
 
 import Header from '../header';
@@ -40,6 +41,8 @@ const OutputBuilderCreate = ({ classes, location }) => {
     };
     const saveOutput = () => {
         console.log('saving');
+        SaveOutput(values);
+        // return value should carry errors/error messages
     };
 
     const goBack = () => history.goBack();
