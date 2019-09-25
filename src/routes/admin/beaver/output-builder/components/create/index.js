@@ -53,7 +53,7 @@ const OutputBuilderCreate = ({ classes, location }) => {
 
         // fake the save a new item
         const selectedOutput = find(remoteOutputData, ['id', values.id]);
-        const elementPos = remoteOutputData.map(function(x) {return x.id; }).indexOf(values.id);
+        const elementPos = remoteOutputData.map(x => x.id).indexOf(values.id);
         if (selectedOutput) {
             const temp = update(remoteOutputData, { [elementPos]: { $set: values } });
             updateRemoteOutputData(temp);
@@ -65,8 +65,8 @@ const OutputBuilderCreate = ({ classes, location }) => {
         // return value should carry errors/error messages
     };
 
-    const goBack = () => history.goBack();
-console.log('values', values)
+    const goBack = () => history.push('/admin/output-builder');
+
     return (
         <>
             <Header save={saveOutput} cancel={goBack} title={`Output / Add New ${values.type}`} />

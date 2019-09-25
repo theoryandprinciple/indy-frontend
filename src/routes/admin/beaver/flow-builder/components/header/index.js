@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 import { SaveFlow } from '../../../wiring/flow-api';
 import { useFlowDataContext } from '../../../wiring/flow-provider';
@@ -28,8 +29,12 @@ const SectionHeader = ({ classes }) => {
                     <div className="col align-items-center text-right">
                         {error ? (<span>{errorMsg}</span>) : null}
                         {error === false ? (<span>success</span>) : null}
-                        <button type="button" onClick={save}>Save</button>
-                        <button type="button" onClick={updateRemoteFlowData}>Load Stuff</button>
+                        <Button variant="outlined" color="primary" onClick={save} style={{ marginRight: 15 }}>
+                            Save
+                        </Button>
+                        <Button variant="contained" color="primary" onClick={updateRemoteFlowData}>
+                            Load Stuff
+                        </Button>
                     </div>
                 </div>
             </div>

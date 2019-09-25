@@ -15,14 +15,11 @@ const theme = createMuiTheme({
     },
     palette: {
         primary: {
-            light: Colors.blue,
             main: Colors.blue,
-            dark: Colors.blue,
+            contrastText: '#fff',
         },
         secondary: {
             main: Colors.orange,
-        },
-        text: {
         },
         background: {
             default: Colors.pageBackground,

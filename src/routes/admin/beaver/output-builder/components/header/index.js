@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 import Styles from './styles';
 
@@ -18,8 +19,12 @@ const SectionHeader = ({
                     <Typography variant="h4">{title}</Typography>
                 </div>
                 <div className="col align-items-center text-right">
-                    <button type="button" onClick={cancel}>Cancel</button>
-                    <button type="button" onClick={save}>Save</button>
+                    <Button variant="outlined" color="primary" onClick={cancel} style={{ marginRight: 15 }}>
+                        Cancel
+                    </Button>
+                    <Button variant="contained" color="primary" onClick={save}>
+                        Save
+                    </Button>
                 </div>
             </div>
         </div>
