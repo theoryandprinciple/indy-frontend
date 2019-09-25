@@ -13,13 +13,19 @@ import Styles from './styles';
 const OutputBuilderDashboard = ({ classes }) => {
     const { remoteOutputData } = useOutputDataContext();
     const [filteredResult, setFilteredResults] = useState([]);
+    const [filter, setFilter] = useState('all');
 
     const editOutput = (id) => {
         history.push(`output-builder/create?id=${id}`);
     };
-    const filter = (type) => {
-        const result = remoteOutputData.filter(obj => obj.type === type);
-        setFilteredResults(result);
+    const filterResults = (type) => {
+        if (type === 'all') {
+            setFilteredResults(remoteOutputData);
+        } else {
+            const result = remoteOutputData.filter(obj => obj.type === type);
+            setFilteredResults(result);
+        }
+        setFilter(type);
     };
 
     useEffect(() => {
@@ -30,9 +36,10 @@ const OutputBuilderDashboard = ({ classes }) => {
         <div className="container">
             <div className="row">
                 <div className="col-3">
-                    <div className={classes.wrapper}>
-                        <p>list area</p>
-                        <button type="button" onClick={() => filter('email')}>Email</button>
+                    <div className={classes.filterWrapper}>
+                        <button className={`${filter === 'all' && classes.filterBtnActive} ${classes.filterBtn}`} type="button" onClick={() => filterResults('all')}>All</button>
+                        <button className={`${filter === 'email' && classes.filterBtnActive} ${classes.filterBtn}`} type="button" onClick={() => filterResults('email')}>Email</button>
+                        <button className={`${filter === 'content' && classes.filterBtnActive} ${classes.filterBtn}`} type="button" onClick={() => filterResults('content')}>Content</button>
                     </div>
                 </div>
                 <div className="col-9">

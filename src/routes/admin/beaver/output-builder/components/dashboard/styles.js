@@ -1,9 +1,6 @@
 import Colors from '../../../../../../styles/colors';
 
 const styles = theme => ({
-    wrapper: {
-        backgroundColor: 'white',
-    },
     outputBlockWrapper: {
         backgroundColor: 'white',
         height: 200,
@@ -41,6 +38,26 @@ const styles = theme => ({
     },
     elementOutputIcon: {
         backgroundColor: 'black',
+    },
+    filterWrapper: {
+        borderLeft: `1px ${Colors.darkGrey2} solid`,
+    },
+    filterBtn: {
+        paddingLeft: 15,
+        width: '100%',
+        textAlign: 'left',
+        height: 45,
+        backgroundColor: Colors.pageBackground,
+        '&:hover': {
+            backgroundColor: 'white',
+            borderLeft: `3px ${Colors.blue} solid`,
+            paddingLeft: 12,
+        },
+    },
+    filterBtnActive: {
+        backgroundColor: 'white',
+        borderLeft: `3px ${Colors.blue} solid`,
+        paddingLeft: 12,
     },
 });
 export default styles;
