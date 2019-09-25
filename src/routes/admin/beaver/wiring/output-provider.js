@@ -3,6 +3,7 @@ import React, {
     createContext,
     useState,
     useContext,
+    useEffect,
 } from 'react';
 
 export const OutputDataContext = createContext(null);
@@ -13,26 +14,18 @@ const SampleOutputData = [
         'type': 'email',
         'visiblity': 'published',
         'lastUpdated': '(date here)',
-        'title': 'Engagement Email',
-        'emailContent': {
-            'shortDescription': '',
-            'longDescription': '',
-            'emailAddress': 'info@info.com',
-            'emailBody': '<p>tester</p>',
-        },
+        'emailSubject': 'Email Subject Stuffs',
+        'emailAddress': 'info@info.com',
+        'emailBody': '<p>tester</p>',
     },
     {
         'id': '85ff9e7d-ac4f-4ac7-801c-3aceb91c97fa',
         'type': 'email',
         'visiblity': 'published',
         'lastUpdated': '(date here)',
-        'title': 'Follow-up Email',
-        'emailContent': {
-            'shortDescription': '',
-            'longDescription': '',
-            'emailAddress': 'info@info.com',
-            'emailBody': '<p>tester</p>',
-        },
+        'emailSubject': 'Email Subject HEre',
+        'emailAddress': 'info@info.com',
+        'emailBody': '<p>tester</p>',
     },
     {
         'id': '85ff9e7d-ac4f-4ac7-802c-3aceb91c97fa',
@@ -40,11 +33,7 @@ const SampleOutputData = [
         'visiblity': 'published',
         'lastUpdated': '(date here)',
         'title': 'Best Practices',
-        'emailContent': {
-            'shortDescription': 'Best Practices',
-            'website': 'http://google.com',
-            'content': '<p>tester</p>',
-        },
+        'description': 'this is my description',
     },
 ];
 
@@ -52,9 +41,13 @@ const SampleOutputData = [
 const OutputDataProvider = (props) => {
     const [remoteOutputData, setRemoteOutputData] = useState(SampleOutputData);
 
+    useEffect(() => {
+        // nothing to do when this updates (yet)
+        console.log('remoteOutputData', remoteOutputData);
+    }, [remoteOutputData]);
 
-    const updateRemoteOutputData = () => {
-        setRemoteOutputData(SampleOutputData);
+    const updateRemoteOutputData = (values) => {
+        setRemoteOutputData(values);
     };
 
     return (

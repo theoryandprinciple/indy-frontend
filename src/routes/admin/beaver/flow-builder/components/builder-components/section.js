@@ -21,7 +21,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import SectionElement from './section-element-question';
 import SectionElementOutput from './section-element-output';
 import ElementTypes from '../../wiring/element-types';
-import IdGenerator from '../../wiring/unique-id-generator';
+import IdGenerator from '../../../wiring/unique-id-generator';
 import useDebounce from '../../../../../../utils/use-debounce';
 
 import Colors from '../../../../../../styles/colors';
