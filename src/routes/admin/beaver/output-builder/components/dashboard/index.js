@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-// import { filter } from 'lodash';
 
 import history from '../../../../../../wiring/history';
 import { useOutputDataContext } from '../../../wiring/output-provider';
 import IconList from '../../../wiring/icon-list';
+
+import CreateDialog from './dialog';
 
 import Styles from './styles';
 
@@ -33,7 +34,8 @@ const OutputBuilderDashboard = ({ classes }) => {
     }, [remoteOutputData]);
 
     return (
-        <div className="container">
+        <div className={`container ${classes.wrapper}`}>
+            <CreateDialog />
             <div className="row">
                 <div className="col-3">
                     <div className={classes.filterWrapper}>
@@ -49,7 +51,7 @@ const OutputBuilderDashboard = ({ classes }) => {
                                 type="button"
                                 key={output.id}
                                 onClick={() => editOutput(output.id)}
-                                className={classes.outputBlockWrapper}
+                                className={`${classes.outputBlockWrapper} ${classes.dashboardOutputBlockWrapper}`}
                             >
                                 <div className={classes.outputBlockHeader}>
                                     <div className={`${classes.elementIconWrapper} ${classes.elementOutputIcon}`}>

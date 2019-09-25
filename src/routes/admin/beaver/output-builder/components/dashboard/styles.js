@@ -1,6 +1,12 @@
 import Colors from '../../../../../../styles/colors';
 
 const styles = theme => ({
+    wrapper: {
+        paddingTop: 60,
+    },
+    dashboardOutputBlockWrapper: {
+        boxShadow: '0 1px 3px 0 rgba(0,0,0,0.1)',
+    },
     outputBlockWrapper: {
         backgroundColor: 'white',
         height: 200,
@@ -58,6 +64,39 @@ const styles = theme => ({
         backgroundColor: 'white',
         borderLeft: `3px ${Colors.blue} solid`,
         paddingLeft: 12,
+    },
+    // Dialog
+    dialogWrapper: {},
+    dialogContentWrapper: {
+        padding: 30,
+        width: 600,
+    },
+    dialogOutputBlockWrapper: {
+        border: `1px ${Colors.lightGrey} solid`,
+        width: 213,
+        height: 180,
+        padding: 15,
+    },
+    dialogCloseButton: {
+        position: 'absolute',
+        right: theme.spacing(1),
+        top: theme.spacing(1),
+        color: theme.palette.grey[500],
+    },
+    dialogTitle: {
+        paddingTop: 50,
+    },
+    dialogElementIconWrapper: {
+        margin: '0 auto',
+        marginBottom: 15,
+    },
+    addOutputBtn: {
+        height: 60,
+        width: 60,
+        borderRadius: 60,
+        backgroundColor: Colors.blue,
+        position: 'fixed',
+        top: 50,
     },
 });
 export default styles;
