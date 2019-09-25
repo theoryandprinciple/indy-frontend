@@ -20,7 +20,7 @@ const OutputBuilderCreateEmail = ({ classes, values, handleChange }) => (
                 placeholder="Add the email address here"
                 className={classes.inputLabel}
                 value={values.emailAddress}
-                onChange={handleChange('title')}
+                onChange={handleChange('emailAddress')}
             />
 
             <TextField

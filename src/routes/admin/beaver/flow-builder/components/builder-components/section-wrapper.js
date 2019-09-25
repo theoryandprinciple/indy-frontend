@@ -8,7 +8,7 @@ import ElementTypes from '../../wiring/element-types';
 import Section from './section';
 import { useFlowDataContext } from '../../../wiring/flow-provider';
 import Styles from './styles';
-import IdGenerator from '../../wiring/unique-id-generator';
+import IdGenerator from '../../../wiring/unique-id-generator';
 
 const SectionWrapper = ({ classes }) => {
     const [sections, setSections] = useState(undefined);

@@ -3,6 +3,7 @@ import React, {
     createContext,
     useState,
     useContext,
+    useEffect,
 } from 'react';
 
 export const OutputDataContext = createContext(null);
@@ -40,9 +41,13 @@ const SampleOutputData = [
 const OutputDataProvider = (props) => {
     const [remoteOutputData, setRemoteOutputData] = useState(SampleOutputData);
 
+    useEffect(() => {
+        // nothing to do when this updates (yet)
+        console.log('remoteOutputData', remoteOutputData);
+    }, [remoteOutputData]);
 
-    const updateRemoteOutputData = () => {
-        setRemoteOutputData(SampleOutputData);
+    const updateRemoteOutputData = (values) => {
+        setRemoteOutputData(values);
     };
 
     return (
