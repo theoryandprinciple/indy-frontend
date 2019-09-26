@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { find } from 'lodash';
 import update from 'immutability-helper';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 
-import history from '../../../../../../wiring/history';
 import { useOutputDataContext } from '../../../wiring/output-provider';
 // import { SaveOutput } from '../../../wiring/output-api';
 import GetParameterByName from '../../../../../../utils/get-param';
@@ -20,6 +19,7 @@ import ContentBuilder from './content';
 const OutputBuilderCreate = ({ classes }) => {
     const { remoteOutputData, updateRemoteOutputData } = useOutputDataContext();
     const location = useLocation();
+    const history = useHistory();
 
     const [values, setValues] = useState({});
 
