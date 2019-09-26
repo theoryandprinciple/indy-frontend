@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { find } from 'lodash';
 import update from 'immutability-helper';
+import { useLocation } from 'react-router-dom';
 
 import history from '../../../../../../wiring/history';
 import { useOutputDataContext } from '../../../wiring/output-provider';
@@ -16,8 +17,9 @@ import Styles from './styles';
 import EmailBuilder from './email';
 import ContentBuilder from './content';
 
-const OutputBuilderCreate = ({ classes, location }) => {
+const OutputBuilderCreate = ({ classes }) => {
     const { remoteOutputData, updateRemoteOutputData } = useOutputDataContext();
+    const location = useLocation();
 
     const [values, setValues] = useState({});
 
@@ -88,7 +90,6 @@ const OutputBuilderCreate = ({ classes, location }) => {
 
 OutputBuilderCreate.propTypes = {
     classes: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
 };
 
 export default withStyles(Styles)(OutputBuilderCreate);

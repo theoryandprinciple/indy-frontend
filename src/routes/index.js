@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import PublicLayout from '../layouts/public';
@@ -22,20 +22,21 @@ PrivateRoute.propTypes = {
     component: PropTypes.func.isRequired,
 };
 
-const App = () => (
-    <Route
-        render={({ location }) => (
-            <MuiThemeProvider theme={themer}>
-                <Switch location={location}>
-                    <PrivateRoute
-                        path="/admin"
-                        component={AdminLayout}
-                    />
-                    <Route exact path="/" component={PublicLayout} />
-                </Switch>
-            </MuiThemeProvider>
-        )}
-    />
-);
+const App = () => {
+    const location = useLocation();
+
+    return (
+        <MuiThemeProvider theme={themer}>
+            <Switch location={location}>
+                <PrivateRoute path="/admin">
+                    <AdminLayout />
+                </PrivateRoute>
+                <Route exact path="/">
+                    <PublicLayout />
+                </Route>
+            </Switch>
+        </MuiThemeProvider>
+    );
+};
 
 export default withRoot(App);
