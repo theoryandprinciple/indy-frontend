@@ -281,15 +281,21 @@ const Section = ({
             </div>
 
             <div className="row no-gutters" style={{ padding: '15px 30px' }}>
-                <TextField
-                    placeholder="Question Title..."
-                    className={classes.inputLabel}
-                    value={titleValue}
-                    onChange={event => setTitleValue(event.target.value)}
-                />
-                <Typography variant="h5">
-                    {sectionElements ? sectionElements.length : 0}
-                </Typography>
+                <div className="col">
+                    <TextField
+                        placeholder="Question Title..."
+                        className={classes.inputLabel}
+                        value={titleValue}
+                        onChange={event => setTitleValue(event.target.value)}
+                    />
+                </div>
+                <div className="col text-right">
+                    <Typography variant="body1">
+                        {sectionElements ? sectionElements.length : 0}
+                        {' '}
+                        questions
+                    </Typography>
+                </div>
             </div>
             {/* PERFORMANCE UPDATE don't render things that aren't being shown */}
             {sectionOpen && (
