@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import history from '../../../../../../wiring/history';
+import { useHistory } from 'react-router-dom';
 import { useOutputDataContext } from '../../../wiring/output-provider';
 import IconList from '../../../wiring/icon-list';
 
@@ -15,6 +15,7 @@ const OutputBuilderDashboard = ({ classes }) => {
     const { remoteOutputData } = useOutputDataContext();
     const [filteredResult, setFilteredResults] = useState([]);
     const [filter, setFilter] = useState('all');
+    const history = useHistory();
 
     const editOutput = (id) => {
         history.push(`output-builder/create?id=${id}`);

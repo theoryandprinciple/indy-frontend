@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
-import history from '../../../../../../wiring/history';
+import { useHistory } from 'react-router-dom';
 import IconList from '../../../wiring/icon-list';
 import Styles from './styles';
 
@@ -28,6 +27,7 @@ const DialogTitle = withStyles(Styles)((props) => {
 
 const CustomizedDialogs = ({ classes }) => {
     const [open, setOpen] = React.useState(false);
+    const history = useHistory();
 
     const handleClickOpen = () => {
         setOpen(true);
