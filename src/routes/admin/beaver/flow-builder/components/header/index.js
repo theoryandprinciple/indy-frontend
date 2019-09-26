@@ -24,7 +24,7 @@ const SectionHeader = ({ classes }) => {
             <div className="container" style={{ height: '100%' }}>
                 <div className="row align-items-center" style={{ height: '100%' }}>
                     <div className="col align-items-center">
-                        <Typography variant="h4">Question Flow</Typography>
+                        <Typography variant="h3">Question Flow</Typography>
                     </div>
                     <div className="col align-items-center text-right">
                         {error ? (<span>{errorMsg}</span>) : null}

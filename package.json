@@ -9,7 +9,7 @@
     "start": "react-scripts start",
     "now-start": "serve -s ./build",
     "build": "react-scripts build",
-    "test": "CI=true react-scripts test --env=jsdom",
+    "test": "CI=true react-scripts test --env=jsdom --passWithNoTests",
     "eject": "react-scripts eject",
     "precommit": "pretty-quick --staged",
     "lint": "eslint 'src/**/*.js' --ignore-pattern node_modules/"
@@ -17,7 +17,6 @@
   "devDependencies": {
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-react": "^7.14.3",
-    "jest-mock-axios": "^3.1.0",
     "react-scripts": "^3.1.2"
   },
   "pre-commit": [
@@ -30,7 +29,6 @@
     "@material-ui/icons": "^4.2.1",
     "@material-ui/styles": "^4.3.0",
     "axios": "^0.19.0",
-    "babel-eslint": "10.0.2",
     "bootstrap-css-only": "^4.3.1",
     "eslint": "^6.2.1",
     "eslint-config-airbnb": "^17.1.0",
