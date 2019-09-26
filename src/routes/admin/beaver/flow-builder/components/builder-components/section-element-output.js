@@ -17,7 +17,6 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import ElementTypes from '../../wiring/element-types';
-import OutputTypes from '../../wiring/output-types';
 import IconList from '../../../wiring/icon-list';
 
 import OutputSettings from '../section-element-inputs/output-settings';
@@ -138,20 +137,28 @@ const SectionElementOutput = ({
             <div className="col">
                 <div className={`row ${classes.elementHeader}`}>
                     <div className="col ml-3">
-                        {(initialValues.inputType === OutputTypes.EMAIL && (
-                            <Select
-                                className={classes.elementSelectMenu}
-                                color="primary"
-                                value={initialValues.selectedOutput || ''}
-                                onChange={event => updateSelectedOutput(event.target.value)}
-                            >
-                                {outputData.map(output => (
-                                    <MenuItem key={output.id} value={output.id}>
-                                        {output.title}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        ))}
+                        {/*
+                            we will likely need to have a handful of components for different types
+                            (initialValues.inputType === OutputTypes.EMAIL && ())
+                        */}
+                        <Select
+                            className={classes.elementSelectMenu}
+                            color="primary"
+                            value={initialValues.selectedOutput || ''}
+                            onChange={event => updateSelectedOutput(event.target.value)}
+                        >
+                            {outputData.map((output) => {
+                                if (output.type === initialValues.inputType) {
+                                    return (
+                                        <MenuItem key={output.id} value={output.id}>
+                                            {output.title}
+                                        </MenuItem>
+                                    );
+                                }
+                                return false;
+                            })}
+                        </Select>
+
                     </div>
                     <div className="col-auto">
                         <button type="button" onClick={() => setSectionOpen(!sectionOpen)}>

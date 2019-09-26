@@ -14,7 +14,7 @@ const SampleOutputData = [
         'type': 'email',
         'visiblity': 'published',
         'lastUpdated': '(date here)',
-        'emailSubject': 'Email Subject Stuffs',
+        'title': 'Email Subject Stuffs',
         'emailAddress': 'info@info.com',
         'emailBody': '<p>tester</p>',
     },
@@ -23,7 +23,7 @@ const SampleOutputData = [
         'type': 'email',
         'visiblity': 'published',
         'lastUpdated': '(date here)',
-        'emailSubject': 'Email Subject HEre',
+        'title': 'Email Subject HEre',
         'emailAddress': 'info@info.com',
         'emailBody': '<p>tester</p>',
     },
@@ -43,7 +43,7 @@ const OutputDataProvider = (props) => {
 
     useEffect(() => {
         // nothing to do when this updates (yet)
-        console.log('remoteOutputData', remoteOutputData);
+        // console.log('remoteOutputData', remoteOutputData);
     }, [remoteOutputData]);
 
     const updateRemoteOutputData = (values) => {
