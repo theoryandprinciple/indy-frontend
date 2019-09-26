@@ -1,6 +1,6 @@
 import Colors from '../../../../../../styles/colors';
 
-const styles = theme => ({
+const styles = () => ({
     elementQuestionWrapper: {
         height: 40,
         width: 160,
