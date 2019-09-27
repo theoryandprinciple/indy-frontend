@@ -26,7 +26,7 @@ const App = () => {
                 <Route exact path="/login/forgot-password">
                     <ForgotPassword />
                 </Route>
-                <Route path="/login/reset-password">
+                <Route path="/reset-password/:resetToken">
                     <ResetPassword />
                 </Route>
             </Switch>

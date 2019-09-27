@@ -1,41 +1,79 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+
+import Input from '@material-ui/core/Input';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
 import { ForgotPass } from './wiring/auth-api';
 import ValidateEmail from '../../utils/valid-email';
 
-const ForgotPassword = () => {
+import Styles from './styles';
+
+const ForgotPassword = ({ classes }) => {
+    const [values, setValues] = React.useState({ email: '' });
     const [error, setError] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
 
-    /*
-   * We use uncontrolled inputs to simplify the example
-   */
-    const emailInput = useRef();
+    const handleChange = prop => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+    };
 
     const handleSubmit = () => {
         // Validatation
-        if (!ValidateEmail(emailInput.current.value)) {
+        if (!ValidateEmail(values.email)) {
             setError(true);
             setErrorMsg('Error: Email appears invalid');
             return;
         }
 
-        ForgotPass(emailInput.current.value)
+        ForgotPass(values.email)
             .then((data) => {
                 // we get here with or without errors
                 setError(data.error);
                 setErrorMsg(data.error ? data.errorMsg : null);
-                // TODO: add some success state
             });
     };
 
     return (
-        <div>
-            {error ? (<span>{errorMsg}</span>) : null}
-            {error === false ? (<span>success</span>) : null}
-            <input ref={emailInput} type="text" name="email" placeholder="email" />
-            <button type="button" onClick={handleSubmit}>Reset Password</button>
+        <div className={classes.wrapper}>
+            <div className={classes.formWrapper}>
+                <Typography
+                    variant="h3"
+                    style={{ fontSize: 24, paddingBottom: 45 }}
+                >
+                    Reset Password
+                </Typography>
+                {error ? (<span>{errorMsg}</span>) : null}
+                {error === false ? (<span>success, an email to complete the process has been sent.</span>) : null}
+                <div className={classes.inputWrapper}>
+                    <Input
+                        className={classes.formInput}
+                        placeholder="Email"
+                        fullWidth
+                        type="email"
+                        value={values.email}
+                        onChange={handleChange('email')}
+                    />
+                </div>
+                <div className={classes.inputWrapper}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                        fullWidth
+                    >
+                        Reset Password
+                    </Button>
+                </div>
+            </div>
         </div>
     );
 };
 
-export default ForgotPassword;
+ForgotPassword.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(Styles)(ForgotPassword);
