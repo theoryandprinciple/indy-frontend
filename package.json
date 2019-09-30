@@ -25,6 +25,7 @@
   ],
   "dependencies": {
     "@hapi/inert": "^5.2.1",
+    "@hapi/joi": "^16.1.4",
     "@material-ui/core": "^4.3.2",
     "@material-ui/icons": "^4.2.1",
     "@material-ui/styles": "^4.3.0",
