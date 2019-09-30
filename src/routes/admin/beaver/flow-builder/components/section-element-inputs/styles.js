@@ -2,8 +2,8 @@
 
 const styles = () => ({
     inputLabel: {
-        display: 'inline-block',
-        paddingLeft: 15,
+        // display: 'inline-block',
+        // paddingLeft: 15,
     },
     answerActions: {
         display: 'none',
@@ -13,7 +13,7 @@ const styles = () => ({
             cursor: 'pointer', // overrides the drag handle that is default
         },
         '&:hover $answerActions': {
-            display: 'block',
+            display: 'inline-flex',
         },
     },
     elementSelectMenu: {

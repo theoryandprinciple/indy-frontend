@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/AddCircle';
 import Radio from '@material-ui/core/Radio';
@@ -89,24 +91,39 @@ const QuestionAnswers = ({
             The radio element is really just a visual cue to the user, the important part of this element is the text TextField
             editing the text field updates the answer label that is presented in other areas of the app
         */
-        <div key={index} className={`row ${classes.answerRow}`}>
-            <div className="col">
+        <div key={index} className={`row no-gutters ${classes.answerRow}`}>
+            <div className="col-auto">
                 {inputType === 'radio'
                     && <Radio disabled name="answer-set" value={element.value} />
                 }
                 {inputType === 'checkbox'
                     && <Checkbox disabled name="answer-set" value={element.value} />
                 }
-                <TextField
+            </div>
+            <div className="col">
+                <Input
+                    fullWidth
                     placeholder="Answer Label..."
                     className={classes.inputLabel}
                     value={element.value}
                     onChange={handleContentUpdates('value', index)}
+                    endAdornment={(
+                        <InputAdornment position="end" className={classes.answerActions}>
+                            <IconButton
+                                aria-label="delete answer"
+                                onClick={handleContentUpdates('delete', index)}
+                            >
+                                <CloseIcon />
+                            </IconButton>
+                        </InputAdornment>
+                    )}
                 />
             </div>
-            <div className={`col-auto ${classes.answerActions}`}>
-                <button type="button" onClick={handleContentUpdates('delete', index)}><CloseIcon /></button>
-            </div>
+            {/*
+                <div className="col-1">
+                    <button type="button" onClick={handleContentUpdates('delete', index)} className={classes.answerActions}><CloseIcon /></button>
+                </div>
+            */}
         </div>
     );
 

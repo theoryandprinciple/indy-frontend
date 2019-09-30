@@ -25,7 +25,7 @@ const App = () => {
         <MuiThemeProvider theme={themer}>
             <Switch location={location}>
                 <PrivateRoute path="/admin" />
-                <Route exact path="/">
+                <Route path="/">
                     <PublicLayout />
                 </Route>
             </Switch>

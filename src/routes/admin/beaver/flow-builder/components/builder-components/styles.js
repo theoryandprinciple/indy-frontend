@@ -27,6 +27,7 @@ const styles = () => ({
         backgroundColor: 'white',
         cursor: 'move',
         color: 'black',
+        borderRadius: 5,
     },
     elementIconWrapper: {
         borderRadius: 5,
