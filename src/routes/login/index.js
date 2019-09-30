@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import Input from '@material-ui/core/Input';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
@@ -15,6 +14,7 @@ import { Login, Logout } from './wiring/auth-api';
 import ValidateEmail from '../../utils/valid-email';
 
 import Styles from './styles';
+import StyledInput from './styledComponents/input';
 
 const SignInForm = ({ classes }) => {
     const history = useHistory();
@@ -76,7 +76,7 @@ const SignInForm = ({ classes }) => {
                 {error ? (<span>{errorMsg}</span>) : null}
                 {error === false ? (<span>success</span>) : null}
                 <div className={classes.inputWrapper}>
-                    <Input
+                    <StyledInput
                         className={classes.formInput}
                         placeholder="Email"
                         fullWidth
@@ -86,7 +86,7 @@ const SignInForm = ({ classes }) => {
                     />
                 </div>
                 <div className={classes.inputWrapper}>
-                    <Input
+                    <StyledInput
                         className={classes.formInput}
                         placeholder="Password"
                         fullWidth

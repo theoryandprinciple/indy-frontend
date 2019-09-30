@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,6 +14,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { ResetPass } from './wiring/auth-api';
 import ValidateEmail from '../../utils/valid-email';
 import Styles from './styles';
+import StyledInput from './styledComponents/input';
 
 const ResetPassword = ({ classes }) => {
     const { resetToken } = useParams();
@@ -74,7 +74,7 @@ const ResetPassword = ({ classes }) => {
                 {error ? (<span>{errorMsg}</span>) : null}
                 {error === false ? (<span>success, proceed to login</span>) : null}
                 <div className={classes.inputWrapper}>
-                    <Input
+                    <StyledInput
                         className={classes.formInput}
                         placeholder="Email"
                         fullWidth
@@ -84,7 +84,7 @@ const ResetPassword = ({ classes }) => {
                     />
                 </div>
                 <div className={classes.inputWrapper}>
-                    <Input
+                    <StyledInput
                         className={classes.formInput}
                         placeholder="Password"
                         fullWidth
