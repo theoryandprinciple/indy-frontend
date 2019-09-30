@@ -10,7 +10,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Typography from '@material-ui/core/Typography';
 
 import { useAuthDataContext } from './wiring/auth-provider';
-import { Login, Logout } from './wiring/auth-api';
+import { Login } from './wiring/auth-api';
 
 import Styles from './styles';
 import StyledInput from './styledComponents/input';
@@ -18,7 +18,7 @@ import Validation from '../../utils/validationSchema';
 
 const SignInForm = ({ classes }) => {
     const history = useHistory();
-    const { onLogin, onLogout } = useAuthDataContext();
+    const { onLogin } = useAuthDataContext();
 
     const [error, setError] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -78,11 +78,6 @@ const SignInForm = ({ classes }) => {
                 // update the app's auth context regardless of success or error
                 onLogin(data);
             });
-    };
-    const handleLogout = () => {
-        // use the values contained in the Logout function
-        // pass those values to auth data context
-        onLogout(Logout());
     };
 
     return (

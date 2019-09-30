@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import { find } from 'lodash';
 import update from 'immutability-helper';
 import { useLocation, useHistory } from 'react-router-dom';
@@ -11,12 +9,11 @@ import GetParameterByName from '../../../../../../utils/get-param';
 import IdGenerator from '../../../wiring/unique-id-generator';
 
 import Header from '../header';
-import Styles from './styles';
 
 import EmailBuilder from './email';
 import ContentBuilder from './content';
 
-const OutputBuilderCreate = ({ classes }) => {
+const OutputBuilderCreate = () => {
     const { remoteOutputData, updateRemoteOutputData } = useOutputDataContext();
     const location = useLocation();
     const history = useHistory();
@@ -88,8 +85,4 @@ const OutputBuilderCreate = ({ classes }) => {
     );
 };
 
-OutputBuilderCreate.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(Styles)(OutputBuilderCreate);
+export default OutputBuilderCreate;
