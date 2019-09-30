@@ -1,5 +1,5 @@
 /* eslint quote-props: 0 */
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -12,8 +12,6 @@ import Styles from './styles';
 
 const SectionHeader = ({ classes }) => {
     const { localFlowData, updateRemoteFlowData } = useFlowDataContext();
-    const [error, setError] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
 
     const save = () => {
         SaveFlow(localFlowData);
@@ -27,8 +25,6 @@ const SectionHeader = ({ classes }) => {
                         <Typography variant="h3">Question Flow</Typography>
                     </div>
                     <div className="col align-items-center text-right">
-                        {error ? (<span>{errorMsg}</span>) : null}
-                        {error === false ? (<span>success</span>) : null}
                         <Button variant="outlined" color="primary" onClick={save} style={{ marginRight: 15 }}>
                             Save
                         </Button>

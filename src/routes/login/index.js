@@ -10,15 +10,15 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Typography from '@material-ui/core/Typography';
 
 import { useAuthDataContext } from './wiring/auth-provider';
-import { Login, Logout } from './wiring/auth-api';
-import ValidateEmail from '../../utils/valid-email';
+import { Login } from './wiring/auth-api';
 
 import Styles from './styles';
 import StyledInput from './styledComponents/input';
+import Validation from '../../utils/validationSchema';
 
 const SignInForm = ({ classes }) => {
     const history = useHistory();
-    const { onLogin, onLogout } = useAuthDataContext();
+    const { onLogin } = useAuthDataContext();
 
     const [error, setError] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -37,15 +37,31 @@ const SignInForm = ({ classes }) => {
     };
 
     const handleSubmit = () => {
+        // reset error states
+        setError(null);
+        setErrorMsg(null);
+        let errored = false;
+
         // Validatation
-        if (!ValidateEmail(values.email)) {
-            setError(true);
-            setErrorMsg('Error: Email appears invalid');
-            return;
-        }
-        if (values.password === '') {
-            setError(true);
+        // - validating just on field at a time, and offering feedback only on that field
+
+        const emailError = Validation.validate({ email: values.email }).error;
+        if (values.email === '') {
+            setErrorMsg('Email is required');
+            errored = true;
+        } else if (emailError) {
+            setErrorMsg('Email appears to invalid');
+            errored = true;
+            // joi can't handle custom error messages, so we still need to use offer our own
+            // setErrorMsg(emailError.message);
+        } else if (values.password === '') {
             setErrorMsg('Error: Password appears invalid');
+            errored = true;
+        }
+
+        // if we had a local error, stop the submission
+        if (errored) {
+            setError(true);
             return;
         }
 
@@ -62,11 +78,6 @@ const SignInForm = ({ classes }) => {
                 // update the app's auth context regardless of success or error
                 onLogin(data);
             });
-    };
-    const handleLogout = () => {
-        // use the values contained in the Logout function
-        // pass those values to auth data context
-        onLogout(Logout());
     };
 
     return (

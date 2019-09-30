@@ -12,7 +12,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import { ResetPass } from './wiring/auth-api';
-import ValidateEmail from '../../utils/valid-email';
+import Validation from '../../utils/validationSchema';
 import Styles from './styles';
 import StyledInput from './styledComponents/input';
 
@@ -27,18 +27,30 @@ const ResetPassword = ({ classes }) => {
     }, [resetToken]);
 
     const handleSubmit = () => {
+        // reset error states
+        setError(null);
+        setErrorMsg(null);
+        let errored = false;
+
         // Validatation
-        if (!ValidateEmail(values.email)) {
-            setError(true);
-            setErrorMsg('Error: Email appears invalid');
-            return;
-        }
-        if (values.password === '') {
+        const emailError = Validation.validate({ email: values.email }).error;
+        if (values.email === '') {
+            setErrorMsg('Email is required');
+            errored = true;
+        } else if (emailError) {
+            setErrorMsg('Email appears to invalid');
+            errored = true;
+        } else if (values.password === '') {
             setErrorMsg('Error: Password appears invalid');
-            return;
-        }
-        if (!resetToken) {
+            errored = true;
+        } else if (!resetToken) {
             setErrorMsg('Error: The URL you used to get here appears invalid');
+            errored = true;
+        }
+
+        // if we had a local error, stop the submission
+        if (errored) {
+            setError(true);
             return;
         }
 
@@ -47,6 +59,7 @@ const ResetPassword = ({ classes }) => {
             resetToken,
             newPassword: values.password,
         };
+
         ResetPass(currentFormValue)
             .then((data) => {
                 // we get here with or without errors
