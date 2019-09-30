@@ -11,20 +11,16 @@ import { useAuthDataContext } from './login/wiring/auth-provider';
 
 import themer from '../styles/material-theme';
 
-const PrivateRoute = ({ ...options }) => {
-    const { authData } = useAuthDataContext();
-
-    const FinalComponent = authData.isAuthenticated ? AdminLayout : Login;
-    return <Route {...options}><FinalComponent /></Route>;
-};
-
 const App = () => {
     const location = useLocation();
+    const { authData } = useAuthDataContext();
 
     return (
         <MuiThemeProvider theme={themer}>
             <Switch location={location}>
-                <PrivateRoute path="/admin" />
+                <Route path="/admin">
+                    {authData.isAuthenticated ? <AdminLayout /> : <Login />}
+                </Route>
                 <Route path="/">
                     <PublicLayout />
                 </Route>
