@@ -2,27 +2,20 @@ import WebClient from '../../../utils/web-client';
 
 export const Login = (FormValues) => {
     const { email, password } = FormValues;
-    let token;
 
     return WebClient.post(
         '/login',
         { email, password },
         { responseType: 'text' },
     )
-        .then(({ data }) => {
-            ({ token } = data); // this is dumb syntax
-            return WebClient.get('/user', {
-                headers: { authorization: token },
-            });
-        })
         .then(({ data }) => ({
             isAuthenticated: true,
             credentials: {
-                token,
-                role: data.role,
+                token: data.token,
+                role: data.user.role,
             },
             user: {
-                ...data,
+                ...data.user,
             },
             error: false,
             errorMsg: '',
