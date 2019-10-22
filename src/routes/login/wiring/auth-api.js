@@ -8,18 +8,23 @@ export const Login = (FormValues) => {
         { email, password },
         { responseType: 'text' },
     )
-        .then(({ data }) => ({
-            isAuthenticated: true,
-            credentials: {
-                token: data.token,
-                role: data.user.role,
-            },
-            user: {
-                ...data.user,
-            },
-            error: false,
-            errorMsg: '',
-        }))
+        .then(({ data }) => {
+            // update auth token
+            WebClient.updateAuth(data.token);
+
+            return ({
+                isAuthenticated: true,
+                credentials: {
+                    token: data.token,
+                    role: data.user.role,
+                },
+                user: {
+                    ...data.user,
+                },
+                error: false,
+                errorMsg: '',
+            });
+        })
         .catch((error) => {
             let errorMsg = 'Error';
             if (error.response && (error.response.status === 401)) {
