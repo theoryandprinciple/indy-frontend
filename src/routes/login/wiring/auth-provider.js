@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 
 import LocalStorageAvailable from '../../../utils/check-local-storage';
+import WebClient from '../../../utils/web-client';
 
 const initialAuthData = {
     isAuthenticated: false,
@@ -34,6 +35,9 @@ const AuthDataProvider = (props) => {
 
     useEffect(() => {
         localStorage.setItem('auth', JSON.stringify(authData));
+        if (authData.credentials && authData.credentials.token) {
+            WebClient.updateAuth(authData.credentials.token);
+        }
     }, [authData]);
 
     const onLogout = newAuthData => setAuthData(newAuthData);
