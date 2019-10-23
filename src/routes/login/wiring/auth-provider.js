@@ -26,6 +26,10 @@ const AuthDataProvider = (props) => {
             const checkLocalKey = key => localStorage.getItem(key) || null;
             const localAuth = checkLocalKey('auth');
             if (localAuth) {
+                // update token here to prevent race conditions from components that rely on authData
+                if (localAuth.credentials && localAuth.credentials.token) {
+                    WebClient.updateAuth(localAuth.credentials.token);
+                }
                 // if there is data stored, internalize it
                 setAuthData(JSON.parse(localAuth));
             }
