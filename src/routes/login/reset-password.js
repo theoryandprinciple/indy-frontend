@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 
@@ -21,10 +21,6 @@ const ResetPassword = ({ classes }) => {
     const [values, setValues] = React.useState({ email: '', password: '' });
     const [error, setError] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-
-    useEffect(() => {
-        setValues({ ...values, resetToken });
-    }, [resetToken]);
 
     const handleSubmit = () => {
         // reset error states
