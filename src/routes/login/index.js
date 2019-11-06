@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -9,20 +10,28 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Typography from '@material-ui/core/Typography';
 
-import { useAuthDataContext } from './wiring/auth-provider';
-import { Login } from './wiring/auth-api';
+import { Login } from '../../actions/auth';
 
 import Styles from './styles';
 import StyledInput from './styledComponents/input';
 import Validation from '../../utils/validationSchema';
 
 const SignInForm = ({ classes }) => {
+    const loginError = useSelector(state => state.auth.error);
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    const dispatch = useDispatch();
     const history = useHistory();
-    const { onLogin } = useAuthDataContext();
 
     const [error, setError] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [values, setValues] = React.useState({ password: '', email: '', showPassword: false });
+
+    useEffect(() => {
+        setError(loginError);
+        if (loginError) {
+            setErrorMsg('Invalid email or password.');
+        }
+    }, [loginError]);
 
     const handleChange = prop => (event) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -37,14 +46,10 @@ const SignInForm = ({ classes }) => {
     };
 
     const handleSubmit = () => {
-        // reset error states
-        setError(null);
-        setErrorMsg(null);
         let errored = false;
 
         // Validatation
         // - validating just on field at a time, and offering feedback only on that field
-
         const emailError = Validation.validate({ email: values.email }).error;
         if (values.email === '') {
             setErrorMsg('Email is required');
@@ -70,14 +75,7 @@ const SignInForm = ({ classes }) => {
             password: values.password,
         };
 
-        Login(currentFormValue)
-            .then((data) => {
-                // we get here with or without errors
-                setError(data.error);
-                setErrorMsg(data.error ? data.errorMsg : null);
-                // update the app's auth context regardless of success or error
-                onLogin(data);
-            });
+        dispatch(Login(currentFormValue));
     };
 
     return (
@@ -85,7 +83,7 @@ const SignInForm = ({ classes }) => {
             <div className={classes.formWrapper}>
                 <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Sign In</Typography>
                 {error ? (<span>{errorMsg}</span>) : null}
-                {error === false ? (<span>success</span>) : null}
+                {isAuthenticated ? (<span>success</span>) : null}
                 <div className={classes.inputWrapper}>
                     <StyledInput
                         className={classes.formInput}
