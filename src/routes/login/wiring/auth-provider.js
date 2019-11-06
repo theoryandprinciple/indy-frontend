@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 
 import LocalStorageAvailable from '../../../utils/check-local-storage';
+import WebClient from '../../../utils/web-client';
 
 const initialAuthData = {
     isAuthenticated: false,
@@ -25,6 +26,10 @@ const AuthDataProvider = (props) => {
             const checkLocalKey = key => localStorage.getItem(key) || null;
             const localAuth = checkLocalKey('auth');
             if (localAuth) {
+                // update token here to prevent race conditions from components that rely on authData
+                if (localAuth.credentials && localAuth.credentials.token) {
+                    WebClient.updateAuth(localAuth.credentials.token);
+                }
                 // if there is data stored, internalize it
                 setAuthData(JSON.parse(localAuth));
             }
@@ -34,6 +39,9 @@ const AuthDataProvider = (props) => {
 
     useEffect(() => {
         localStorage.setItem('auth', JSON.stringify(authData));
+        if (authData.credentials && authData.credentials.token) {
+            WebClient.updateAuth(authData.credentials.token);
+        }
     }, [authData]);
 
     const onLogout = newAuthData => setAuthData(newAuthData);

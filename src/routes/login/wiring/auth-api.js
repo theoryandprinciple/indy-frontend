@@ -2,7 +2,6 @@ import WebClient from '../../../utils/web-client';
 
 export const Login = (FormValues) => {
     const { email, password } = FormValues;
-    let token;
 
     return WebClient.post(
         '/login',
@@ -10,23 +9,22 @@ export const Login = (FormValues) => {
         { responseType: 'text' },
     )
         .then(({ data }) => {
-            ({ token } = data); // this is dumb syntax
-            return WebClient.get('/user', {
-                headers: { authorization: token },
+            // update auth token
+            WebClient.updateAuth(data.token);
+
+            return ({
+                isAuthenticated: true,
+                credentials: {
+                    token: data.token,
+                    role: data.user.role,
+                },
+                user: {
+                    ...data.user,
+                },
+                error: false,
+                errorMsg: '',
             });
         })
-        .then(({ data }) => ({
-            isAuthenticated: true,
-            credentials: {
-                token,
-                role: data.role,
-            },
-            user: {
-                ...data,
-            },
-            error: false,
-            errorMsg: '',
-        }))
         .catch((error) => {
             let errorMsg = 'Error';
             if (error.response && (error.response.status === 401)) {
