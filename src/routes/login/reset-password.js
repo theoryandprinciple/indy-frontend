@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
-
+import { useSelector, useDispatch } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
@@ -11,16 +11,28 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-import { ResetPass } from './wiring/auth-api';
+import { ResetPass } from '../../actions/auth';
 import Validation from '../../utils/validationSchema';
 import Styles from './styles';
 import StyledInput from './styledComponents/input';
 
 const ResetPassword = ({ classes }) => {
+    const resetpassError = useSelector(state => state.auth.resetPass.error);
+    const resetpassErrorMsg = useSelector(state => state.auth.resetPass.errorMsg);
+    const resetpassCompleted = useSelector(state => state.auth.resetPass.completed);
+    const dispatch = useDispatch();
+
     const { resetToken } = useParams();
     const [values, setValues] = React.useState({ email: '', password: '' });
     const [error, setError] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
+
+    useEffect(() => {
+        setError(resetpassError);
+        if (resetpassError) {
+            setErrorMsg(resetpassErrorMsg);
+        }
+    }, [resetpassError]);
 
     const handleSubmit = () => {
         // reset error states
@@ -56,13 +68,7 @@ const ResetPassword = ({ classes }) => {
             newPassword: values.password,
         };
 
-        ResetPass(currentFormValue)
-            .then((data) => {
-                // we get here with or without errors
-                setError(data.error);
-                setErrorMsg(data.error ? data.errorMsg : null);
-                // TODO: add some success state
-            });
+        dispatch(ResetPass(currentFormValue));
     };
 
     const handleChange = prop => (event) => {
@@ -81,7 +87,7 @@ const ResetPassword = ({ classes }) => {
             <div className={classes.formWrapper}>
                 <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Reset Password</Typography>
                 {error ? (<span>{errorMsg}</span>) : null}
-                {error === false ? (<span>success, proceed to login</span>) : null}
+                {resetpassCompleted ? (<span>success, proceed to login</span>) : null}
                 <div className={classes.inputWrapper}>
                     <StyledInput
                         className={classes.formInput}

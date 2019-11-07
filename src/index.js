@@ -15,8 +15,6 @@ import storage from 'redux-persist/lib/storage';
 
 import reducers from './reducers';
 
-import AuthDataProvider from './routes/login/wiring/auth-provider';
-
 import browserHistory from './wiring/history';
 import App from './routes';
 
@@ -60,9 +58,7 @@ ReactDOM.render(
             onBeforeLift={onBeforeLift}
         >
             <Router history={history}>
-                <AuthDataProvider>
-                    <App />
-                </AuthDataProvider>
+                <App />
             </Router>
         </PersistGate>
     </Provider>,

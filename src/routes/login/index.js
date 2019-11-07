@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -18,6 +19,7 @@ import Validation from '../../utils/validationSchema';
 
 const SignInForm = ({ classes }) => {
     const loginError = useSelector(state => state.auth.error);
+    const loginErrorMsg = useSelector(state => state.auth.errorMsg);
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -29,7 +31,7 @@ const SignInForm = ({ classes }) => {
     useEffect(() => {
         setError(loginError);
         if (loginError) {
-            setErrorMsg('Invalid email or password.');
+            setErrorMsg(loginErrorMsg);
         }
     }, [loginError]);
 

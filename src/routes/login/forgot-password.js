@@ -1,22 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-import { ForgotPass } from './wiring/auth-api';
+import { ForgotPass } from '../../actions/auth';
 import Validation from '../../utils/validationSchema';
 
 import Styles from './styles';
 import StyledInput from './styledComponents/input';
 
 const ForgotPassword = ({ classes }) => {
+    const forgotpassError = useSelector(state => state.auth.forgotPass.error);
+    const forgotpassErrorMsg = useSelector(state => state.auth.forgotPass.errorMsg);
+    const forgotpassCompleted = useSelector(state => state.auth.forgotPass.completed);
+    const dispatch = useDispatch();
+
     const history = useHistory();
     const [values, setValues] = React.useState({ email: '' });
     const [error, setError] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
+
+    useEffect(() => {
+        setError(forgotpassError);
+        if (forgotpassError) {
+            setErrorMsg(forgotpassErrorMsg);
+        }
+    }, [forgotpassError]);
 
     const handleChange = prop => (event) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -44,12 +57,7 @@ const ForgotPassword = ({ classes }) => {
             return;
         }
 
-        ForgotPass(values.email)
-            .then((data) => {
-                // we get here with or without errors
-                setError(data.error);
-                setErrorMsg(data.error ? data.errorMsg : null);
-            });
+        dispatch(ForgotPass(values.email));
     };
 
     return (
@@ -62,7 +70,7 @@ const ForgotPassword = ({ classes }) => {
                     Reset Password
                 </Typography>
                 {error ? (<span>{errorMsg}</span>) : null}
-                {error === false ? (<span>success, an email to complete the process has been sent.</span>) : null}
+                {forgotpassCompleted ? (<span>success, an email to complete the process has been sent.</span>) : null}
                 <div className={classes.inputWrapper}>
                     <StyledInput
                         className={classes.formInput}
