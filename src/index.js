@@ -13,6 +13,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
 
+import { ClearErrors } from './actions/auth';
 import reducers from './reducers';
 
 import browserHistory from './wiring/history';
@@ -44,10 +45,9 @@ const persistedStore = persistStore(store);
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store);
 
-// import { clearErrors } from './actions/auth';
 const onBeforeLift = () => {
-    // clear login/logout errors that may be in local state
-    // store.dispatch(clearErrors());
+    // clear login/logout errors that may be in local storage
+    store.dispatch(ClearErrors());
 };
 
 ReactDOM.render(

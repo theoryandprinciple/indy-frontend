@@ -1,6 +1,10 @@
 import WebClient from '../utils/web-client';
 import AuthTypes from '../action-types/auth';
 
+export const ClearErrors = () => ({
+    type: AuthTypes.INITIALIZE_APP,
+});
+
 const LoginBegin = payload => ({
     type: AuthTypes.LOGIN_BEGIN,
     payload,

@@ -11,5 +11,6 @@ module.exports = KeyMirror({
     FORGOT_PASSWORD_BEGIN: true,
     FORGOT_PASSWORD_SUCCCES: true,
     FORGOT_PASSWORD_ERROR: true,
+    INITIALIZE_APP: true,
     NO_TOKEN: true,
 });

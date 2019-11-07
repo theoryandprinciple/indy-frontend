@@ -27,6 +27,23 @@ const AuthReducer = (stateParam, action) => {
     const { payload, type } = action;
 
     switch (type) {
+    case AuthTypes.INITIALIZE_APP:
+
+        return {
+            ...state,
+            error: false,
+            errorMsg: '',
+            resetPass: {
+                error: false,
+                errorMsg: '',
+                completed: false,
+            },
+            forgotPass: {
+                error: false,
+                errorMsg: '',
+                completed: false,
+            },
+        };
     case AuthTypes.LOGIN_BEGIN:
     case AuthTypes.LOGIN_SUCCCES:
     case AuthTypes.LOGIN_ERROR:
