@@ -10,7 +10,7 @@ const LoginBegin = payload => ({
     payload,
 });
 const LoginSuccess = payload => ({
-    type: AuthTypes.LOGIN_SUCCCES,
+    type: AuthTypes.LOGIN_SUCCESS,
     payload,
 });
 const LoginError = payload => ({
@@ -71,7 +71,7 @@ const ForgotPassBegin = payload => ({
     payload,
 });
 const ForgotPassSuccess = payload => ({
-    type: AuthTypes.FORGOT_PASSWORD_SUCCCES,
+    type: AuthTypes.FORGOT_PASSWORD_SUCCESS,
     payload,
 });
 const ForgotPassError = payload => ({
@@ -104,7 +104,7 @@ const ResetPassBegin = payload => ({
     payload,
 });
 const ResetPassSuccess = payload => ({
-    type: AuthTypes.RESET_PASSWORD_SUCCCES,
+    type: AuthTypes.RESET_PASSWORD_SUCCESS,
     payload,
 });
 const ResetPassError = payload => ({

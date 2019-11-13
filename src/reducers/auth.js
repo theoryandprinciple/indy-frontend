@@ -45,7 +45,7 @@ const AuthReducer = (stateParam, action) => {
             },
         };
     case AuthTypes.LOGIN_BEGIN:
-    case AuthTypes.LOGIN_SUCCCES:
+    case AuthTypes.LOGIN_SUCCESS:
     case AuthTypes.LOGIN_ERROR:
     case AuthTypes.LOGOUT:
 
@@ -54,7 +54,7 @@ const AuthReducer = (stateParam, action) => {
             ...payload,
         };
     case AuthTypes.RESET_PASSWORD_BEGIN:
-    case AuthTypes.RESET_PASSWORD_SUCCCES:
+    case AuthTypes.RESET_PASSWORD_SUCCESS:
     case AuthTypes.RESET_PASSWORD_ERROR:
         return {
             ...state,
@@ -63,7 +63,7 @@ const AuthReducer = (stateParam, action) => {
             },
         };
     case AuthTypes.FORGOT_PASSWORD_BEGIN:
-    case AuthTypes.FORGOT_PASSWORD_SUCCCES:
+    case AuthTypes.FORGOT_PASSWORD_SUCCESS:
     case AuthTypes.FORGOT_PASSWORD_ERROR:
         return {
             ...state,
