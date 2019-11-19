@@ -19,6 +19,8 @@ import reducers from './reducers';
 import browserHistory from './wiring/history';
 import App from './routes';
 
+import MaintainAuthToken from './utils/maintain-auth-token';
+
 import 'sanitize.css/sanitize.css';
 import './index.css';
 
@@ -48,6 +50,8 @@ const history = syncHistoryWithStore(browserHistory, store);
 const onBeforeLift = () => {
     // clear login/logout errors that may be in local storage
     store.dispatch(ClearErrors());
+    // if loading from local storage, make sure our auth token is setup
+    MaintainAuthToken(store);
 };
 
 ReactDOM.render(
