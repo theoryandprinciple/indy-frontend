@@ -70,7 +70,7 @@ const ForgotPassword = ({ classes }) => {
                     Reset Password
                 </Typography>
                 {error ? (<span>{errorMsg}</span>) : null}
-                {forgotpassCompleted ? (<span>success, an email to complete the process has been sent.</span>) : null}
+                {(forgotpassCompleted && !error) ? (<span>success, an email to complete the process has been sent.</span>) : null}
                 <div className={classes.inputWrapper}>
                     <StyledInput
                         className={classes.formInput}
