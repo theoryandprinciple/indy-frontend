@@ -4,7 +4,7 @@ const internals = {
     host:
         process.env.API_HOST
         || process.env.REACT_APP_API_HOST
-        || '//user.theoryandprinciple.com/',
+        || 'https://user.theoryandprinciple.com/',
     prefix: process.env.API_PREFIX || 'api',
     getApiBase: () => {
         const { host, prefix } = internals;

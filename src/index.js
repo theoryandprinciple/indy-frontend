@@ -19,7 +19,8 @@ import reducers from './reducers';
 import browserHistory from './wiring/history';
 import App from './routes';
 
-import MaintainAuthToken from './utils/maintain-auth-token';
+import Initializers from './initializers';
+import InitializerAdmin from './initializers/admin';
 
 import 'sanitize.css/sanitize.css';
 import './index.css';
@@ -48,10 +49,18 @@ const persistedStore = persistStore(store);
 const history = syncHistoryWithStore(browserHistory, store);
 
 const onBeforeLift = () => {
+    // Run initializers... anything that will need to use or subscribe to the store
+    Initializers(store);
+
     // clear login/logout errors that may be in local storage
     store.dispatch(ClearErrors());
-    // if loading from local storage, make sure our auth token is setup
-    MaintainAuthToken(store);
+
+    if (store.getState().auth.isAuthenticated) {
+        // load role specific content
+        if (store.getState().auth.credentials.role === 'admin') {
+            InitializerAdmin(store);
+        }
+    }
 };
 
 ReactDOM.render(
