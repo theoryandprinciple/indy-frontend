@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, {
+    useState,
+    useRef,
+    useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
@@ -15,6 +19,8 @@ import { Login } from './wiring/auth-api';
 import Styles from './styles';
 import StyledInput from './styledComponents/input';
 import Validation from '../../utils/validationSchema';
+
+import useEventListener from '../../utils/use-event-listener';
 
 const SignInForm = ({ classes }) => {
     const history = useHistory();
@@ -80,6 +86,20 @@ const SignInForm = ({ classes }) => {
             });
     };
 
+    const passwordInputRef = useRef(null);
+    const eventHandler = useCallback((event) => {
+        // check to see if we are pressing the enter key
+        if (event.keyCode === 13) {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+            handleSubmit();
+        }
+    }, [handleSubmit]);
+
+    useEventListener('keyup', eventHandler, passwordInputRef.current);
+
+
     return (
         <div className={classes.wrapper}>
             <div className={classes.formWrapper}>
@@ -98,6 +118,7 @@ const SignInForm = ({ classes }) => {
                 </div>
                 <div className={classes.inputWrapper}>
                     <StyledInput
+                        ref={passwordInputRef}
                         className={classes.formInput}
                         placeholder="Password"
                         fullWidth
