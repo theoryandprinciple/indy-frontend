@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 import Output from './components/starter-elements/element-output';
 import Question from './components/starter-elements/element-question';
@@ -24,10 +25,10 @@ const Flow = ({ classes }) => (
                         <div style={{ position: 'sticky', top: 0 }}>
                             <div className="row">
                                 <div className="col">
-                                    <h5>SECTION BREAK</h5>
+                                    <Typography variant="h2">SECTION BREAK</Typography>
                                 </div>
                             </div>
-                            <div className="row">
+                            <div className={`row ${classes.questionTypeBlock}`}>
                                 <div className="col-6">
                                     <Section text="New Section" />
                                 </div>
@@ -36,11 +37,11 @@ const Flow = ({ classes }) => (
 
                             <div className="row">
                                 <div className="col">
-                                    <h5>QUESTION FIELDS</h5>
+                                    <Typography variant="h2">QUESTION FIELDS</Typography>
                                 </div>
                             </div>
 
-                            <div className="row">
+                            <div className={`row ${classes.questionTypeBlock}`}>
                                 <div className="col-6">
                                     <Question text="Radio Buttons" inputType={QuestionTypes.RADIO} />
                                     <Question text="Checkboxes" inputType={QuestionTypes.CHECKBOX} />
@@ -60,10 +61,10 @@ const Flow = ({ classes }) => (
 
                             <div className="row">
                                 <div className="col">
-                                    <h5>OUTPUT</h5>
+                                    <Typography variant="h2">OUTPUT</Typography>
                                 </div>
                             </div>
-                            <div className="row">
+                            <div className={`row ${classes.questionTypeBlock}`}>
                                 <div className="col-6">
                                     <Output text="Email Generation" inputType={OutputTypes.EMAIL} />
                                 </div>

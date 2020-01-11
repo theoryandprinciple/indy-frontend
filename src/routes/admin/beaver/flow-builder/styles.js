@@ -7,5 +7,8 @@ const styles = theme => ({
             marginTop: 30,
         },
     },
+    questionTypeBlock: {
+        paddingBottom: 15,
+    },
 });
 export default styles;

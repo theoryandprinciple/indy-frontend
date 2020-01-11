@@ -22,15 +22,20 @@ const SectionHeader = ({ classes }) => {
             <div className="container" style={{ height: '100%' }}>
                 <div className="row align-items-center" style={{ height: '100%' }}>
                     <div className="col align-items-center">
-                        <Typography variant="h3">Question Flow</Typography>
+                        <Typography variant="h1">Question Flow</Typography>
                     </div>
                     <div className="col align-items-center text-right">
-                        <Button variant="outlined" color="primary" onClick={save} style={{ marginRight: 15 }}>
+                        <Button variant="outlined" color="primary" style={{ marginRight: 15 }}>
+                            Preview
+                        </Button>
+                        <Button variant="contained" color="primary" onClick={save} disableElevation>
                             Save
                         </Button>
-                        <Button variant="contained" color="primary" onClick={updateRemoteFlowData}>
-                            Load Stuff
-                        </Button>
+                        {/*
+                            <Button variant="contained" color="primary" onClick={updateRemoteFlowData}>
+                                Load Stuff
+                            </Button>
+                        */}
                     </div>
                 </div>
             </div>

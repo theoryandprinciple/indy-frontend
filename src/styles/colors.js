@@ -5,4 +5,5 @@ export default {
     pageBackground: '#F2F2F2',
     blue: '#00A0FF',
     orange: '#F36452',
+    brown: '#333333',
 };
