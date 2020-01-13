@@ -12,6 +12,7 @@ import SectionWrapper from './components/builder-components/section-wrapper';
 import Header from './components/header';
 import QuestionTypes from './wiring/question-types';
 import OutputTypes from './wiring/output-types';
+import ElementTypes from './wiring/element-types';
 
 import Styles from './styles';
 
@@ -30,7 +31,7 @@ const Flow = ({ classes }) => (
                             </div>
                             <div className={`row ${classes.questionTypeBlock}`}>
                                 <div className="col-6">
-                                    <Section text="New Section" />
+                                    <Section text="New Section" inputType={ElementTypes.SECTION} />
                                 </div>
                                 <div className="col-6" />
                             </div>

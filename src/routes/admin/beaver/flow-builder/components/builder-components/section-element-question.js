@@ -7,6 +7,7 @@ import React, {
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import InputBase from '@material-ui/core/InputBase';
 import TextField from '@material-ui/core/TextField';
 
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -179,14 +180,14 @@ const SectionElementQuestion = ({
             <div className="col">
                 <div className={`row ${classes.elementHeader}`}>
                     <div className="col ml-3">
-                        <TextField
+                        <InputBase
                             placeholder="Question Title..."
                             className={classes.inputLabel}
                             value={titleValue}
                             onChange={event => setTitleValue(event.target.value)}
                         />
                         {(initialValues.settings && initialValues.settings.enableDescription) && (
-                            <TextField
+                            <InputBase
                                 placeholder="Question Description..."
                                 fullWidth
                                 multiline

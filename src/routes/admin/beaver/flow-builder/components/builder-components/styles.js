@@ -21,13 +21,13 @@ const styles = () => ({
     // Section Element
     sectionElementWrapper: {
         width: '100%',
-        border: '1px dashed gray',
         padding: 15,
         marginBottom: 30,
         backgroundColor: 'white',
         cursor: 'move',
         color: 'black',
         borderRadius: 5,
+        boxShadow: '0 1px 3px 0 rgba(0,0,0,0.1)',
     },
     elementIconWrapper: {
         borderRadius: 5,
@@ -38,8 +38,7 @@ const styles = () => ({
         justifyContent: 'center',
         alignItems: 'center',
         '& svg': {
-            height: 20,
-            width: 20,
+            height: 14,
         },
     },
     elementQuestionIcon: {

@@ -25,10 +25,10 @@ const SectionHeader = ({ classes }) => {
                         <Typography variant="h1">Question Flow</Typography>
                     </div>
                     <div className="col align-items-center text-right">
-                        <Button variant="outlined" color="primary" style={{ marginRight: 15 }}>
+                        <Button variant="outlined" color="primary" style={{ marginRight: 15, height: 42, width: 100 }}>
                             Preview
                         </Button>
-                        <Button variant="contained" color="primary" onClick={save} disableElevation>
+                        <Button variant="contained" color="primary" onClick={save} disableElevation style={{ height: 42, width: 100 }}>
                             Save
                         </Button>
                         {/*

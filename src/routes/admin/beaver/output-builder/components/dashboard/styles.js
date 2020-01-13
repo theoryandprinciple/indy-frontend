@@ -38,8 +38,7 @@ const styles = theme => ({
         justifyContent: 'center',
         alignItems: 'center',
         '& svg': {
-            height: 20,
-            width: 20,
+            height: 14,
         },
     },
     elementOutputIcon: {

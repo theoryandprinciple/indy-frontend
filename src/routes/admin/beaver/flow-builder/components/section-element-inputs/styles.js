@@ -4,6 +4,19 @@ const styles = () => ({
     inputLabel: {
         // display: 'inline-block',
         // paddingLeft: 15,
+        fontSize: 13,
+        fontFamily: 'ibm-plex-sans, sans-serif',
+        fontWeight: 400,
+        fontStyle: 'normal',
+    },
+    inputUnderline: {
+        '&:before': {
+            borderBottom: 0,
+        },
+    },
+    inputLabelFocused: {
+        fontWeight: 700,
+        fontStyle: 'bold',
     },
     answerActions: {
         display: 'none',

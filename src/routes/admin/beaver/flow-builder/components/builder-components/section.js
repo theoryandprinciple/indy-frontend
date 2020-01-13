@@ -9,7 +9,7 @@ import { useDrag, useDrop } from 'react-dnd';
 import update from 'immutability-helper';
 import { cloneDeep } from 'lodash';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import InputBase from '@material-ui/core/InputBase';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -280,10 +280,10 @@ const Section = ({
                 </div>
             </div>
 
-            <div className="row no-gutters" style={{ padding: '15px 30px' }}>
+            <div className="row no-gutters align-items-center" style={{ padding: '15px 30px' }}>
                 <div className="col">
-                    <TextField
-                        placeholder="Question Title..."
+                    <InputBase
+                        placeholder="Section Title..."
                         className={classes.inputLabel}
                         value={titleValue}
                         onChange={event => setTitleValue(event.target.value)}
