@@ -1,5 +1,5 @@
-// import { GetIntakes } from '../actions/intakes';
+import { CheckToken } from '../actions/auth';
 
 export default (store) => {
-    // store.dispatch(GetIntakes());
+    store.dispatch(CheckToken());
 };

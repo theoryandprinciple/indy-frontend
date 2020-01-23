@@ -1,6 +1,9 @@
 const KeyMirror = require('keymirror');
 
 module.exports = KeyMirror({
+    CHECK_TOKEN_BEGIN: true,
+    CHECK_TOKEN_SUCCESS: true,
+    CHECK_TOKEN_ERROR: true,
     LOGIN_BEGIN: true,
     LOGIN_SUCCESS: true,
     LOGIN_ERROR: true,

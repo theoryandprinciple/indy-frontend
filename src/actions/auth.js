@@ -137,3 +137,25 @@ export const ResetPass = formValues => (dispatch) => {
         });
     return resetpassword;
 };
+
+const CheckTokenBegin = () => ({
+    type: AuthTypes.CHECK_TOKEN_BEGIN,
+});
+const CheckTokenSuccess = () => ({
+    type: AuthTypes.CHECK_TOKEN_SUCCESS,
+});
+const CheckTokenError = () => ({
+    type: AuthTypes.CHECK_TOKEN_ERROR,
+});
+
+export const CheckToken = () => (dispatch) => {
+    dispatch(CheckTokenBegin());
+    const checkToken = WebClient.get('/users/authenticated');
+
+    checkToken
+        .then(() => dispatch(CheckTokenSuccess()))
+        .catch(() => {
+            dispatch(CheckTokenError());
+            dispatch(Logout());
+        });
+};
