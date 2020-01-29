@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 import Output from './components/starter-elements/element-output';
 import Question from './components/starter-elements/element-question';
@@ -11,6 +12,7 @@ import SectionWrapper from './components/builder-components/section-wrapper';
 import Header from './components/header';
 import QuestionTypes from './wiring/question-types';
 import OutputTypes from './wiring/output-types';
+import ElementTypes from './wiring/element-types';
 
 import Styles from './styles';
 
@@ -21,56 +23,57 @@ const Flow = ({ classes }) => (
             <DndProvider backend={HTML5Backend}>
                 <div className="row">
                     <div className="col-auto">
-                        <div className="row">
-                            <div className="col">
-                                <h5>SECTION BREAK</h5>
+                        <div style={{ position: 'sticky', top: 0 }}>
+                            <div className="row">
+                                <div className="col">
+                                    <Typography variant="h2">SECTION BREAK</Typography>
+                                </div>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-6">
-                                <Section text="New Section" />
+                            <div className={`row ${classes.questionTypeBlock}`}>
+                                <div className="col-6">
+                                    <Section text="New Section" inputType={ElementTypes.SECTION} />
+                                </div>
+                                <div className="col-6" />
                             </div>
-                            <div className="col-6" />
-                        </div>
 
-                        <div className="row">
-                            <div className="col">
-                                <h5>QUESTION FIELDS</h5>
+                            <div className="row">
+                                <div className="col">
+                                    <Typography variant="h2">QUESTION FIELDS</Typography>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="row">
-                            <div className="col-6">
-                                <Question text="Radio Buttons" inputType={QuestionTypes.RADIO} />
-                                <Question text="Checkboxes" inputType={QuestionTypes.CHECKBOX} />
-                                <Question text="Short Text" inputType={QuestionTypes.SHORT_TEXT} />
+                            <div className={`row ${classes.questionTypeBlock}`}>
+                                <div className="col-6">
+                                    <Question text="Radio Buttons" inputType={QuestionTypes.RADIO} />
+                                    <Question text="Checkboxes" inputType={QuestionTypes.CHECKBOX} />
+                                    <Question text="Short Text" inputType={QuestionTypes.SHORT_TEXT} />
+                                </div>
+                                <div className="col-6">
+                                    <Question text="Long Text" inputType={QuestionTypes.LONG_TEXT} />
+                                    <Question text="Number" inputType={QuestionTypes.NUMBER} />
+                                    {/* REMOVED FOR MVP
+                                    <Question text="Date" inputType={QuestionTypes.DATE} />
+                                    <Question text="File Uploader" inputType={QuestionTypes.FILE_UPLOAD} />
+                                    <Question text="Jurisdiction" inputType={QuestionTypes.JURISDICTION} />
+                                    <Question text="Legal Disclaimer" inputType={QuestionTypes.LEGAL_DISCLAIMER} />
+                                    */}
+                                </div>
                             </div>
-                            <div className="col-6">
-                                <Question text="Long Text" inputType={QuestionTypes.LONG_TEXT} />
-                                <Question text="Number" inputType={QuestionTypes.NUMBER} />
-                                {/* REMOVED FOR MVP
-                                <Question text="Date" inputType={QuestionTypes.DATE} />
-                                <Question text="File Uploader" inputType={QuestionTypes.FILE_UPLOAD} />
-                                <Question text="Jurisdiction" inputType={QuestionTypes.JURISDICTION} />
-                                <Question text="Legal Disclaimer" inputType={QuestionTypes.LEGAL_DISCLAIMER} />
-                                */}
-                            </div>
-                        </div>
 
-                        <div className="row">
-                            <div className="col">
-                                <h5>OUTPUT</h5>
+                            <div className="row">
+                                <div className="col">
+                                    <Typography variant="h2">OUTPUT</Typography>
+                                </div>
+                            </div>
+                            <div className={`row ${classes.questionTypeBlock}`}>
+                                <div className="col-6">
+                                    <Output text="Email Generation" inputType={OutputTypes.EMAIL} />
+                                </div>
+                                <div className="col-6">
+                                    <Output text="Content" inputType={OutputTypes.CONTENT} />
+                                </div>
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-6">
-                                <Output text="Email Generation" inputType={OutputTypes.EMAIL} />
-                            </div>
-                            <div className="col-6">
-                                <Output text="Content" inputType={OutputTypes.CONTENT} />
-                            </div>
-                        </div>
-
                     </div>
                     <div className="col">
                         <SectionWrapper />
