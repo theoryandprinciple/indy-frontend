@@ -20,8 +20,7 @@ const styles = () => ({
         justifyContent: 'center',
         alignItems: 'center',
         '& svg': {
-            height: 20,
-            width: 20,
+            height: 14,
         },
     },
     elementQuestionIcon: {

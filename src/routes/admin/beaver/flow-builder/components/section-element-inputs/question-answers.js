@@ -91,7 +91,7 @@ const QuestionAnswers = ({
             The radio element is really just a visual cue to the user, the important part of this element is the text TextField
             editing the text field updates the answer label that is presented in other areas of the app
         */
-        <div key={index} className={`row no-gutters ${classes.answerRow}`}>
+        <div key={index} className={`row no-gutters align-items-center ${classes.answerRow}`}>
             <div className="col-auto">
                 {inputType === 'radio'
                     && <Radio disabled name="answer-set" value={element.value} />
@@ -105,6 +105,11 @@ const QuestionAnswers = ({
                     fullWidth
                     placeholder="Answer Label..."
                     className={classes.inputLabel}
+                    disableUnderline={false}
+                    classes={{
+                        underline: classes.inputUnderline,
+                        focused: classes.inputLabelFocused,
+                    }}
                     value={element.value}
                     onChange={handleContentUpdates('value', index)}
                     endAdornment={(
