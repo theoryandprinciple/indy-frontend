@@ -5,12 +5,12 @@ import { useHistory } from 'react-router-dom';
 
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 import { ForgotPass } from './wiring/auth-api';
-import Validation from '../../utils/validationSchema';
+import Validation from '../../utils/validation-schema-password-reset';
 
 import Styles from './styles';
-import StyledInput from './styledComponents/input';
 
 const ForgotPassword = ({ classes }) => {
     const history = useHistory();
@@ -64,13 +64,31 @@ const ForgotPassword = ({ classes }) => {
                 {error ? (<span>{errorMsg}</span>) : null}
                 {error === false ? (<span>success, an email to complete the process has been sent.</span>) : null}
                 <div className={classes.inputWrapper}>
-                    <StyledInput
-                        className={classes.formInput}
-                        placeholder="Email"
-                        fullWidth
+                    <TextField
+                        label="Email"
+                        variant="outlined"
                         type="email"
+                        autoComplete="on"
                         value={values.email}
                         onChange={handleChange('email')}
+                        fullWidth
+                        InputLabelProps={{
+                            classes: {
+                                root: classes.textInputLabelRoot,
+                                focused: classes.textInputLabelFocused,
+                                error: classes.textInputLabelError,
+                            },
+                        }}
+                        InputProps={{
+                            classes: {
+                                root: classes.textInput,
+                                notchedOutline: classes.notchedOutline,
+                                error: classes.textInputError,
+                            },
+                            inputProps: {
+                                'aria-label': 'Email',
+                            },
+                        }}
                     />
                 </div>
                 <div className={classes.inputWrapper}>

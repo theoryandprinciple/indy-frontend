@@ -8,18 +8,14 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 import { useAuthDataContext } from './wiring/auth-provider';
 import { Login } from './wiring/auth-api';
 
 import Styles from './styles';
-import StyledInput from './styledComponents/input';
-import Validation from '../../utils/validationSchema';
+import Validation from '../../utils/validation-schema-login';
 
 import useEventListener from '../../utils/use-event-listener';
 
@@ -33,14 +29,6 @@ const SignInForm = ({ classes }) => {
 
     const handleChange = prop => (event) => {
         setValues({ ...values, [prop]: event.target.value });
-    };
-
-    const handleClickShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
-    };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
     };
 
     const handleSubmit = () => {
@@ -113,36 +101,61 @@ const SignInForm = ({ classes }) => {
                 {error ? (<span>{errorMsg}</span>) : null}
                 {error === false ? (<span>success</span>) : null}
                 <div className={classes.inputWrapper}>
-                    <StyledInput
-                        className={classes.formInput}
-                        placeholder="Email"
-                        fullWidth
+                    <TextField
+                        label="Email"
+                        variant="outlined"
                         type="email"
+                        autoComplete="on"
                         value={values.email}
                         onChange={handleChange('email')}
+                        fullWidth
+                        InputLabelProps={{
+                            classes: {
+                                root: classes.textInputLabelRoot,
+                                focused: classes.textInputLabelFocused,
+                                error: classes.textInputLabelError,
+                            },
+                        }}
+                        InputProps={{
+                            classes: {
+                                root: classes.textInput,
+                                notchedOutline: classes.notchedOutline,
+                                error: classes.textInputError,
+                            },
+                            inputProps: {
+                                'aria-label': 'Email',
+                            },
+                        }}
                     />
                 </div>
                 <div className={classes.inputWrapper}>
-                    <StyledInput
+                    <TextField
                         ref={passwordInputRef}
-                        className={classes.formInput}
-                        placeholder="Password"
+                        label="Password"
+                        variant="outlined"
+                        type="password"
+                        autoComplete="current-password"
                         fullWidth
-                        id="adornment-password"
-                        type={values.showPassword ? 'text' : 'password'}
                         value={values.password}
                         onChange={handleChange('password')}
-                        endAdornment={(
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                >
-                                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                        )}
+                        id="passwordField"
+                        InputLabelProps={{
+                            classes: {
+                                root: classes.textInputLabelRoot,
+                                focused: classes.textInputLabelFocused,
+                                error: classes.textInputLabelError,
+                            },
+                        }}
+                        InputProps={{
+                            classes: {
+                                root: classes.textInput,
+                                notchedOutline: classes.notchedOutline,
+                                error: classes.textInputError,
+                            },
+                            inputProps: {
+                                'aria-label': 'Password',
+                            },
+                        }}
                     />
                 </div>
                 <div className={classes.inputWrapper}>
