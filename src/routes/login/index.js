@@ -1,5 +1,6 @@
 import React, {
     useState,
+    useEffect,
     useRef,
     useCallback,
 } from 'react';
@@ -24,11 +25,11 @@ import useEventListener from '../../utils/use-event-listener';
 
 const SignInForm = ({ classes }) => {
     const history = useHistory();
-    const { onLogin } = useAuthDataContext();
+    const { onLogin, authData } = useAuthDataContext();
 
     const [error, setError] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [values, setValues] = React.useState({ password: '', email: '', showPassword: false });
+    const [values, setValues] = useState({ password: '', email: '', showPassword: false });
 
     const handleChange = prop => (event) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -99,6 +100,11 @@ const SignInForm = ({ classes }) => {
 
     useEventListener('keyup', eventHandler, passwordInputRef.current);
 
+    useEffect(() => {
+        if (authData.isAuthenticated) {
+            history.push('/');
+        }
+    }, [authData.isAuthenticated]);
 
     return (
         <div className={classes.wrapper}>
