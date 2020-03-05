@@ -20,7 +20,7 @@ import browserHistory from './wiring/history';
 import App from './routes';
 
 import Initializers from './initializers';
-import InitializerAdmin from './initializers/admin';
+import InitializerUser from './initializers/user';
 
 import 'sanitize.css/sanitize.css';
 import './index.css';
@@ -56,10 +56,9 @@ const onBeforeLift = () => {
     store.dispatch(ClearErrors());
 
     if (store.getState().auth.isAuthenticated) {
+        InitializerUser(store);
         // load role specific content
-        if (store.getState().auth.credentials.role === 'admin') {
-            InitializerAdmin(store);
-        }
+        // if (store.getState().auth.credentials.role === 'admin') {}
     }
 };
 

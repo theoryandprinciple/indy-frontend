@@ -6,7 +6,7 @@ export const ClearErrors = () => ({
     type: AuthTypes.INITIALIZE_APP,
 });
 
-const LoginBegin = payload => ({
+export const LoginBegin = payload => ({
     type: AuthTypes.LOGIN_BEGIN,
     payload,
 });
@@ -69,7 +69,7 @@ export const Logout = () => ({
     payload: { isAuthenticated: false, credentials: { token: '' } },
 });
 
-const ForgotPassBegin = payload => ({
+export const ForgotPassBegin = payload => ({
     type: AuthTypes.FORGOT_PASSWORD_BEGIN,
     payload,
 });
@@ -102,7 +102,7 @@ export const ForgotPass = email => (dispatch) => {
     return forgotpassword;
 };
 
-const ResetPassBegin = payload => ({
+export const ResetPassBegin = payload => ({
     type: AuthTypes.RESET_PASSWORD_BEGIN,
     payload,
 });

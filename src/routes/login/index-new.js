@@ -18,11 +18,9 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import { Login, ResetPassBegin, LoginBegin } from '../../actions/auth';
-import Validation from '../../utils/validation-schema-login';
 
-import CombineStyles from '../../utils/combine-styles';
-import InputStyles from '../../styles/inputs';
 import Styles from './styles';
+import Validation from '../../utils/validation-schema-login';
 
 import useEventListener from '../../utils/use-event-listener';
 
@@ -142,28 +140,15 @@ const SignInForm = ({ classes }) => {
                 </div>
                 <div className={classes.inputWrapper}>
                     <TextField
+                        className={classes.formInput}
                         placeholder="Email"
-                        label="Email"
-                        variant="outlined"
                         fullWidth
                         type="email"
                         autoComplete="on"
                         value={values.email}
                         error={errors.email !== undefined}
                         onChange={handleChange('email')}
-                        InputLabelProps={{
-                            classes: {
-                                root: classes.textInputLabelRoot,
-                                focused: classes.textInputLabelFocused,
-                                error: classes.textInputLabelError,
-                            },
-                        }}
                         InputProps={{
-                            classes: {
-                                root: classes.textInput,
-                                notchedOutline: classes.notchedOutline,
-                                error: classes.textInputError,
-                            },
                             inputProps: {
                                 'aria-label': 'Email',
                             },
@@ -175,9 +160,8 @@ const SignInForm = ({ classes }) => {
                 </div>
                 <div className={classes.inputWrapper}>
                     <TextField
+                        className={classes.formInput}
                         placeholder="Password"
-                        label="Password"
-                        variant="outlined"
                         fullWidth
                         id="adornment-password"
                         type={values.showPassword ? 'text' : 'password'}
@@ -196,27 +180,15 @@ const SignInForm = ({ classes }) => {
                                 </IconButton>
                             </InputAdornment>
                         )}
-                        InputLabelProps={{
-                            classes: {
-                                root: classes.textInputLabelRoot,
-                                focused: classes.textInputLabelFocused,
-                                error: classes.textInputLabelError,
-                            },
-                        }}
                         InputProps={{
-                            classes: {
-                                root: classes.textInput,
-                                notchedOutline: classes.notchedOutline,
-                                error: classes.textInputError,
-                            },
                             inputProps: {
                                 'aria-label': 'Password',
                             },
                         }}
                     />
-                    <div className={classes.errorMessage} role="status" aria-live="polite">
-                        {errors.password ? 'Please enter your password' : ''}
-                    </div>
+                </div>
+                <div className={classes.errorMessage} role="status" aria-live="polite">
+                    {errors.password ? 'Please enter your password' : ''}
                 </div>
                 <div className={classes.inputWrapper}>
                     <Button
@@ -246,5 +218,4 @@ SignInForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const combinedStyles = CombineStyles(Styles, InputStyles);
-export default withStyles(combinedStyles)(SignInForm);
+export default withStyles(Styles)(SignInForm);
