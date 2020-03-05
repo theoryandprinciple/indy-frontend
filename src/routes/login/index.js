@@ -1,7 +1,7 @@
 import React, {
     useState,
-    useRef,
     useEffect,
+    useRef,
     useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -33,7 +33,7 @@ const SignInForm = ({ classes }) => {
 
     const [error, setError] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [values, setValues] = React.useState({ password: '', email: '', showPassword: false });
+    const [values, setValues] = useState({ password: '', email: '', showPassword: false });
 
     useEffect(() => {
         setError(loginError);
@@ -100,6 +100,11 @@ const SignInForm = ({ classes }) => {
 
     useEventListener('keyup', eventHandler, passwordInputRef.current);
 
+    useEffect(() => {
+        if (isAuthenticated) {
+            history.push('/');
+        }
+    }, [isAuthenticated]);
 
     return (
         <div className={classes.wrapper}>

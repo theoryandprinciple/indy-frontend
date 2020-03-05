@@ -1,5 +1,6 @@
 import WebClient from '../utils/web-client';
 import AuthTypes from '../action-types/auth';
+import UserTypes from '../action-types/user';
 
 export const ClearErrors = () => ({
     type: AuthTypes.INITIALIZE_APP,
@@ -16,6 +17,10 @@ const LoginSuccess = payload => ({
 const LoginError = payload => ({
     type: AuthTypes.LOGIN_ERROR,
     payload,
+});
+export const SetupUser = user => ({
+    type: UserTypes.SETUP_USER,
+    payload: user,
 });
 
 export const Login = formValues => (dispatch) => {
@@ -39,12 +44,10 @@ export const Login = formValues => (dispatch) => {
                     token: data.token,
                     role: data.user.role,
                 },
-                user: {
-                    ...data.user,
-                },
                 error: false,
                 errorMsg: '',
             };
+            dispatch(SetupUser(data.user));
             dispatch(LoginSuccess(userData));
         })
         .catch((error) => {
