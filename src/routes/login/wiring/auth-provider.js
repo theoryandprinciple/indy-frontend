@@ -7,6 +7,8 @@ import React, {
     useContext,
 } from 'react';
 
+import _ from 'lodash';
+
 import LocalStorageAvailable from '../../../utils/check-local-storage';
 import WebClient from '../../../utils/web-client';
 
@@ -38,7 +40,9 @@ const AuthDataProvider = (props) => {
 
 
     useEffect(() => {
-        localStorage.setItem('auth', JSON.stringify(authData));
+        const storage = _.cloneDeep(authData);
+        delete storage.user;
+        localStorage.setItem('auth', JSON.stringify(storage));
         if (authData.credentials && authData.credentials.token) {
             WebClient.updateAuth(authData.credentials.token);
         }
