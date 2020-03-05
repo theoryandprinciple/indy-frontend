@@ -12,10 +12,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import { Login, ResetPassBegin, LoginBegin } from '../../actions/auth';
 import Validation from '../../utils/validation-schema-login';
@@ -38,7 +34,7 @@ const SignInForm = ({ classes }) => {
 
     const [errorAPI, setErrorAPI] = useState(null);
     const [errorMsgAPI, setErrorMsgAPI] = useState(null);
-    const [values, setValues] = React.useState({ password: '', email: '' });
+    const [values, setValues] = useState({ password: '', email: '' });
     const [errors, setErrors] = useState({});
     const [validationActive, setValidationActive] = useState(false);
 
@@ -122,14 +118,6 @@ const SignInForm = ({ classes }) => {
         }
     }, [handleSubmit]);
 
-    const handleClickShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
-    };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
-
     useEventListener('keyup', eventHandler, inputRef.current);
 
     return (
@@ -185,17 +173,6 @@ const SignInForm = ({ classes }) => {
                         value={values.password}
                         error={errors.password !== undefined}
                         onChange={handleChange('password')}
-                        endAdornment={(
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                >
-                                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                        )}
                         InputLabelProps={{
                             classes: {
                                 root: classes.textInputLabelRoot,
