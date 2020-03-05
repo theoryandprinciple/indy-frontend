@@ -8,7 +8,9 @@ import Login from '../../routes/login';
 import ForgotPassword from '../../routes/login/forgot-password';
 import ResetPassword from '../../routes/login/reset-password';
 
-const App = () => {
+import themer from '../../styles/material-theme';
+
+const PublicLayout = () => {
     const location = useLocation();
 
     return (
@@ -37,4 +39,4 @@ const App = () => {
     );
 };
 
-export default withRoot(App);
+export default withRoot(PublicLayout, themer);
