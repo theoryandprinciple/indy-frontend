@@ -14,14 +14,7 @@ const styles = () => ({
         backgroundColor: 'white',
         borderRadius: 5,
         width: 400,
-        height: 440,
-    },
-    inputWrapper: {
-        margin: '10px 0',
-        width: '100%',
-    },
-    formInput: {
-        padding: '15px 0',
+        height: 'auto',
     },
 });
 export default styles;

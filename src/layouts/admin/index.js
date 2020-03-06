@@ -9,7 +9,9 @@ import AdminHeader from '../../components/admin/header';
 import FlowDataProvider from '../../routes/admin/beaver/wiring/flow-provider';
 import OutputDataProvider from '../../routes/admin/beaver/wiring/output-provider';
 
-const App = () => {
+import themer from '../../styles/material-theme';
+
+const AdminLayout = () => {
     const location = useLocation();
     return (
         <React.Fragment>
@@ -37,4 +39,4 @@ const App = () => {
         </React.Fragment>
     );
 };
-export default withRoot(App);
+export default withRoot(AdminLayout, themer);

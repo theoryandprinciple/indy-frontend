@@ -1,63 +1,70 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import { ForgotPass } from '../../actions/auth';
-import Validation from '../../utils/validationSchema';
+import { ForgotPass, ForgotPassBegin } from '../../actions/auth';
+import Validation from '../../utils/validation-schema-forgot-pass';
 
+import CombineStyles from '../../utils/combine-styles';
+import InputStyles from '../../styles/inputs';
 import Styles from './styles';
-import StyledInput from './styledComponents/input';
 
 const ForgotPassword = ({ classes }) => {
     const forgotpassError = useSelector(state => state.auth.forgotPass.error);
     const forgotpassErrorMsg = useSelector(state => state.auth.forgotPass.errorMsg);
     const forgotpassCompleted = useSelector(state => state.auth.forgotPass.completed);
     const dispatch = useDispatch();
-
     const history = useHistory();
-    const [values, setValues] = React.useState({ email: '' });
-    const [error, setError] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
+
+    const [values, setValues] = useState({ email: '' });
+    const [errors, setErrors] = useState({});
+    const [validationActive, setValidationActive] = useState(false);
 
     useEffect(() => {
-        setError(forgotpassError);
-        if (forgotpassError) {
-            setErrorMsg(forgotpassErrorMsg);
-        }
-    }, [forgotpassError]);
+        document.title = '[SITE]: Forgot Password';
+        // clear error messages when component loads
+        dispatch(ForgotPassBegin());
+    }, []);
 
     const handleChange = prop => (event) => {
         setValues({ ...values, [prop]: event.target.value });
     };
+    const validate = () => {
+        setValidationActive(true);
 
+        const validationError = Validation.validate({ email: values.email }).error;
+
+        if (validationError) {
+            const currentErrors = {};
+            validationError.details.forEach((detail) => {
+                currentErrors[detail.context.key] = detail.type;
+            });
+
+            setErrors(currentErrors);
+        } else {
+            setErrors({});
+        }
+        return validationError;
+    };
+
+
+    useEffect(() => {
+        if (validationActive) {
+            validate();
+        }
+    }, [values.email]);
     const handleSubmit = () => {
-        // reset error states
-        setError(null);
-        setErrorMsg(null);
-        let errored = false;
-
-        // Validatation
-        const emailError = Validation.validate({ email: values.email }).error;
-        if (values.email === '') {
-            setErrorMsg('Email is required');
-            errored = true;
-        } else if (emailError) {
-            setErrorMsg('Email appears to invalid');
-            errored = true;
+        if (!validate()) {
+            // no error
+            // let's make an API Call
+            dispatch(ForgotPass(values.email));
         }
-
-        // if we had a local error, stop the submission
-        if (errored) {
-            setError(true);
-            return;
-        }
-
-        dispatch(ForgotPass(values.email));
     };
 
     return (
@@ -69,17 +76,41 @@ const ForgotPassword = ({ classes }) => {
                 >
                     Reset Password
                 </Typography>
-                {error ? (<span>{errorMsg}</span>) : null}
-                {(forgotpassCompleted && !error) ? (<span>success, an email to complete the process has been sent.</span>) : null}
+                <div role="status" aria-live="polite">
+                    {forgotpassError ? (<Typography variant="body1" className={classes.errorMessage} style={{ paddingBottom: 30 }}>{forgotpassErrorMsg}</Typography>) : null}
+                    {(forgotpassCompleted && !forgotpassError) && (<Typography variant="body1" className={classes.successMessage} style={{ paddingBottom: 30 }}>Success: A reset email has been sent to your account.</Typography>)}
+                </div>
                 <div className={classes.inputWrapper}>
-                    <StyledInput
-                        className={classes.formInput}
-                        placeholder="Email"
-                        fullWidth
+                    <TextField
+                        label="Email"
+                        variant="outlined"
                         type="email"
+                        autoComplete="on"
                         value={values.email}
+                        error={errors.email !== undefined}
                         onChange={handleChange('email')}
+                        fullWidth
+                        InputLabelProps={{
+                            classes: {
+                                root: classes.textInputLabelRoot,
+                                focused: classes.textInputLabelFocused,
+                                error: classes.textInputLabelError,
+                            },
+                        }}
+                        InputProps={{
+                            classes: {
+                                root: classes.textInput,
+                                notchedOutline: classes.notchedOutline,
+                                error: classes.textInputError,
+                            },
+                            inputProps: {
+                                'aria-label': 'Email',
+                            },
+                        }}
                     />
+                </div>
+                <div className={classes.errorMessage} role="status" aria-live="polite">
+                    {errors.email ? 'Please enter your email address' : ''}
                 </div>
                 <div className={classes.inputWrapper}>
                     <Button
@@ -88,7 +119,7 @@ const ForgotPassword = ({ classes }) => {
                         onClick={handleSubmit}
                         fullWidth
                     >
-                        Reset Password
+                        Submit
                     </Button>
                 </div>
                 <div className={classes.inputWrapper}>
@@ -109,4 +140,5 @@ ForgotPassword.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(Styles)(ForgotPassword);
+const combinedStyles = CombineStyles(Styles, InputStyles);
+export default withStyles(combinedStyles)(ForgotPassword);

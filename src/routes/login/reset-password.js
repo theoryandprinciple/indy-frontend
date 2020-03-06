@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import { ResetPass } from '../../actions/auth';
-import Validation from '../../utils/validationSchema';
+import Validation from '../../utils/validation-schema-password-reset';
+
+import CombineStyles from '../../utils/combine-styles';
+import InputStyles from '../../styles/inputs';
 import Styles from './styles';
-import StyledInput from './styledComponents/input';
 
 const ResetPassword = ({ classes }) => {
     const resetpassError = useSelector(state => state.auth.resetPass.error);
@@ -22,103 +21,182 @@ const ResetPassword = ({ classes }) => {
     const resetpassCompleted = useSelector(state => state.auth.resetPass.completed);
     const dispatch = useDispatch();
 
+    const history = useHistory();
+
     const { resetToken } = useParams();
-    const [values, setValues] = React.useState({ email: '', password: '' });
-    const [error, setError] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
+    const [values, setValues] = useState({ password: '', passwordConfirm: '', email: '' });
+    const [errors, setErrors] = useState({});
+    const [validationActive, setValidationActive] = useState(false);
 
     useEffect(() => {
-        setError(resetpassError);
-        if (resetpassError) {
-            setErrorMsg(resetpassErrorMsg);
+        document.title = '[SITE]: Reset Password';
+    }, []);
+
+    useEffect(() => {
+        setValues({ ...values, resetToken });
+    }, [resetToken]);
+
+    useEffect(() => {
+        let timer = null;
+        if (resetpassCompleted && !resetpassError) {
+            timer = setTimeout(() => {
+                history.push('/login');
+            }, 3000);
         }
-    }, [resetpassError]);
+        return () => clearTimeout(timer);
+    }, [resetpassCompleted, resetpassError]);
+
+    const validate = () => {
+        setValidationActive(true);
+
+        const validationError = Validation.validate({ email: values.email, password: values.password, passwordConfirm: values.passwordConfirm }, { abortEarly: false }).error;
+
+        if (validationError) {
+            const currentErrors = {};
+            validationError.details.forEach((detail) => {
+                currentErrors[detail.context.key] = detail.type;
+            });
+
+            setErrors(currentErrors);
+        } else {
+            setErrors({});
+        }
+        return validationError;
+    };
+
+    useEffect(() => {
+        if (validationActive) {
+            validate();
+        }
+    }, [
+        values.email,
+        values.password,
+        values.passwordConfirm,
+    ]);
 
     const handleSubmit = () => {
-        // reset error states
-        setError(null);
-        setErrorMsg(null);
-        let errored = false;
+        if (!validate()) {
+            // no error
+            // let's make an API Call
+            const currentFormValue = {
+                email: values.email,
+                resetToken,
+                newPassword: values.password,
+            };
 
-        // Validatation
-        const emailError = Validation.validate({ email: values.email }).error;
-        if (values.email === '') {
-            setErrorMsg('Email is required');
-            errored = true;
-        } else if (emailError) {
-            setErrorMsg('Email appears to invalid');
-            errored = true;
-        } else if (values.password === '') {
-            setErrorMsg('Error: Password appears invalid');
-            errored = true;
-        } else if (!resetToken) {
-            setErrorMsg('Error: The URL you used to get here appears invalid');
-            errored = true;
+            dispatch(ResetPass(currentFormValue));
         }
-
-        // if we had a local error, stop the submission
-        if (errored) {
-            setError(true);
-            return;
-        }
-
-        const currentFormValue = {
-            email: values.email,
-            resetToken,
-            newPassword: values.password,
-        };
-
-        dispatch(ResetPass(currentFormValue));
     };
 
     const handleChange = prop => (event) => {
         setValues({ ...values, [prop]: event.target.value });
-    };
-    const handleClickShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
-    };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
     };
 
     return (
         <div className={classes.wrapper}>
             <div className={classes.formWrapper}>
                 <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Reset Password</Typography>
-                {error ? (<span>{errorMsg}</span>) : null}
-                {resetpassCompleted ? (<span>success, proceed to login</span>) : null}
-                <div className={classes.inputWrapper}>
-                    <StyledInput
-                        className={classes.formInput}
-                        placeholder="Email"
-                        fullWidth
-                        type="email"
-                        value={values.email}
-                        onChange={handleChange('email')}
-                    />
+                <div role="status" aria-live="polite">
+                    {resetpassError ? (<Typography variant="body1" className={classes.errorMessage} style={{ paddingBottom: 30 }}>{resetpassErrorMsg}</Typography>) : null}
+                    {(resetpassCompleted && !resetpassError) && (<Typography variant="body1" className={classes.successMessage} style={{ paddingBottom: 30 }}>Success: Your password has successfully been updated.</Typography>)}
                 </div>
                 <div className={classes.inputWrapper}>
-                    <StyledInput
-                        className={classes.formInput}
-                        placeholder="Password"
+                    <TextField
+                        label="Email"
+                        variant="outlined"
+                        type="email"
+                        autoComplete="on"
+                        value={values.email}
+                        error={errors.email !== undefined}
+                        onChange={handleChange('email')}
                         fullWidth
-                        id="adornment-password"
-                        type={values.showPassword ? 'text' : 'password'}
-                        value={values.password}
-                        onChange={handleChange('password')}
-                        endAdornment={(
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                >
-                                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                        )}
+                        InputLabelProps={{
+                            classes: {
+                                root: classes.textInputLabelRoot,
+                                focused: classes.textInputLabelFocused,
+                                error: classes.textInputLabelError,
+                            },
+                        }}
+                        InputProps={{
+                            classes: {
+                                root: classes.textInput,
+                                notchedOutline: classes.notchedOutline,
+                                error: classes.textInputError,
+                            },
+                            inputProps: {
+                                'aria-label': 'Email',
+                            },
+                        }}
                     />
+                </div>
+                <div className={classes.errorMessage} role="status" aria-live="polite">
+                    {errors.email ? 'Please enter your email address' : ''}
+                </div>
+                <div className={classes.inputWrapper}>
+                    <TextField
+                        aria-label="Password"
+                        label="Password"
+                        variant="outlined"
+                        type="password"
+                        autoComplete="off"
+                        fullWidth
+                        value={values.password}
+                        error={errors.password !== undefined}
+                        onChange={handleChange('password')}
+                        InputLabelProps={{
+                            classes: {
+                                root: classes.textInputLabelRoot,
+                                focused: classes.textInputLabelFocused,
+                                error: classes.textInputLabelError,
+                            },
+                        }}
+                        InputProps={{
+                            classes: {
+                                root: classes.textInput,
+                                notchedOutline: classes.notchedOutline,
+                                error: classes.textInputError,
+                            },
+                            inputProps: {
+                                'aria-label': 'Password',
+                            },
+                        }}
+                    />
+                </div>
+                <div className={classes.errorMessage} role="status" aria-live="polite">
+                    {errors.password ? 'Please enter a new password' : ''}
+                </div>
+                <div className={classes.inputWrapper}>
+                    <TextField
+                        aria-label="Password"
+                        label="Confirm Password"
+                        variant="outlined"
+                        type="password"
+                        autoComplete="off"
+                        fullWidth
+                        value={values.passwordConfirm}
+                        error={errors.passwordConfirm !== undefined}
+                        onChange={handleChange('passwordConfirm')}
+                        InputLabelProps={{
+                            classes: {
+                                root: classes.textInputLabelRoot,
+                                focused: classes.textInputLabelFocused,
+                                error: classes.textInputLabelError,
+                            },
+                        }}
+                        InputProps={{
+                            classes: {
+                                root: classes.textInput,
+                                notchedOutline: classes.notchedOutline,
+                                error: classes.textInputError,
+                            },
+                            inputProps: {
+                                'aria-label': 'Confirm Password',
+                            },
+                        }}
+                    />
+                </div>
+                <div className={classes.errorMessage} role="status" aria-live="polite">
+                    {errors.passwordConfirm ? 'Your passwords do not match' : ''}
                 </div>
                 <div className={classes.inputWrapper}>
                     <Button
@@ -139,4 +217,5 @@ ResetPassword.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(Styles)(ResetPassword);
+const combinedStyles = CombineStyles(Styles, InputStyles);
+export default withStyles(combinedStyles)(ResetPassword);

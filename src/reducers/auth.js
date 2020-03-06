@@ -1,4 +1,4 @@
-const AuthTypes = require('../action-types/auth');
+import AuthTypes from '../action-types/auth';
 
 const internals = {
     initial: () => ({
