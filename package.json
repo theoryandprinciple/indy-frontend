@@ -16,26 +16,26 @@
   },
   "devDependencies": {
     "eslint-plugin-babel": "^5.3.0",
-    "eslint-plugin-react": "^7.18.3",
-    "react-scripts": "^3.4.0"
+    "eslint-plugin-react": "^7.19.0",
+    "react-scripts": "^3.4.1"
   },
   "pre-commit": [
     "test",
     "lint"
   ],
   "dependencies": {
-    "@hapi/inert": "^5.2.1",
-    "@hapi/joi": "^16.1.8",
-    "@material-ui/core": "^4.9.5",
+    "@hapi/inert": "^6.0.1",
+    "@hapi/joi": "^17.1.1",
+    "@material-ui/core": "^4.9.12",
     "@material-ui/icons": "^4.9.1",
     "axios": "^0.19.2",
     "bootstrap-css-only": "^4.4.1",
-    "core-js": "^3.6.4",
+    "core-js": "^3.6.5",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^17.1.0",
     "history": "^4.10.1",
-    "immutability-helper": "^3.0.1",
-    "jss": "^10.0.4",
+    "immutability-helper": "^3.0.2",
+    "jss": "^10.1.1",
     "keymirror": "^0.1.1",
     "lodash": "^4.17.15",
     "path": "^0.12.7",
@@ -44,10 +44,10 @@
     "react": "16.9.0",
     "react-dnd": "^9.5.1",
     "react-dnd-html5-backend": "^9.5.1",
-    "react-dom": "16.9.0",
-    "react-router-dom": "5.1.0",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2",
     "rest": "^2.0.0",
-    "sanitize.css": "11.0.0",
+    "sanitize.css": "^11.0.0",
     "serve": "11.1.0",
     "uuid": "^3.4.0"
   },
