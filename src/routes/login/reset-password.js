@@ -9,40 +9,29 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 import { ResetPass } from './wiring/auth-api';
-import Validation from '../../utils/validation-schema-forgot-pass';
+import Validation from '../../utils/validation-schema-login';
 import Styles from './styles';
 
 const ResetPassword = ({ classes }) => {
     const { resetToken } = useParams();
-    const [values, setValues] = React.useState({ email: '', password: '' });
-    const [error, setError] = useState(null);
+    const [values, setValues] = useState({ email: '', password: '' });
+    const [errored, setErrored] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
 
     const handleSubmit = () => {
         // reset error states
-        setError(null);
+        setErrored(null);
         setErrorMsg(null);
-        let errored = false;
+        const { error } = Validation.reset.validate(values);
 
-        // Validatation
-        const emailError = Validation.validate({ email: values.email }).error;
-        if (values.email === '') {
-            setErrorMsg('Email is required');
-            errored = true;
-        } else if (emailError) {
-            setErrorMsg('Email appears to invalid');
-            errored = true;
-        } else if (values.password === '') {
-            setErrorMsg('Error: Password appears invalid');
-            errored = true;
-        } else if (!resetToken) {
-            setErrorMsg('Error: The URL you used to get here appears invalid');
-            errored = true;
+        if (error) {
+            setErrorMsg(error.message);
+            setErrored(true);
+            return;
         }
-
-        // if we had a local error, stop the submission
-        if (errored) {
-            setError(true);
+        if (!resetToken) {
+            setErrorMsg('Error: The URL you used to get here appears invalid');
+            setErrored(true);
             return;
         }
 
@@ -55,7 +44,7 @@ const ResetPassword = ({ classes }) => {
         ResetPass(currentFormValue)
             .then((data) => {
                 // we get here with or without errors
-                setError(data.error);
+                setErrored(data.error);
                 setErrorMsg(data.error ? data.errorMsg : null);
                 // TODO: add some success state
             });
@@ -69,8 +58,8 @@ const ResetPassword = ({ classes }) => {
         <div className={classes.wrapper}>
             <div className={classes.formWrapper}>
                 <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Reset Password</Typography>
-                {error ? (<span>{errorMsg}</span>) : null}
-                {error === false ? (<span>success, proceed to login</span>) : null}
+                {errored ? (<span>{errorMsg}</span>) : null}
+                {errored === false ? (<span>success, proceed to login</span>) : null}
                 <div className={classes.inputWrapper}>
                     <TextField
                         label="Email"

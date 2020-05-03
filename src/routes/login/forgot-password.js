@@ -8,14 +8,14 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 import { ForgotPass } from './wiring/auth-api';
-import Validation from '../../utils/validation-schema-password-reset';
+import Validation from '../../utils/validation-schema-login';
 
 import Styles from './styles';
 
 const ForgotPassword = ({ classes }) => {
     const history = useHistory();
-    const [values, setValues] = React.useState({ email: '' });
-    const [error, setError] = useState(null);
+    const [values, setValues] = useState({ email: '' });
+    const [errored, setErrored] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
 
     const handleChange = prop => (event) => {
@@ -24,30 +24,22 @@ const ForgotPassword = ({ classes }) => {
 
     const handleSubmit = () => {
         // reset error states
-        setError(null);
+        setErrored(null);
         setErrorMsg(null);
-        let errored = false;
 
         // Validatation
-        const emailError = Validation.validate({ email: values.email }).error;
-        if (values.email === '') {
-            setErrorMsg('Email is required');
-            errored = true;
-        } else if (emailError) {
-            setErrorMsg('Email appears to invalid');
-            errored = true;
-        }
+        const { error } = Validation.forgot.validate(values);
 
-        // if we had a local error, stop the submission
-        if (errored) {
-            setError(true);
+        if (error) {
+            setErrorMsg(error.message);
+            setErrored(true);
             return;
         }
 
         ForgotPass(values.email)
             .then((data) => {
                 // we get here with or without errors
-                setError(data.error);
+                setErrored(data.error);
                 setErrorMsg(data.error ? data.errorMsg : null);
             });
     };
@@ -61,8 +53,8 @@ const ForgotPassword = ({ classes }) => {
                 >
                     Reset Password
                 </Typography>
-                {error ? (<span>{errorMsg}</span>) : null}
-                {error === false ? (<span>success, an email to complete the process has been sent.</span>) : null}
+                {errored ? (<span>{errorMsg}</span>) : null}
+                {errored === false ? (<span>success, an email to complete the process has been sent.</span>) : null}
                 <div className={classes.inputWrapper}>
                     <TextField
                         label="Email"
