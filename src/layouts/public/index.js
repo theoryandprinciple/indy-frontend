@@ -16,9 +16,6 @@ const PublicLayout = () => {
     return (
         <main className="container">
             <Switch location={location}>
-                <Route exact path="/">
-                    <Home />
-                </Route>
                 <Route exact path="/about">
                     <About />
                 </Route>
@@ -31,8 +28,8 @@ const PublicLayout = () => {
                 <Route path="/password-reset/:resetToken">
                     <ResetPassword />
                 </Route>
-                <Route path="/password-reset/">
-                    <Login />
+                <Route path="/">
+                    <Home />
                 </Route>
             </Switch>
         </main>

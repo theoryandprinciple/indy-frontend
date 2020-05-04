@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import { ErrorBoundary } from 'react-error-boundary';
 import 'bootstrap-css-only/css/bootstrap-grid.min.css';
 
 // REDUX
@@ -12,6 +12,8 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
+
+import ErrorFallback from './components/ErrorFallback';
 
 import { ClearErrors } from './actions/auth';
 import reducers from './reducers';
@@ -70,7 +72,9 @@ ReactDOM.render(
             onBeforeLift={onBeforeLift}
         >
             <Router history={history}>
-                <App />
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <App />
+                </ErrorBoundary>
             </Router>
         </PersistGate>
     </Provider>,
