@@ -10,6 +10,8 @@ import TextField from '@material-ui/core/TextField';
 
 import { ResetPass } from './wiring/auth-api';
 import Validation from '../../utils/validation-schema-login';
+import CombineStyles from '../../utils/combine-styles';
+import InputStyles from '../../styles/inputs';
 import Styles from './styles';
 
 const ResetPassword = ({ classes }) => {
@@ -54,8 +56,8 @@ const ResetPassword = ({ classes }) => {
             <div className={classes.formWrapper}>
                 <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Reset Password</Typography>
                 <div role="status" aria-live="polite">
-                    {errored ? (<span>{errorMsg}</span>) : null}
-                    {errored === false ? (<span>success, proceed to login</span>) : null}
+                    {errored && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
+                    {errored === false && <Typography variant="body1" className={classes.successMessage}>success, proceed to login</Typography>}
                 </div>
                 <div className={classes.inputWrapper}>
                     <TextField
@@ -132,4 +134,5 @@ ResetPassword.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(Styles)(ResetPassword);
+const combinedStyles = CombineStyles(Styles, InputStyles);
+export default withStyles(combinedStyles)(ResetPassword);

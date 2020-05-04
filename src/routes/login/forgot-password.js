@@ -10,6 +10,8 @@ import TextField from '@material-ui/core/TextField';
 import { ForgotPass } from './wiring/auth-api';
 import Validation from '../../utils/validation-schema-login';
 
+import CombineStyles from '../../utils/combine-styles';
+import InputStyles from '../../styles/inputs';
 import Styles from './styles';
 
 const ForgotPassword = ({ classes }) => {
@@ -54,8 +56,9 @@ const ForgotPassword = ({ classes }) => {
                     Reset Password
                 </Typography>
                 <div role="status" aria-live="polite">
-                    {errored ? (<span>{errorMsg}</span>) : null}
-                    {errored === false ? (<span>success, an email to complete the process has been sent.</span>) : null}
+                    {errored && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
+                    {errored === false && <Typography variant="body1" className={classes.successMessage}>success, an email to complete the process has been sent.</Typography>}
+
                 </div>
                 <div className={classes.inputWrapper}>
                     <TextField
@@ -113,4 +116,5 @@ ForgotPassword.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(Styles)(ForgotPassword);
+const combinedStyles = CombineStyles(Styles, InputStyles);
+export default withStyles(combinedStyles)(ForgotPassword);

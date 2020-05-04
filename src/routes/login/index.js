@@ -14,6 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import { useAuthDataContext } from './wiring/auth-provider';
 import { Login } from './wiring/auth-api';
 
+import CombineStyles from '../../utils/combine-styles';
+import InputStyles from '../../styles/inputs';
 import Styles from './styles';
 import Validation from '../../utils/validation-schema-login';
 
@@ -85,7 +87,7 @@ const SignInForm = ({ classes }) => {
             <div className={classes.formWrapper}>
                 <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Sign In</Typography>
                 <div role="status" aria-live="polite">
-                    {errored && <span>{errorMsg}</span>}
+                    {errored && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
                 </div>
                 <div className={classes.inputWrapper}>
                     <TextField
@@ -173,4 +175,5 @@ SignInForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(Styles)(SignInForm);
+const combinedStyles = CombineStyles(Styles, InputStyles);
+export default withStyles(combinedStyles)(SignInForm);
