@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import { ResetPass } from '../../actions/auth';
-import Validation from '../../utils/validation-schema-password-reset';
+import Validation from '../../utils/validation-schema-login';
 
 import CombineStyles from '../../utils/combine-styles';
 import InputStyles from '../../styles/inputs';
@@ -25,16 +25,12 @@ const ResetPassword = ({ classes }) => {
 
     const { resetToken } = useParams();
     const [values, setValues] = useState({ password: '', passwordConfirm: '', email: '' });
-    const [errors, setErrors] = useState({});
-    const [validationActive, setValidationActive] = useState(false);
+    const [errored, setErrored] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
 
     useEffect(() => {
         document.title = '[SITE]: Reset Password';
     }, []);
-
-    useEffect(() => {
-        setValues({ ...values, resetToken });
-    }, [resetToken]);
 
     useEffect(() => {
         let timer = null;
@@ -46,46 +42,25 @@ const ResetPassword = ({ classes }) => {
         return () => clearTimeout(timer);
     }, [resetpassCompleted, resetpassError]);
 
-    const validate = () => {
-        setValidationActive(true);
-
-        const validationError = Validation.validate({ email: values.email, password: values.password, passwordConfirm: values.passwordConfirm }, { abortEarly: false }).error;
-
-        if (validationError) {
-            const currentErrors = {};
-            validationError.details.forEach((detail) => {
-                currentErrors[detail.context.key] = detail.type;
-            });
-
-            setErrors(currentErrors);
-        } else {
-            setErrors({});
-        }
-        return validationError;
-    };
-
-    useEffect(() => {
-        if (validationActive) {
-            validate();
-        }
-    }, [
-        values.email,
-        values.password,
-        values.passwordConfirm,
-    ]);
-
     const handleSubmit = () => {
-        if (!validate()) {
-            // no error
-            // let's make an API Call
-            const currentFormValue = {
-                email: values.email,
-                resetToken,
-                newPassword: values.password,
-            };
+        setErrored(null);
+        setErrorMsg(null);
+        const { error } = Validation.reset.validate({ ...values, resetToken });
 
-            dispatch(ResetPass(currentFormValue));
+        if (error) {
+            setErrorMsg(error.message);
+            setErrored(true);
+            return;
         }
+        // no error
+        // let's make an API Call
+        const currentFormValue = {
+            email: values.email,
+            resetToken,
+            newPassword: values.password,
+        };
+
+        dispatch(ResetPass(currentFormValue));
     };
 
     const handleChange = prop => (event) => {
@@ -97,7 +72,8 @@ const ResetPassword = ({ classes }) => {
             <div className={classes.formWrapper}>
                 <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Reset Password</Typography>
                 <div role="status" aria-live="polite">
-                    {resetpassError ? (<Typography variant="body1" className={classes.errorMessage} style={{ paddingBottom: 30 }}>{resetpassErrorMsg}</Typography>) : null}
+                    {errored && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
+                    {resetpassError && <Typography variant="body1" className={classes.errorMessage}>{resetpassErrorMsg}</Typography>}
                     {(resetpassCompleted && !resetpassError) && (<Typography variant="body1" className={classes.successMessage} style={{ paddingBottom: 30 }}>Success: Your password has successfully been updated.</Typography>)}
                 </div>
                 <div className={classes.inputWrapper}>
@@ -107,7 +83,6 @@ const ResetPassword = ({ classes }) => {
                         type="email"
                         autoComplete="on"
                         value={values.email}
-                        error={errors.email !== undefined}
                         onChange={handleChange('email')}
                         fullWidth
                         InputLabelProps={{
@@ -129,9 +104,6 @@ const ResetPassword = ({ classes }) => {
                         }}
                     />
                 </div>
-                <div className={classes.errorMessage} role="status" aria-live="polite">
-                    {errors.email ? 'Please enter your email address' : ''}
-                </div>
                 <div className={classes.inputWrapper}>
                     <TextField
                         aria-label="Password"
@@ -141,7 +113,6 @@ const ResetPassword = ({ classes }) => {
                         autoComplete="off"
                         fullWidth
                         value={values.password}
-                        error={errors.password !== undefined}
                         onChange={handleChange('password')}
                         InputLabelProps={{
                             classes: {
@@ -162,9 +133,6 @@ const ResetPassword = ({ classes }) => {
                         }}
                     />
                 </div>
-                <div className={classes.errorMessage} role="status" aria-live="polite">
-                    {errors.password ? 'Please enter a new password' : ''}
-                </div>
                 <div className={classes.inputWrapper}>
                     <TextField
                         aria-label="Password"
@@ -174,7 +142,6 @@ const ResetPassword = ({ classes }) => {
                         autoComplete="off"
                         fullWidth
                         value={values.passwordConfirm}
-                        error={errors.passwordConfirm !== undefined}
                         onChange={handleChange('passwordConfirm')}
                         InputLabelProps={{
                             classes: {
@@ -194,9 +161,6 @@ const ResetPassword = ({ classes }) => {
                             },
                         }}
                     />
-                </div>
-                <div className={classes.errorMessage} role="status" aria-live="polite">
-                    {errors.passwordConfirm ? 'Your passwords do not match' : ''}
                 </div>
                 <div className={classes.inputWrapper}>
                     <Button
