@@ -30,6 +30,7 @@ const ForgotPassword = ({ classes }) => {
         document.title = '[SITE]: Forgot Password';
         // clear error messages when component loads
         dispatch(ForgotPassBegin());
+        // eslint-disable-next-line
     }, []);
 
     const handleChange = prop => (event) => {

@@ -43,6 +43,7 @@ const SignInForm = ({ classes }) => {
         // clear errors on mount/dismount
         dispatch(LoginBegin({ error: false, errorMsg: '' }));
         return () => dispatch(LoginBegin({ error: false, errorMsg: '' }));
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
@@ -50,13 +51,13 @@ const SignInForm = ({ classes }) => {
         if (loginError) {
             setErrorMsgAPI(loginErrorMsg);
         }
-    }, [loginError]);
+    }, [loginError, loginErrorMsg]);
 
     useEffect(() => {
         if (isAuthenticated) {
             history.push('/');
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, history]);
 
     useEffect(() => {
         let timer = null;
@@ -72,7 +73,7 @@ const SignInForm = ({ classes }) => {
         setValues({ ...values, [prop]: event.target.value });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = useCallback(() => {
         // reset error states
         setErrored(null);
         setErrorMsg(null);
@@ -87,7 +88,7 @@ const SignInForm = ({ classes }) => {
         // no error
         // let's make an API Call
         dispatch(Login(values));
-    };
+    }, [values]);
 
     const inputRef = useRef(null);
     const eventHandler = useCallback((event) => {
