@@ -32,11 +32,11 @@ const SignInForm = ({ classes }) => {
 
     const history = useHistory();
 
+    const [errored, setErrored] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
     const [errorAPI, setErrorAPI] = useState(null);
     const [errorMsgAPI, setErrorMsgAPI] = useState(null);
     const [values, setValues] = useState({ password: '', email: '' });
-    const [errors, setErrors] = useState({});
-    const [validationActive, setValidationActive] = useState(false);
 
     useEffect(() => {
         document.title = '[SITE]: Log in';
@@ -72,39 +72,21 @@ const SignInForm = ({ classes }) => {
         setValues({ ...values, [prop]: event.target.value });
     };
 
-    const validate = () => {
-        setValidationActive(true);
-
-        const validationError = Validation.validate({ email: values.email, password: values.password }, { abortEarly: false }).error;
-
-        if (validationError) {
-            const currentErrors = {};
-            validationError.details.forEach((detail) => {
-                currentErrors[detail.context.key] = detail.type;
-            });
-
-            setErrors(currentErrors);
-        } else {
-            setErrors({});
-        }
-        return validationError;
-    };
-
-    useEffect(() => {
-        if (validationActive) {
-            validate();
-        }
-    }, [
-        values.email,
-        values.password,
-    ]);
-
     const handleSubmit = () => {
-        if (!validate()) {
-            // no error
-            // let's make an API Call
-            dispatch(Login(values));
+        // reset error states
+        setErrored(null);
+        setErrorMsg(null);
+
+        const { error } = Validation.login.validate(values);
+
+        if (error) {
+            setErrorMsg(error.message);
+            setErrored(true);
+            return;
         }
+        // no error
+        // let's make an API Call
+        dispatch(Login(values));
     };
 
     const inputRef = useRef(null);
@@ -125,7 +107,8 @@ const SignInForm = ({ classes }) => {
             <div className={classes.formWrapper}>
                 <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Sign In</Typography>
                 <div role="status" aria-live="polite">
-                    {errorAPI ? (<Typography variant="body1" className={classes.errorMessage} style={{ paddingBottom: 30 }}>{errorMsgAPI}</Typography>) : null}
+                    {errored && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
+                    {errorAPI && <Typography variant="body1" className={classes.errorMessage}>{errorMsgAPI}</Typography>}
                     {(resetpassCompleted && !resetpassError) && (<Typography variant="body1" className={classes.successMessage} style={{ paddingBottom: 30 }}>Success: Your password has successfully been updated.</Typography>)}
                 </div>
                 <div className={classes.inputWrapper}>
@@ -137,7 +120,6 @@ const SignInForm = ({ classes }) => {
                         type="email"
                         autoComplete="on"
                         value={values.email}
-                        error={errors.email !== undefined}
                         onChange={handleChange('email')}
                         InputLabelProps={{
                             classes: {
@@ -157,9 +139,6 @@ const SignInForm = ({ classes }) => {
                             },
                         }}
                     />
-                    <div className={classes.errorMessage} role="status" aria-live="polite">
-                        {errors.email ? 'Please enter your email address' : ''}
-                    </div>
                 </div>
                 <div className={classes.inputWrapper}>
                     <TextField
@@ -171,7 +150,6 @@ const SignInForm = ({ classes }) => {
                         type={values.showPassword ? 'text' : 'password'}
                         autoComplete="current-password"
                         value={values.password}
-                        error={errors.password !== undefined}
                         onChange={handleChange('password')}
                         InputLabelProps={{
                             classes: {
@@ -191,9 +169,6 @@ const SignInForm = ({ classes }) => {
                             },
                         }}
                     />
-                    <div className={classes.errorMessage} role="status" aria-live="polite">
-                        {errors.password ? 'Please enter your password' : ''}
-                    </div>
                 </div>
                 <div className={classes.inputWrapper}>
                     <Button

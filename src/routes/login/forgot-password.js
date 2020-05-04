@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import { ForgotPass, ForgotPassBegin } from '../../actions/auth';
-import Validation from '../../utils/validation-schema-forgot-pass';
+import Validation from '../../utils/validation-schema-login';
 
 import CombineStyles from '../../utils/combine-styles';
 import InputStyles from '../../styles/inputs';
@@ -23,8 +23,8 @@ const ForgotPassword = ({ classes }) => {
     const history = useHistory();
 
     const [values, setValues] = useState({ email: '' });
-    const [errors, setErrors] = useState({});
-    const [validationActive, setValidationActive] = useState(false);
+    const [errored, setErrored] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
 
     useEffect(() => {
         document.title = '[SITE]: Forgot Password';
@@ -35,36 +35,20 @@ const ForgotPassword = ({ classes }) => {
     const handleChange = prop => (event) => {
         setValues({ ...values, [prop]: event.target.value });
     };
-    const validate = () => {
-        setValidationActive(true);
 
-        const validationError = Validation.validate({ email: values.email }).error;
-
-        if (validationError) {
-            const currentErrors = {};
-            validationError.details.forEach((detail) => {
-                currentErrors[detail.context.key] = detail.type;
-            });
-
-            setErrors(currentErrors);
-        } else {
-            setErrors({});
-        }
-        return validationError;
-    };
-
-
-    useEffect(() => {
-        if (validationActive) {
-            validate();
-        }
-    }, [values.email]);
     const handleSubmit = () => {
-        if (!validate()) {
-            // no error
-            // let's make an API Call
-            dispatch(ForgotPass(values.email));
+        setErrored(null);
+        setErrorMsg(null);
+        const { error } = Validation.forgot.validate(values);
+
+        if (error) {
+            setErrorMsg(error.message);
+            setErrored(true);
+            return;
         }
+        // no error
+        // let's make an API Call
+        dispatch(ForgotPass(values.email));
     };
 
     return (
@@ -77,7 +61,8 @@ const ForgotPassword = ({ classes }) => {
                     Reset Password
                 </Typography>
                 <div role="status" aria-live="polite">
-                    {forgotpassError ? (<Typography variant="body1" className={classes.errorMessage} style={{ paddingBottom: 30 }}>{forgotpassErrorMsg}</Typography>) : null}
+                    {errored && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
+                    {forgotpassError && <Typography variant="body1" className={classes.errorMessage}>{forgotpassErrorMsg}</Typography>}
                     {(forgotpassCompleted && !forgotpassError) && (<Typography variant="body1" className={classes.successMessage} style={{ paddingBottom: 30 }}>Success: A reset email has been sent to your account.</Typography>)}
                 </div>
                 <div className={classes.inputWrapper}>
@@ -87,7 +72,6 @@ const ForgotPassword = ({ classes }) => {
                         type="email"
                         autoComplete="on"
                         value={values.email}
-                        error={errors.email !== undefined}
                         onChange={handleChange('email')}
                         fullWidth
                         InputLabelProps={{
@@ -108,9 +92,6 @@ const ForgotPassword = ({ classes }) => {
                             },
                         }}
                     />
-                </div>
-                <div className={classes.errorMessage} role="status" aria-live="polite">
-                    {errors.email ? 'Please enter your email address' : ''}
                 </div>
                 <div className={classes.inputWrapper}>
                     <Button
