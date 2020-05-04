@@ -33,7 +33,7 @@ export default function useDebounce(value, delay, initialBuildComplete) {
         // Only re-call effect if value changes
         // You could also add the "delay" var to inputs array if you ...
         // ... need to be able to change that dynamically.
-        [value],
+        [value, delay, initialBuildComplete],
     );
 
     return debouncedValue;
