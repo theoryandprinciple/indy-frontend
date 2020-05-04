@@ -40,7 +40,7 @@ const ResetPassword = ({ classes }) => {
             }, 3000);
         }
         return () => clearTimeout(timer);
-    }, [resetpassCompleted, resetpassError]);
+    }, [resetpassCompleted, resetpassError, history]);
 
     const handleSubmit = () => {
         setErrored(null);
