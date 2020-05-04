@@ -10,7 +10,6 @@ const email = Joi.string()
 
 const password = Joi.string()
     .required()
-    .min(8)
     .messages({
         'string.empty': 'Error: Password is required',
     });
@@ -26,6 +25,10 @@ const schemas = {
     reset: Joi.object({
         email,
         password,
+        resetToken: Joi.string().required()
+            .messages({
+                'string.required': 'Error: The URL you used to get here appears invalid',
+            }),
         passwordConfirm: Joi.ref('password'),
     }),
 };

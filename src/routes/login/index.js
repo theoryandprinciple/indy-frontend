@@ -25,7 +25,7 @@ const SignInForm = ({ classes }) => {
 
     const [errored, setErrored] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [values, setValues] = useState({ password: '', email: '', dumb: '' });
+    const [values, setValues] = useState({ password: '', email: '' });
 
     const handleChange = prop => (event) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -84,8 +84,9 @@ const SignInForm = ({ classes }) => {
         <div className={classes.wrapper}>
             <div className={classes.formWrapper}>
                 <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Sign In</Typography>
-                {errored ? (<span>{errorMsg}</span>) : null}
-                {errored === false ? (<span>success</span>) : null}
+                <div role="status" aria-live="polite">
+                    {errored && <span>{errorMsg}</span>}
+                </div>
                 <div className={classes.inputWrapper}>
                     <TextField
                         label="Email"

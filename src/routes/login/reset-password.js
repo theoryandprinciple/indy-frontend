@@ -22,15 +22,10 @@ const ResetPassword = ({ classes }) => {
         // reset error states
         setErrored(null);
         setErrorMsg(null);
-        const { error } = Validation.reset.validate(values);
+        const { error } = Validation.reset.validate({ ...values, resetToken });
 
         if (error) {
             setErrorMsg(error.message);
-            setErrored(true);
-            return;
-        }
-        if (!resetToken) {
-            setErrorMsg('Error: The URL you used to get here appears invalid');
             setErrored(true);
             return;
         }
@@ -58,8 +53,10 @@ const ResetPassword = ({ classes }) => {
         <div className={classes.wrapper}>
             <div className={classes.formWrapper}>
                 <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Reset Password</Typography>
-                {errored ? (<span>{errorMsg}</span>) : null}
-                {errored === false ? (<span>success, proceed to login</span>) : null}
+                <div role="status" aria-live="polite">
+                    {errored ? (<span>{errorMsg}</span>) : null}
+                    {errored === false ? (<span>success, proceed to login</span>) : null}
+                </div>
                 <div className={classes.inputWrapper}>
                     <TextField
                         label="Email"

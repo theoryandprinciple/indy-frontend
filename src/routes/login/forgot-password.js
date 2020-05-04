@@ -53,8 +53,10 @@ const ForgotPassword = ({ classes }) => {
                 >
                     Reset Password
                 </Typography>
-                {errored ? (<span>{errorMsg}</span>) : null}
-                {errored === false ? (<span>success, an email to complete the process has been sent.</span>) : null}
+                <div role="status" aria-live="polite">
+                    {errored ? (<span>{errorMsg}</span>) : null}
+                    {errored === false ? (<span>success, an email to complete the process has been sent.</span>) : null}
+                </div>
                 <div className={classes.inputWrapper}>
                     <TextField
                         label="Email"
