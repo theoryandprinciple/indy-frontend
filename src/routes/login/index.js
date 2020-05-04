@@ -33,7 +33,7 @@ const SignInForm = ({ classes }) => {
         setValues({ ...values, [prop]: event.target.value });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = useCallback(() => {
         // reset error states
         setErrored(null);
         setErrorMsg(null);
@@ -61,7 +61,7 @@ const SignInForm = ({ classes }) => {
                 // update the app's auth context regardless of success or error
                 onLogin(data);
             });
-    };
+    }, [values]);
 
     const passwordInputRef = useRef(null);
     const eventHandler = useCallback((event) => {
@@ -80,7 +80,7 @@ const SignInForm = ({ classes }) => {
         if (authData.isAuthenticated) {
             history.push('/');
         }
-    }, [authData.isAuthenticated]);
+    }, [authData.isAuthenticated, history]);
 
     return (
         <div className={classes.wrapper}>
