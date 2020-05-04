@@ -14,6 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import { useAuthDataContext } from './wiring/auth-provider';
 import { Login } from './wiring/auth-api';
 
+import CombineStyles from '../../utils/combine-styles';
+import InputStyles from '../../styles/inputs';
 import Styles from './styles';
 import Validation from '../../utils/validation-schema-login';
 
@@ -23,9 +25,9 @@ const SignInForm = ({ classes }) => {
     const history = useHistory();
     const { onLogin, authData } = useAuthDataContext();
 
-    const [error, setError] = useState(null);
+    const [errored, setErrored] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [values, setValues] = useState({ password: '', email: '', showPassword: false });
+    const [values, setValues] = useState({ password: '', email: '' });
 
     const handleChange = prop => (event) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -33,30 +35,16 @@ const SignInForm = ({ classes }) => {
 
     const handleSubmit = () => {
         // reset error states
-        setError(null);
+        setErrored(null);
         setErrorMsg(null);
-        let errored = false;
 
         // Validatation
         // - validating just on field at a time, and offering feedback only on that field
+        const { error } = Validation.login.validate(values);
 
-        const emailError = Validation.validate({ email: values.email }).error;
-        if (values.email === '') {
-            setErrorMsg('Email is required');
-            errored = true;
-        } else if (emailError) {
-            setErrorMsg('Email appears to invalid');
-            errored = true;
-            // joi can't handle custom error messages, so we still need to use offer our own
-            // setErrorMsg(emailError.message);
-        } else if (values.password === '') {
-            setErrorMsg('Error: Password appears invalid');
-            errored = true;
-        }
-
-        // if we had a local error, stop the submission
-        if (errored) {
-            setError(true);
+        if (error) {
+            setErrorMsg(error.message);
+            setErrored(true);
             return;
         }
 
@@ -68,7 +56,7 @@ const SignInForm = ({ classes }) => {
         Login(currentFormValue)
             .then((data) => {
                 // we get here with or without errors
-                setError(data.error);
+                setErrored(data.error);
                 setErrorMsg(data.error ? data.errorMsg : null);
                 // update the app's auth context regardless of success or error
                 onLogin(data);
@@ -98,8 +86,9 @@ const SignInForm = ({ classes }) => {
         <div className={classes.wrapper}>
             <div className={classes.formWrapper}>
                 <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Sign In</Typography>
-                {error ? (<span>{errorMsg}</span>) : null}
-                {error === false ? (<span>success</span>) : null}
+                <div role="status" aria-live="polite">
+                    {errored && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
+                </div>
                 <div className={classes.inputWrapper}>
                     <TextField
                         label="Email"
@@ -186,4 +175,5 @@ SignInForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(Styles)(SignInForm);
+const combinedStyles = CombineStyles(Styles, InputStyles);
+export default withStyles(combinedStyles)(SignInForm);
