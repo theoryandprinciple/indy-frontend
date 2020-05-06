@@ -11,7 +11,7 @@ import { useFlowDataContext } from '../../../wiring/flow-provider';
 import Styles from './styles';
 
 const SectionHeader = ({ classes }) => {
-    const { localFlowData, updateRemoteFlowData } = useFlowDataContext();
+    const { localFlowData } = useFlowDataContext();
 
     const save = () => {
         SaveFlow(localFlowData);
