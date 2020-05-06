@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+import useQuery from '../../utils/use-query';
+
 import { ForgotPass, ForgotPassBegin } from '../../actions/auth';
 import Validation from '../../utils/validation-schema-login';
 
@@ -22,12 +24,21 @@ const ForgotPassword = ({ classes }) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    // get query parameter
+    const query = useQuery();
+
     const [values, setValues] = useState({ email: '' });
     const [errored, setErrored] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
 
+    const encodeQueryParam = x => (
+        x.replace(/\s/g, '+')
+    );
+
     useEffect(() => {
         document.title = 'Forgot Password - [SITE]';
+        // hydrate email address from URL
+        setValues({ email: encodeQueryParam(query.get('email')) });
         // clear error messages when component loads
         dispatch(ForgotPassBegin());
         // eslint-disable-next-line
