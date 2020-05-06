@@ -11,7 +11,8 @@ import { useFlowDataContext } from '../../../wiring/flow-provider';
 import Styles from './styles';
 
 const SectionHeader = ({ classes }) => {
-    const { localFlowData } = useFlowDataContext();
+    // eslint-disable-next-line
+    const { localFlowData, updateRemoteFlowData } = useFlowDataContext();
 
     const save = () => {
         SaveFlow(localFlowData);
