@@ -39,7 +39,7 @@ const SignInForm = ({ classes }) => {
     const [values, setValues] = useState({ password: '', email: '' });
 
     useEffect(() => {
-        document.title = '[SITE]: Log in';
+        document.title = 'Log in - [SITE]';
         // clear errors on mount/dismount
         dispatch(LoginBegin({ error: false, errorMsg: '' }));
         return () => dispatch(LoginBegin({ error: false, errorMsg: '' }));

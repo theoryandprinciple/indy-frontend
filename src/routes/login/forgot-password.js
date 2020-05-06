@@ -27,7 +27,7 @@ const ForgotPassword = ({ classes }) => {
     const [errorMsg, setErrorMsg] = useState(null);
 
     useEffect(() => {
-        document.title = '[SITE]: Forgot Password';
+        document.title = 'Forgot Password - [SITE]';
         // clear error messages when component loads
         dispatch(ForgotPassBegin());
         // eslint-disable-next-line
