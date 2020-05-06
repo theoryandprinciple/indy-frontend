@@ -185,7 +185,9 @@ const SignInForm = ({ classes }) => {
                     <Button
                         color="primary"
                         fullWidth
-                        onClick={() => history.push(`/login/forgot-password?email=${values.email}`)}
+                        onClick={() => {
+                            history.push(values.email ? `/login/forgot-password?email=${values.email}` : '/login/forgot-password');
+                        }}
                     >
                         Forgot Password
                     </Button>

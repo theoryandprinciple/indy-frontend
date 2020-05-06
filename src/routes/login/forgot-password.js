@@ -38,7 +38,9 @@ const ForgotPassword = ({ classes }) => {
     useEffect(() => {
         document.title = 'Forgot Password - [SITE]';
         // hydrate email address from URL
-        setValues({ email: encodeQueryParam(query.get('email')) });
+        if (query.get('email')) {
+            setValues({ email: encodeQueryParam(query.get('email')) });
+        }
         // clear error messages when component loads
         dispatch(ForgotPassBegin());
         // eslint-disable-next-line
