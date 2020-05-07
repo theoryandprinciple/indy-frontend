@@ -22,9 +22,8 @@ const ForgotPassword = ({ classes }) => {
     const forgotpassErrorMsg = useSelector(state => state.auth.forgotPass.errorMsg);
     const forgotpassCompleted = useSelector(state => state.auth.forgotPass.completed);
     const dispatch = useDispatch();
-    const history = useHistory();
 
-    // get query parameter
+    const history = useHistory();
     const query = useQuery();
 
     const [values, setValues] = useState({ email: '' });
@@ -88,6 +87,7 @@ const ForgotPassword = ({ classes }) => {
                         value={values.email}
                         onChange={handleChange('email')}
                         fullWidth
+                        autoFocus
                         InputLabelProps={{
                             classes: {
                                 root: classes.textInputLabelRoot,
@@ -120,8 +120,8 @@ const ForgotPassword = ({ classes }) => {
                 <div className={classes.inputWrapper}>
                     <Button
                         color="primary"
-                        onClick={() => history.goBack()}
                         fullWidth
+                        onClick={() => history.push(values.email ? `/login?email=${values.email}` : '/login')}
                     >
                         Cancel
                     </Button>

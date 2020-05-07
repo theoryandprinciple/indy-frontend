@@ -13,6 +13,8 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import useQuery from '../../utils/use-query';
+
 import { Login, ResetPassBegin, LoginBegin } from '../../actions/auth';
 import Validation from '../../utils/validation-schema-login';
 
@@ -31,6 +33,7 @@ const SignInForm = ({ classes }) => {
     const dispatch = useDispatch();
 
     const history = useHistory();
+    const query = useQuery();
 
     const [errored, setErrored] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -38,10 +41,20 @@ const SignInForm = ({ classes }) => {
     const [errorMsgAPI, setErrorMsgAPI] = useState(null);
     const [values, setValues] = useState({ password: '', email: '' });
 
+    const encodeQueryParam = x => (
+        x.replace(/\s/g, '+')
+    );
+
     useEffect(() => {
         document.title = 'Log in - [SITE]';
         // clear errors on mount/dismount
         dispatch(LoginBegin({ error: false, errorMsg: '' }));
+        // hydrate email address from URL
+        if (query.get('email')) {
+            setValues({ email: encodeQueryParam(query.get('email')) });
+            // clear query string
+            history.push({ search: '' });
+        }
         return () => dispatch(LoginBegin({ error: false, errorMsg: '' }));
         // eslint-disable-next-line
     }, []);
@@ -122,6 +135,7 @@ const SignInForm = ({ classes }) => {
                         autoComplete="on"
                         value={values.email}
                         onChange={handleChange('email')}
+                        autoFocus={!values.email}
                         InputLabelProps={{
                             classes: {
                                 root: classes.textInputLabelRoot,
@@ -181,7 +195,7 @@ const SignInForm = ({ classes }) => {
                         Log In
                     </Button>
                 </div>
-                <div>
+                <div className={classes.inputWrapper}>
                     <Button
                         color="primary"
                         fullWidth
