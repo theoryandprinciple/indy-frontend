@@ -25,11 +25,14 @@ const schemas = {
     reset: Joi.object({
         email,
         password,
+        passwordConfirm: Joi.string().valid(Joi.ref('password')).required()
+            .messages({
+                'any.only': 'Error: Confirmation password does not match',
+            }),
         resetToken: Joi.string().required()
             .messages({
                 'string.required': 'Error: The URL you used to get here appears invalid',
             }),
-        passwordConfirm: Joi.ref('password'),
     }),
 };
 
