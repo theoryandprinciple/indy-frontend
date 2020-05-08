@@ -83,6 +83,7 @@ const ResetPassword = ({ classes }) => {
                         type="email"
                         autoComplete="on"
                         value={values.email}
+                        autoFocus
                         onChange={handleChange('email')}
                         fullWidth
                         InputLabelProps={{
