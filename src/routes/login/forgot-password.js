@@ -1,4 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+    useState,
+    useEffect,
+    useRef,
+    useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,6 +21,8 @@ import Validation from '../../utils/validation-schema-login';
 import CombineStyles from '../../utils/combine-styles';
 import InputStyles from '../../styles/inputs';
 import Styles from './styles';
+
+import useEventListener from '../../utils/use-event-listener';
 
 const ForgotPassword = ({ classes }) => {
     const forgotpassError = useSelector(state => state.auth.forgotPass.error);
@@ -64,6 +71,18 @@ const ForgotPassword = ({ classes }) => {
         dispatch(ForgotPass(values.email));
     };
 
+    const emailRef = useRef(null);
+    const eventHandler = useCallback((event) => {
+        // check to see if we are pressing the enter key
+        if (event.keyCode === 13) {
+            // cancel the default action, if needed
+            event.preventDefault();
+            // trigger the button element with a click
+            handleSubmit();
+        }
+    }, [handleSubmit]);
+    useEventListener('keyup', eventHandler, emailRef.current);
+
     return (
         <div className={classes.wrapper}>
             <div className={classes.formWrapper}>
@@ -80,6 +99,7 @@ const ForgotPassword = ({ classes }) => {
                 </div>
                 <div className={classes.inputWrapper}>
                     <TextField
+                        ref={emailRef}
                         label="Email"
                         variant="outlined"
                         type="email"

@@ -39,7 +39,7 @@ const SignInForm = ({ classes }) => {
     const [errorMsg, setErrorMsg] = useState(null);
     const [errorAPI, setErrorAPI] = useState(null);
     const [errorMsgAPI, setErrorMsgAPI] = useState(null);
-    const [values, setValues] = useState({ password: '', email: '' });
+    const [values, setValues] = useState({ email: '', password: '' });
 
     const encodeQueryParam = x => (
         x.replace(/\s/g, '+')
@@ -51,11 +51,17 @@ const SignInForm = ({ classes }) => {
         dispatch(LoginBegin({ error: false, errorMsg: '' }));
         // hydrate email address from URL
         if (query.get('email')) {
-            setValues({ email: encodeQueryParam(query.get('email')) });
-            // clear query string
-            history.push({ search: '' });
+            if (values.email !== encodeQueryParam(query.get('email'))) {
+                // populate email and must set password as controlled input
+                setValues({
+                    email: encodeQueryParam(query.get('email')),
+                    password: '',
+                });
+                // clear query string
+                history.push({ search: '' });
+            }
         }
-        return () => dispatch(LoginBegin({ error: false, errorMsg: '' }));
+        dispatch(LoginBegin({ error: false, errorMsg: '' }));
         // eslint-disable-next-line
     }, []);
 
@@ -103,18 +109,19 @@ const SignInForm = ({ classes }) => {
         dispatch(Login(values));
     }, [values]);
 
-    const inputRef = useRef(null);
+    const emailRef = useRef(null);
+    const passRef = useRef(null);
     const eventHandler = useCallback((event) => {
         // check to see if we are pressing the enter key
         if (event.keyCode === 13) {
-            // Cancel the default action, if needed
+            // cancel the default action, if needed
             event.preventDefault();
-            // Trigger the button element with a click
+            // trigger the button element with a click
             handleSubmit();
         }
     }, [handleSubmit]);
-
-    useEventListener('keyup', eventHandler, inputRef.current);
+    useEventListener('keyup', eventHandler, emailRef.current);
+    useEventListener('keyup', eventHandler, passRef.current);
 
     return (
         <div className={classes.wrapper}>
@@ -127,14 +134,14 @@ const SignInForm = ({ classes }) => {
                 </div>
                 <div className={classes.inputWrapper}>
                     <TextField
-                        placeholder="Email"
+                        ref={emailRef}
                         label="Email"
                         variant="outlined"
-                        fullWidth
                         type="email"
                         autoComplete="on"
                         value={values.email}
                         onChange={handleChange('email')}
+                        fullWidth
                         autoFocus={!values.email}
                         InputLabelProps={{
                             classes: {
@@ -157,6 +164,7 @@ const SignInForm = ({ classes }) => {
                 </div>
                 <div className={classes.inputWrapper}>
                     <TextField
+                        ref={passRef}
                         placeholder="Password"
                         label="Password"
                         variant="outlined"
