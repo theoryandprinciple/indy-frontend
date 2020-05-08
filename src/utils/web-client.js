@@ -6,7 +6,7 @@ const internals = {
     getApiBase: () => {
         const { host, prefix } = internals;
 
-        return `${host}/${prefix}`;
+        return `${host}${prefix}`;
     },
 };
 
