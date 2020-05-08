@@ -13,8 +13,6 @@ import Logo from './images/logo.png';
 
 const AdminHeader = ({ classes }) => {
     const LogoLink = React.forwardRef((props, ref) => <NavLink activeClassName={classes.primaryLinkActive} exact to="/admin" {...ref} {...props} />);
-    const FlowBuilderLink = React.forwardRef((props, ref) => <NavLink activeClassName={classes.primaryLinkActive} to="/admin/flow-builder" {...ref} {...props} />);
-    const OutputBuilderLink = React.forwardRef((props, ref) => <NavLink activeClassName={classes.primaryLinkActive} to="/admin/output-builder" {...ref} {...props} />);
 
     const { onLogout } = useAuthDataContext();
     const LogoutFunc = () => onLogout(Logout());
@@ -29,12 +27,6 @@ const AdminHeader = ({ classes }) => {
                 <div className="col text-center" style={{ height: '100%' }}>
                     <Button component={LogoLink} className={classes.primaryLink}>
                         Dashboard
-                    </Button>
-                    <Button component={FlowBuilderLink} className={classes.primaryLink}>
-                        Flow Builder
-                    </Button>
-                    <Button component={OutputBuilderLink} className={classes.primaryLink}>
-                        Output
                     </Button>
                 </div>
                 <div className="col text-right">
