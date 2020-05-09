@@ -86,7 +86,7 @@ const SignInForm = ({ classes }) => {
             }, 5000);
         }
         return () => clearTimeout(timer);
-    }, [resetpassCompleted]);
+    }, [resetpassCompleted, dispatch]);
 
     const handleChange = prop => (event) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -107,7 +107,7 @@ const SignInForm = ({ classes }) => {
         // no error
         // let's make an API Call
         dispatch(Login(values));
-    }, [values]);
+    }, [values, dispatch]);
 
     const emailRef = useRef(null);
     const passRef = useRef(null);

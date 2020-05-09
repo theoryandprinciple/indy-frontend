@@ -56,7 +56,7 @@ const ForgotPassword = ({ classes }) => {
         setValues({ ...values, [prop]: event.target.value });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = useCallback(() => {
         setErrored(null);
         setErrorMsg(null);
         const { error } = Validation.forgot.validate(values);
@@ -69,7 +69,7 @@ const ForgotPassword = ({ classes }) => {
         // no error
         // let's make an API Call
         dispatch(ForgotPass(values.email));
-    };
+    }, [values, dispatch]);
 
     const emailRef = useRef(null);
     const eventHandler = useCallback((event) => {
