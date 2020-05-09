@@ -135,13 +135,14 @@ const SignInForm = ({ classes }) => {
                 <div className={classes.inputWrapper}>
                     <TextField
                         ref={emailRef}
+                        placeholder="Email"
                         label="Email"
                         variant="outlined"
+                        fullWidth
                         type="email"
                         autoComplete="on"
                         value={values.email}
                         onChange={handleChange('email')}
-                        fullWidth
                         autoFocus={!values.email}
                         InputLabelProps={{
                             classes: {
@@ -169,7 +170,6 @@ const SignInForm = ({ classes }) => {
                         label="Password"
                         variant="outlined"
                         fullWidth
-                        id="adornment-password"
                         type={values.showPassword ? 'text' : 'password'}
                         autoComplete="current-password"
                         value={values.password}
