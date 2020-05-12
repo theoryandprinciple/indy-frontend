@@ -89,10 +89,7 @@ const SignInForm = ({ classes }) => {
     }, [resetpassCompleted, dispatch]);
 
     const handleChange = prop => (event) => {
-        // keep the original synthetic event around, prevent null value
-        event.persist();
-        // update values
-        setValues(v => ({ ...v, [prop]: event.target.value }));
+        setValues({ ...values, [prop]: event.target.value });
     };
 
     const handleSubmit = useCallback(() => {

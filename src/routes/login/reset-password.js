@@ -64,7 +64,7 @@ const ResetPassword = ({ classes }) => {
     };
 
     const handleChange = prop => (event) => {
-        setValues(v => ({ ...v, [prop]: event.target.value }));
+        setValues({ ...values, [prop]: event.target.value });
     };
 
     return (
