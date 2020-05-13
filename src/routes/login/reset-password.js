@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 
@@ -25,6 +25,10 @@ const ResetPassword = ({ classes }) => {
         setErrored(null);
         setErrorMsg(null);
         const { error } = Validation.reset.validate({ ...values, resetToken });
+
+        useEffect(() => {
+            document.title = 'Reset Password - [SITE]';
+        }, []);
 
         if (error) {
             setErrorMsg(error.message);
@@ -66,6 +70,7 @@ const ResetPassword = ({ classes }) => {
                         type="email"
                         autoComplete="on"
                         value={values.email}
+                        autoFocus
                         onChange={handleChange('email')}
                         fullWidth
                         InputLabelProps={{
