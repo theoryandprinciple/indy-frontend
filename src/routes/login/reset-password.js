@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 
@@ -19,6 +19,10 @@ const ResetPassword = ({ classes }) => {
     const [values, setValues] = useState({ email: '', password: '' });
     const [errored, setErrored] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
+
+    useEffect(() => {
+        document.title = 'Reset Password - [SITE]';
+    }, []);
 
     const handleSubmit = () => {
         // reset error states
@@ -66,6 +70,7 @@ const ResetPassword = ({ classes }) => {
                         type="email"
                         autoComplete="on"
                         value={values.email}
+                        autoFocus
                         onChange={handleChange('email')}
                         fullWidth
                         InputLabelProps={{

@@ -25,7 +25,7 @@ const PublicLayout = () => {
                 <Route exact path="/login/forgot-password">
                     <ForgotPassword />
                 </Route>
-                <Route path="/password-reset/:resetToken">
+                <Route path="/reset-password/:resetToken">
                     <ResetPassword />
                 </Route>
                 <Route path="/">

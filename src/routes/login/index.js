@@ -7,9 +7,11 @@ import React, {
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
+import useQuery from '../../utils/use-query';
 
 import { useAuthDataContext } from './wiring/auth-provider';
 import { Login } from './wiring/auth-api';
@@ -23,11 +25,34 @@ import useEventListener from '../../utils/use-event-listener';
 
 const SignInForm = ({ classes }) => {
     const history = useHistory();
+    const query = useQuery();
     const { onLogin, authData } = useAuthDataContext();
 
     const [errored, setErrored] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [values, setValues] = useState({ password: '', email: '' });
+    const [values, setValues] = useState({ email: '', password: '' });
+
+    const encodeQueryParam = x => (
+        x.replace(/\s/g, '+')
+    );
+
+    useEffect(() => {
+        document.title = 'Log in - [SITE]';
+
+        // hydrate email address from URL
+        if (query.get('email')) {
+            if (values.email !== encodeQueryParam(query.get('email'))) {
+                // populate email and must set password as controlled input
+                setValues({
+                    email: encodeQueryParam(query.get('email')),
+                    password: '',
+                });
+                // clear query string
+                history.push({ search: '' });
+            }
+        }
+        // eslint-disable-next-line
+   }, []);
 
     const handleChange = prop => (event) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -61,20 +86,22 @@ const SignInForm = ({ classes }) => {
                 // update the app's auth context regardless of success or error
                 onLogin(data);
             });
-    }, [values]);
+    }, [values, onLogin]);
 
-    const passwordInputRef = useRef(null);
+    const emailRef = useRef(null);
+    const passRef = useRef(null);
     const eventHandler = useCallback((event) => {
         // check to see if we are pressing the enter key
         if (event.keyCode === 13) {
-            // Cancel the default action, if needed
+            // cancel the default action, if needed
             event.preventDefault();
-            // Trigger the button element with a click
+            // trigger the button element with a click
             handleSubmit();
         }
     }, [handleSubmit]);
 
-    useEventListener('keyup', eventHandler, passwordInputRef.current);
+    useEventListener('keyup', eventHandler, emailRef.current);
+    useEventListener('keyup', eventHandler, passRef.current);
 
     useEffect(() => {
         if (authData.isAuthenticated) {
@@ -91,12 +118,14 @@ const SignInForm = ({ classes }) => {
                 </div>
                 <div className={classes.inputWrapper}>
                     <TextField
+                        ref={emailRef}
                         label="Email"
                         variant="outlined"
                         type="email"
                         autoComplete="on"
                         value={values.email}
                         onChange={handleChange('email')}
+                        autoFocus={!values.email}
                         fullWidth
                         InputLabelProps={{
                             classes: {
@@ -119,7 +148,7 @@ const SignInForm = ({ classes }) => {
                 </div>
                 <div className={classes.inputWrapper}>
                     <TextField
-                        ref={passwordInputRef}
+                        ref={passRef}
                         label="Password"
                         variant="outlined"
                         type="password"
@@ -161,7 +190,7 @@ const SignInForm = ({ classes }) => {
                     <Button
                         color="primary"
                         fullWidth
-                        onClick={() => history.push('/login/forgot-password')}
+                        onClick={() => history.push(values.email ? `/login/forgot-password?email=${values.email}` : '/login/forgot-password')}
                     >
                         Forgot Password
                     </Button>
