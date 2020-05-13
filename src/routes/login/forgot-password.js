@@ -1,4 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+    useState,
+    useEffect,
+    useRef,
+    useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+import useQuery from '../../utils/use-query';
+
 import { ForgotPass, ForgotPassBegin } from '../../actions/auth';
 import Validation from '../../utils/validation-schema-login';
 
@@ -15,19 +22,31 @@ import CombineStyles from '../../utils/combine-styles';
 import InputStyles from '../../styles/inputs';
 import Styles from './styles';
 
+import useEventListener from '../../utils/use-event-listener';
+
 const ForgotPassword = ({ classes }) => {
     const forgotpassError = useSelector(state => state.auth.forgotPass.error);
     const forgotpassErrorMsg = useSelector(state => state.auth.forgotPass.errorMsg);
     const forgotpassCompleted = useSelector(state => state.auth.forgotPass.completed);
     const dispatch = useDispatch();
+
     const history = useHistory();
+    const query = useQuery();
 
     const [values, setValues] = useState({ email: '' });
     const [errored, setErrored] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
 
+    const encodeQueryParam = x => (
+        x.replace(/\s/g, '+')
+    );
+
     useEffect(() => {
-        document.title = '[SITE]: Forgot Password';
+        document.title = 'Forgot Password - [SITE]';
+        // hydrate email address from URL
+        if (query.get('email')) {
+            setValues({ email: encodeQueryParam(query.get('email')) });
+        }
         // clear error messages when component loads
         dispatch(ForgotPassBegin());
         // eslint-disable-next-line
@@ -37,7 +56,7 @@ const ForgotPassword = ({ classes }) => {
         setValues({ ...values, [prop]: event.target.value });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = useCallback(() => {
         setErrored(null);
         setErrorMsg(null);
         const { error } = Validation.forgot.validate(values);
@@ -50,7 +69,19 @@ const ForgotPassword = ({ classes }) => {
         // no error
         // let's make an API Call
         dispatch(ForgotPass(values.email));
-    };
+    }, [values, dispatch]);
+
+    const emailRef = useRef(null);
+    const eventHandler = useCallback((event) => {
+        // check to see if we are pressing the enter key
+        if (event.keyCode === 13) {
+            // cancel the default action, if needed
+            event.preventDefault();
+            // trigger the button element with a click
+            handleSubmit();
+        }
+    }, [handleSubmit]);
+    useEventListener('keyup', eventHandler, emailRef.current);
 
     return (
         <div className={classes.wrapper}>
@@ -68,6 +99,7 @@ const ForgotPassword = ({ classes }) => {
                 </div>
                 <div className={classes.inputWrapper}>
                     <TextField
+                        ref={emailRef}
                         label="Email"
                         variant="outlined"
                         type="email"
@@ -75,6 +107,7 @@ const ForgotPassword = ({ classes }) => {
                         value={values.email}
                         onChange={handleChange('email')}
                         fullWidth
+                        autoFocus
                         InputLabelProps={{
                             classes: {
                                 root: classes.textInputLabelRoot,
@@ -107,8 +140,8 @@ const ForgotPassword = ({ classes }) => {
                 <div className={classes.inputWrapper}>
                     <Button
                         color="primary"
-                        onClick={() => history.goBack()}
                         fullWidth
+                        onClick={() => history.push(values.email ? `/login?email=${values.email}` : '/login')}
                     >
                         Cancel
                     </Button>

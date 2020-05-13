@@ -29,7 +29,7 @@ const ResetPassword = ({ classes }) => {
     const [errorMsg, setErrorMsg] = useState(null);
 
     useEffect(() => {
-        document.title = '[SITE]: Reset Password';
+        document.title = 'Reset Password - [SITE]';
     }, []);
 
     useEffect(() => {
@@ -83,6 +83,7 @@ const ResetPassword = ({ classes }) => {
                         type="email"
                         autoComplete="on"
                         value={values.email}
+                        autoFocus
                         onChange={handleChange('email')}
                         fullWidth
                         InputLabelProps={{
