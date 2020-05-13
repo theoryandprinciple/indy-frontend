@@ -20,15 +20,15 @@ const ResetPassword = ({ classes }) => {
     const [errored, setErrored] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
 
+    useEffect(() => {
+        document.title = 'Reset Password - [SITE]';
+    }, []);
+
     const handleSubmit = () => {
         // reset error states
         setErrored(null);
         setErrorMsg(null);
         const { error } = Validation.reset.validate({ ...values, resetToken });
-
-        useEffect(() => {
-            document.title = 'Reset Password - [SITE]';
-        }, []);
 
         if (error) {
             setErrorMsg(error.message);

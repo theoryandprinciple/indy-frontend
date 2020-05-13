@@ -86,7 +86,7 @@ const SignInForm = ({ classes }) => {
                 // update the app's auth context regardless of success or error
                 onLogin(data);
             });
-    }, [values]);
+    }, [values, onLogin]);
 
     const emailRef = useRef(null);
     const passRef = useRef(null);
