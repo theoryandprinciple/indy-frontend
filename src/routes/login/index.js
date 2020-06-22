@@ -63,7 +63,7 @@ const SignInForm = ({ classes }) => {
         setErrored(null);
         setErrorMsg(null);
 
-        // Validatation
+        // Validation
         // - validating just on field at a time, and offering feedback only on that field
         const { error } = Validation.login.validate(values);
 

@@ -12,6 +12,12 @@ import App from './routes';
 import 'sanitize.css/sanitize.css';
 import './index.css';
 
+if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line global-require
+    const axe = require('react-axe');
+    axe(React, ReactDOM, 1000);
+}
+
 ReactDOM.render(
     <Router history={history}>
         <AuthDataProvider>
