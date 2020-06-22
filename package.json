@@ -12,10 +12,11 @@
     "test": "CI=true react-scripts test --env=jsdom --passWithNoTests",
     "eject": "react-scripts eject",
     "precommit": "pretty-quick --staged",
-    "lint": "eslint 'src/**/*.js' --ignore-pattern node_modules/"
+    "lint": "eslint ./src"
   },
   "devDependencies": {
     "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.19.0",
     "react-scripts": "^3.4.1"
   },
@@ -41,6 +42,7 @@
     "pre-commit": "^1.2.2",
     "prop-types": "^15.7.2",
     "react": "16.9.0",
+    "react-axe": "^3.5.2",
     "react-dom": "^16.13.1",
     "react-error-boundary": "^2.2.1",
     "react-router-dom": "^5.1.2",

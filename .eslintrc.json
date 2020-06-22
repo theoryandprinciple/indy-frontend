@@ -3,8 +3,8 @@
     "browser": true,
     "jest": true
   },
-  "extends": ["airbnb"],
-  "plugins": ["babel"],
+  "extends": ["airbnb", "plugin:jsx-a11y/strict"],
+  "plugins": ["babel", "jsx-a11y"],
   "parser": "babel-eslint",
   "rules": {
     "max-len": 0,
