@@ -79,12 +79,12 @@ const SignInForm = ({ classes }) => {
     }, [authData.isAuthenticated, history]);
 
     useEffect(() => {
-        Object.values(errors).forEach((error) => {
-            // TODO error precedence? show email validation error first while keeping dynamic
-            if (error && error.message) {
-                setErrorMsg(error.message);
-            }
-        });
+        // Only show the first error message
+        if (Object.keys(errors).length) {
+            // Relies on Object.keys insertion order property ordering, not ideal
+            setErrorMsg(errors[Object.keys(errors)[0]].message);
+            setErrorAPI(null);
+        }
     }, [errors]);
 
     return (
@@ -100,7 +100,7 @@ const SignInForm = ({ classes }) => {
                         <TextField
                             name="email"
                             inputRef={register({
-                                required: true,
+                                required: 'Email is required',
                                 pattern: {
                                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                                     message: 'Email appears invalid',
@@ -110,6 +110,7 @@ const SignInForm = ({ classes }) => {
                             label="Email"
                             variant="outlined"
                             fullWidth
+                            style={{ minWidth: 280 }}
                             autoComplete="on"
                             autoFocus={!getValues('email')}
                             InputLabelProps={{
@@ -135,12 +136,13 @@ const SignInForm = ({ classes }) => {
                         <TextField
                             name="password"
                             inputRef={register({
-                                required: 'Password required',
+                                required: 'Password is required',
                             })}
                             placeholder="Password"
                             label="Password"
                             variant="outlined"
                             fullWidth
+                            style={{ minWidth: 280 }}
                             autoComplete="current-password"
                             type="password"
                             InputLabelProps={{
