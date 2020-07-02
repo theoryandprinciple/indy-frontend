@@ -128,7 +128,7 @@ const SignInForm = ({ classes }) => {
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Sign In</Typography>
                     <div role="status" aria-live="polite">
-                        {!!Object.keys(errors).length && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
+                        {errorMsg && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
                         {errorAPI && <Typography variant="body1" className={classes.errorMessage}>{errorMsgAPI}</Typography>}
                         {(resetpassCompleted && !resetpassError) && (<Typography variant="body1" className={classes.successMessage} style={{ paddingBottom: 30 }}>Success: Your password has successfully been updated.</Typography>)}
                     </div>
