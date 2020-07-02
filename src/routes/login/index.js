@@ -12,6 +12,8 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import Validation from '../../utils/validation-schema-login';
+
 import useQuery from '../../utils/use-query';
 
 import { useAuthDataContext } from './wiring/auth-provider';
@@ -36,7 +38,23 @@ const SignInForm = ({ classes }) => {
         setValue,
         getValues,
         errors,
-    } = useForm();
+    } = useForm({
+        resolver: async (data) => {
+            const { error, value: values } = Validation.login.validate(data, {
+                abortEarly: false,
+            });
+
+            return {
+                values: error ? {} : values,
+                errors: error
+                    ? error.details.reduce((previous, currentError) => ({
+                        ...previous,
+                        [currentError.path[0]]: currentError,
+                    }), {})
+                    : {},
+            };
+        },
+    });
 
     const onSubmit = useCallback(async (data) => {
         try {
@@ -99,13 +117,7 @@ const SignInForm = ({ classes }) => {
                     <div className={classes.inputWrapper}>
                         <TextField
                             name="email"
-                            inputRef={register({
-                                required: 'Email is required',
-                                pattern: {
-                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                                    message: 'Email appears invalid',
-                                },
-                            })}
+                            inputRef={register}
                             placeholder="Email"
                             label="Email"
                             variant="outlined"
@@ -135,9 +147,7 @@ const SignInForm = ({ classes }) => {
                     <div className={classes.inputWrapper}>
                         <TextField
                             name="password"
-                            inputRef={register({
-                                required: 'Password is required',
-                            })}
+                            inputRef={register}
                             placeholder="Password"
                             label="Password"
                             variant="outlined"
