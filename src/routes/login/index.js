@@ -1,16 +1,19 @@
 import React, {
     useState,
     useEffect,
+    useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
 
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers';
 
 import Validation from '../../utils/validation-schema-login';
 
@@ -47,26 +50,8 @@ const SignInForm = ({ classes }) => {
         getValues,
         errors,
     } = useForm({
-        resolver: async (data) => {
-            const { error, value: values } = Validation.login.validate(data, {
-                abortEarly: false,
-            });
-
-            return {
-                values: error ? {} : values,
-                errors: error
-                    ? error.details.reduce((previous, currentError) => ({
-                        ...previous,
-                        [currentError.path[0]]: currentError,
-                    }), {})
-                    : {},
-            };
-        },
+        resolver: yupResolver(Validation.login),
     });
-
-    const onSubmit = (data) => {
-        dispatch(Login(data));
-    };
 
     const encodeQueryParam = x => (
         x.replace(/\s/g, '+')
@@ -122,6 +107,11 @@ const SignInForm = ({ classes }) => {
         return () => clearTimeout(timer);
     }, [resetpassCompleted, dispatch]);
 
+    const onSubmit = useCallback((data) => {
+        setErrorMsg(null);
+        dispatch(Login(data));
+    });
+
     return (
         <div className={classes.wrapper}>
             <div className={classes.formWrapper}>
@@ -139,10 +129,9 @@ const SignInForm = ({ classes }) => {
                             placeholder="Email"
                             label="Email"
                             variant="outlined"
-                            fullWidth
-                            style={{ minWidth: 280 }}
                             autoComplete="on"
                             autoFocus={!getValues('email')}
+                            className={classes.fullWidth}
                             InputLabelProps={{
                                 classes: {
                                     root: classes.textInputLabelRoot,
@@ -169,10 +158,9 @@ const SignInForm = ({ classes }) => {
                             placeholder="Password"
                             label="Password"
                             variant="outlined"
-                            fullWidth
-                            style={{ minWidth: 280 }}
                             autoComplete="current-password"
                             type="password"
+                            className={classes.fullWidth}
                             InputLabelProps={{
                                 classes: {
                                     root: classes.textInputLabelRoot,

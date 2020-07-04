@@ -1,7 +1,6 @@
 import React, {
     useState,
     useEffect,
-    useRef,
     useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -13,16 +12,18 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers';
+
 import useQuery from '../../utils/use-query';
 
 import { ForgotPass, ForgotPassBegin } from '../../actions/auth';
+
 import Validation from '../../utils/validation-schema-login';
 
 import CombineStyles from '../../utils/combine-styles';
 import InputStyles from '../../styles/inputs';
 import Styles from './styles';
-
-import useEventListener from '../../utils/use-event-listener';
 
 const ForgotPassword = ({ classes }) => {
     const forgotpassError = useSelector(state => state.auth.forgotPass.error);
@@ -33,9 +34,17 @@ const ForgotPassword = ({ classes }) => {
     const history = useHistory();
     const query = useQuery();
 
-    const [values, setValues] = useState({ email: '' });
-    const [errored, setErrored] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
+
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        getValues,
+        errors,
+    } = useForm({
+        resolver: yupResolver(Validation.login),
+    });
 
     const encodeQueryParam = x => (
         x.replace(/\s/g, '+')
@@ -43,109 +52,91 @@ const ForgotPassword = ({ classes }) => {
 
     useEffect(() => {
         document.title = 'Forgot Password - [SITE]';
-        // hydrate email address from URL
+        // hydrate email address from query param in URL
         if (query.get('email')) {
-            setValues({ email: encodeQueryParam(query.get('email')) });
+            setValue('email', encodeQueryParam(query.get('email')));
         }
         // clear error messages when component loads
         dispatch(ForgotPassBegin());
         // eslint-disable-next-line
     }, []);
 
-    const handleChange = prop => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-    };
+    useEffect(() => {
+        // Only show the first error message
+        if (Object.keys(errors).length) {
+            // Relies on Object.keys insertion order property ordering, not ideal
+            setErrorMsg(errors[Object.keys(errors)[0]].message);
+        }
+    }, [errors]);
 
-    const handleSubmit = useCallback(() => {
-        setErrored(null);
+    const onSubmit = useCallback((data) => {
         setErrorMsg(null);
-        const { error } = Validation.forgot.validate(values);
-
-        if (error) {
-            setErrorMsg(error.message);
-            setErrored(true);
-            return;
-        }
-        // no error
-        // let's make an API Call
-        dispatch(ForgotPass(values.email));
-    }, [values, dispatch]);
-
-    const emailRef = useRef(null);
-    const eventHandler = useCallback((event) => {
-        // check to see if we are pressing the enter key
-        if (event.keyCode === 13) {
-            // cancel the default action, if needed
-            event.preventDefault();
-            // trigger the button element with a click
-            handleSubmit();
-        }
-    }, [handleSubmit]);
-    useEventListener('keyup', eventHandler, emailRef.current);
+        dispatch(ForgotPass(data));
+    });
 
     return (
         <div className={classes.wrapper}>
             <div className={classes.formWrapper}>
-                <Typography
-                    variant="h3"
-                    style={{ fontSize: 24, paddingBottom: 45 }}
-                >
-                    Reset Password
-                </Typography>
-                <div role="status" aria-live="polite">
-                    {errored && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
-                    {forgotpassError && <Typography variant="body1" className={classes.errorMessage}>{forgotpassErrorMsg}</Typography>}
-                    {(forgotpassCompleted && !forgotpassError) && (<Typography variant="body1" className={classes.successMessage} style={{ paddingBottom: 30 }}>Success: A reset email has been sent to your account.</Typography>)}
-                </div>
-                <div className={classes.inputWrapper}>
-                    <TextField
-                        ref={emailRef}
-                        label="Email"
-                        variant="outlined"
-                        type="email"
-                        autoComplete="on"
-                        value={values.email}
-                        onChange={handleChange('email')}
-                        fullWidth
-                        autoFocus
-                        InputLabelProps={{
-                            classes: {
-                                root: classes.textInputLabelRoot,
-                                focused: classes.textInputLabelFocused,
-                                error: classes.textInputLabelError,
-                            },
-                        }}
-                        InputProps={{
-                            classes: {
-                                root: classes.textInput,
-                                notchedOutline: classes.notchedOutline,
-                                error: classes.textInputError,
-                            },
-                            inputProps: {
-                                'aria-label': 'Email',
-                            },
-                        }}
-                    />
-                </div>
-                <div className={classes.inputWrapper}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        fullWidth
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Typography
+                        variant="h3"
+                        style={{ fontSize: 24, paddingBottom: 45 }}
                     >
-                        Submit
-                    </Button>
-                </div>
-                <div className={classes.inputWrapper}>
-                    <Button
-                        color="primary"
-                        fullWidth
-                        onClick={() => history.push(values.email ? `/login?email=${values.email}` : '/login')}
-                    >
-                        Cancel
-                    </Button>
-                </div>
+                        Reset Password
+                    </Typography>
+                    <div role="status" aria-live="polite">
+                        {errorMsg && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
+                        {forgotpassError && <Typography variant="body1" className={classes.errorMessage}>{forgotpassErrorMsg}</Typography>}
+                        {(forgotpassCompleted && !forgotpassError) && (<Typography variant="body1" className={classes.successMessage} style={{ paddingBottom: 30 }}>Success: A reset email has been sent to your account.</Typography>)}
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <TextField
+                            name="email"
+                            inputRef={register}
+                            label="Email"
+                            variant="outlined"
+                            autoComplete="on"
+                            autoFocus
+                            className={classes.fullWidth}
+                            InputLabelProps={{
+                                classes: {
+                                    root: classes.textInputLabelRoot,
+                                    focused: classes.textInputLabelFocused,
+                                    error: classes.textInputLabelError,
+                                },
+                            }}
+                            InputProps={{
+                                classes: {
+                                    root: classes.textInput,
+                                    notchedOutline: classes.notchedOutline,
+                                    error: classes.textInputError,
+                                },
+                                inputProps: {
+                                    'aria-label': 'Email',
+                                },
+                            }}
+                        />
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            fullWidth
+                        >
+                            Submit
+                        </Button>
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <Button
+                            color="primary"
+                            fullWidth
+                            onClick={() => history.push(getValues('email') ? `/login?email=${getValues('email')}` : '/login')}
+                        >
+                            Cancel
+                        </Button>
+                    </div>
+                </form>
             </div>
         </div>
     );

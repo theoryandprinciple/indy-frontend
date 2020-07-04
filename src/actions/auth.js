@@ -132,7 +132,7 @@ export const ResetPass = formValues => (dispatch) => {
                 status.response.status !== 404
                     && status.response.status !== 400
             )) {
-                errorMsg = 'Something seems to have gone awry!  Try that again.';
+                errorMsg = 'Something seems to have gone awry! Try that again.';
             } else {
                 errorMsg = "We couldn't find a user with that email address.";
             }
