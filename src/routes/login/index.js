@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers';
 
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -39,36 +40,8 @@ const SignInForm = ({ classes }) => {
         getValues,
         errors,
     } = useForm({
-        resolver: async (data) => {
-            const { error, value: values } = Validation.login.validate(data, {
-                abortEarly: false,
-            });
-
-            return {
-                values: error ? {} : values,
-                errors: error
-                    ? error.details.reduce((previous, currentError) => ({
-                        ...previous,
-                        [currentError.path[0]]: currentError,
-                    }), {})
-                    : {},
-            };
-        },
+        resolver: yupResolver(Validation.login),
     });
-
-    const onSubmit = useCallback(async (data) => {
-        try {
-            const response = await Login(data);
-
-            // we get here with or without errors
-            setErrorAPI(response.error);
-            setErrorMsgAPI(response.error ? response.errorMsg : null);
-            // update the app's auth context regardless of success or error
-            onLogin(response);
-        } catch (requestError) {
-            // do nothing - shouldn't happen
-        }
-    }, [onLogin]);
 
     const encodeQueryParam = x => (
         x.replace(/\s/g, '+')
@@ -105,6 +78,21 @@ const SignInForm = ({ classes }) => {
         }
     }, [errors]);
 
+    const onSubmit = useCallback(async (data) => {
+        setErrorMsg(null);
+        try {
+            const response = await Login(data);
+
+            // we get here with or without errors
+            setErrorAPI(response.error);
+            setErrorMsgAPI(response.error ? response.errorMsg : null);
+            // update the app's auth context regardless of success or error
+            onLogin(response);
+        } catch (requestError) {
+            // do nothing - shouldn't happen
+        }
+    }, [onLogin]);
+
     return (
         <div className={classes.wrapper}>
             <div className={classes.formWrapper}>
@@ -121,10 +109,9 @@ const SignInForm = ({ classes }) => {
                             placeholder="Email"
                             label="Email"
                             variant="outlined"
-                            fullWidth
-                            style={{ minWidth: 280 }}
                             autoComplete="on"
                             autoFocus={!getValues('email')}
+                            className={classes.fullWidth}
                             InputLabelProps={{
                                 classes: {
                                     root: classes.textInputLabelRoot,
@@ -151,10 +138,9 @@ const SignInForm = ({ classes }) => {
                             placeholder="Password"
                             label="Password"
                             variant="outlined"
-                            fullWidth
-                            style={{ minWidth: 280 }}
                             autoComplete="current-password"
                             type="password"
+                            className={classes.fullWidth}
                             InputLabelProps={{
                                 classes: {
                                     root: classes.textInputLabelRoot,

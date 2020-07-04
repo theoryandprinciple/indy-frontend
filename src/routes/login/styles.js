@@ -23,5 +23,8 @@ const styles = () => ({
     formInput: {
         padding: '15px 0',
     },
+    fullWidth: {
+        minWidth: 280,
+    },
 });
 export default styles;
