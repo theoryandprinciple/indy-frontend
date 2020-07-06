@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 
 import { useForm } from 'react-hook-form';
 
-// eslint-disable-next-line
+// eslint-disable-next-line import/no-unresolved
 import { yupResolver } from '@hookform/resolvers';
 
 import useQuery from '../../utils/use-query';
