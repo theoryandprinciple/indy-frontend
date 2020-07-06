@@ -1,7 +1,6 @@
 import React, {
     useState,
     useEffect,
-    useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -71,10 +70,10 @@ const ForgotPassword = ({ classes }) => {
         }
     }, [errors]);
 
-    const onSubmit = useCallback((data) => {
+    const onSubmit = (data) => {
         setErrorMsg(null);
         dispatch(ForgotPass(data));
-    });
+    };
 
     return (
         <div className={classes.wrapper}>
