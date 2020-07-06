@@ -36,7 +36,7 @@ const ForgotPassword = ({ classes }) => {
         getValues,
         errors,
     } = useForm({
-        resolver: yupResolver(Validation.login),
+        resolver: yupResolver(Validation.forgot),
     });
 
     const encodeQueryParam = x => (
