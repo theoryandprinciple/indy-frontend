@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+// eslint-disable-next-line
 import { yupResolver } from '@hookform/resolvers';
 
 import TextField from '@material-ui/core/TextField';

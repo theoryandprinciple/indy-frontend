@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 import { useForm } from 'react-hook-form';
+// eslint-disable-next-line
 import { yupResolver } from '@hookform/resolvers';
 
 import { ResetPass } from './wiring/auth-api';
