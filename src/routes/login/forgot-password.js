@@ -69,7 +69,7 @@ const ForgotPassword = ({ classes }) => {
         } catch (requestError) {
             // do nothing - shouldn't happen
         }
-    });
+    }, [setErrorMsg]);
 
     return (
         <div className={classes.wrapper}>

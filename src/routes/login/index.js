@@ -92,7 +92,7 @@ const SignInForm = ({ classes }) => {
         } catch (requestError) {
             // do nothing - shouldn't happen
         }
-    }, [onLogin]);
+    }, [onLogin, setErrorAPI, setErrorMsgAPI]);
 
     return (
         <div className={classes.wrapper}>

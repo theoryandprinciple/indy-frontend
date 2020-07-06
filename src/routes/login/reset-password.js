@@ -37,10 +37,11 @@ const ResetPassword = ({ classes }) => {
         resolver: yupResolver(Validation.reset),
     });
 
+    document.title = 'Reset Password - [SITE]';
+
     useEffect(() => {
-        document.title = 'Reset Password - [SITE]';
         setValue('resetToken', resetToken);
-    }, []);
+    }, [resetToken, setValue]);
 
     useEffect(() => {
         // Only show the first error message
@@ -61,7 +62,7 @@ const ResetPassword = ({ classes }) => {
         } catch (requestError) {
             // do nothing - shouldn't happen
         }
-    });
+    }, [setErrorMsg]);
 
     return (
         <div className={classes.wrapper}>
