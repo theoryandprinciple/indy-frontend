@@ -16,5 +16,8 @@ const styles = () => ({
         width: 400,
         height: 'auto',
     },
+    fullWidth: {
+        minWidth: 280,
+    },
 });
 export default styles;

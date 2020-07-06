@@ -1,7 +1,6 @@
 import React, {
     useState,
     useEffect,
-    useRef,
     useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -13,33 +12,47 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+import { useForm } from 'react-hook-form';
+// eslint-disable-next-line import/no-unresolved
+import { yupResolver } from '@hookform/resolvers';
+
+import Validation from '../../utils/validation-schema-login';
+
 import useQuery from '../../utils/use-query';
 
 import { Login, ResetPassBegin, LoginBegin } from '../../actions/auth';
-import Validation from '../../utils/validation-schema-login';
 
 import CombineStyles from '../../utils/combine-styles';
 import InputStyles from '../../styles/inputs';
 import Styles from './styles';
 
-import useEventListener from '../../utils/use-event-listener';
-
 const SignInForm = ({ classes }) => {
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+
     const loginError = useSelector(state => state.auth.error);
     const loginErrorMsg = useSelector(state => state.auth.errorMsg);
-    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+
     const resetpassCompleted = useSelector(state => state.auth.resetPass.completed);
     const resetpassError = useSelector(state => state.auth.resetPass.error);
+
     const dispatch = useDispatch();
 
     const history = useHistory();
     const query = useQuery();
 
-    const [errored, setErrored] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [errorAPI, setErrorAPI] = useState(null);
     const [errorMsgAPI, setErrorMsgAPI] = useState(null);
-    const [values, setValues] = useState({ email: '', password: '' });
+
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        getValues,
+        errors,
+    } = useForm({
+        resolver: yupResolver(Validation.login),
+    });
 
     const encodeQueryParam = x => (
         x.replace(/\s/g, '+')
@@ -51,12 +64,10 @@ const SignInForm = ({ classes }) => {
         dispatch(LoginBegin({ error: false, errorMsg: '' }));
         // hydrate email address from URL
         if (query.get('email')) {
-            if (values.email !== encodeQueryParam(query.get('email'))) {
+            if (getValues('email') !== encodeQueryParam(query.get('email'))) {
                 // populate email and must set password as controlled input
-                setValues({
-                    email: encodeQueryParam(query.get('email')),
-                    password: '',
-                });
+                setValue('email', encodeQueryParam(query.get('email')));
+                setValue('password', '');
                 // clear query string
                 history.push({ search: '' });
             }
@@ -66,6 +77,12 @@ const SignInForm = ({ classes }) => {
     }, []);
 
     useEffect(() => {
+        if (isAuthenticated) {
+            history.push('/');
+        }
+    }, [isAuthenticated, history]);
+
+    useEffect(() => {
         setErrorAPI(loginError);
         if (loginError) {
             setErrorMsgAPI(loginErrorMsg);
@@ -73,10 +90,13 @@ const SignInForm = ({ classes }) => {
     }, [loginError, loginErrorMsg]);
 
     useEffect(() => {
-        if (isAuthenticated) {
-            history.push('/');
+        // Only show the first error message
+        if (Object.keys(errors).length) {
+            // Relies on Object.keys insertion order property ordering, not ideal
+            setErrorMsg(errors[Object.keys(errors)[0]].message);
+            setErrorAPI(null);
         }
-    }, [isAuthenticated, history]);
+    }, [errors]);
 
     useEffect(() => {
         let timer = null;
@@ -88,132 +108,101 @@ const SignInForm = ({ classes }) => {
         return () => clearTimeout(timer);
     }, [resetpassCompleted, dispatch]);
 
-    const handleChange = prop => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-    };
-
-    const handleSubmit = useCallback(() => {
-        // reset error states
-        setErrored(null);
+    const onSubmit = useCallback((data) => {
         setErrorMsg(null);
-
-        const { error } = Validation.login.validate(values);
-
-        if (error) {
-            setErrorMsg(error.message);
-            setErrored(true);
-            return;
-        }
-        // no error
-        // let's make an API Call
-        dispatch(Login(values));
-    }, [values, dispatch]);
-
-    const emailRef = useRef(null);
-    const passRef = useRef(null);
-    const eventHandler = useCallback((event) => {
-        // check to see if we are pressing the enter key
-        if (event.keyCode === 13) {
-            // cancel the default action, if needed
-            event.preventDefault();
-            // trigger the button element with a click
-            handleSubmit();
-        }
-    }, [handleSubmit]);
-    useEventListener('keyup', eventHandler, emailRef.current);
-    useEventListener('keyup', eventHandler, passRef.current);
+        dispatch(Login(data));
+    });
 
     return (
         <div className={classes.wrapper}>
             <div className={classes.formWrapper}>
-                <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Sign In</Typography>
-                <div role="status" aria-live="polite">
-                    {errored && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
-                    {errorAPI && <Typography variant="body1" className={classes.errorMessage}>{errorMsgAPI}</Typography>}
-                    {(resetpassCompleted && !resetpassError) && (<Typography variant="body1" className={classes.successMessage} style={{ paddingBottom: 30 }}>Success: Your password has successfully been updated.</Typography>)}
-                </div>
-                <div className={classes.inputWrapper}>
-                    <TextField
-                        ref={emailRef}
-                        placeholder="Email"
-                        label="Email"
-                        variant="outlined"
-                        fullWidth
-                        type="email"
-                        autoComplete="on"
-                        value={values.email}
-                        onChange={handleChange('email')}
-                        autoFocus={!values.email}
-                        InputLabelProps={{
-                            classes: {
-                                root: classes.textInputLabelRoot,
-                                focused: classes.textInputLabelFocused,
-                                error: classes.textInputLabelError,
-                            },
-                        }}
-                        InputProps={{
-                            classes: {
-                                root: classes.textInput,
-                                notchedOutline: classes.notchedOutline,
-                                error: classes.textInputError,
-                            },
-                            inputProps: {
-                                'aria-label': 'Email',
-                            },
-                        }}
-                    />
-                </div>
-                <div className={classes.inputWrapper}>
-                    <TextField
-                        ref={passRef}
-                        placeholder="Password"
-                        label="Password"
-                        variant="outlined"
-                        fullWidth
-                        type={values.showPassword ? 'text' : 'password'}
-                        autoComplete="current-password"
-                        value={values.password}
-                        onChange={handleChange('password')}
-                        InputLabelProps={{
-                            classes: {
-                                root: classes.textInputLabelRoot,
-                                focused: classes.textInputLabelFocused,
-                                error: classes.textInputLabelError,
-                            },
-                        }}
-                        InputProps={{
-                            classes: {
-                                root: classes.textInput,
-                                notchedOutline: classes.notchedOutline,
-                                error: classes.textInputError,
-                            },
-                            inputProps: {
-                                'aria-label': 'Password',
-                            },
-                        }}
-                    />
-                </div>
-                <div className={classes.inputWrapper}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        fullWidth
-                    >
-                        Log In
-                    </Button>
-                </div>
-                <div className={classes.inputWrapper}>
-                    <Button
-                        color="primary"
-                        fullWidth
-                        onClick={() => {
-                            history.push(values.email ? `/login/forgot-password?email=${values.email}` : '/login/forgot-password');
-                        }}
-                    >
-                        Forgot Password
-                    </Button>
-                </div>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Sign In</Typography>
+                    <div role="status" aria-live="polite">
+                        {errorMsg && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
+                        {errorAPI && <Typography variant="body1" className={classes.errorMessage}>{errorMsgAPI}</Typography>}
+                        {(resetpassCompleted && !resetpassError) && (<Typography variant="body1" className={classes.successMessage} style={{ paddingBottom: 30 }}>Success: Your password has successfully been updated.</Typography>)}
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <TextField
+                            name="email"
+                            inputRef={register}
+                            placeholder="Email"
+                            label="Email"
+                            variant="outlined"
+                            autoComplete="on"
+                            autoFocus={!getValues('email')}
+                            className={classes.fullWidth}
+                            InputLabelProps={{
+                                classes: {
+                                    root: classes.textInputLabelRoot,
+                                    focused: classes.textInputLabelFocused,
+                                    error: classes.textInputLabelError,
+                                },
+                            }}
+                            InputProps={{
+                                classes: {
+                                    root: classes.textInput,
+                                    notchedOutline: classes.notchedOutline,
+                                    error: classes.textInputError,
+                                },
+                                inputProps: {
+                                    'aria-label': 'Email',
+                                },
+                            }}
+                        />
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <TextField
+                            name="password"
+                            inputRef={register}
+                            placeholder="Password"
+                            label="Password"
+                            variant="outlined"
+                            autoComplete="current-password"
+                            type="password"
+                            className={classes.fullWidth}
+                            InputLabelProps={{
+                                classes: {
+                                    root: classes.textInputLabelRoot,
+                                    focused: classes.textInputLabelFocused,
+                                    error: classes.textInputLabelError,
+                                },
+                            }}
+                            InputProps={{
+                                classes: {
+                                    root: classes.textInput,
+                                    notchedOutline: classes.notchedOutline,
+                                    error: classes.textInputError,
+                                },
+                                inputProps: {
+                                    'aria-label': 'Password',
+                                },
+                            }}
+                        />
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            fullWidth
+                        >
+                            Log In
+                        </Button>
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <Button
+                            color="primary"
+                            fullWidth
+                            onClick={() => {
+                                history.push(getValues('email') ? `/login/forgot-password?email=${getValues('email')}` : '/login/forgot-password');
+                            }}
+                        >
+                            Forgot Password
+                        </Button>
+                    </div>
+                </form>
             </div>
         </div>
     );

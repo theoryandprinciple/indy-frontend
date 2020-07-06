@@ -1,4 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+    useState,
+    useEffect,
+    useCallback,
+} from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,8 +12,13 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import { ResetPass } from '../../actions/auth';
+import { useForm } from 'react-hook-form';
+// eslint-disable-next-line import/no-unresolved
+import { yupResolver } from '@hookform/resolvers';
+
 import Validation from '../../utils/validation-schema-login';
+
+import { ResetPass } from '../../actions/auth';
 
 import CombineStyles from '../../utils/combine-styles';
 import InputStyles from '../../styles/inputs';
@@ -24,12 +33,20 @@ const ResetPassword = ({ classes }) => {
     const history = useHistory();
 
     const { resetToken } = useParams();
-    const [values, setValues] = useState({ password: '', passwordConfirm: '', email: '' });
-    const [errored, setErrored] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
+
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        errors,
+    } = useForm({
+        resolver: yupResolver(Validation.reset),
+    });
 
     useEffect(() => {
         document.title = 'Reset Password - [SITE]';
+        setValue('resetToken', resetToken);
     }, []);
 
     useEffect(() => {
@@ -40,139 +57,129 @@ const ResetPassword = ({ classes }) => {
             }, 3000);
         }
         return () => clearTimeout(timer);
-    }, [resetpassCompleted, resetpassError, history]);
+    }, [resetpassCompleted, resetpassError]);
 
-    const handleSubmit = () => {
-        setErrored(null);
-        setErrorMsg(null);
-        const { error } = Validation.reset.validate({ ...values, resetToken });
-
-        if (error) {
-            setErrorMsg(error.message);
-            setErrored(true);
-            return;
+    useEffect(() => {
+        // Only show the first error message
+        if (Object.keys(errors).length) {
+            // Relies on Object.keys insertion order property ordering, not ideal
+            setErrorMsg(errors[Object.keys(errors)[0]].message);
         }
-        // no error
-        // let's make an API Call
-        const currentFormValue = {
-            email: values.email,
-            resetToken,
-            newPassword: values.password,
-        };
+    }, [errors]);
 
-        dispatch(ResetPass(currentFormValue));
-    };
-
-    const handleChange = prop => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-    };
+    const onSubmit = useCallback((data) => {
+        setErrorMsg(null);
+        dispatch(ResetPass(data));
+    });
 
     return (
         <div className={classes.wrapper}>
             <div className={classes.formWrapper}>
-                <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Reset Password</Typography>
-                <div role="status" aria-live="polite">
-                    {errored && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
-                    {resetpassError && <Typography variant="body1" className={classes.errorMessage}>{resetpassErrorMsg}</Typography>}
-                    {(resetpassCompleted && !resetpassError) && (<Typography variant="body1" className={classes.successMessage} style={{ paddingBottom: 30 }}>Success: Your password has successfully been updated.</Typography>)}
-                </div>
-                <div className={classes.inputWrapper}>
-                    <TextField
-                        label="Email"
-                        variant="outlined"
-                        type="email"
-                        autoComplete="on"
-                        value={values.email}
-                        autoFocus
-                        onChange={handleChange('email')}
-                        fullWidth
-                        InputLabelProps={{
-                            classes: {
-                                root: classes.textInputLabelRoot,
-                                focused: classes.textInputLabelFocused,
-                                error: classes.textInputLabelError,
-                            },
-                        }}
-                        InputProps={{
-                            classes: {
-                                root: classes.textInput,
-                                notchedOutline: classes.notchedOutline,
-                                error: classes.textInputError,
-                            },
-                            inputProps: {
-                                'aria-label': 'Email',
-                            },
-                        }}
-                    />
-                </div>
-                <div className={classes.inputWrapper}>
-                    <TextField
-                        aria-label="Password"
-                        label="Password"
-                        variant="outlined"
-                        type="password"
-                        autoComplete="off"
-                        fullWidth
-                        value={values.password}
-                        onChange={handleChange('password')}
-                        InputLabelProps={{
-                            classes: {
-                                root: classes.textInputLabelRoot,
-                                focused: classes.textInputLabelFocused,
-                                error: classes.textInputLabelError,
-                            },
-                        }}
-                        InputProps={{
-                            classes: {
-                                root: classes.textInput,
-                                notchedOutline: classes.notchedOutline,
-                                error: classes.textInputError,
-                            },
-                            inputProps: {
-                                'aria-label': 'Password',
-                            },
-                        }}
-                    />
-                </div>
-                <div className={classes.inputWrapper}>
-                    <TextField
-                        aria-label="Password"
-                        label="Confirm Password"
-                        variant="outlined"
-                        type="password"
-                        autoComplete="off"
-                        fullWidth
-                        value={values.passwordConfirm}
-                        onChange={handleChange('passwordConfirm')}
-                        InputLabelProps={{
-                            classes: {
-                                root: classes.textInputLabelRoot,
-                                focused: classes.textInputLabelFocused,
-                                error: classes.textInputLabelError,
-                            },
-                        }}
-                        InputProps={{
-                            classes: {
-                                root: classes.textInput,
-                                notchedOutline: classes.notchedOutline,
-                                error: classes.textInputError,
-                            },
-                            inputProps: {
-                                'aria-label': 'Confirm Password',
-                            },
-                        }}
-                    />
-                </div>
-                <div className={classes.inputWrapper}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        fullWidth
-                    >
-                        Reset Password
-                    </Button>
-                </div>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Typography variant="h3" style={{ fontSize: 24, paddingBottom: 45 }}>Reset Password</Typography>
+                    <div role="status" aria-live="polite">
+                        {errorMsg && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
+                        {resetpassError && <Typography variant="body1" className={classes.errorMessage}>{resetpassErrorMsg}</Typography>}
+                        {(resetpassCompleted && !resetpassError) && (<Typography variant="body1" className={classes.successMessage} style={{ paddingBottom: 30 }}>Success: Your password has successfully been updated.</Typography>)}
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <TextField
+                            name="email"
+                            inputRef={register}
+                            label="Email"
+                            variant="outlined"
+                            autoComplete="on"
+                            autoFocus
+                            className={classes.fullWidth}
+                            InputLabelProps={{
+                                classes: {
+                                    root: classes.textInputLabelRoot,
+                                    focused: classes.textInputLabelFocused,
+                                    error: classes.textInputLabelError,
+                                },
+                            }}
+                            InputProps={{
+                                classes: {
+                                    root: classes.textInput,
+                                    notchedOutline: classes.notchedOutline,
+                                    error: classes.textInputError,
+                                },
+                                inputProps: {
+                                    'aria-label': 'Email',
+                                },
+                            }}
+                        />
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <TextField
+                            name="password"
+                            inputRef={register}
+                            aria-label="Password"
+                            label="Password"
+                            variant="outlined"
+                            type="password"
+                            autoComplete="off"
+                            className={classes.fullWidth}
+                            InputLabelProps={{
+                                classes: {
+                                    root: classes.textInputLabelRoot,
+                                    focused: classes.textInputLabelFocused,
+                                    error: classes.textInputLabelError,
+                                },
+                            }}
+                            InputProps={{
+                                classes: {
+                                    root: classes.textInput,
+                                    notchedOutline: classes.notchedOutline,
+                                    error: classes.textInputError,
+                                },
+                                inputProps: {
+                                    'aria-label': 'Password',
+                                },
+                            }}
+                        />
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <TextField
+                            name="passwordConfirm"
+                            inputRef={register}
+                            aria-label="Password"
+                            label="Confirm Password"
+                            variant="outlined"
+                            type="password"
+                            autoComplete="off"
+                            className={classes.fullWidth}
+                            InputLabelProps={{
+                                classes: {
+                                    root: classes.textInputLabelRoot,
+                                    focused: classes.textInputLabelFocused,
+                                    error: classes.textInputLabelError,
+                                },
+                            }}
+                            InputProps={{
+                                classes: {
+                                    root: classes.textInput,
+                                    notchedOutline: classes.notchedOutline,
+                                    error: classes.textInputError,
+                                },
+                                inputProps: {
+                                    'aria-label': 'Confirm Password',
+                                },
+                            }}
+                        />
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            fullWidth
+                        >
+                            Reset Password
+                        </Button>
+                    </div>
+                    <input name="resetToken" ref={register} type="hidden" />
+                </form>
             </div>
         </div>
     );
