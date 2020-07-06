@@ -1,7 +1,6 @@
 import React, {
     useState,
     useEffect,
-    useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
@@ -44,10 +43,11 @@ const ResetPassword = ({ classes }) => {
         resolver: yupResolver(Validation.reset),
     });
 
+    document.title = 'Reset Password - [SITE]';
+
     useEffect(() => {
-        document.title = 'Reset Password - [SITE]';
         setValue('resetToken', resetToken);
-    }, []);
+    }, [resetToken, setValue]);
 
     useEffect(() => {
         let timer = null;
@@ -57,7 +57,7 @@ const ResetPassword = ({ classes }) => {
             }, 3000);
         }
         return () => clearTimeout(timer);
-    }, [resetpassCompleted, resetpassError]);
+    }, [resetpassCompleted, resetpassError, history]);
 
     useEffect(() => {
         // Only show the first error message
@@ -67,10 +67,10 @@ const ResetPassword = ({ classes }) => {
         }
     }, [errors]);
 
-    const onSubmit = useCallback((data) => {
+    const onSubmit = (data) => {
         setErrorMsg(null);
         dispatch(ResetPass(data));
-    });
+    };
 
     return (
         <div className={classes.wrapper}>

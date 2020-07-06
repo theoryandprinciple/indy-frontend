@@ -1,7 +1,6 @@
 import React, {
     useState,
     useEffect,
-    useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -45,7 +44,7 @@ const ForgotPassword = ({ classes }) => {
         getValues,
         errors,
     } = useForm({
-        resolver: yupResolver(Validation.login),
+        resolver: yupResolver(Validation.forgot),
     });
 
     const encodeQueryParam = x => (
@@ -71,10 +70,10 @@ const ForgotPassword = ({ classes }) => {
         }
     }, [errors]);
 
-    const onSubmit = useCallback((data) => {
+    const onSubmit = (data) => {
         setErrorMsg(null);
         dispatch(ForgotPass(data));
-    });
+    };
 
     return (
         <div className={classes.wrapper}>
