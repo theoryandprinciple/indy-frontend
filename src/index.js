@@ -13,6 +13,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
 
+import ScrollToTop from './utils/scroll-to-top';
 import ErrorFallback from './components/ErrorFallback';
 
 import { ClearErrors } from './actions/auth';
@@ -49,6 +50,10 @@ const persistedStore = persistStore(store);
 
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store);
+
+history.listen(() => {
+    ScrollToTop();
+});
 
 const onBeforeLift = () => {
     // Run initializers... anything that will need to use or subscribe to the store
