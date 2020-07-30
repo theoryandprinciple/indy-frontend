@@ -7,8 +7,7 @@ import 'bootstrap-css-only/css/bootstrap-grid.min.css';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { Router } from 'react-router-dom';
-import { syncHistoryWithStore } from 'react-router-redux';
+import { ConnectedRouter, routerMiddleware } from 'connected-react-router';
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
@@ -29,7 +28,7 @@ import './index.css';
 
 const initialState = {};
 const enhancers = [];
-const middleware = [thunk];
+const middleware = [thunk, routerMiddleware(browserHistory)];
 if (process.env.NODE_ENV === 'development') {
     const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
 
@@ -43,12 +42,13 @@ const persistConfig = {
     storage,
     whitelist: ['auth'],
 };
-const persistedReducer = persistReducer(persistConfig, reducers);
-const store = createStore(persistedReducer, initialState, composedEnhancers);
+const persistedReducer = persistReducer(persistConfig, reducers(browserHistory));
+const store = createStore(
+    persistedReducer,
+    initialState,
+    composedEnhancers,
+);
 const persistedStore = persistStore(store);
-
-// Create an enhanced history that syncs navigation events with the store
-const history = syncHistoryWithStore(browserHistory, store);
 
 const onBeforeLift = () => {
     // Run initializers... anything that will need to use or subscribe to the store
@@ -71,11 +71,11 @@ ReactDOM.render(
             persistor={persistedStore}
             onBeforeLift={onBeforeLift}
         >
-            <Router history={history}>
+            <ConnectedRouter history={browserHistory}>
                 <ErrorBoundary FallbackComponent={ErrorFallback}>
                     <App />
                 </ErrorBoundary>
-            </Router>
+            </ConnectedRouter>
         </PersistGate>
     </Provider>,
     document.getElementById('root'),
