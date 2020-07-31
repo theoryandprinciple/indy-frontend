@@ -23,45 +23,41 @@ export const SetupUser = user => ({
     payload: user,
 });
 
-export const Login = formValues => (dispatch) => {
+export const Login = formValues => async (dispatch) => {
     const { email, password } = formValues;
 
     dispatch(LoginBegin({ isAuthenticated: false, error: false, errorMsg: '' }));
-    const login = WebClient.post(
-        '/login',
-        { email, password },
-        { responseType: 'text' },
-    );
+    try {
+        const data = await WebClient.post(
+            '/login',
+            { email, password },
+            { responseType: 'text' },
+        );
 
-    login
-        .then(({ data }) => {
-            // update auth token
-            WebClient.updateAuth(data.token);
+        // update auth token
+        WebClient.updateAuth(data.token);
 
-            const userData = {
-                isAuthenticated: true,
-                credentials: {
-                    token: data.token,
-                    role: data.user.role,
-                },
-                error: false,
-                errorMsg: '',
-            };
-            dispatch(SetupUser(data.user));
-            dispatch(LoginSuccess(userData));
-        })
-        .catch((error) => {
-            let errorMsg = 'Error';
-            if (error.response && (error.response.status === 401)) {
-                errorMsg = 'Invalid email or password';
-            }
-            if (error.response && (error.response.status === 422)) {
-                errorMsg = 'Invalid email address';
-            }
-            dispatch(LoginError({ isAuthenticated: false, error: true, errorMsg }));
-        });
-
-    return login;
+        const userData = {
+            isAuthenticated: true,
+            credentials: {
+                token: data.token,
+                role: data.user.role,
+            },
+            error: false,
+            errorMsg: '',
+        };
+        dispatch(SetupUser(data.user));
+        dispatch(LoginSuccess(userData));
+    } catch (error) {
+        let errorMsg = 'Error';
+        if (error.response && (error.response.status === 401)) {
+            errorMsg = 'Invalid email or password';
+        }
+        if (error.response && (error.response.status === 422)) {
+            errorMsg = 'Invalid email address';
+        }
+        dispatch(LoginError({ isAuthenticated: false, error: true, errorMsg }));
+    }
 };
 
 export const Logout = () => ({
@@ -81,25 +77,22 @@ const ForgotPassError = payload => ({
     type: AuthTypes.FORGOT_PASSWORD_ERROR,
     payload,
 });
-export const ForgotPass = email => (dispatch) => {
+export const ForgotPass = email => async (dispatch) => {
     dispatch(ForgotPassBegin({ error: false, errorMsg: '', completed: false }));
 
-    const forgotpassword = WebClient.post('/users/request-reset', { email });
-
-    forgotpassword
-        .then(() => dispatch(ForgotPassSuccess({ error: false, errorMsg: '', completed: true })))
-        .catch((error) => {
-            let errorMsg = 'Error';
-            // make sure we have a response object, then check to value of the status
-            if (error.response && (error.response.status !== 404 && error.response.status !== 400)) {
-                errorMsg = 'Something seems to have gone awry!  Try that again.';
-            } else {
-                errorMsg = "We couldn't find a user with that email address.";
-            }
-            dispatch(ForgotPassError({ error: true, errorMsg, completed: true }));
-        });
-
-    return forgotpassword;
+    try {
+        await WebClient.post('/users/request-reset', { email });
+        dispatch(ForgotPassSuccess({ error: false, errorMsg: '', completed: true }));
+    } catch (error) {
+        let errorMsg = 'Error';
+        // make sure we have a response object, then check to value of the status
+        if (error.response && (error.response.status !== 404 && error.response.status !== 400)) {
+            errorMsg = 'Something seems to have gone awry!  Try that again.';
+        } else {
+            errorMsg = "We couldn't find a user with that email address.";
+        }
+        dispatch(ForgotPassError({ error: true, errorMsg, completed: true }));
+    }
 };
 
 export const ResetPassBegin = payload => ({
@@ -114,31 +107,30 @@ const ResetPassError = payload => ({
     type: AuthTypes.RESET_PASSWORD_ERROR,
     payload,
 });
-export const ResetPass = formValues => (dispatch) => {
+export const ResetPass = formValues => async (dispatch) => {
     dispatch(ResetPassBegin({ error: false, errorMsg: '', completed: false }));
 
     const { email, resetToken, newPassword } = formValues;
-    const resetpassword = WebClient.post('/users/reset-password', {
-        email,
-        newPassword,
-        resetToken,
-    });
 
-    resetpassword
-        .then(() => dispatch(ResetPassSuccess({ error: false, errorMsg: '', completed: true })))
-        .catch((status) => {
-            let errorMsg;
-            if (status.response && (
-                status.response.status !== 404
-                    && status.response.status !== 400
-            )) {
-                errorMsg = 'Something seems to have gone awry! Try that again.';
-            } else {
-                errorMsg = "We couldn't find a user with that email address.";
-            }
-            dispatch(ResetPassError({ error: true, errorMsg, completed: true }));
+    try {
+        await WebClient.post('/users/reset-password', {
+            email,
+            newPassword,
+            resetToken,
         });
-    return resetpassword;
+        dispatch(ResetPassSuccess({ error: false, errorMsg: '', completed: true }));
+    } catch (status) {
+        let errorMsg;
+        if (status.response && (
+            status.response.status !== 404
+                && status.response.status !== 400
+        )) {
+            errorMsg = 'Something seems to have gone awry! Try that again.';
+        } else {
+            errorMsg = "We couldn't find a user with that email address.";
+        }
+        dispatch(ResetPassError({ error: true, errorMsg, completed: true }));
+    }
 };
 
 const CheckTokenBegin = () => ({
@@ -151,14 +143,14 @@ const CheckTokenError = () => ({
     type: AuthTypes.CHECK_TOKEN_ERROR,
 });
 
-export const CheckToken = () => (dispatch) => {
+export const CheckToken = () => async (dispatch) => {
     dispatch(CheckTokenBegin());
-    const checkToken = WebClient.get('/users/authenticated');
 
-    checkToken
-        .then(() => dispatch(CheckTokenSuccess()))
-        .catch(() => {
-            dispatch(CheckTokenError());
-            dispatch(Logout());
-        });
+    try {
+        await WebClient.get('/users/authenticated');
+        dispatch(CheckTokenSuccess());
+    } catch (error) {
+        dispatch(CheckTokenError());
+        dispatch(Logout());
+    }
 };
