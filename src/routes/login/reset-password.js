@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 
@@ -24,7 +24,7 @@ const ResetPassword = ({ classes }) => {
         document.title = 'Reset Password - [SITE]';
     }, []);
 
-    const handleSubmit = () => {
+    const handleSubmit = useCallback(async () => {
         // reset error states
         setErrored(null);
         setErrorMsg(null);
@@ -42,14 +42,17 @@ const ResetPassword = ({ classes }) => {
             newPassword: values.password,
         };
 
-        ResetPass(currentFormValue)
-            .then((data) => {
-                // we get here with or without errors
-                setErrored(data.error);
-                setErrorMsg(data.error ? data.errorMsg : null);
-                // TODO: add some success state
-            });
-    };
+        try {
+            const data = await ResetPass(currentFormValue);
+
+            // we get here with or without errors
+            setErrored(data.error);
+            setErrorMsg(data.error ? data.errorMsg : null);
+            // TODO: add some success state
+        } catch (requestError) {
+            // do nothing - shouldn't happen
+        }
+    }, [values, resetToken]);
 
     const handleChange = prop => (event) => {
         setValues({ ...values, [prop]: event.target.value });

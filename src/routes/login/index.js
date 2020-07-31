@@ -58,7 +58,7 @@ const SignInForm = ({ classes }) => {
         setValues({ ...values, [prop]: event.target.value });
     };
 
-    const handleSubmit = useCallback(() => {
+    const handleSubmit = useCallback(async () => {
         // reset error states
         setErrored(null);
         setErrorMsg(null);
@@ -78,14 +78,17 @@ const SignInForm = ({ classes }) => {
             password: values.password,
         };
 
-        Login(currentFormValue)
-            .then((data) => {
-                // we get here with or without errors
-                setErrored(data.error);
-                setErrorMsg(data.error ? data.errorMsg : null);
-                // update the app's auth context regardless of success or error
-                onLogin(data);
-            });
+        try {
+            const data = await Login(currentFormValue);
+
+            // we get here with or without errors
+            setErrored(data.error);
+            setErrorMsg(data.error ? data.errorMsg : null);
+            // update the app's auth context regardless of success or error
+            onLogin(data);
+        } catch (requestError) {
+            // do nothing - shouldn't happen
+        }
     }, [values, onLogin]);
 
     const emailRef = useRef(null);
