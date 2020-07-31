@@ -15,9 +15,9 @@
     "lint": "eslint ./src"
   },
   "devDependencies": {
-    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react": "^7.20.5",
     "react-scripts": "^3.4.1"
   },
   "pre-commit": [
@@ -27,27 +27,32 @@
   "dependencies": {
     "@hapi/inert": "^6.0.1",
     "@hapi/joi": "^17.1.1",
-    "@material-ui/core": "^4.9.12",
+    "@hookform/error-message": "0.0.2",
+    "@hookform/resolvers": "0.0.5",
+    "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "axios": "^0.19.2",
     "bootstrap-css-only": "^4.4.1",
+    "connected-react-router": "^6.8.0",
     "core-js": "^3.6.5",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^17.1.0",
     "history": "^4.10.1",
-    "jss": "^10.1.1",
+    "jss": "^10.3.0",
     "keymirror": "^0.1.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "path": "^0.12.7",
     "pre-commit": "^1.2.2",
     "prop-types": "^15.7.2",
-    "react": "^16.9.0",
+    "react": "^16.13.1",
     "react-axe": "^3.5.2",
     "react-dom": "^16.13.1",
-    "react-error-boundary": "^2.2.1",
-    "react-router-dom": "^5.1.2",
-    "sanitize.css": "^11.0.0",
-    "serve": "^11.3.2"
+    "react-error-boundary": "^2.3.1",
+    "react-hook-form": "^6.0.0",
+    "react-router-dom": "^5.2.0",
+    "sanitize.css": "^11.0.1",
+    "serve": "^11.3.2",
+    "yup": "^0.29.1"
   },
   "browserslist": [
     ">0.2%",
