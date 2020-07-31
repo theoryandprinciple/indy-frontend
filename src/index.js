@@ -37,6 +37,11 @@ if (process.env.NODE_ENV === 'development') {
         enhancers.push(devToolsExtension());
     }
 }
+if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line global-require
+    const axe = require('react-axe');
+    axe(React, ReactDOM, 1000);
+}
 const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
 const persistConfig = {
     key: 'root',
