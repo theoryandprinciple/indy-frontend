@@ -41,13 +41,13 @@
     "path": "^0.12.7",
     "pre-commit": "^1.2.2",
     "prop-types": "^15.7.2",
-    "react": "16.9.0",
+    "react": "^16.9.0",
     "react-axe": "^3.5.2",
     "react-dom": "^16.13.1",
     "react-error-boundary": "^2.2.1",
     "react-router-dom": "^5.1.2",
     "sanitize.css": "^11.0.0",
-    "serve": "11.1.0"
+    "serve": "^11.3.2"
   },
   "browserslist": [
     ">0.2%",
