@@ -6,6 +6,8 @@ import 'bootstrap-css-only/css/bootstrap-grid.min.css';
 import AuthDataProvider from './routes/login/wiring/auth-provider';
 import ErrorFallback from './components/ErrorFallback';
 
+import ScrollToTop from './utils/scroll-to-top';
+
 import history from './wiring/history';
 import App from './routes';
 
@@ -17,6 +19,10 @@ if (process.env.NODE_ENV !== 'production') {
     const axe = require('react-axe');
     axe(React, ReactDOM, 1000);
 }
+
+history.listen(() => {
+    ScrollToTop();
+});
 
 ReactDOM.render(
     <Router history={history}>
