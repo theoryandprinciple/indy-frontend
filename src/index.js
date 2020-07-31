@@ -14,6 +14,7 @@ import storage from 'redux-persist/lib/storage';
 
 import ScrollToTop from './utils/scroll-to-top';
 import ErrorFallback from './components/ErrorFallback';
+import * as serviceWorker from './serviceWorker';
 
 import { ClearErrors } from './actions/auth';
 import reducers from './reducers';
@@ -90,3 +91,8 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root'),
 );
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
