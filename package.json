@@ -12,7 +12,7 @@
     "test": "CI=true react-scripts test --env=jsdom --passWithNoTests",
     "eject": "react-scripts eject",
     "precommit": "pretty-quick --staged",
-    "lint": "eslint 'src/**/*.js' --ignore-pattern node_modules/"
+    "lint": "eslint ./src"
   },
   "devDependencies": {
     "eslint-plugin-babel": "^5.3.1",
