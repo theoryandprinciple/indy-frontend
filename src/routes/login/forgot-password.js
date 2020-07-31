@@ -46,12 +46,12 @@ const ForgotPassword = ({ classes }) => {
         setValues({ ...values, [prop]: event.target.value });
     };
 
-    const handleSubmit = useCallback(() => {
+    const handleSubmit = useCallback(async () => {
         // reset error states
         setErrored(null);
         setErrorMsg(null);
 
-        // Validatation
+        // Validation
         const { error } = Validation.forgot.validate(values);
 
         if (error) {
@@ -60,12 +60,14 @@ const ForgotPassword = ({ classes }) => {
             return;
         }
 
-        ForgotPass(values.email)
-            .then((data) => {
-                // we get here with or without errors
-                setErrored(data.error);
-                setErrorMsg(data.error ? data.errorMsg : null);
-            });
+        try {
+            const data = await ForgotPass(values.email);
+            // we get here with or without errors
+            setErrored(data.error);
+            setErrorMsg(data.error ? data.errorMsg : null);
+        } catch (requestError) {
+            // do nothing - shouldn't happen
+        }
     }, [values]);
 
     const emailRef = useRef(null);
