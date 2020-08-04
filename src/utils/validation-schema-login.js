@@ -1,38 +1,27 @@
-import Joi from '@hapi/joi';
+import * as yup from 'yup';
 
-const email = Joi.string()
-    .required() // never actually hit because .email structure requires non-empty string
-    .email({ minDomainSegments: 2, tlds: { allow: false } })
-    .messages({
-        'string.empty': 'Error: Email is required',
-        'string.email': 'Error: Email appears invalid',
-    });
+const email = yup
+    .string()
+    .required('Email is required')
+    .email('Email is invalid');
 
-const password = Joi.string()
-    .required()
-    .messages({
-        'string.empty': 'Error: Password is required',
-    });
+const password = yup
+    .string()
+    .required('Password is required');
 
 const schemas = {
-    login: Joi.object({
+    login: yup.object().shape({
         email,
         password,
     }),
-    forgot: Joi.object({
+    forgot: yup.object().shape({
         email,
     }),
-    reset: Joi.object({
+    reset: yup.object().shape({
         email,
         password,
-        passwordConfirm: Joi.string().valid(Joi.ref('password')).required()
-            .messages({
-                'any.only': 'Error: Confirmation password does not match',
-            }),
-        resetToken: Joi.string().required()
-            .messages({
-                'string.required': 'Error: The URL you used to get here appears invalid',
-            }),
+        passwordConfirm: yup.string().oneOf([yup.ref('password')], 'Confirmation password does not match'),
+        resetToken: yup.string().required('The URL you used to get here appears invalid'),
     }),
 };
 

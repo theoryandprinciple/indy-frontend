@@ -2,32 +2,42 @@ import React, {
     useState,
     useEffect,
     useCallback,
-    useRef,
 } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+// eslint-disable-next-line import/no-unresolved
+import { yupResolver } from '@hookform/resolvers';
 
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
 import useQuery from '../../utils/use-query';
 
 import { ForgotPass } from './wiring/auth-api';
+
 import Validation from '../../utils/validation-schema-login';
 
 import CombineStyles from '../../utils/combine-styles';
 import InputStyles from '../../styles/inputs';
 import Styles from './styles';
 
-import useEventListener from '../../utils/use-event-listener';
-
 const ForgotPassword = ({ classes }) => {
     const history = useHistory();
     const query = useQuery();
-    const [values, setValues] = useState({ email: '' });
-    const [errored, setErrored] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
+
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        getValues,
+        errors,
+    } = useForm({
+        resolver: yupResolver(Validation.forgot),
+    });
 
     const encodeQueryParam = x => (
         x.replace(/\s/g, '+')
@@ -35,116 +45,94 @@ const ForgotPassword = ({ classes }) => {
 
     useEffect(() => {
         document.title = 'Forgot Password - [SITE]';
-        // hydrate email address from URL
+        // hydrate email address from query param in URL
         if (query.get('email')) {
-            setValues({ email: encodeQueryParam(query.get('email')) });
+            setValue('email', encodeQueryParam(query.get('email')));
         }
         // eslint-disable-next-line
     }, []);
 
-    const handleChange = prop => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-    };
-
-    const handleSubmit = useCallback(async () => {
-        // reset error states
-        setErrored(null);
-        setErrorMsg(null);
-
-        // Validation
-        const { error } = Validation.forgot.validate(values);
-
-        if (error) {
-            setErrorMsg(error.message);
-            setErrored(true);
-            return;
+    useEffect(() => {
+        // Only show the first error message
+        if (Object.keys(errors).length) {
+            // Relies on Object.keys insertion order property ordering, not ideal
+            setErrorMsg(errors[Object.keys(errors)[0]].message);
         }
+    }, [errors]);
 
+    const onSubmit = useCallback(async (data) => {
+        setErrorMsg(null);
         try {
-            const data = await ForgotPass(values.email);
+            const response = await ForgotPass(data);
             // we get here with or without errors
-            setErrored(data.error);
-            setErrorMsg(data.error ? data.errorMsg : null);
+            setErrorMsg(response.error ? response.errorMsg : null);
         } catch (requestError) {
             // do nothing - shouldn't happen
         }
-    }, [values]);
-
-    const emailRef = useRef(null);
-    const eventHandler = useCallback((event) => {
-        // check to see if we are pressing the enter key
-        if (event.keyCode === 13) {
-            // cancel the default action, if needed
-            event.preventDefault();
-            // trigger the button element with a click
-            handleSubmit();
-        }
-    }, [handleSubmit]);
-    useEventListener('keyup', eventHandler, emailRef.current);
+    }, [setErrorMsg]);
 
     return (
         <div className={classes.wrapper}>
             <div className={classes.formWrapper}>
-                <Typography
-                    variant="h3"
-                    style={{ fontSize: 24, paddingBottom: 45 }}
-                >
-                    Reset Password
-                </Typography>
-                <div role="status" aria-live="polite">
-                    {errored && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
-                    {errored === false && <Typography variant="body1" className={classes.successMessage}>success, an email to complete the process has been sent.</Typography>}
-
-                </div>
-                <div className={classes.inputWrapper}>
-                    <TextField
-                        ref={emailRef}
-                        label="Email"
-                        variant="outlined"
-                        type="email"
-                        autoComplete="on"
-                        value={values.email}
-                        onChange={handleChange('email')}
-                        fullWidth
-                        autoFocus
-                        InputLabelProps={{
-                            classes: {
-                                root: classes.textInputLabelRoot,
-                                focused: classes.textInputLabelFocused,
-                                error: classes.textInputLabelError,
-                            },
-                        }}
-                        InputProps={{
-                            classes: {
-                                root: classes.textInput,
-                                notchedOutline: classes.notchedOutline,
-                                error: classes.textInputError,
-                            },
-                            inputProps: {
-                                'aria-label': 'Email',
-                            },
-                        }}
-                    />
-                </div>
-                <div className={classes.inputWrapper}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}
-                        fullWidth
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Typography
+                        variant="h3"
+                        style={{ fontSize: 24, paddingBottom: 45 }}
                     >
                         Reset Password
-                    </Button>
-                </div>
-                <div className={classes.inputWrapper}>
-                    <Button
-                        color="primary"
-                        onClick={() => history.push(values.email ? `/login?email=${values.email}` : '/login')}
-                        fullWidth
-                    >
-                        Cancel
-                    </Button>
-                </div>
+                    </Typography>
+                    <div role="status" aria-live="polite">
+                        {errorMsg && <Typography variant="body1" className={classes.errorMessage}>{errorMsg}</Typography>}
+                        {!errorMsg && <Typography variant="body1" className={classes.successMessage}>success, an email to complete the process has been sent.</Typography>}
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <TextField
+                            name="email"
+                            inputRef={register}
+                            label="Email"
+                            variant="outlined"
+                            autoComplete="on"
+                            autoFocus
+                            className={classes.fullWidth}
+                            InputLabelProps={{
+                                classes: {
+                                    root: classes.textInputLabelRoot,
+                                    focused: classes.textInputLabelFocused,
+                                    error: classes.textInputLabelError,
+                                },
+                            }}
+                            InputProps={{
+                                classes: {
+                                    root: classes.textInput,
+                                    notchedOutline: classes.notchedOutline,
+                                    error: classes.textInputError,
+                                },
+                                inputProps: {
+                                    'aria-label': 'Email',
+                                },
+                            }}
+                        />
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            fullWidth
+                        >
+                            Submit
+                        </Button>
+                    </div>
+                    <div className={classes.inputWrapper}>
+                        <Button
+                            color="primary"
+                            fullWidth
+                            onClick={() => history.push(getValues('email') ? `/login?email=${getValues('email')}` : '/login')}
+                        >
+                            Cancel
+                        </Button>
+                    </div>
+                </form>
             </div>
         </div>
     );
