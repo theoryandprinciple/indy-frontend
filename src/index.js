@@ -13,8 +13,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
 
 import ScrollToTop from './utils/scroll-to-top';
-import ErrorFallback from './components/ErrorFallback';
-import * as serviceWorker from './serviceWorker';
+import ErrorFallback from './components/error-fallback';
+import * as serviceWorker from './service-worker';
 
 import { ClearErrors } from './actions/auth';
 import reducers from './reducers';
