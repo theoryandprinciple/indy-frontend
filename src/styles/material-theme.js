@@ -3,6 +3,15 @@ import Colors from './colors';
 // https://material-ui.com/customization/default-theme/?expend-path=$.palette.background
 // https://fonts.adobe.com/fonts/ibm-plex-sans#fonts-section
 const theme = createMuiTheme({
+    breakpoints: { // using bootstrap defined breakpoints for consistancy
+        values: {
+            xs: 0,
+            sm: 576,
+            md: 768,
+            lg: 992,
+            xl: 1200,
+        },
+    },
     typography: {
         useNextVariants: true,
         h1: {
