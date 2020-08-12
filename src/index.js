@@ -4,9 +4,9 @@ import { Router } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import 'bootstrap-css-only/css/bootstrap-grid.min.css';
 import AuthDataProvider from './routes/login/wiring/auth-provider';
-import ErrorFallback from './components/ErrorFallback';
+import ErrorFallback from './components/error-fallback';
 
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './service-worker';
 import ScrollToTop from './utils/scroll-to-top';
 
 import history from './wiring/history';
