@@ -22,6 +22,9 @@ const PublicLayout = () => {
     return (
         <main className="container">
             <Switch location={location}>
+                <Route exact path="/error/404">
+                    <Error404 />
+                </Route>
                 <Route exact path="/about">
                     <About />
                 </Route>
@@ -38,9 +41,7 @@ const PublicLayout = () => {
                     <Home />
                 </Route>
                 <Route path="/">
-                    <Redirect to="/error/404">
-                        <Error404 />
-                    </Redirect>
+                    <Redirect to="/error/404" />
                 </Route>
             </Switch>
         </main>
