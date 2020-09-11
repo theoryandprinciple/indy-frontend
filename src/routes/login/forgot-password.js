@@ -72,7 +72,7 @@ const ForgotPassword = ({ classes }) => {
 
     const onSubmit = (data) => {
         setErrorMsg(null);
-        dispatch(ForgotPass(data));
+        dispatch(ForgotPass(data.email));
     };
 
     return (
