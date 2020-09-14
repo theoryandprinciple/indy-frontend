@@ -63,7 +63,7 @@ const ForgotPassword = ({ classes }) => {
     const onSubmit = useCallback(async (data) => {
         setErrorMsg(null);
         try {
-            const response = await ForgotPass(data);
+            const response = await ForgotPass(data.email);
             // we get here with or without errors
             setErrorMsg(response.error ? response.errorMsg : null);
         } catch (requestError) {
