@@ -69,12 +69,12 @@ export const ForgotPass = async (email) => {
 };
 
 export const ResetPass = async (FormValues) => {
-    const { email, resetToken, newPassword } = FormValues;
+    const { email, resetToken, password } = FormValues;
 
     try {
         await WebClient.post('/users/reset-password', {
             email,
-            newPassword,
+            newPassword: password,
             resetToken,
         });
 
