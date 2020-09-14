@@ -110,12 +110,12 @@ const ResetPassError = payload => ({
 export const ResetPass = formValues => async (dispatch) => {
     dispatch(ResetPassBegin({ error: false, errorMsg: '', completed: false }));
 
-    const { email, resetToken, newPassword } = formValues;
+    const { email, resetToken, password } = formValues;
 
     try {
         await WebClient.post('/users/reset-password', {
             email,
-            newPassword,
+            newPassword: password,
             resetToken,
         });
         dispatch(ResetPassSuccess({ error: false, errorMsg: '', completed: true }));
