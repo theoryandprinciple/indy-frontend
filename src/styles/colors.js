@@ -1,9 +1,10 @@
 export default {
-    darkGrey: '#E6E6E6',
-    darkGrey2: '#DCDCDC',
-    lightGrey: '#DDDDDD',
-    pageBackground: '#F2F2F2',
-    blue: '#00A0FF',
-    orange: '#F36452',
-    brown: '#333333',
+    black: '#001525',
+    teal: '#00FFC2',
+    lightTeal: '#CCFFF3',
+    lightBlue: '#EAF1FC',
+    blue: '#045FC9',
+    purple: '#1F1578',
+    yellow: '#FFDA02',
+    white: '#FFFFFF',
 };
