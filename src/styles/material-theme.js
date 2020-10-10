@@ -18,6 +18,45 @@ const theme = createMuiTheme({
             ...breakpointObject.breakpoints.values,
         },
     },
+    props: {
+        MuiButton: {
+            disableElevation: true,
+        },
+    },
+    overrides: {
+        MuiButton: {
+            root: {
+                borderRadius: 8,
+                minHeight: 50,
+                paddingLeft: 40,
+                paddingRight: 40,
+            },
+            containedPrimary: {
+                '&$disabled': {
+                    backgroundColor: `rgba(${Colors.purpleRGB}, .8)`,
+                    color: Colors.white,
+                },
+            },
+        },
+        MuiFormControlLabel: {
+            root: {
+                border: '1px solid #DDDDDD',
+                borderRadius: 8,
+                minHeight: 50,
+                paddingLeft: 20,
+                marginLeft: 0,
+                '&[data-checked="true"]': {
+                    backgroundColor: Colors.lightTeal,
+                },
+            },
+        },
+        MuiCheckbox: {
+            root: {},
+            colorPrimary: {
+                '&$checked': {},
+            },
+        },
+    },
     typography: {
         useNextVariants: true,
         fontFamily: '"Kumbh Sans", sans-serif',
@@ -44,6 +83,8 @@ const theme = createMuiTheme({
         },
         button: {
             textTransform: 'none',
+            fontWeight: 700,
+            fontSize: 17,
         },
     },
     palette: {

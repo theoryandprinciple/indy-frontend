@@ -5,6 +5,8 @@ export default {
     lightBlue: '#EAF1FC',
     blue: '#045FC9',
     purple: '#1F1578',
+    purpleRGB: '31, 21, 120',
     yellow: '#FFDA02',
     white: '#FFFFFF',
+    grey: '#DEDDE1',
 };
