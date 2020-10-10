@@ -10,4 +10,5 @@ export default {
     white: '#FFFFFF',
     grey: '#DEDDE1',
     grey2: '#8E9499',
+    error: 'red',
 };

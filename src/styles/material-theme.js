@@ -60,6 +60,36 @@ const theme = createMuiTheme({
                 '&$checked': {},
             },
         },
+        MuiInputBase: {
+            root: {
+                // fontFamily: theme.typography.body1.fontFamily,
+                // fontSize: theme.typography.body1.fontSize,
+                color: Colors.black,
+                backgroundColor: 'white',
+                outline: 0,
+                lineHeight: 1,
+                width: '100%',
+                padding: '2px 0',
+                borderRadius: 5,
+                border: `1px solid ${Colors.grey}`,
+                '&$textInputError': {
+                    borderColor: `${Colors.error} !important`,
+                },
+                '&$focused': {
+                    borderRadius: 5,
+                    border: `1px solid ${Colors.purple}`,
+                    color: Colors.purple,
+                },
+            },
+            input: {
+                borderRadius: 5,
+                padding: 10,
+            },
+
+            error: {
+                border: `1px solid ${Colors.error}`,
+            },
+        },
     },
     typography: {
         useNextVariants: true,
