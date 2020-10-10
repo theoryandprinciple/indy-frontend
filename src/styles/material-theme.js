@@ -40,18 +40,22 @@ const theme = createMuiTheme({
         },
         MuiFormControlLabel: {
             root: {
-                border: '1px solid #DDDDDD',
+                marginTop: 15,
+                border: `1px solid ${Colors.grey}`,
                 borderRadius: 8,
                 minHeight: 50,
-                paddingLeft: 20,
+                paddingLeft: 5,
                 marginLeft: 0,
+                marginRight: 0,
                 '&[data-checked="true"]': {
+                    border: `2px solid ${Colors.purple}`,
                     backgroundColor: Colors.lightTeal,
                 },
             },
         },
         MuiCheckbox: {
             root: {},
+            icon: {},
             colorPrimary: {
                 '&$checked': {},
             },

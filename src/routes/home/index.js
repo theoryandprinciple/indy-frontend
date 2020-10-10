@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Typography from '@material-ui/core/Typography';
 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -28,22 +29,15 @@ const Home = ({ classes }) => {
         <div className={`container ${classes.containerWrapper}`}>
             <div className={`row ${classes.sectionWrapper}`}>
                 <div className="col">
-                    <div className="row">
+                    <div className="row mt-3">
+                        <div className="col text-center">
+                            <Typography variant="body1" color="primary">Qualification 1 of 5</Typography>
+                        </div>
+                    </div>
+                    <div className="row mt-4">
                         <div className="col">
-
-                            <h1>Home Page</h1>
-                            <Button variant="outlinedPrimary">
-                                Primary
-                            </Button>
-                            <Button variant="contained" color="primary">
-                                Primary
-                            </Button>
-                            <Button disabled variant="contained" color="primary">
-                                Primary
-                            </Button>
-                            <Button variant="contained" color="secondary">
-                                Secondary
-                            </Button>
+                            <Typography variant="h1" color="primary">Income Qualification</Typography>
+                            <Typography variant="body1">Check all that apply</Typography>
                             <FormGroup>
                                 <FormControlLabel
                                     data-checked={box1}
@@ -74,6 +68,16 @@ const Home = ({ classes }) => {
                                 <FormControlLabel data-checked={radioValue === 'best'} value="best" control={<Radio color="primary" />} label="The best!" />
                                 <FormControlLabel data-checked={radioValue === 'worst'} value="worst" control={<Radio color="primary" />} label="The worst." />
                             </RadioGroup>
+                        </div>
+                    </div>
+                    <div className="row mt-5 mb-3">
+                        <div className="col text-right">
+                            <Button variant="outlinedPrimary" className="mr-3">
+                                Previous
+                            </Button>
+                            <Button variant="contained" color="primary">
+                                Next
+                            </Button>
                         </div>
                     </div>
                 </div>
