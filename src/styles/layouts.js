@@ -22,27 +22,13 @@ const styles = theme => ({
             marginLeft: 0,
         },
     },
-    edgelessContainerWrapper: {
-        maxWidth: 700,
-        paddingLeft: 0,
-        paddingRight: 0,
+    sectionWrapperPurple: {
+        backgroundColor: Colors.purple,
+        color: Colors.white,
     },
-    edgelessSectionWrapper: {
-        backgroundColor: Colors.white,
-        paddingTop: 20,
-        paddingBottom: 30,
-        marginBottom: 100,
-        marginTop: 15,
-        borderRadius: 8,
-        width: '100%',
-    },
-    edgelessElementWrapper: {
-        paddingRight: 60,
-        paddingLeft: 60,
-        [theme.breakpoints.down('md')]: {
-            paddingRight: 15,
-            paddingLeft: 15,
-        },
+    sectionWrapperFullWidth: {
+        borderRadius: 0,
+        margin: 0,
     },
 });
 
