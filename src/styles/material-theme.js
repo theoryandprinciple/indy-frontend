@@ -24,6 +24,22 @@ const theme = createMuiTheme({
         },
     },
     overrides: {
+        MuiList: {
+            root: {
+                paddingLeft: 20,
+                paddingRight: 20,
+            },
+        },
+        MuiListItem: {
+            root: {
+                '&$selected': {
+                    backgroundColor: Colors.lightTeal,
+                },
+                '&$selected$disabled': {
+                    backgroundColor: Colors.white,
+                },
+            },
+        },
         MuiButton: {
             root: {
                 borderRadius: 8,
@@ -80,14 +96,13 @@ const theme = createMuiTheme({
                     border: `1px solid ${Colors.purple}`,
                     color: Colors.purple,
                 },
+                '&$error': {
+                    border: `1px solid ${Colors.error}`,
+                },
             },
             input: {
                 borderRadius: 5,
                 padding: 10,
-            },
-
-            error: {
-                border: `1px solid ${Colors.error}`,
             },
         },
     },
