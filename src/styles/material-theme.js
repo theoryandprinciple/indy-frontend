@@ -53,6 +53,10 @@ const theme = createMuiTheme({
                     color: Colors.white,
                 },
             },
+            outlined: {
+                paddingLeft: 40,
+                paddingRight: 40,
+            },
         },
         MuiFormControlLabel: {
             root: {
@@ -128,6 +132,13 @@ const theme = createMuiTheme({
             fontWeight: 400,
             [breakpointObject.breakpoints.down('sm')]: {
                 fontSize: 15,
+            },
+        },
+        body2: {
+            fontSize: 15,
+            fontWeight: 400,
+            [breakpointObject.breakpoints.down('sm')]: {
+                fontSize: 13,
             },
         },
         button: {

@@ -27,6 +27,7 @@ const styles = theme => ({
         color: Colors.white,
     },
     sectionWrapperFullWidth: {
+        border: 'none',
         borderRadius: 0,
         margin: 0,
     },
