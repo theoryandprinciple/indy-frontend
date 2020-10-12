@@ -75,7 +75,7 @@ const IntakeStep1 = ({ classes }) => {
                                 variant="outlined"
                                 color="primary"
                                 className="mr-3"
-                                onClick={() => history.goBack()}
+                                onClick={() => history.push('/intake/getstarted')}
                             >
                                 Previous
                             </Button>

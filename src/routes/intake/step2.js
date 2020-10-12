@@ -40,7 +40,8 @@ const IntakeStep2 = ({ classes }) => {
     });
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
-        history.push('/intake/3');
+        if (values.govermentAsst === 'No') history.push('/intake/noqualify');
+        else history.push('/intake/3');
     }, [dispatch, history]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
@@ -103,7 +104,7 @@ const IntakeStep2 = ({ classes }) => {
                                 variant="outlined"
                                 color="primary"
                                 className="mr-3"
-                                onClick={() => history.goBack()}
+                                onClick={() => history.push('/intake/1')}
                             >
                                 Previous
                             </Button>

@@ -39,7 +39,8 @@ const IntakeStep5 = ({ classes }) => {
     });
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
-        history.push('/qualify');
+        if (values.tryingToPay === 'No') history.push('/intake/noqualify');
+        else history.push('/intake/qualify');
     }, [dispatch, history]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
@@ -62,7 +63,7 @@ const IntakeStep5 = ({ classes }) => {
                         <div className="col">
                             <Typography variant="h1" color="primary">I am doing my best to pay as much rent as I can, given my circumstances</Typography>
                             <RadioGroup
-                                name="govermentAsst"
+                                name="tryingToPay"
                                 label={Questions.step5.tryingToPay.label}
                                 errors={errors}
                                 required
@@ -85,7 +86,7 @@ const IntakeStep5 = ({ classes }) => {
                                 variant="outlined"
                                 color="primary"
                                 className="mr-3"
-                                onClick={() => history.goBack()}
+                                onClick={() => history.push('/intake/4')}
                             >
                                 Previous
                             </Button>

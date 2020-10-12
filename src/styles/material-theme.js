@@ -74,13 +74,6 @@ const theme = createMuiTheme({
                 },
             },
         },
-        MuiCheckbox: {
-            root: {},
-            icon: {},
-            colorPrimary: {
-                '&$checked': {},
-            },
-        },
         MuiInputBase: {
             root: {
                 // fontFamily: theme.typography.body1.fontFamily,

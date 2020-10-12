@@ -36,7 +36,8 @@ const IntakeStep4 = ({ classes }) => {
     });
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
-        history.push('/intake/5');
+        if (values.evictionHealthRisks === '5') history.push('/intake/noqualify');
+        else history.push('/intake/5');
     }, [dispatch, history]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
@@ -75,7 +76,7 @@ const IntakeStep4 = ({ classes }) => {
                                 variant="outlined"
                                 color="primary"
                                 className="mr-3"
-                                onClick={() => history.goBack()}
+                                onClick={() => history.push('/intake/3')}
                             >
                                 Previous
                             </Button>
