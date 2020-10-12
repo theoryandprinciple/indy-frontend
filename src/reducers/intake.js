@@ -1,21 +1,25 @@
-import UserTypes from '../action-types/user';
+import IntakeTypes from '../action-types/intake';
 
 const internals = {
     initial: () => ({
-        user: {},
+        answers: {
+            checkboxDemo: [],
+            checkboxDemo2: [],
+        },
     }),
 };
 
-const UserReducer = (stateParam, action) => {
+const IntakeReducer = (stateParam, action) => {
     const state = stateParam || internals.initial();
 
     const { payload, type } = action;
 
     switch (type) {
-    case UserTypes.SETUP_USER:
+    case IntakeTypes.SAVE_INTAKE:
         return {
             ...state,
-            user: {
+            answers: {
+                ...state.answers,
                 ...payload,
             },
         };
@@ -26,4 +30,4 @@ const UserReducer = (stateParam, action) => {
     return state;
 };
 
-export default UserReducer;
+export default IntakeReducer;

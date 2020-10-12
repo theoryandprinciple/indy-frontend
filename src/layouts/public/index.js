@@ -13,6 +13,7 @@ import Footer from '../../components/footer';
 import Home from '../../routes/home';
 
 import Intake1 from '../../routes/intake/step1';
+import Intake2 from '../../routes/intake/step2';
 
 import Demo from '../../routes/demo';
 import Error404 from '../../routes/error/404';
@@ -31,10 +32,16 @@ const PublicLayout = () => {
                         <Error404 />
                     </Route>
                     <Route exact path="/">
-                        <Home />
+                        <>
+                            <Home />
+                            <Footer />
+                        </>
                     </Route>
                     <Route exact path="/intake/1">
                         <Intake1 />
+                    </Route>
+                    <Route exact path="/intake/2">
+                        <Intake2 />
                     </Route>
                     <Route path="/intake">
                         <Intake1 />
@@ -47,7 +54,6 @@ const PublicLayout = () => {
                     </Route>
                 </Switch>
             </main>
-            <Footer />
         </>
     );
 };

@@ -8,25 +8,22 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { SaveAnswers } from '../../actions/intake';
-import { getAnswers } from '../../selectors/intake';
-
 import CheckboxGroup from '../../components/form/checkboxgroup';
 
 import LayoutStyles from '../../styles/layouts';
 
 const CheckBoxOptions = [
-    { id: '1', name: 'I did not report any income to the I.R.S. for 2019' },
-    { id: '2', name: 'I did not report any income to the I.R.S. for 2019' },
+    { id: '4', name: 'I did not report any income to the I.R.S. for 2019' },
+    { id: '5', name: 'I did not report any income to the I.R.S. for 2019' },
 ];
 
-const IntakeStep1 = ({ classes }) => {
+const IntakeStep2 = ({ classes }) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const currentAnswers = useSelector(getAnswers);
     const {
         handleSubmit,
         watch,
@@ -36,19 +33,19 @@ const IntakeStep1 = ({ classes }) => {
     } = useForm({
         mode: 'onSubmit',
         defaultValues: {
-            checkboxDemo: currentAnswers.answers.checkboxDemo,
+            checkboxDemo2: [],
         },
     });
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
-        history.push('/intake/2');
+        history.push('/intake/3');
     }, []);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
 
     useEffect(() => {
-        console.log(getValues('checkboxDemo'))
-        if (getValues('checkboxDemo').length > 0) setContinueActive(true);
+        console.log(getValues('checkboxDemo2'))
+        if (getValues('checkboxDemo2').length > 0) setContinueActive(true);
         else setContinueActive(false);
     }, [watchAll, getValues]);
     // END form setup
@@ -68,7 +65,7 @@ const IntakeStep1 = ({ classes }) => {
                             <Typography variant="h1" color="primary">Income Qualification</Typography>
                             <Typography variant="body1">Check all that apply</Typography>
                             <CheckboxGroup
-                                name="checkboxDemo"
+                                name="checkboxDemo2"
                                 options={CheckBoxOptions}
                                 errors={errors}
                                 control={control}
@@ -81,6 +78,7 @@ const IntakeStep1 = ({ classes }) => {
                                 variant="outlined"
                                 color="primary"
                                 className="mr-3"
+                                onClick={() => history.goBack()}
                             >
                                 Previous
                             </Button>
@@ -100,8 +98,8 @@ const IntakeStep1 = ({ classes }) => {
     );
 };
 
-IntakeStep1.propTypes = {
+IntakeStep2.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(LayoutStyles)(IntakeStep1);
+export default withStyles(LayoutStyles)(IntakeStep2);

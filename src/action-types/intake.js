@@ -1,5 +1,5 @@
 const KeyMirror = require('keymirror');
 
 module.exports = KeyMirror({
-    SETUP_USER: true,
+    SAVE_INTAKE: true,
 });
