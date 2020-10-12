@@ -43,6 +43,7 @@ const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
 const persistConfig = {
     key: 'root',
     storage,
+    blacklist: 'intake',
 };
 const persistedReducer = persistReducer(persistConfig, reducers(browserHistory));
 const store = createStore(
@@ -58,10 +59,7 @@ browserHistory.listen(() => {
 
 ReactDOM.render(
     <Provider store={store}>
-        <PersistGate
-            loading={null}
-            persistor={persistedStore}
-        >
+        <PersistGate loading={null} persistor={persistedStore}>
             <ConnectedRouter history={browserHistory}>
                 <ErrorBoundary FallbackComponent={ErrorFallback}>
                     <App />

@@ -21,10 +21,9 @@ import LayoutStyles from '../../styles/layouts';
 import ButtonStyles from '../../styles/buttons';
 import Questions from './questions';
 
-const IntakeStep2 = ({ classes }) => {
+const IntakeStep5 = ({ classes }) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [open, setOpen] = useState(false);
     const currentAnswers = useSelector(getAnswers);
     const {
         handleSubmit,
@@ -35,18 +34,18 @@ const IntakeStep2 = ({ classes }) => {
     } = useForm({
         mode: 'onSubmit',
         defaultValues: {
-            govermentAsst: currentAnswers.govermentAsst,
+            tryingToPay: currentAnswers.tryingToPay,
         },
     });
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
-        history.push('/intake/3');
+        history.push('/qualify');
     }, [dispatch, history]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
 
     useEffect(() => {
-        if (getValues('govermentAsst') !== '') setContinueActive(true);
+        if (getValues('tryingToPay') !== '') setContinueActive(true);
         else setContinueActive(false);
     }, [watchAll, getValues]);
 
@@ -56,45 +55,28 @@ const IntakeStep2 = ({ classes }) => {
                 <div className="col">
                     <div className="row mt-3">
                         <div className="col text-center">
-                            <Typography variant="body1" color="primary">Qualification 2 of 5</Typography>
+                            <Typography variant="body1" color="primary">Qualification 5 of 5</Typography>
                         </div>
                     </div>
                     <div className="row mt-4">
                         <div className="col">
-                            <Typography variant="h1" color="primary">Did you do your best to get government help to pay the rent?</Typography>
-                            <Typography variant="body1">If you do not qualify for any help from the government, or if applications were closed, your application was waitlisted, or assistance programs were no longer available or if you applied and you were denied, answer ‘Yes.’</Typography>
+                            <Typography variant="h1" color="primary">I am doing my best to pay as much rent as I can, given my circumstances</Typography>
                             <RadioGroup
                                 name="govermentAsst"
-                                label={Questions.step2.govermentAsst.label}
+                                label={Questions.step5.tryingToPay.label}
                                 errors={errors}
                                 required
                                 control={control}
                             >
-                                {Questions.step2.govermentAsst.options.map(option => (
+                                {Questions.step5.tryingToPay.options.map(option => (
                                     <RadioButton
-                                        key={`${Questions.step2.govermentAsst.id}-${option}`}
+                                        key={`${Questions.step5.tryingToPay.id}-${option}`}
                                         value={option}
                                         label={option}
                                         buttonStyle
                                     />
                                 ))}
                             </RadioGroup>
-
-                            <button
-                                type="button"
-                                className={`mt-4 ${classes.textLink}`}
-                                onClick={() => setOpen(!open)}
-                            >
-                                <Typography variant="body1">What are &quot;best efforts&quot; and &quot;government help&quot;?</Typography>
-                            </button>
-                            <div className={`${classes.expandableContentRow} ${open ? classes.expandableOpened : classes.expandableClosed}`}>
-                                <Typography variant="body1" className="mt-3">
-                                    &quot;Best efforts,&quot; while not defined by the Order, means that you should attempt to apply for assistance at indyrent.org if a resident of Marion County or https://www.indianahousingnow.org/ if you live anywhere else in Indiana. You should document whether your application was successful.
-                                </Typography>
-                                <Typography variant="body1" className="mt-3">
-                                    &quot;Government help&quot; means any governmental rental or housing payment benefits available to the individual or any household member.
-                                </Typography>
-                            </div>
                         </div>
                     </div>
                     <div className="row mt-5 mb-3">
@@ -123,9 +105,9 @@ const IntakeStep2 = ({ classes }) => {
     );
 };
 
-IntakeStep2.propTypes = {
+IntakeStep5.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
 const combinedStyles = CombineStyles(LayoutStyles, ButtonStyles);
-export default withStyles(combinedStyles)(IntakeStep2);
+export default withStyles(combinedStyles)(IntakeStep5);

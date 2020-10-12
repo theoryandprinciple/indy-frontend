@@ -3,8 +3,12 @@ import IntakeTypes from '../action-types/intake';
 const internals = {
     initial: () => ({
         answers: {
-            checkboxDemo: [],
-            checkboxDemo2: [],
+            income: [],
+            govermentAsst: '',
+            affordRent: '',
+            affordRentProblems: [],
+            evictionHealthRisks: [],
+            tryingToPay: '',
         },
     }),
 };

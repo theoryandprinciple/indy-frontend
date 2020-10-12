@@ -31,6 +31,19 @@ const styles = theme => ({
         borderRadius: 0,
         margin: 0,
     },
+    // EXPANDABLE BLOCK
+    expandableContentRow: {
+        overflow: 'hidden',
+        transition: 'all 0.2s ease-out',
+    },
+    expandableOpened: {
+        maxHeight: '100%',
+        paddingBottom: 0,
+    },
+    expandableClosed: {
+        maxHeight: 0,
+        paddingBottom: 0,
+    },
 });
 
 export default styles;

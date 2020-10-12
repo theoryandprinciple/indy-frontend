@@ -18,7 +18,7 @@ import CheckboxGroup from '../../components/form/checkboxgroup';
 import LayoutStyles from '../../styles/layouts';
 import Questions from './questions';
 
-const IntakeStep1 = ({ classes }) => {
+const IntakeStep4 = ({ classes }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const currentAnswers = useSelector(getAnswers);
@@ -31,18 +31,18 @@ const IntakeStep1 = ({ classes }) => {
     } = useForm({
         mode: 'onSubmit',
         defaultValues: {
-            income: currentAnswers.income,
+            evictionHealthRisks: currentAnswers.evictionHealthRisks,
         },
     });
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
-        history.push('/intake/2');
+        history.push('/intake/5');
     }, [dispatch, history]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
 
     useEffect(() => {
-        if (getValues('income').length > 0) setContinueActive(true);
+        if (getValues('evictionHealthRisks').length > 0) setContinueActive(true);
         else setContinueActive(false);
     }, [watchAll, getValues]);
 
@@ -52,18 +52,18 @@ const IntakeStep1 = ({ classes }) => {
                 <div className="col">
                     <div className="row mt-3">
                         <div className="col text-center">
-                            <Typography variant="body1" color="primary">Qualification 1 of 5</Typography>
+                            <Typography variant="body1" color="primary">Qualification 4 of 5</Typography>
                         </div>
                     </div>
                     <div className="row mt-4">
                         <div className="col">
-                            <Typography variant="h1" color="primary">Income Qualification</Typography>
+                            <Typography variant="h1" color="primary">Would an eviction result in a health risk to you by placing you in unsafe living conditions?</Typography>
                             <Typography variant="body1">Check all that apply</Typography>
                             <CheckboxGroup
-                                name="income"
-                                label={Questions.step1.income.label}
+                                name="evictionHealthRisks"
+                                label={Questions.step4.evictionHealthRisks.label}
                                 hiddenLabel
-                                options={Questions.step1.income.options}
+                                options={Questions.step4.evictionHealthRisks.options}
                                 errors={errors}
                                 control={control}
                             />
@@ -95,8 +95,8 @@ const IntakeStep1 = ({ classes }) => {
     );
 };
 
-IntakeStep1.propTypes = {
+IntakeStep4.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(LayoutStyles)(IntakeStep1);
+export default withStyles(LayoutStyles)(IntakeStep4);

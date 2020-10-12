@@ -99,6 +99,7 @@ const ControlledCheckboxGroup = ({
     options,
     inputRef,
     conditional,
+    hiddenLabel,
 }) => {
     const isInvalid = !!errors[name];
     const describedBy = (showError && isInvalid) ? `${name}-error` : null;
@@ -117,8 +118,8 @@ const ControlledCheckboxGroup = ({
             fullWidth
             required={required}
         >
-            {label && (
-                <Typography variant="body1" id={`${name}-label`}>{label}</Typography>
+            {(label && !hiddenLabel) && (
+                <Typography variant="body1" id={`${name}-label`} className={classes.inputLabel}>{label}</Typography>
             )}
 
             <Controller
@@ -157,6 +158,7 @@ ControlledCheckboxGroup.defaultProps = {
     rules: null,
     inputRef: null,
     conditional: null,
+    hiddenLabel: false,
 };
 
 ControlledCheckboxGroup.propTypes = {
@@ -171,6 +173,7 @@ ControlledCheckboxGroup.propTypes = {
     options: PropTypes.array.isRequired,
     inputRef: PropTypes.func,
     conditional: PropTypes.object,
+    hiddenLabel: PropTypes.bool,
 };
 
 export default withStyles(InputStyles)(ControlledCheckboxGroup);

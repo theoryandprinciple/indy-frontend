@@ -14,6 +14,9 @@ import Home from '../../routes/home';
 
 import Intake1 from '../../routes/intake/step1';
 import Intake2 from '../../routes/intake/step2';
+import Intake3 from '../../routes/intake/step3';
+import Intake4 from '../../routes/intake/step4';
+import Intake5 from '../../routes/intake/step5';
 
 import Demo from '../../routes/demo';
 import Error404 from '../../routes/error/404';
@@ -42,6 +45,15 @@ const PublicLayout = () => {
                     </Route>
                     <Route exact path="/intake/2">
                         <Intake2 />
+                    </Route>
+                    <Route exact path="/intake/3">
+                        <Intake3 />
+                    </Route>
+                    <Route exact path="/intake/4">
+                        <Intake4 />
+                    </Route>
+                    <Route exact path="/intake/5">
+                        <Intake5 />
                     </Route>
                     <Route path="/intake">
                         <Intake1 />

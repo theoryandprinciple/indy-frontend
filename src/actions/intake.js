@@ -3,7 +3,7 @@ import WebClient from '../utils/web-client';
 
 export const SaveAnswers = answers => ({
     type: IntakeTypes.SAVE_INTAKE,
-    payload: { answers },
+    payload: answers,
 });
 
 export const PostAnswers = (reportId, patchData, onSuccess, onError) => (
