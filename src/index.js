@@ -16,14 +16,10 @@ import ScrollToTop from './utils/scroll-to-top';
 import ErrorFallback from './components/error-fallback';
 import * as serviceWorker from './service-worker';
 
-import { ClearErrors } from './actions/auth';
 import reducers from './reducers';
 
 import browserHistory from './wiring/history';
 import App from './routes';
-
-import Initializers from './initializers';
-import InitializerUser from './initializers/user';
 
 import 'sanitize.css/sanitize.css';
 import './index.css';
@@ -47,7 +43,6 @@ const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['auth'],
 };
 const persistedReducer = persistReducer(persistConfig, reducers(browserHistory));
 const store = createStore(
@@ -61,26 +56,11 @@ browserHistory.listen(() => {
     ScrollToTop();
 });
 
-const onBeforeLift = () => {
-    // Run initializers... anything that will need to use or subscribe to the store
-    Initializers(store);
-
-    // clear login/logout errors that may be in local storage
-    store.dispatch(ClearErrors());
-
-    if (store.getState().auth.isAuthenticated) {
-        InitializerUser(store);
-        // load role specific content
-        // if (store.getState().auth.credentials.role === 'admin') {}
-    }
-};
-
 ReactDOM.render(
     <Provider store={store}>
         <PersistGate
             loading={null}
             persistor={persistedStore}
-            onBeforeLift={onBeforeLift}
         >
             <ConnectedRouter history={browserHistory}>
                 <ErrorBoundary FallbackComponent={ErrorFallback}>

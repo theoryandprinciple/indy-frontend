@@ -11,6 +11,9 @@ import Header from '../../components/header';
 import Footer from '../../components/footer';
 
 import Home from '../../routes/home';
+
+import Intake1 from '../../routes/intake/step1';
+
 import Demo from '../../routes/demo';
 import Error404 from '../../routes/error/404';
 
@@ -29,6 +32,12 @@ const PublicLayout = () => {
                     </Route>
                     <Route exact path="/">
                         <Home />
+                    </Route>
+                    <Route exact path="/intake/1">
+                        <Intake1 />
+                    </Route>
+                    <Route path="/intake">
+                        <Intake1 />
                     </Route>
                     <Route exact path="/demo">
                         <Demo />
