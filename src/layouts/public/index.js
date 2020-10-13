@@ -22,6 +22,9 @@ import IntakeStart from '../../routes/intake/start';
 import IntakeQualify from '../../routes/intake/qualify';
 import IntakeNoQualify from '../../routes/intake/no-qualify';
 
+import Form1 from '../../routes/form/step1';
+import Form2 from '../../routes/form/step2';
+
 import Demo from '../../routes/demo';
 import Error404 from '../../routes/error/404';
 
@@ -71,8 +74,15 @@ const PublicLayout = () => {
                     <Route exact path="/intake/5">
                         <Intake5 />
                     </Route>
-                    <Route path="/intake/start">
-                        <Intake1 />
+                    <Route path="/intake">
+                        <IntakeStart />
+                    </Route>
+
+                    <Route exact path="/form/1">
+                        <Form1 />
+                    </Route>
+                    <Route exact path="/form/2">
+                        <Form2 />
                     </Route>
                     <Route exact path="/demo">
                         <Demo />

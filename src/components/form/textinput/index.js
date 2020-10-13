@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import InputBase from '@material-ui/core/InputBase';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 import { withStyles } from '@material-ui/core/styles';
@@ -56,8 +56,7 @@ const TextInput = ({
         <>
             <Typography variant="body1" id={`${name}-label`}>{label}</Typography>
 
-            <InputBase
-                variant="outlined"
+            <OutlinedInput
                 inputRef={inputRef}
                 name={name}
                 value={value}
