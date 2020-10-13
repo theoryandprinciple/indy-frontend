@@ -85,7 +85,6 @@ const theme = createMuiTheme({
                 color: Colors.black,
                 backgroundColor: 'white',
                 outline: 0,
-                lineHeight: 1,
                 width: '100%',
                 padding: '2px 0',
                 borderRadius: 3,
