@@ -13,6 +13,7 @@ const internals = {
             landlordCompany: '',
             landlordFullName: '',
             landlordSendMethod: '',
+            landlordEmail: '',
             landlordAddress: '',
             landlordUnit: '',
             landlordCity: '',

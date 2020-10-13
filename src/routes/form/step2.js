@@ -128,6 +128,18 @@ const FormStep2 = ({ classes }) => {
                             </div>
                         </div>
                     </div>
+                    <ConditionalQuestions condition={watchLandlordSendMethod === 'email'}>
+                        <div className="row mt-3">
+                            <div className="col-md">
+                                <TextInput
+                                    name="landlordEmail"
+                                    label="Email"
+                                    errors={errors}
+                                    inputRef={register()}
+                                />
+                            </div>
+                        </div>
+                    </ConditionalQuestions>
                     <ConditionalQuestions condition={watchLandlordSendMethod === 'usps'}>
                         <div className="row mt-3">
                             <div className="col-md-8">

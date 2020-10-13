@@ -14,6 +14,11 @@ const schemas = {
         landlordCompany: string(),
         landlordFullName: string().required(),
         landlordSendMethod: string().required(),
+        landlordEmail: string().when('landlordSendMethod', {
+            is: 'email',
+            then: string().required('Email Required').email('Invalid Email Format'),
+            otherwise: string(),
+        }),
         landlordAddress: string().when('landlordSendMethod', {
             is: 'usps',
             then: string().required('Address Required'),
