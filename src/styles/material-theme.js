@@ -92,11 +92,6 @@ const theme = createMuiTheme({
                 '& $notchedOutline': {
                     border: `1px solid ${Colors.grey}`,
                 },
-                '&$textInputError': {
-                    '& $notchedOutline': {
-                        borderColor: `${Colors.error} !important`,
-                    },
-                },
                 '&$focused': {
                     '& $notchedOutline': {
                         border: `1px solid ${Colors.purple}`,
@@ -104,7 +99,7 @@ const theme = createMuiTheme({
                     borderRadius: 3,
                     color: Colors.purple,
                 },
-                '&$error': {
+                '&$error$focused': {
                     '& $notchedOutline': {
                         border: `1px solid ${Colors.error}`,
                     },
@@ -164,6 +159,9 @@ const theme = createMuiTheme({
         },
         background: {
             default: Colors.lightBlue,
+        },
+        error: {
+            main: Colors.error,
         },
     },
 });

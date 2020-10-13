@@ -35,9 +35,7 @@ const FormStep1 = ({ classes }) => {
         getValues,
         errors,
         control,
-        formState,
     } = useForm({
-        mode: 'onChange',
         reValidateMode: 'onChange',
         resolver: yupResolver(ValidationSchema.step1),
         defaultValues: {
@@ -58,7 +56,13 @@ const FormStep1 = ({ classes }) => {
     const [continueActive, setContinueActive] = useState(false);
 
     useEffect(() => {
-        if (getValues('firstName') !== '' && formState.isValid) setContinueActive(true);
+        if (
+            getValues('firstName') !== ''
+            && getValues('lastName') !== ''
+            && getValues('address') !== ''
+            && getValues('city') !== ''
+            && getValues('zip') !== ''
+        ) setContinueActive(true);
         else setContinueActive(false);
     }, [watchAll, getValues]);
 
@@ -162,7 +166,6 @@ const FormStep1 = ({ classes }) => {
                                         errors={errors}
                                         required
                                         inputRef={register()}
-                                        showError={false}
                                     />
                                 </div>
                             </div>

@@ -8,7 +8,7 @@ const schemas = {
         unit: string(),
         city: string().required(),
         state: string().required(),
-        zip: string().required(),
+        zip: string().required().matches(/[0-9]{5}/, { message: 'Zip Code must match "55555"' }),
     }),
 };
 
