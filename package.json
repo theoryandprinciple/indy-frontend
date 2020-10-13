@@ -1,5 +1,5 @@
 {
-  "name": "cra-plugin",
+  "name": "indy-frontend",
   "private": true,
   "version": "0.0.1",
   "main": "plugin.js",
