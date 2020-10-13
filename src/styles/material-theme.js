@@ -24,10 +24,16 @@ const theme = createMuiTheme({
         },
     },
     overrides: {
+        MuiSelect: {
+            root: {
+                paddingTop: 10,
+                paddingBottom: 10,
+            },
+        },
         MuiList: {
             root: {
                 paddingLeft: 20,
-                paddingRight: 20,
+                paddingRight: '20px !important',
             },
         },
         MuiListItem: {
@@ -74,28 +80,28 @@ const theme = createMuiTheme({
                 },
             },
         },
-        MuiInputBase: {
+        MuiOutlinedInput: {
             root: {
-                // fontFamily: theme.typography.body1.fontFamily,
-                // fontSize: theme.typography.body1.fontSize,
                 color: Colors.black,
                 backgroundColor: 'white',
                 outline: 0,
-                lineHeight: 1,
                 width: '100%',
                 padding: '2px 0',
-                borderRadius: 5,
-                border: `1px solid ${Colors.grey}`,
-                '&$textInputError': {
-                    borderColor: `${Colors.error} !important`,
+                borderRadius: 3,
+                '& $notchedOutline': {
+                    border: `1px solid ${Colors.grey}`,
                 },
                 '&$focused': {
-                    borderRadius: 5,
-                    border: `1px solid ${Colors.purple}`,
+                    '& $notchedOutline': {
+                        border: `1px solid ${Colors.purple}`,
+                    },
+                    borderRadius: 3,
                     color: Colors.purple,
                 },
-                '&$error': {
-                    border: `1px solid ${Colors.error}`,
+                '&$error$focused': {
+                    '& $notchedOutline': {
+                        border: `1px solid ${Colors.error}`,
+                    },
                 },
             },
             input: {
@@ -124,6 +130,7 @@ const theme = createMuiTheme({
         body1: {
             fontSize: 17,
             fontWeight: 400,
+            lineHeight: 1.25,
             [breakpointObject.breakpoints.down('sm')]: {
                 fontSize: 15,
             },
@@ -152,6 +159,9 @@ const theme = createMuiTheme({
         },
         background: {
             default: Colors.lightBlue,
+        },
+        error: {
+            main: Colors.error,
         },
     },
 });
