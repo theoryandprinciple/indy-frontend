@@ -13,6 +13,11 @@ const internals = {
             landlordCompany: '',
             landlordFullName: '',
             landlordSendMethod: '',
+            landlordAddress: '',
+            landlordUnit: '',
+            landlordCity: '',
+            landlordState: 'Indiana',
+            landlordZip: '',
         },
     }),
 };

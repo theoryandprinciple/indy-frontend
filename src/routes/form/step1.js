@@ -35,7 +35,9 @@ const FormStep1 = ({ classes }) => {
         getValues,
         errors,
         control,
+        formState,
     } = useForm({
+        mode: 'onChange',
         reValidateMode: 'onChange',
         resolver: yupResolver(ValidationSchema.step1),
         defaultValues: {
@@ -56,15 +58,9 @@ const FormStep1 = ({ classes }) => {
     const [continueActive, setContinueActive] = useState(false);
 
     useEffect(() => {
-        if (
-            getValues('firstName') !== ''
-            && getValues('lastName') !== ''
-            && getValues('address') !== ''
-            && getValues('city') !== ''
-            && getValues('zip') !== ''
-        ) setContinueActive(true);
+        if (getValues('firstName') !== '' && formState.isValid) setContinueActive(true);
         else setContinueActive(false);
-    }, [watchAll, getValues]);
+    }, [watchAll, getValues, formState.isValid]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`container ${classes.containerWrapper}`}>
@@ -101,6 +97,7 @@ const FormStep1 = ({ classes }) => {
                                     />
                                 </div>
                             </div>
+
                             <div className="row mt-3">
                                 <div className="col-md-8">
                                     <TextInput
@@ -152,7 +149,7 @@ const FormStep1 = ({ classes }) => {
                                         {StateOptions.map(option => (
                                             <MenuItem
                                                 key={option.key}
-                                                value={option.value}
+                                                value={option.key}
                                             >
                                                 {option.value}
                                             </MenuItem>
