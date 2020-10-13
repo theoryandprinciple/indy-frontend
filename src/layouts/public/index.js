@@ -11,6 +11,17 @@ import Header from '../../components/header';
 import Footer from '../../components/footer';
 
 import Home from '../../routes/home';
+
+import Intake1 from '../../routes/intake/step1';
+import Intake2 from '../../routes/intake/step2';
+import Intake3 from '../../routes/intake/step3';
+import Intake4 from '../../routes/intake/step4';
+import Intake5 from '../../routes/intake/step5';
+
+import IntakeStart from '../../routes/intake/start';
+import IntakeQualify from '../../routes/intake/qualify';
+import IntakeNoQualify from '../../routes/intake/no-qualify';
+
 import Demo from '../../routes/demo';
 import Error404 from '../../routes/error/404';
 
@@ -28,7 +39,40 @@ const PublicLayout = () => {
                         <Error404 />
                     </Route>
                     <Route exact path="/">
-                        <Home />
+                        <>
+                            <Home />
+                            <Footer />
+                        </>
+                    </Route>
+                    <Route exact path="/intake/start">
+                        <IntakeStart />
+                    </Route>
+                    <Route exact path="/intake/qualify">
+                        <IntakeQualify />
+                    </Route>
+                    <Route exact path="/intake/noqualify">
+                        <IntakeNoQualify />
+                    </Route>
+                    <Route exact path="/intake/noqualify">
+                        <IntakeStart />
+                    </Route>
+                    <Route exact path="/intake/1">
+                        <Intake1 />
+                    </Route>
+                    <Route exact path="/intake/2">
+                        <Intake2 />
+                    </Route>
+                    <Route exact path="/intake/3">
+                        <Intake3 />
+                    </Route>
+                    <Route exact path="/intake/4">
+                        <Intake4 />
+                    </Route>
+                    <Route exact path="/intake/5">
+                        <Intake5 />
+                    </Route>
+                    <Route path="/intake/start">
+                        <Intake1 />
                     </Route>
                     <Route exact path="/demo">
                         <Demo />
@@ -38,7 +82,6 @@ const PublicLayout = () => {
                     </Route>
                 </Switch>
             </main>
-            <Footer />
         </>
     );
 };

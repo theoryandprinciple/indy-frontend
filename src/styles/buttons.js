@@ -14,6 +14,7 @@ const styles = theme => ({
     },
     textLink: {
         color: Colors.blue,
+        textDecoration: 'underline',
     },
     footerLink: {
         color: Colors.black,
