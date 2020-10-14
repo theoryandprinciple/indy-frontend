@@ -12,41 +12,13 @@ import LayoutStyles from '../../styles/layouts';
 import ButtonStyles from '../../styles/buttons';
 import Styles from './styles';
 
-const d = new Date();
-const currentYear = d.getUTCFullYear();
-const currentDate = d.getUTCDate();
-const month = [];
-month[0] = 'January';
-month[1] = 'February';
-month[2] = 'March';
-month[3] = 'April';
-month[4] = 'May';
-month[5] = 'June';
-month[6] = 'July';
-month[7] = 'August';
-month[8] = 'September';
-month[9] = 'October';
-month[10] = 'November';
-month[11] = 'December';
-const currentMonth = month[d.getMonth()];
-
 const FormStep3 = ({ classes }) => {
     const history = useHistory();
     const currentAnswers = useSelector(getAnswers);
     const {
-        firstName,
-        lastName,
-        address,
-        unit,
-        city,
-        state,
-        zip,
-        landlordFullName,
-        landlordAddress,
-        landlordUnit,
-        landlordCity,
-        landlordState,
-        landlordZip,
+        tenant,
+        landlord,
+        date,
     } = currentAnswers;
 
     return (
@@ -66,21 +38,21 @@ const FormStep3 = ({ classes }) => {
                             </Typography>
                             <div className={`mt-3 ${classes.letterPreview}`}>
                                 <Typography variant="body1">
-                                    {firstName} {lastName}<br />
-                                    {address}<br />
-                                    {unit && <>{unit}<br /></>}
-                                    {city}, {state} {zip}
+                                    {tenant.firstName} {tenant.lastName}<br />
+                                    {tenant.address}<br />
+                                    {tenant.address2 && <>{tenant.address2}<br /></>}
+                                    {tenant.city}, {tenant.state} {tenant.zip}
                                 </Typography>
                                 <Typography variant="body1" className="mt-3">
-                                    {landlordFullName}<br />
-                                    {landlordAddress && <>{landlordUnit}<br /></>}
-                                    {landlordUnit && <>{landlordUnit}<br /></>}
+                                    {landlord.name}<br />
+                                    {landlord.address && <>{landlord.address}<br /></>}
+                                    {landlord.address2 && <>{landlord.address2}<br /></>}
                                     {/* landlordState has a default value, so we check city */}
-                                    {landlordCity && <>{landlordCity},</>} {landlordCity && landlordState} {landlordZip}
-                                    {currentMonth} {currentDate}, {currentYear}
+                                    {landlord.city && <>{landlord.city},</>} {landlord.city && landlord.state} {landlord.zip}
+                                    {date}
                                 </Typography>
                                 <Typography variant="body1" className="mt-3">
-                                    Dear {landlordFullName}:<br />
+                                    Dear {tenant.name}:<br />
                                     I am writing you to express my right to not be evicted through December 31, 2020 because I am unable to pay my rent due to the COVID-19 pandemic. I have this right under the Centers for Disease Control and Prevention&apos;s (&quot;CDC&quot;) Order effective September 4, 2020<sup>1</sup>. The CDC issued this Order as an emergency action authorized by Section 361 of the Public Health Act and 42 CFR 70.2 to prevent the spread of COVID-19 throughout the United States, including Indiana.<br />
                                 </Typography>
                                 <Typography variant="body1" className="mt-3">
@@ -93,10 +65,10 @@ const FormStep3 = ({ classes }) => {
                                 <Typography variant="body1" className="mt-3">
                                     Regards,<br />
                                     _______________________<br />
-                                    {firstName} {lastName}<br />
-                                    {address}<br />
-                                    {unit && <>{unit}<br /></>}
-                                    {city}, {state} {zip}
+                                    {tenant.firstName} {tenant.lastName}<br />
+                                    {tenant.address}<br />
+                                    {tenant.address2 && <>{tenant.address2}<br /></>}
+                                    {tenant.city}, {tenant.state} {tenant.zip}
                                 </Typography>
                                 <Typography variant="body2" className="mt-3">
                                     _______________________<br />

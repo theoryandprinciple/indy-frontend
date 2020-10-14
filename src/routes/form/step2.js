@@ -43,26 +43,38 @@ const FormStep2 = ({ classes }) => {
         reValidateMode: 'onChange',
         resolver: yupResolver(ValidationSchema.step2),
         defaultValues: {
-            landlordCompany: currentAnswers.landlordCompany,
-            landlordFullName: currentAnswers.landlordFullName,
-            landlordSendMethod: currentAnswers.landlordSendMethod,
-            landlordAddress: currentAnswers.landlordAddress,
-            landlordUnit: currentAnswers.landlordUnit,
-            landlordCity: currentAnswers.landlordCity,
-            landlordState: currentAnswers.landlordState,
-            landlordZip: currentAnswers.landlordZip,
+            company: currentAnswers.tenant.company,
+            name: currentAnswers.landlord.name,
+            sendMethod: currentAnswers.sendMethod,
+            address: currentAnswers.landlord.address,
+            address2: currentAnswers.landlord.address2,
+            city: currentAnswers.landlord.city,
+            state: currentAnswers.landlord.state,
+            zip: currentAnswers.landlord.zip,
         },
     });
     const onSubmit = useCallback((values) => {
-        dispatch(SaveAnswers(values));
+        const saveValues = {
+            landlord: {
+                company: values.company,
+                name: values.name,
+                address: values.address,
+                address2: values.address2,
+                city: values.city,
+                state: values.state,
+                zip: values.zip,
+            },
+            sendMethod: values.sendMethod,
+        };
+        dispatch(SaveAnswers(saveValues));
         history.push('/form/3');
     }, [dispatch, history]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
-    const watchLandlordSendMethod = watch('landlordSendMethod');
+    const watchSendMethod = watch('sendMethod');
 
     useEffect(() => {
-        if (getValues('landlordFullName') !== '' && formState.isValid) setContinueActive(true);
+        if (getValues('name') !== '' && formState.isValid) setContinueActive(true);
         else setContinueActive(false);
     }, [watchAll, getValues, formState.isValid, errors]);
 
@@ -82,7 +94,7 @@ const FormStep2 = ({ classes }) => {
                             <div className="row mt-4">
                                 <div className="col">
                                     <TextInput
-                                        name="landlordCompany"
+                                        name="company"
                                         label="Company (optional)"
                                         errors={errors}
                                         inputRef={register()}
@@ -93,7 +105,7 @@ const FormStep2 = ({ classes }) => {
                             <div className="row mt-3">
                                 <div className="col">
                                     <TextInput
-                                        name="landlordFullName"
+                                        name="name"
                                         label="Full Name"
                                         errors={errors}
                                         required
@@ -105,7 +117,7 @@ const FormStep2 = ({ classes }) => {
                             <div className="row mt-3">
                                 <div className="col-md">
                                     <Select
-                                        name="landlordSendMethod"
+                                        name="sendMethod"
                                         label="How do you want to send the form?"
                                         errors={errors}
                                         required
@@ -128,11 +140,11 @@ const FormStep2 = ({ classes }) => {
                             </div>
                         </div>
                     </div>
-                    <ConditionalQuestions condition={watchLandlordSendMethod === 'email'}>
+                    <ConditionalQuestions condition={watchSendMethod === 'email'}>
                         <div className="row mt-3">
                             <div className="col-md">
                                 <TextInput
-                                    name="landlordEmail"
+                                    name="email"
                                     label="Email"
                                     errors={errors}
                                     inputRef={register()}
@@ -140,11 +152,11 @@ const FormStep2 = ({ classes }) => {
                             </div>
                         </div>
                     </ConditionalQuestions>
-                    <ConditionalQuestions condition={watchLandlordSendMethod === 'usps'}>
+                    <ConditionalQuestions condition={watchSendMethod === 'usps'}>
                         <div className="row mt-3">
                             <div className="col-md-8">
                                 <TextInput
-                                    name="landlordAddress"
+                                    name="address"
                                     label="Address"
                                     errors={errors}
                                     inputRef={register()}
@@ -152,7 +164,7 @@ const FormStep2 = ({ classes }) => {
                             </div>
                             <div className="col-md-4">
                                 <TextInput
-                                    name="unit"
+                                    name="address2"
                                     label="Unit"
                                     errors={errors}
                                     inputRef={register()}
@@ -164,7 +176,7 @@ const FormStep2 = ({ classes }) => {
                         <div className="row mt-3">
                             <div className="col-md">
                                 <TextInput
-                                    name="landlordCity"
+                                    name="city"
                                     label="City"
                                     errors={errors}
                                     inputRef={register()}
@@ -175,7 +187,7 @@ const FormStep2 = ({ classes }) => {
                         <div className="row mt-3">
                             <div className="col-md">
                                 <Select
-                                    name="landlordState"
+                                    name="state"
                                     label="State"
                                     errors={errors}
                                     required
@@ -197,7 +209,7 @@ const FormStep2 = ({ classes }) => {
                             </div>
                             <div className="col-md">
                                 <TextInput
-                                    name="landlordZip"
+                                    name="zip"
                                     label="Zip"
                                     errors={errors}
                                     inputRef={register()}

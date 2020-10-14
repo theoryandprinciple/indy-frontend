@@ -1,25 +1,48 @@
 import FormTypes from '../action-types/form';
 
+const d = new Date();
+const currentYear = d.getUTCFullYear();
+const currentDate = d.getUTCDate();
+const month = [];
+month[0] = 'January';
+month[1] = 'February';
+month[2] = 'March';
+month[3] = 'April';
+month[4] = 'May';
+month[5] = 'June';
+month[6] = 'July';
+month[7] = 'August';
+month[8] = 'September';
+month[9] = 'October';
+month[10] = 'November';
+month[11] = 'December';
+const currentMonth = month[d.getMonth()];
+
 const internals = {
     initial: () => ({
         answers: {
-            firstName: '',
-            lastName: '',
-            address: '',
-            unit: '',
-            city: '',
-            state: 'Indiana',
-            zip: '',
-            landlordCompany: '',
-            landlordFullName: '',
-            landlordSendMethod: '',
-            landlordEmail: '',
-            landlordAddress: '',
-            landlordUnit: '',
-            landlordCity: '',
-            landlordState: 'Indiana',
-            landlordZip: '',
+            tenant: {
+                firstName: '',
+                lastName: '',
+                address: '',
+                address2: '',
+                city: '',
+                state: 'Indiana',
+                zip: '',
+            },
+            landlord: {
+                company: '',
+                name: '',
+                email: '',
+                address: '',
+                address2: '',
+                city: '',
+                state: 'Indiana',
+                zip: '',
+            },
+            date: `${currentMonth} ${currentDate}, ${currentYear}`,
             signature: null,
+            sendMethod: '',
         },
     }),
 };

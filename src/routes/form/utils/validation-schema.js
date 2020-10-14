@@ -5,37 +5,37 @@ const schemas = {
         firstName: string().required(),
         lastName: string().required(),
         address: string().required(),
-        unit: string(),
+        address2: string(),
         city: string().required(),
         state: string().required(),
         zip: string().required().matches(/[0-9]{5}/, { message: 'Zip Code must match "55555"' }),
     }),
     step2: object().shape({
-        landlordCompany: string(),
-        landlordFullName: string().required(),
-        landlordSendMethod: string().required(),
-        landlordEmail: string().when('landlordSendMethod', {
+        company: string(),
+        name: string().required(),
+        sendMethod: string().required(),
+        email: string().when('sendMethod', {
             is: 'email',
             then: string().required('Email Required').email('Invalid Email Format'),
             otherwise: string(),
         }),
-        landlordAddress: string().when('landlordSendMethod', {
+        address: string().when('sendMethod', {
             is: 'usps',
             then: string().required('Address Required'),
             otherwise: string(),
         }),
-        landlordUnit: string(),
-        landlordCity: string().when('landlordSendMethod', {
+        address2: string(),
+        city: string().when('sendMethod', {
             is: 'usps',
             then: string().required('City Required'),
             otherwise: string(),
         }),
-        landlordState: string().when('landlordSendMethod', {
+        state: string().when('sendMethod', {
             is: 'usps',
             then: string().required('State Required'),
             otherwise: string(),
         }),
-        landlordZip: string().when('landlordSendMethod', {
+        zip: string().when('sendMethod', {
             is: 'usps',
             then: string().required('Zip Code Required').matches(/[0-9]{5}/, { message: 'Zip Code must match "55555"' }),
             otherwise: string(),

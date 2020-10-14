@@ -41,17 +41,17 @@ const FormStep1 = ({ classes }) => {
         reValidateMode: 'onChange',
         resolver: yupResolver(ValidationSchema.step1),
         defaultValues: {
-            firstName: currentAnswers.firstName,
-            lastName: currentAnswers.lastName,
-            address: currentAnswers.address,
-            unit: currentAnswers.unit,
-            city: currentAnswers.city,
-            state: currentAnswers.state,
-            zip: currentAnswers.zip,
+            firstName: currentAnswers.tenant.firstName,
+            lastName: currentAnswers.tenant.lastName,
+            address: currentAnswers.tenant.address,
+            address2: currentAnswers.tenant.address2,
+            city: currentAnswers.tenant.city,
+            state: currentAnswers.tenant.state,
+            zip: currentAnswers.tenant.zip,
         },
     });
     const onSubmit = useCallback((values) => {
-        dispatch(SaveAnswers(values));
+        dispatch(SaveAnswers({ tenant: values }));
         history.push('/form/2');
     }, [dispatch, history]);
     const watchAll = watch();
@@ -111,7 +111,7 @@ const FormStep1 = ({ classes }) => {
                                 </div>
                                 <div className="col-md-4">
                                     <TextInput
-                                        name="unit"
+                                        name="address2"
                                         label="Unit"
                                         errors={errors}
                                         inputRef={register()}
