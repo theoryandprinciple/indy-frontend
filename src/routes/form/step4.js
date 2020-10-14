@@ -90,7 +90,7 @@ const FormStep4 = ({ classes }) => {
                     <div className="row mt-4">
                         <div className="col">
                             <Typography variant="h1" color="primary">Please sign the form</Typography>
-                            <Typography variant="body1" className="mt-3">
+                            <Typography variant="body1" className="mt-3" id="signatureTitle">
                                 Use your mouse (or finger on a phone) to sign the form digitally
                             </Typography>
                             <div ref={containerNode} className={classes.canvasContainer}>
