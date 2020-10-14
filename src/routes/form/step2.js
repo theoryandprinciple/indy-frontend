@@ -58,7 +58,7 @@ const FormStep2 = ({ classes }) => {
         history.push('/form/3');
     }, [dispatch, history]);
     const watchAll = watch();
-    const [continueActive, setContinueActive] = useState(true);
+    const [continueActive, setContinueActive] = useState(false);
     const watchLandlordSendMethod = watch('landlordSendMethod');
 
     useEffect(() => {
@@ -128,6 +128,18 @@ const FormStep2 = ({ classes }) => {
                             </div>
                         </div>
                     </div>
+                    <ConditionalQuestions condition={watchLandlordSendMethod === 'email'}>
+                        <div className="row mt-3">
+                            <div className="col-md">
+                                <TextInput
+                                    name="landlordEmail"
+                                    label="Email"
+                                    errors={errors}
+                                    inputRef={register()}
+                                />
+                            </div>
+                        </div>
+                    </ConditionalQuestions>
                     <ConditionalQuestions condition={watchLandlordSendMethod === 'usps'}>
                         <div className="row mt-3">
                             <div className="col-md-8">
