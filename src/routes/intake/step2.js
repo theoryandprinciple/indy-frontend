@@ -35,19 +35,19 @@ const IntakeStep2 = ({ classes }) => {
     } = useForm({
         mode: 'onSubmit',
         defaultValues: {
-            govermentAsst: currentAnswers.govermentAsst,
+            governmentAsst: currentAnswers.governmentAsst,
         },
     });
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
-        if (values.govermentAsst === 'No') history.push('/intake/noqualify');
+        if (values.governmentAsst === 'No') history.push('/intake/noqualify');
         else history.push('/intake/3');
     }, [dispatch, history]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
 
     useEffect(() => {
-        if (getValues('govermentAsst') !== '') setContinueActive(true);
+        if (getValues('governmentAsst') !== '') setContinueActive(true);
         else setContinueActive(false);
     }, [watchAll, getValues]);
 
@@ -65,15 +65,15 @@ const IntakeStep2 = ({ classes }) => {
                             <Typography variant="h1" color="primary">Did you do your best to get government help to pay the rent?</Typography>
                             <Typography variant="body1">If you do not qualify for any help from the government, or if applications were closed, your application was waitlisted, or assistance programs were no longer available or if you applied and you were denied, answer ‘Yes.’</Typography>
                             <RadioGroup
-                                name="govermentAsst"
-                                label={Questions.step2.govermentAsst.label}
+                                name="governmentAsst"
+                                label={Questions.step2.governmentAsst.label}
                                 errors={errors}
                                 required
                                 control={control}
                             >
-                                {Questions.step2.govermentAsst.options.map(option => (
+                                {Questions.step2.governmentAsst.options.map(option => (
                                     <RadioButton
-                                        key={`${Questions.step2.govermentAsst.id}-${option}`}
+                                        key={`${Questions.step2.governmentAsst.id}-${option}`}
                                         value={option}
                                         label={option}
                                         buttonStyle
