@@ -19,7 +19,7 @@ import TextInput from '../../components/form/textinput';
 import Select from '../../components/form/select';
 import ConditionalQuestions from '../../components/form/conditional-questions';
 
-import { SaveAnswers } from '../../actions/form';
+import { SaveAnswers, PostForm } from '../../actions/form';
 import { getAnswers } from '../../selectors/form';
 import SendOptions from './wiring/send-options-list';
 import StateOptions from './wiring/state-list';
@@ -67,7 +67,12 @@ const FormStep2 = ({ classes }) => {
             sendMethod: values.sendMethod,
         };
         dispatch(SaveAnswers(saveValues));
-        history.push('/form/3');
+        let onSuccess;
+        if (saveValues.sendMethod === 'usps') onSuccess = () => history.push('/form/done');
+        else onSuccess = () => history.push('/form/3');
+        // TODO: we have no requirements for error handling so for now just log the error
+        const onError = (error) => { console.error(error); };
+        dispatch(PostForm(saveValues, onSuccess, onError));
     }, [dispatch, history]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);

@@ -58,7 +58,7 @@ const IntakeStep1 = ({ classes }) => {
                     <div className="row mt-4">
                         <div className="col">
                             <Typography variant="h1" color="primary">Income Qualification</Typography>
-                            <Typography variant="body1">Check all that apply</Typography>
+                            <Typography variant="body1" className="mt-3">Check all that apply</Typography>
                             <CheckboxGroup
                                 name="income"
                                 label={Questions.step1.income.label}

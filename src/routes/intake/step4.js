@@ -59,7 +59,7 @@ const IntakeStep4 = ({ classes }) => {
                     <div className="row mt-4">
                         <div className="col">
                             <Typography variant="h1" color="primary">Would an eviction result in a health risk to you by placing you in unsafe living conditions?</Typography>
-                            <Typography variant="body1">Check all that apply</Typography>
+                            <Typography variant="body1" className="mt-3">Check all that apply</Typography>
                             <CheckboxGroup
                                 name="evictionHealthRisks"
                                 label={Questions.step4.evictionHealthRisks.label}

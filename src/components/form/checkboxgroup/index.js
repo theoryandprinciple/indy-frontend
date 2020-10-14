@@ -131,7 +131,7 @@ const ControlledCheckboxGroup = ({
                     <CheckboxGroup
                         classes={classes}
                         name={name}
-                        label={!hiddenLabel && label}
+                        label={!hiddenLabel ? label : ''}
                         values={controllerProps.value}
                         onChange={controllerProps.onChange}
                         options={options}

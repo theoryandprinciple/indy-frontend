@@ -67,7 +67,7 @@ const IntakeStep2 = ({ classes }) => {
                     <div className="row mt-4">
                         <div className="col">
                             <Typography variant="h1" color="primary">Did you do your best to get government help to pay the rent?</Typography>
-                            <Typography variant="body1">If you do not qualify for any help from the government, or if applications were closed, your application was waitlisted, or assistance programs were no longer available or if you applied and you were denied, answer ‘Yes.’</Typography>
+                            <Typography variant="body1" className="mt-3">If you do not qualify for any help from the government, or if applications were closed, your application was waitlisted, or assistance programs were no longer available or if you applied and you were denied, answer ‘Yes.’</Typography>
                             <RadioGroup
                                 name="governmentAsst"
                                 label={Questions.step2.governmentAsst.label}

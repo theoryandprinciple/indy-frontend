@@ -124,9 +124,11 @@ const theme = createMuiTheme({
         fontFamily: '"Kumbh Sans", sans-serif',
         h1: {
             fontSize: 30,
+            lineHeight: 1,
             fontWeight: 700,
             [breakpointObject.breakpoints.down('sm')]: {
                 fontSize: 24,
+                lineHeight: 1,
             },
         },
         h2: {

@@ -12,7 +12,7 @@ import GenderOptions from './wiring/gender-list';
 import RaceOptions from './wiring/race-list';
 import Select from '../../components/form/select';
 
-import { SaveAnswers } from '../../actions/form';
+import { SaveAnswers, PostForm } from '../../actions/form';
 import { getAnswers } from '../../selectors/form';
 
 import CombineStyles from '../../utils/combine-styles';
@@ -37,6 +37,7 @@ const FormStep5 = ({ classes }) => {
     });
     const onSubmit = useCallback((values) => {
         const saveValues = {
+            ...currentAnswers,
             tenant: {
                 ...currentAnswers.tenant,
                 race: values.race,
@@ -44,8 +45,13 @@ const FormStep5 = ({ classes }) => {
             },
         };
         dispatch(SaveAnswers(saveValues));
-        history.push('/form/done');
-    }, [dispatch, history]);
+        let onSuccess;
+        if (saveValues.sendMethod === 'usps') onSuccess = () => history.push('/form/done');
+        else onSuccess = () => history.push('/form/download');
+        // TODO: we have no requirements for error handling so for now just log the error
+        const onError = (error) => { console.error(error); };
+        dispatch(PostForm(saveValues, onSuccess, onError));
+    }, [dispatch, history, currentAnswers]);
 
     useEffect(() => {
         if (open) document.getElementById('form5More').focus();
