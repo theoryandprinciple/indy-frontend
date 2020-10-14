@@ -29,6 +29,8 @@ const internals = {
                 city: '',
                 state: 'Indiana',
                 zip: '',
+                race: '',
+                gender: '',
             },
             landlord: {
                 company: '',

@@ -58,6 +58,10 @@ const IntakeStep3 = ({ classes }) => {
 
     const watchAffordRent = watch('affordRent');
 
+    useEffect(() => {
+        if (open) document.getElementById('intake3More').focus();
+    }, [open]);
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`container ${classes.containerWrapper}`}>
             <div className={`row ${classes.sectionWrapper}`}>
@@ -102,10 +106,12 @@ const IntakeStep3 = ({ classes }) => {
                                     type="button"
                                     className={`mt-4 ${classes.textLink}`}
                                     onClick={() => setOpen(!open)}
+                                    aria-expanded={open}
+                                    aria-controls="intake3More"
                                 >
                                     <Typography variant="body1">What are “extraordinary medical costs”?</Typography>
                                 </button>
-                                <div className={`${classes.expandableContentRow} ${open ? classes.expandableOpened : classes.expandableClosed}`}>
+                                <div id="intake3More" tabIndex="-1" role="region" className={`${classes.expandableContentRow} ${open ? classes.expandableOpened : classes.expandableClosed}`}>
                                     <Typography variant="body1" className="mt-3">
                                         Stuff
                                     </Typography>

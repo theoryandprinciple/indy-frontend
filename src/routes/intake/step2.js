@@ -51,6 +51,10 @@ const IntakeStep2 = ({ classes }) => {
         else setContinueActive(false);
     }, [watchAll, getValues]);
 
+    useEffect(() => {
+        if (open) document.getElementById('intake2More').focus();
+    }, [open]);
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`container ${classes.containerWrapper}`}>
             <div className={`row ${classes.sectionWrapper}`}>
@@ -85,10 +89,12 @@ const IntakeStep2 = ({ classes }) => {
                                 type="button"
                                 className={`mt-4 ${classes.textLink}`}
                                 onClick={() => setOpen(!open)}
+                                aria-expanded={open}
+                                aria-controls="intake2More"
                             >
                                 <Typography variant="body1">What are &quot;best efforts&quot; and &quot;government help&quot;?</Typography>
                             </button>
-                            <div className={`${classes.expandableContentRow} ${open ? classes.expandableOpened : classes.expandableClosed}`}>
+                            <div id="intake2More" tabIndex="-1" role="region" className={`${classes.expandableContentRow} ${open ? classes.expandableOpened : classes.expandableClosed}`}>
                                 <Typography variant="body1" className="mt-3">
                                     &quot;Best efforts,&quot; while not defined by the Order, means that you should attempt to apply for assistance at indyrent.org if a resident of Marion County or https://www.indianahousingnow.org/ if you live anywhere else in Indiana. You should document whether your application was successful.
                                 </Typography>

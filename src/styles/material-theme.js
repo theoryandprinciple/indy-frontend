@@ -58,6 +58,14 @@ const theme = createMuiTheme({
                     backgroundColor: `rgba(${Colors.purpleRGB}, .8)`,
                     color: Colors.white,
                 },
+                '&:hover': {
+                    backgroundColor: Colors.lightPurple,
+                },
+            },
+            containedSecondary: {
+                '&:hover': {
+                    backgroundColor: Colors.lightTeal,
+                },
             },
             outlined: {
                 paddingLeft: 40,
@@ -88,6 +96,7 @@ const theme = createMuiTheme({
                 width: '100%',
                 padding: '2px 0',
                 borderRadius: 3,
+                marginTop: 5,
                 '& $notchedOutline': {
                     border: `1px solid ${Colors.grey}`,
                 },

@@ -26,6 +26,7 @@ import Form1 from '../../routes/form/step1';
 import Form2 from '../../routes/form/step2';
 import Form3 from '../../routes/form/step3';
 import Form4 from '../../routes/form/step4';
+import Form5 from '../../routes/form/step5';
 
 import Demo from '../../routes/demo';
 import Error404 from '../../routes/error/404';
@@ -88,6 +89,9 @@ const PublicLayout = () => {
                     </Route>
                     <Route exact path="/form/4">
                         <Form4 />
+                    </Route>
+                    <Route exact path="/form/5">
+                        <Form5 />
                     </Route>
                     <Route exact path="/demo">
                         <Demo />
