@@ -6,21 +6,32 @@ export const SaveAnswers = answers => ({
     payload: answers,
 });
 
-export const PostAnswers = (reportId, patchData, onSuccess, onError) => (
+export const PostFormBegin = () => ({
+    type: FormTypes.POST_FORM_BEGIN,
+});
+
+export const PostFormSuccess = PDFLink => ({
+    type: FormTypes.POST_FORM_SUCCESS,
+    payload: PDFLink,
+});
+
+export const PostFormError = () => ({
+    type: FormTypes.POST_FORM_ERROR,
+});
+
+export const PostForm = (answerSet, onSuccess, onError) => (
     async (dispatch) => {
-        // dispatch(patchReportBegin(reportId));
+        dispatch(PostFormBegin());
 
         try {
-            const payload = {
-                ...patchData,
-            };
-            await WebClient.patch(`/reports/${reportId}`, payload);
-            // dispatch(patchReportSuccess(reportId, patchData));
+            const payload = { ...answerSet };
+            if (payload.sendMethod) delete payload.sendMethod;
 
+            const response = await WebClient.patch('/declaration', payload);
+            dispatch(PostFormSuccess(response.data));
             onSuccess();
         } catch (error) {
-            // dispatch(patchReportError(reportId, error));
-
+            dispatch(PostFormError());
             onError();
         }
     }

@@ -43,7 +43,7 @@ const FormStep2 = ({ classes }) => {
         reValidateMode: 'onChange',
         resolver: yupResolver(ValidationSchema.step2),
         defaultValues: {
-            company: currentAnswers.tenant.company,
+            company: currentAnswers.landlord.company,
             name: currentAnswers.landlord.name,
             sendMethod: currentAnswers.sendMethod,
             address: currentAnswers.landlord.address,
