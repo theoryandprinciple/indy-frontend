@@ -1,15 +1,15 @@
 const list = [
     {
         value: 'Male',
-        key: 'male',
+        key: 'Male',
     },
     {
         value: 'Female',
-        key: 'female',
+        key: 'Female',
     },
     {
-        value: 'I will download and send it myself',
-        key: 'download',
+        value: 'Non-binary',
+        key: 'Non-binary',
     },
 ];
 export default list;
