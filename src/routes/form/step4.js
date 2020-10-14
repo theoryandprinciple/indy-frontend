@@ -75,9 +75,8 @@ const FormStep4 = ({ classes }) => {
     const onSaveClick = useCallback(() => {
         const signatureImage = handleSave('image/png', 1); // Saves as PNG at 100% original quality
         dispatch(SaveAnswers({ signature: signatureImage }));
-        console.log('signatureImage', signatureImage)
         history.push('/form/5');
-    }, [handleSave]);
+    }, [handleSave, history, dispatch]);
 
     useEffect(() => {
         document.getElementById('signaturePad').focus();
