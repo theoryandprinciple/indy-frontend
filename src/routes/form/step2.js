@@ -58,7 +58,7 @@ const FormStep2 = ({ classes }) => {
         history.push('/form/3');
     }, [dispatch, history]);
     const watchAll = watch();
-    const [continueActive, setContinueActive] = useState(true);
+    const [continueActive, setContinueActive] = useState(false);
     const watchLandlordSendMethod = watch('landlordSendMethod');
 
     useEffect(() => {

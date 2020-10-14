@@ -9,6 +9,7 @@ import { getAnswers } from '../../selectors/form';
 
 import CombineStyles from '../../utils/combine-styles';
 import LayoutStyles from '../../styles/layouts';
+import ButtonStyles from '../../styles/buttons';
 import Styles from './styles';
 
 const d = new Date();
@@ -136,5 +137,5 @@ FormStep3.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const combinedStyles = CombineStyles(LayoutStyles, Styles);
+const combinedStyles = CombineStyles(LayoutStyles, ButtonStyles, Styles);
 export default withStyles(combinedStyles)(FormStep3);

@@ -19,6 +19,7 @@ const internals = {
             landlordCity: '',
             landlordState: 'Indiana',
             landlordZip: '',
+            signature: null,
         },
     }),
 };
