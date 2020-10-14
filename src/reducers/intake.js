@@ -4,7 +4,7 @@ const internals = {
     initial: () => ({
         answers: {
             income: [],
-            govermentAsst: '',
+            governmentAsst: '',
             affordRent: '',
             affordRentProblems: [],
             evictionHealthRisks: [],

@@ -11,7 +11,7 @@ const questions = {
         },
     },
     step2: {
-        govermentAsst: {
+        governmentAsst: {
             id: '2',
             label: 'Did you do your best to get government help to pay the rent?',
             options: ['Yes', 'No'],

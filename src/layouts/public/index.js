@@ -44,10 +44,7 @@ const PublicLayout = () => {
                         <Error404 />
                     </Route>
                     <Route exact path="/">
-                        <>
-                            <Home />
-                            <Footer />
-                        </>
+                        <Home />
                     </Route>
                     <Route exact path="/intake/start">
                         <IntakeStart />
@@ -100,6 +97,7 @@ const PublicLayout = () => {
                     </Route>
                 </Switch>
             </main>
+            {location.pathname === '/' && <Footer />}
         </>
     );
 };

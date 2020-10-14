@@ -110,6 +110,7 @@ const ControlledCheckboxGroup = ({
         'aria-required': required,
         required,
     };
+    if (hiddenLabel) elementProps['aria-label'] = label;
 
     return (
         <FormControl
@@ -130,7 +131,7 @@ const ControlledCheckboxGroup = ({
                     <CheckboxGroup
                         classes={classes}
                         name={name}
-                        label={label}
+                        label={!hiddenLabel && label}
                         values={controllerProps.value}
                         onChange={controllerProps.onChange}
                         options={options}
