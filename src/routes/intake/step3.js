@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { includes } from 'lodash';
+import { includes, remove } from 'lodash';
 
 import { SaveAnswers } from '../../actions/intake';
 import { getAnswers } from '../../selectors/intake';
@@ -28,8 +28,11 @@ import Questions from './questions';
 const IntakeStep3 = ({ classes }) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [open, setOpen] = useState(false);
     const currentAnswers = useSelector(getAnswers);
+    const [open, setOpen] = useState(false);
+    const [continueActive, setContinueActive] = useState(false);
+    const [affordRentProblemsPrevValues, setAffordRentProblemsPrevValues] = useState(currentAnswers.affordRentProblems);
+
     const {
         handleSubmit,
         watch,
@@ -37,8 +40,6 @@ const IntakeStep3 = ({ classes }) => {
         setValue,
         errors,
         control,
-        formState,
-        reset,
     } = useForm({
         mode: 'onSubmit',
         defaultValues: {
@@ -52,22 +53,37 @@ const IntakeStep3 = ({ classes }) => {
         else history.push('/intake/4');
     }, [dispatch, history]);
     const watchAll = watch();
-    const [continueActive, setContinueActive] = useState(false);
-
+    const watchAffordRent = watch('affordRent');
     useEffect(() => {
-        console.log('value', getValues('affordRentProblems'));
-        console.log('dirty', formState.dirtyFields);
-        if (includes(getValues('affordRentProblems'), '5')) {
-
-            // setValue('affordRentProblems', '5', { shouldDirty: false });
+        const incomingValues = getValues('affordRentProblems');
+        // logic to manage 'None' option in list
+        if (incomingValues !== affordRentProblemsPrevValues) {
+            let newValues = [];
+            // infinite loop preventer
+            if (
+                // if selecting something other than 'none' and 'none' is currently selected, deselect it
+                incomingValues.length >= 1
+                && includes(incomingValues, '5')
+                && includes(affordRentProblemsPrevValues, '5')) {
+                // newValues are selections minus "none"
+                newValues = remove(incomingValues, choice => choice !== '5');
+                setValue('affordRentProblems', newValues);
+            } else if (
+                // if selecting "none" and others are already selected, deselect them
+                incomingValues.length > 1
+                && includes(incomingValues, '5')
+                && !includes(affordRentProblemsPrevValues, '5')) {
+                // newValues = 'none'
+                newValues = ['5'];
+                setValue('affordRentProblems', newValues);
+            } else newValues = incomingValues;
+            setAffordRentProblemsPrevValues(newValues);
         }
 
         if (getValues('affordRent') === 'Yes') setContinueActive(true);
         if (getValues('affordRent') === 'No' && getValues('affordRentProblems').length > 0) setContinueActive(true);
         else setContinueActive(false);
-    }, [watchAll, getValues]);
-
-    const watchAffordRent = watch('affordRent');
+    }, [watchAll, getValues, setValue, affordRentProblemsPrevValues]);
 
     useEffect(() => {
         if (open) document.getElementById('intake3More').focus();
@@ -81,8 +97,6 @@ const IntakeStep3 = ({ classes }) => {
                         <div className="col text-center">
                             <Typography variant="body1" color="primary">Qualification 3 of 5</Typography>
                         </div>
-                        <button type="button" onClick={() => setValue('affordRentProblems', ['5'], { shouldValidate: true, shouldDirty: true })}>setValue</button>
-                        <button type="button" onClick={() => reset({ affordRent: 'No', affordRentProblems: ['5'] }, { dirtyFields: false })}>reset</button>
                     </div>
                     <div className="row mt-4">
                         <div className="col">
