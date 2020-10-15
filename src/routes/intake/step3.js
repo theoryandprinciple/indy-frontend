@@ -81,7 +81,7 @@ const IntakeStep3 = ({ classes }) => {
         }
 
         if (getValues('affordRent') === 'Yes') setContinueActive(true);
-        if (getValues('affordRent') === 'No' && getValues('affordRentProblems').length > 0) setContinueActive(true);
+        else if (getValues('affordRent') === 'No' && getValues('affordRentProblems').length > 0) setContinueActive(true);
         else setContinueActive(false);
     }, [watchAll, getValues, setValue, affordRentProblemsPrevValues]);
 

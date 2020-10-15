@@ -43,7 +43,7 @@ const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['intake', 'form'],
+    whitelist: [''],
 };
 const persistedReducer = persistReducer(persistConfig, reducers(browserHistory));
 const store = createStore(
