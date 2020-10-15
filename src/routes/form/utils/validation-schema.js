@@ -13,7 +13,7 @@ const schemas = {
     step2: object().shape({
         company: string(),
         name: string().required(),
-        sendMethod: string().required(),
+        // sendMethod: string().required(),
         email: string().when('sendMethod', {
             is: 'email',
             then: string().required('Email Required').email('Invalid Email Format'),

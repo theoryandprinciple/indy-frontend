@@ -21,7 +21,7 @@ import ConditionalQuestions from '../../components/form/conditional-questions';
 
 import { SaveAnswers, PostForm } from '../../actions/form';
 import { getAnswers } from '../../selectors/form';
-import SendOptions from './wiring/send-options-list';
+// import SendOptions from './wiring/send-options-list';
 import StateOptions from './wiring/state-list';
 
 import LayoutStyles from '../../styles/layouts';
@@ -45,7 +45,7 @@ const FormStep2 = ({ classes }) => {
         defaultValues: {
             company: currentAnswers.landlord.company,
             name: currentAnswers.landlord.name,
-            sendMethod: currentAnswers.sendMethod,
+            // sendMethod: currentAnswers.sendMethod,
             address: currentAnswers.landlord.address,
             address2: currentAnswers.landlord.address2,
             city: currentAnswers.landlord.city,
@@ -64,7 +64,7 @@ const FormStep2 = ({ classes }) => {
                 state: values.state,
                 zip: values.zip,
             },
-            sendMethod: values.sendMethod,
+            // sendMethod: values.sendMethod,
         };
         dispatch(SaveAnswers(saveValues));
         let onSuccess;
@@ -76,7 +76,7 @@ const FormStep2 = ({ classes }) => {
     }, [dispatch, history]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
-    const watchSendMethod = watch('sendMethod');
+    // const watchSendMethod = watch('sendMethod');
 
     useEffect(() => {
         if (getValues('name') !== '' && formState.isValid) setContinueActive(true);
@@ -119,6 +119,7 @@ const FormStep2 = ({ classes }) => {
                                     />
                                 </div>
                             </div>
+                            {/* HIDDEN FOR MVP
                             <div className="row mt-3">
                                 <div className="col-md">
                                     <Select
@@ -143,8 +144,10 @@ const FormStep2 = ({ classes }) => {
                                     </Select>
                                 </div>
                             </div>
+                            */}
                         </div>
                     </div>
+                    {/* HIDDEN FOR MVP
                     <ConditionalQuestions condition={watchSendMethod === 'email'}>
                         <div className="row mt-3">
                             <div className="col-md">
@@ -157,6 +160,8 @@ const FormStep2 = ({ classes }) => {
                             </div>
                         </div>
                     </ConditionalQuestions>
+                    */}
+                    {/*
                     <ConditionalQuestions condition={watchSendMethod === 'usps'}>
                         <div className="row mt-3">
                             <div className="col-md-8">
@@ -222,6 +227,7 @@ const FormStep2 = ({ classes }) => {
                             </div>
                         </div>
                     </ConditionalQuestions>
+                    */}
                     <div className="row mt-5 mb-3">
                         <div className="col text-right">
                             <Button
