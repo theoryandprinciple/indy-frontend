@@ -23,6 +23,8 @@ const IntakeStep4 = ({ classes }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const currentAnswers = useSelector(getAnswers);
+    const [continueActive, setContinueActive] = useState(false);
+    const [evictionHealthRisksPrevValues, setEvictionHealthRisksPrevValues] = useState(currentAnswers.evictionHealthRisks);
     const {
         handleSubmit,
         watch,
@@ -36,14 +38,12 @@ const IntakeStep4 = ({ classes }) => {
             evictionHealthRisks: currentAnswers.evictionHealthRisks,
         },
     });
+    const watchAll = watch();
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
         if (values.evictionHealthRisks === '5') history.push('/intake/noqualify');
         else history.push('/intake/5');
     }, [dispatch, history]);
-    const watchAll = watch();
-    const [continueActive, setContinueActive] = useState(false);
-    const [evictionHealthRisksPrevValues, setEvictionHealthRisksPrevValues] = useState(currentAnswers.evictionHealthRisks);
 
     useEffect(() => {
         const incomingValues = getValues('evictionHealthRisks');
