@@ -52,9 +52,9 @@ const FormStep1 = ({ classes }) => {
     });
     const onSubmit = useCallback((values) => {
         dispatch(UpdateFormStep(1));
-        dispatch(SaveAnswers({ tenant: values }));
+        dispatch(SaveAnswers({ tenant: { ...currentAnswers.tenant, ...values } }));
         history.push('/form/2');
-    }, [dispatch, history]);
+    }, [dispatch, history, currentAnswers]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
 

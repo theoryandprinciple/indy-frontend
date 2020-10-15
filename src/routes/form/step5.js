@@ -30,7 +30,6 @@ const FormStep5 = ({ classes }) => {
         errors,
         control,
     } = useForm({
-        reValidateMode: 'onChange',
         defaultValues: {
             race: currentAnswers.tenant.race,
             gender: currentAnswers.tenant.gender,

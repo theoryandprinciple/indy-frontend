@@ -76,7 +76,7 @@ const FormStep2 = ({ classes }) => {
         // TODO: we have no requirements for error handling so for now just log the error
         const onError = (error) => { console.error(error); };
         dispatch(PostForm(saveValues, onSuccess, onError));
-    }, [dispatch, history]);
+    }, [dispatch, history, currentAnswers]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
     // const watchSendMethod = watch('sendMethod');

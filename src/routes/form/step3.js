@@ -100,7 +100,7 @@ const FormStep3 = ({ classes }) => {
                             <Button
                                 variant="contained"
                                 color="primary"
-                                onClick={() => { dispatch(UpdateFormStep(2)); history.push('/form/4'); }}
+                                onClick={() => { dispatch(UpdateFormStep(3)); history.push('/form/4'); }}
                             >
                                 Looks Good!
                             </Button>
