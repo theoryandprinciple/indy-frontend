@@ -51,7 +51,7 @@ export const PostForm = (answerSet, onSuccess, onError) => (
             if (!payload.landlord.company) delete payload.landlord.company;
 
             const response = await WebClient.post('/declaration', payload);
-            dispatch(PostFormSuccess(response.data));
+            dispatch(PostFormSuccess(response.data.data));
             if (onSuccess) onSuccess();
         } catch (error) {
             dispatch(PostFormError());

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -12,15 +12,6 @@ import Checkbox from '../checkbox';
 
 import InputStyles from '../../../styles/inputs';
 
-const getCheckedState = (options, values) => {
-    const checkedStateMap = {};
-    options.forEach((option) => {
-        checkedStateMap[option.id] = values ? values.includes(option.id) : false;
-    });
-
-    return checkedStateMap;
-};
-
 const CheckboxGroup = ({
     name,
     label,
@@ -31,8 +22,15 @@ const CheckboxGroup = ({
     inputProps,
     conditional,
 }) => {
-    const [checkedState, setCheckedState] = useState(getCheckedState(options, values));
+    const [checkedState, setCheckedState] = useState([]);
+    useEffect(() => {
+        const checkedStateMap = {};
+        options.forEach((option) => {
+            checkedStateMap[option.id] = values ? values.includes(option.id) : false;
+        });
 
+        setCheckedState(checkedStateMap);
+    }, [options, values]);
     const handleChange = useCallback((event) => {
         const updatedState = {
             ...checkedState,

@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { includes } from 'lodash';
 
 import { SaveAnswers } from '../../actions/intake';
 import { getAnswers } from '../../selectors/intake';
@@ -33,8 +34,11 @@ const IntakeStep3 = ({ classes }) => {
         handleSubmit,
         watch,
         getValues,
+        setValue,
         errors,
         control,
+        formState,
+        reset,
     } = useForm({
         mode: 'onSubmit',
         defaultValues: {
@@ -51,6 +55,13 @@ const IntakeStep3 = ({ classes }) => {
     const [continueActive, setContinueActive] = useState(false);
 
     useEffect(() => {
+        console.log('value', getValues('affordRentProblems'));
+        console.log('dirty', formState.dirtyFields);
+        if (includes(getValues('affordRentProblems'), '5')) {
+
+            // setValue('affordRentProblems', '5', { shouldDirty: false });
+        }
+
         if (getValues('affordRent') === 'Yes') setContinueActive(true);
         if (getValues('affordRent') === 'No' && getValues('affordRentProblems').length > 0) setContinueActive(true);
         else setContinueActive(false);
@@ -70,6 +81,8 @@ const IntakeStep3 = ({ classes }) => {
                         <div className="col text-center">
                             <Typography variant="body1" color="primary">Qualification 3 of 5</Typography>
                         </div>
+                        <button type="button" onClick={() => setValue('affordRentProblems', ['5'], { shouldValidate: true, shouldDirty: true })}>setValue</button>
+                        <button type="button" onClick={() => reset({ affordRent: 'No', affordRentProblems: ['5'] }, { dirtyFields: false })}>reset</button>
                     </div>
                     <div className="row mt-4">
                         <div className="col">
@@ -96,6 +109,7 @@ const IntakeStep3 = ({ classes }) => {
                                 <Typography variant="body1" className="mt-3">Check all that apply</Typography>
                                 <CheckboxGroup
                                     name="affordRentProblems"
+                                    values={getValues('affordRentProblems')}
                                     label={Questions.step3.affordRentProblems.label}
                                     hiddenLabel
                                     options={Questions.step3.affordRentProblems.options}
@@ -113,7 +127,7 @@ const IntakeStep3 = ({ classes }) => {
                                 </button>
                                 <div id="intake3More" tabIndex="-1" role="region" className={`${classes.expandableContentRow} ${open ? classes.expandableOpened : classes.expandableClosed}`}>
                                     <Typography variant="body1" className="mt-3">
-                                        Stuff
+                                        An “extraordinary” medical expense is any unreimbursed medical expense likely to exceed 7.5% of one’s adjusted gross income for the year.
                                     </Typography>
                                 </div>
                             </ConditionalQuestions>
