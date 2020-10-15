@@ -49,8 +49,8 @@ export const PostForm = (answerSet, onSuccess, onError) => (
 
             if (!payload.landlord.email) delete payload.landlord.email;
             if (!payload.landlord.company) delete payload.landlord.company;
-            console.log('payload', payload)
-            const response = await WebClient.patch('/declaration', payload);
+
+            const response = await WebClient.post('/declaration', payload);
             dispatch(PostFormSuccess(response.data));
             if (onSuccess) onSuccess();
         } catch (error) {
