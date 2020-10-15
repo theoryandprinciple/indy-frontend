@@ -30,7 +30,7 @@ export const PostForm = (answerSet, onSuccess, onError) => (
             const payload = cloneDeep(answerSet);
 
             // dont send the sendMethod
-            if (payload.sendMethod) delete payload.sendMethod;
+            delete payload.sendMethod;
 
             // remove parameters if they dont have values
             if (!payload.signature) delete payload.signature;
@@ -47,9 +47,9 @@ export const PostForm = (answerSet, onSuccess, onError) => (
                 delete payload.landlord.zip;
             } else if (!payload.landlord.address2) delete payload.landlord.address2;
 
-            if (!payload.landlord.email) delete payload.email;
-            if (!payload.landlord.company) delete payload.company;
-
+            if (!payload.landlord.email) delete payload.landlord.email;
+            if (!payload.landlord.company) delete payload.landlord.company;
+            console.log('payload', payload)
             const response = await WebClient.patch('/declaration', payload);
             dispatch(PostFormSuccess(response.data));
             if (onSuccess) onSuccess();

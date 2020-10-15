@@ -8,8 +8,8 @@ const list = [
         key: 'Female',
     },
     {
-        value: 'Non-binary',
-        key: 'Non-binary',
+        value: 'Non-Binary',
+        key: 'Non-Binary',
     },
 ];
 export default list;
