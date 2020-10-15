@@ -10,6 +10,7 @@ const internals = {
             evictionHealthRisks: [],
             tryingToPay: '',
         },
+        intakeStepCleared: 0,
     }),
 };
 
@@ -26,6 +27,11 @@ const IntakeReducer = (stateParam, action) => {
                 ...state.answers,
                 ...payload,
             },
+        };
+    case IntakeTypes.UPDATE_INTAKE_STEP:
+        return {
+            ...state,
+            intakeStepCleared: payload,
         };
 
     default:

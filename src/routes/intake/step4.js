@@ -12,8 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { includes, remove } from 'lodash';
 
-import { SaveAnswers } from '../../actions/intake';
-import { getAnswers } from '../../selectors/intake';
+import { SaveAnswers, UpdateIntakeStep } from '../../actions/intake';
+import { getAnswers, getIntakeStepCleared } from '../../selectors/intake';
 
 import CheckboxGroup from '../../components/form/checkboxgroup';
 import LayoutStyles from '../../styles/layouts';
@@ -23,6 +23,7 @@ const IntakeStep4 = ({ classes }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const currentAnswers = useSelector(getAnswers);
+    const intakeStepCleared = useSelector(getIntakeStepCleared);
     const [continueActive, setContinueActive] = useState(false);
     const [evictionHealthRisksPrevValues, setEvictionHealthRisksPrevValues] = useState(currentAnswers.evictionHealthRisks);
     const {
@@ -42,8 +43,15 @@ const IntakeStep4 = ({ classes }) => {
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
         if (values.evictionHealthRisks === '5') history.push('/intake/noqualify');
-        else history.push('/intake/5');
+        else {
+            dispatch(UpdateIntakeStep(4));
+            history.push('/intake/5');
+        }
     }, [dispatch, history]);
+
+    useEffect(() => {
+        if (intakeStepCleared < 3) history.push(`/intake/${intakeStepCleared}`);
+    }, [intakeStepCleared, history]);
 
     useEffect(() => {
         const incomingValues = getValues('evictionHealthRisks');

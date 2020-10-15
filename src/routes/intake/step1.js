@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { SaveAnswers } from '../../actions/intake';
+import { SaveAnswers, UpdateIntakeStep } from '../../actions/intake';
 import { getAnswers } from '../../selectors/intake';
 
 import CheckboxGroup from '../../components/form/checkboxgroup';
@@ -36,6 +36,7 @@ const IntakeStep1 = ({ classes }) => {
     });
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
+        dispatch(UpdateIntakeStep(1));
         history.push('/intake/2');
     }, [dispatch, history]);
     const watchAll = watch();

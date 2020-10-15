@@ -12,8 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { includes, remove } from 'lodash';
 
-import { SaveAnswers } from '../../actions/intake';
-import { getAnswers } from '../../selectors/intake';
+import { SaveAnswers, UpdateIntakeStep } from '../../actions/intake';
+import { getAnswers, getIntakeStepCleared } from '../../selectors/intake';
 
 import RadioGroup from '../../components/form/radiogroup';
 import RadioButton from '../../components/form/radiobutton';
@@ -29,6 +29,7 @@ const IntakeStep3 = ({ classes }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const currentAnswers = useSelector(getAnswers);
+    const intakeStepCleared = useSelector(getIntakeStepCleared);
     const [open, setOpen] = useState(false);
     const [continueActive, setContinueActive] = useState(false);
     const [affordRentProblemsPrevValues, setAffordRentProblemsPrevValues] = useState(currentAnswers.affordRentProblems);
@@ -50,10 +51,18 @@ const IntakeStep3 = ({ classes }) => {
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
         if (values.affordRent === 'Yes') history.push('/intake/noqualify');
-        else history.push('/intake/4');
+        else {
+            dispatch(UpdateIntakeStep(3));
+            history.push('/intake/4');
+        }
     }, [dispatch, history]);
     const watchAll = watch();
     const watchAffordRent = watch('affordRent');
+
+    useEffect(() => {
+        if (intakeStepCleared < 2) history.push(`/intake/${intakeStepCleared}`);
+    }, [intakeStepCleared, history]);
+
     useEffect(() => {
         const incomingValues = getValues('affordRentProblems');
         // logic to manage 'None' option in list

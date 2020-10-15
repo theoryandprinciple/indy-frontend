@@ -76,7 +76,7 @@ const PublicLayout = () => {
                         <Intake5 />
                     </Route>
                     <Route path="/intake">
-                        <IntakeStart />
+                        <Redirect to="/intake/start" />
                     </Route>
 
                     <Route exact path="/form/1">
