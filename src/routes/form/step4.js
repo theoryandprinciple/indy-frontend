@@ -13,8 +13,8 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useSignaturePad from 'react-hook-signature';
 
-import { getPdfLink } from '../../selectors/form';
-import { SaveAnswers } from '../../actions/form';
+import { getPdfLink, getFormStepCleared } from '../../selectors/form';
+import { SaveAnswers, UpdateFormStep } from '../../actions/form';
 import CombineStyles from '../../utils/combine-styles';
 import LayoutStyles from '../../styles/layouts';
 import ButtonStyles from '../../styles/buttons';
@@ -24,6 +24,7 @@ const FormStep4 = ({ classes }) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const pdfLink = useSelector(getPdfLink);
+    const formStepCleared = useSelector(getFormStepCleared);
 
     const containerNode = useRef(null);
     const [canvasContainerWidth, setCanvasContainerWidth] = useState(null);
@@ -32,12 +33,12 @@ const FormStep4 = ({ classes }) => {
     // measure the width of the canvas container on init and resize
     useLayoutEffect(() => {
         const measure = () => {
-            if (containerNode.current) {
-                window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => {
+                if (containerNode.current) {
                     const { width } = containerNode.current.getBoundingClientRect();
                     setCanvasContainerWidth(width);
-                });
-            }
+                }
+            });
         };
         measure();
 
@@ -76,9 +77,14 @@ const FormStep4 = ({ classes }) => {
     }, [handleClear, setContinueActive]);
     const onSaveClick = useCallback(() => {
         const signatureImage = handleSave('image/png', 1); // Saves as PNG at 100% original quality
+        dispatch(UpdateFormStep(4));
         dispatch(SaveAnswers({ signature: signatureImage }));
         history.push('/form/5');
     }, [handleSave, history, dispatch]);
+
+    useEffect(() => {
+        if (formStepCleared < 3) history.push(`/form/${formStepCleared}`);
+    }, [formStepCleared, history]);
 
     useEffect(() => {
         document.getElementById('signaturePad').focus();

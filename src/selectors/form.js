@@ -11,3 +11,8 @@ export const getPdfLink = createSelector(
     getFormState,
     formState => formState.pdfLink,
 );
+
+export const getFormStepCleared = createSelector(
+    getFormState,
+    formState => formState.formStepCleared,
+);

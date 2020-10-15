@@ -100,6 +100,9 @@ const PublicLayout = () => {
                     <Route exact path="/form/download">
                         <FormDownload />
                     </Route>
+                    <Route path="/form">
+                        <Redirect to="/form/1" />
+                    </Route>
                     <Route path="/">
                         <Redirect to="/error/404" />
                     </Route>

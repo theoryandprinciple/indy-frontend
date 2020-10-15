@@ -20,6 +20,7 @@ const currentMonth = month[d.getMonth()];
 
 const internals = {
     initial: () => ({
+        formStepCleared: 0,
         pdfLink: '',
         answers: {
             tenant: {
@@ -68,6 +69,11 @@ const FormReducer = (stateParam, action) => {
         return {
             ...state,
             pdfLink: payload,
+        };
+    case FormTypes.UPDATE_FORM_STEP:
+        return {
+            ...state,
+            formStepCleared: payload,
         };
 
     default:

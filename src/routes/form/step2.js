@@ -6,7 +6,7 @@ import React, {
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
+// import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import { useForm } from 'react-hook-form';
 // eslint-disable-next-line import/no-unresolved
@@ -16,19 +16,20 @@ import { useHistory } from 'react-router-dom';
 
 import ValidationSchema from './utils/validation-schema';
 import TextInput from '../../components/form/textinput';
-import Select from '../../components/form/select';
-import ConditionalQuestions from '../../components/form/conditional-questions';
+// import Select from '../../components/form/select';
+// import ConditionalQuestions from '../../components/form/conditional-questions';
 
-import { SaveAnswers, PostForm } from '../../actions/form';
-import { getAnswers } from '../../selectors/form';
+import { SaveAnswers, UpdateFormStep, PostForm } from '../../actions/form';
+import { getAnswers, getFormStepCleared } from '../../selectors/form';
 // import SendOptions from './wiring/send-options-list';
-import StateOptions from './wiring/state-list';
+// import StateOptions from './wiring/state-list';
 
 import LayoutStyles from '../../styles/layouts';
 
 const FormStep2 = ({ classes }) => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const formStepCleared = useSelector(getFormStepCleared);
     const currentAnswers = useSelector(getAnswers);
     const {
         register,
@@ -36,7 +37,7 @@ const FormStep2 = ({ classes }) => {
         watch,
         getValues,
         errors,
-        control,
+        // control,
         formState,
     } = useForm({
         mode: 'onChange',
@@ -55,6 +56,7 @@ const FormStep2 = ({ classes }) => {
     });
     const onSubmit = useCallback((values) => {
         const saveValues = {
+            ...currentAnswers,
             landlord: {
                 company: values.company,
                 name: values.name,
@@ -64,8 +66,9 @@ const FormStep2 = ({ classes }) => {
                 state: values.state,
                 zip: values.zip,
             },
-            // sendMethod: values.sendMethod,
+            sendMethod: values.sendMethod,
         };
+        dispatch(UpdateFormStep(2));
         dispatch(SaveAnswers(saveValues));
         let onSuccess;
         if (saveValues.sendMethod === 'usps') onSuccess = () => history.push('/form/done');
@@ -77,6 +80,10 @@ const FormStep2 = ({ classes }) => {
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
     // const watchSendMethod = watch('sendMethod');
+
+    useEffect(() => {
+        if (formStepCleared < 1) history.push(`/form/${formStepCleared}`);
+    }, [formStepCleared, history]);
 
     useEffect(() => {
         if (getValues('name') !== '' && formState.isValid) setContinueActive(true);
