@@ -35,6 +35,7 @@ const styles = theme => ({
     expandableContentRow: {
         overflow: 'hidden',
         transition: 'all 0.2s ease-out',
+        outline: 0,
     },
     expandableOpened: {
         maxHeight: '100%',

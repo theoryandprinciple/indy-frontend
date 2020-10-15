@@ -6,6 +6,7 @@ export default {
     blue: '#045FC9',
     purple: '#1F1578',
     purpleRGB: '31, 21, 120',
+    lightPurple: '#2514B9',
     yellow: '#FFDA02',
     white: '#FFFFFF',
     grey: '#DEDDE1',

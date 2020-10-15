@@ -1,3 +1,5 @@
+import { cloneDeep } from 'lodash';
+
 import FormTypes from '../action-types/form';
 import WebClient from '../utils/web-client';
 
@@ -6,22 +8,54 @@ export const SaveAnswers = answers => ({
     payload: answers,
 });
 
-export const PostAnswers = (reportId, patchData, onSuccess, onError) => (
+export const PostFormBegin = () => ({
+    type: FormTypes.POST_FORM_BEGIN,
+});
+
+export const PostFormSuccess = pdfLink => ({
+    type: FormTypes.POST_FORM_SUCCESS,
+    payload: pdfLink,
+});
+
+export const PostFormError = () => ({
+    type: FormTypes.POST_FORM_ERROR,
+});
+
+export const PostForm = (answerSet, onSuccess, onError) => (
     async (dispatch) => {
-        // dispatch(patchReportBegin(reportId));
+        dispatch(PostFormBegin());
 
         try {
-            const payload = {
-                ...patchData,
-            };
-            await WebClient.patch(`/reports/${reportId}`, payload);
-            // dispatch(patchReportSuccess(reportId, patchData));
+            // shallow clone, as produced by spread operator, is insufficant
+            const payload = cloneDeep(answerSet);
 
-            onSuccess();
+            // dont send the sendMethod
+            delete payload.sendMethod;
+
+            // remove parameters if they dont have values
+            if (!payload.signature) delete payload.signature;
+
+            if (!payload.tenant.address2) delete payload.tenant.address2;
+            if (!payload.tenant.race) delete payload.tenant.race;
+            if (!payload.tenant.gender) delete payload.tenant.gender;
+
+            if (!payload.landlord.address) {
+                delete payload.landlord.address;
+                delete payload.landlord.address2;
+                delete payload.landlord.city;
+                delete payload.landlord.state;
+                delete payload.landlord.zip;
+            } else if (!payload.landlord.address2) delete payload.landlord.address2;
+
+            if (!payload.landlord.email) delete payload.landlord.email;
+            if (!payload.landlord.company) delete payload.landlord.company;
+
+            const response = await WebClient.post('/declaration', payload);
+            dispatch(PostFormSuccess(response.data.data));
+            if (onSuccess) onSuccess();
         } catch (error) {
-            // dispatch(patchReportError(reportId, error));
-
-            onError();
+            dispatch(PostFormError());
+            if (onError) onError();
         }
     }
 );

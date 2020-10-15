@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { includes, remove } from 'lodash';
 
 import { SaveAnswers } from '../../actions/intake';
 import { getAnswers } from '../../selectors/intake';
@@ -22,30 +23,57 @@ const IntakeStep4 = ({ classes }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const currentAnswers = useSelector(getAnswers);
+    const [continueActive, setContinueActive] = useState(false);
+    const [evictionHealthRisksPrevValues, setEvictionHealthRisksPrevValues] = useState(currentAnswers.evictionHealthRisks);
     const {
         handleSubmit,
         watch,
         getValues,
         errors,
         control,
+        setValue,
     } = useForm({
         mode: 'onSubmit',
         defaultValues: {
             evictionHealthRisks: currentAnswers.evictionHealthRisks,
         },
     });
+    const watchAll = watch();
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
         if (values.evictionHealthRisks === '5') history.push('/intake/noqualify');
         else history.push('/intake/5');
     }, [dispatch, history]);
-    const watchAll = watch();
-    const [continueActive, setContinueActive] = useState(false);
 
     useEffect(() => {
+        const incomingValues = getValues('evictionHealthRisks');
+        // logic to manage 'None' option in list
+        if (incomingValues !== evictionHealthRisksPrevValues) {
+            let newValues = [];
+            // infinite loop preventer
+            if (
+                // if selecting something other than 'none' and 'none' is currently selected, deselect it
+                incomingValues.length >= 1
+                && includes(incomingValues, '5')
+                && includes(evictionHealthRisksPrevValues, '5')) {
+                // newValues are selections minus "none"
+                newValues = remove(incomingValues, choice => choice !== '5');
+                setValue('evictionHealthRisks', newValues);
+            } else if (
+                // if selecting "none" and others are already selected, deselect them
+                incomingValues.length > 1
+                && includes(incomingValues, '5')
+                && !includes(evictionHealthRisksPrevValues, '5')) {
+                // newValues = 'none'
+                newValues = ['5'];
+                setValue('evictionHealthRisks', newValues);
+            } else newValues = incomingValues;
+            setEvictionHealthRisksPrevValues(newValues);
+        }
+
         if (getValues('evictionHealthRisks').length > 0) setContinueActive(true);
         else setContinueActive(false);
-    }, [watchAll, getValues]);
+    }, [watchAll, getValues, setValue, evictionHealthRisksPrevValues]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`container ${classes.containerWrapper}`}>
@@ -59,7 +87,7 @@ const IntakeStep4 = ({ classes }) => {
                     <div className="row mt-4">
                         <div className="col">
                             <Typography variant="h1" color="primary">Would an eviction result in a health risk to you by placing you in unsafe living conditions?</Typography>
-                            <Typography variant="body1">Check all that apply</Typography>
+                            <Typography variant="body1" className="mt-3">Check all that apply</Typography>
                             <CheckboxGroup
                                 name="evictionHealthRisks"
                                 label={Questions.step4.evictionHealthRisks.label}

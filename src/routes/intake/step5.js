@@ -67,6 +67,7 @@ const IntakeStep5 = ({ classes }) => {
                                 label={Questions.step5.tryingToPay.label}
                                 errors={errors}
                                 required
+                                hiddenLabel
                                 control={control}
                             >
                                 {Questions.step5.tryingToPay.options.map(option => (

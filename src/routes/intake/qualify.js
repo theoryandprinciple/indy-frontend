@@ -54,7 +54,7 @@ const IntakeQualify = ({ classes }) => {
                             <Button
                                 variant="contained"
                                 color="primary"
-                                onClick={() => history.push('/completeform/1')}
+                                onClick={() => history.push('/form/1')}
                             >
                                 I Understand
                             </Button>

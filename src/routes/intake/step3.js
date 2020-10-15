@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { includes, remove } from 'lodash';
 
 import { SaveAnswers } from '../../actions/intake';
 import { getAnswers } from '../../selectors/intake';
@@ -27,12 +28,16 @@ import Questions from './questions';
 const IntakeStep3 = ({ classes }) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [open, setOpen] = useState(false);
     const currentAnswers = useSelector(getAnswers);
+    const [open, setOpen] = useState(false);
+    const [continueActive, setContinueActive] = useState(false);
+    const [affordRentProblemsPrevValues, setAffordRentProblemsPrevValues] = useState(currentAnswers.affordRentProblems);
+
     const {
         handleSubmit,
         watch,
         getValues,
+        setValue,
         errors,
         control,
     } = useForm({
@@ -48,15 +53,41 @@ const IntakeStep3 = ({ classes }) => {
         else history.push('/intake/4');
     }, [dispatch, history]);
     const watchAll = watch();
-    const [continueActive, setContinueActive] = useState(false);
-
+    const watchAffordRent = watch('affordRent');
     useEffect(() => {
+        const incomingValues = getValues('affordRentProblems');
+        // logic to manage 'None' option in list
+        if (incomingValues !== affordRentProblemsPrevValues) {
+            let newValues = [];
+            // infinite loop preventer
+            if (
+                // if selecting something other than 'none' and 'none' is currently selected, deselect it
+                incomingValues.length >= 1
+                && includes(incomingValues, '5')
+                && includes(affordRentProblemsPrevValues, '5')) {
+                // newValues are selections minus "none"
+                newValues = remove(incomingValues, choice => choice !== '5');
+                setValue('affordRentProblems', newValues);
+            } else if (
+                // if selecting "none" and others are already selected, deselect them
+                incomingValues.length > 1
+                && includes(incomingValues, '5')
+                && !includes(affordRentProblemsPrevValues, '5')) {
+                // newValues = 'none'
+                newValues = ['5'];
+                setValue('affordRentProblems', newValues);
+            } else newValues = incomingValues;
+            setAffordRentProblemsPrevValues(newValues);
+        }
+
         if (getValues('affordRent') === 'Yes') setContinueActive(true);
         if (getValues('affordRent') === 'No' && getValues('affordRentProblems').length > 0) setContinueActive(true);
         else setContinueActive(false);
-    }, [watchAll, getValues]);
+    }, [watchAll, getValues, setValue, affordRentProblemsPrevValues]);
 
-    const watchAffordRent = watch('affordRent');
+    useEffect(() => {
+        if (open) document.getElementById('intake3More').focus();
+    }, [open]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`container ${classes.containerWrapper}`}>
@@ -92,6 +123,7 @@ const IntakeStep3 = ({ classes }) => {
                                 <Typography variant="body1" className="mt-3">Check all that apply</Typography>
                                 <CheckboxGroup
                                     name="affordRentProblems"
+                                    values={getValues('affordRentProblems')}
                                     label={Questions.step3.affordRentProblems.label}
                                     hiddenLabel
                                     options={Questions.step3.affordRentProblems.options}
@@ -102,12 +134,14 @@ const IntakeStep3 = ({ classes }) => {
                                     type="button"
                                     className={`mt-4 ${classes.textLink}`}
                                     onClick={() => setOpen(!open)}
+                                    aria-expanded={open}
+                                    aria-controls="intake3More"
                                 >
                                     <Typography variant="body1">What are “extraordinary medical costs”?</Typography>
                                 </button>
-                                <div className={`${classes.expandableContentRow} ${open ? classes.expandableOpened : classes.expandableClosed}`}>
+                                <div id="intake3More" tabIndex="-1" role="region" className={`${classes.expandableContentRow} ${open ? classes.expandableOpened : classes.expandableClosed}`}>
                                     <Typography variant="body1" className="mt-3">
-                                        Stuff
+                                        An “extraordinary” medical expense is any unreimbursed medical expense likely to exceed 7.5% of one’s adjusted gross income for the year.
                                     </Typography>
                                 </div>
                             </ConditionalQuestions>

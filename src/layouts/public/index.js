@@ -26,8 +26,10 @@ import Form1 from '../../routes/form/step1';
 import Form2 from '../../routes/form/step2';
 import Form3 from '../../routes/form/step3';
 import Form4 from '../../routes/form/step4';
+import Form5 from '../../routes/form/step5';
+import FormSent from '../../routes/form/form-sent';
+import FormDownload from '../../routes/form/form-download';
 
-import Demo from '../../routes/demo';
 import Error404 from '../../routes/error/404';
 
 import themer from '../../styles/material-theme';
@@ -89,8 +91,14 @@ const PublicLayout = () => {
                     <Route exact path="/form/4">
                         <Form4 />
                     </Route>
-                    <Route exact path="/demo">
-                        <Demo />
+                    <Route exact path="/form/5">
+                        <Form5 />
+                    </Route>
+                    <Route exact path="/form/sent">
+                        <FormSent />
+                    </Route>
+                    <Route exact path="/form/download">
+                        <FormDownload />
                     </Route>
                     <Route path="/">
                         <Redirect to="/error/404" />

@@ -58,6 +58,14 @@ const theme = createMuiTheme({
                     backgroundColor: `rgba(${Colors.purpleRGB}, .8)`,
                     color: Colors.white,
                 },
+                '&:hover': {
+                    backgroundColor: Colors.lightPurple,
+                },
+            },
+            containedSecondary: {
+                '&:hover': {
+                    backgroundColor: Colors.lightTeal,
+                },
             },
             outlined: {
                 paddingLeft: 40,
@@ -88,6 +96,7 @@ const theme = createMuiTheme({
                 width: '100%',
                 padding: '2px 0',
                 borderRadius: 3,
+                marginTop: 5,
                 '& $notchedOutline': {
                     border: `1px solid ${Colors.grey}`,
                 },
@@ -115,9 +124,11 @@ const theme = createMuiTheme({
         fontFamily: '"Kumbh Sans", sans-serif',
         h1: {
             fontSize: 30,
+            lineHeight: 1,
             fontWeight: 700,
             [breakpointObject.breakpoints.down('sm')]: {
                 fontSize: 24,
+                lineHeight: 1,
             },
         },
         h2: {

@@ -10,9 +10,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useSignaturePad from 'react-hook-signature';
 
+import { getPdfLink } from '../../selectors/form';
 import { SaveAnswers } from '../../actions/form';
 import CombineStyles from '../../utils/combine-styles';
 import LayoutStyles from '../../styles/layouts';
@@ -22,6 +23,7 @@ import Styles from './styles';
 const FormStep4 = ({ classes }) => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const pdfLink = useSelector(getPdfLink);
 
     const containerNode = useRef(null);
     const [canvasContainerWidth, setCanvasContainerWidth] = useState(null);
@@ -119,7 +121,7 @@ const FormStep4 = ({ classes }) => {
                         <div className="col-8 text-right">
                             <Typography variant="body1">
                                 Having Trouble Signing?
-                                &nbsp;<a href="http://google.com" target="_blank" rel="noopener noreferrer" className={classes.textLink}>Down form</a>
+                                &nbsp;<a href={pdfLink} target="_blank" rel="noopener noreferrer" className={classes.textLink}>Download form</a>
                             </Typography>
                         </div>
                     </div>

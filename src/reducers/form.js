@@ -20,29 +20,32 @@ const currentMonth = month[d.getMonth()];
 
 const internals = {
     initial: () => ({
+        pdfLink: '',
         answers: {
             tenant: {
-                firstName: '',
-                lastName: '',
-                address: '',
-                address2: '',
-                city: '',
+                firstName: null,
+                lastName: null,
+                address: null,
+                address2: null,
+                city: null,
                 state: 'Indiana',
-                zip: '',
+                zip: null,
+                race: null,
+                gender: null,
             },
             landlord: {
-                company: '',
-                name: '',
-                email: '',
-                address: '',
-                address2: '',
-                city: '',
+                company: null,
+                name: null,
+                email: null,
+                address: null,
+                address2: null,
+                city: null,
                 state: 'Indiana',
-                zip: '',
+                zip: null,
             },
             date: `${currentMonth} ${currentDate}, ${currentYear}`,
             signature: null,
-            sendMethod: '',
+            sendMethod: null,
         },
     }),
 };
@@ -60,6 +63,11 @@ const FormReducer = (stateParam, action) => {
                 ...state.answers,
                 ...payload,
             },
+        };
+    case FormTypes.POST_FORM_SUCCESS:
+        return {
+            ...state,
+            pdfLink: payload,
         };
 
     default:
