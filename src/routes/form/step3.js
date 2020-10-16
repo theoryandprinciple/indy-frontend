@@ -44,10 +44,10 @@ const FormStep3 = ({ classes }) => {
                                 We created a form with all your information, please check and make sure it looks correct.
                             </Typography>
                             <div className={`mt-3 ${classes.letterPreview}`}>
-                                <Typography variant="body1" className="mt-3">
+                                <Typography variant="body1">
                                     {date}
                                 </Typography>
-                                <Typography variant="body1">
+                                <Typography variant="body1" className="mt-3">
                                     {tenant.firstName} {tenant.lastName}<br />
                                     {tenant.address}<br />
                                     {tenant.address2 && <>{tenant.address2}<br /></>}
