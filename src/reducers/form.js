@@ -75,6 +75,15 @@ const FormReducer = (stateParam, action) => {
             ...state,
             formStepCleared: payload,
         };
+    case FormTypes.SOFT_RESET_FORM:
+        return {
+            ...internals.initial(),
+            pdfLink: state.pdfLink,
+        };
+    case FormTypes.HARD_RESET_FORM:
+        return {
+            ...internals.initial(),
+        };
 
     default:
         // do nothing

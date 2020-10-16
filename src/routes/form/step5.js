@@ -51,7 +51,7 @@ const FormStep5 = ({ classes }) => {
         else onSuccess = () => history.push('/form/download');
         // TODO: we have no requirements for error handling so for now just log the error
         const onError = (error) => { console.error(error); };
-        dispatch(PostForm(saveValues, onSuccess, onError));
+        dispatch(PostForm(saveValues, onSuccess, onError, true));
     }, [dispatch, history, currentAnswers]);
 
     useEffect(() => {

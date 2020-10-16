@@ -3,6 +3,14 @@ import { cloneDeep } from 'lodash';
 import FormTypes from '../action-types/form';
 import WebClient from '../utils/web-client';
 
+export const SoftResetForm = () => ({
+    type: FormTypes.SOFT_RESET_FORM,
+});
+
+export const HardResetForm = () => ({
+    type: FormTypes.HARD_RESET_FORM,
+});
+
 export const SaveAnswers = answers => ({
     type: FormTypes.SAVE_FORM,
     payload: answers,
@@ -21,7 +29,7 @@ export const PostFormError = () => ({
     type: FormTypes.POST_FORM_ERROR,
 });
 
-export const PostForm = (answerSet, onSuccess, onError) => (
+export const PostForm = (answerSet, onSuccess, onError, finalStep = false) => (
     async (dispatch) => {
         dispatch(PostFormBegin());
 
@@ -52,6 +60,7 @@ export const PostForm = (answerSet, onSuccess, onError) => (
             const response = await WebClient.post('/declaration', payload);
             dispatch(PostFormSuccess(response.data.data));
             if (onSuccess) onSuccess();
+            if (finalStep) dispatch(SoftResetForm()); // clear everything but pdfLink
         } catch (error) {
             dispatch(PostFormError());
             if (onError) onError();
