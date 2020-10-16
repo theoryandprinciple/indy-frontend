@@ -28,7 +28,6 @@ export const PostForm = (answerSet, onSuccess, onError) => (
         try {
             // shallow clone, as produced by spread operator, is insufficant
             const payload = cloneDeep(answerSet);
-            console.log('payload', payload)
             // dont send the sendMethod
             delete payload.sendMethod;
 
