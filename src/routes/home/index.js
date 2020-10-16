@@ -1,9 +1,12 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import { HardResetForm } from '../../actions/form';
 
 import HIW1 from './images/how-it-works-1.png';
 import HIW2 from './images/how-it-works-2.png';
@@ -19,6 +22,11 @@ import Styles from './styles';
 
 const Home = ({ classes }) => {
     const IntakeLink = forwardRef((props, ref) => <NavLink to="/intake/start" {...ref} {...props} />);
+    const dispatch = useDispatch();
+    // we reset the form incase the user uses the logo link to get back here while PII is in the form
+    useEffect(() => {
+        dispatch(HardResetForm());
+    }, [dispatch]);
 
     return (
         <>

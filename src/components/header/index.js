@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
@@ -8,7 +8,7 @@ import LayoutStyles from '../../styles/layouts';
 import Logo from './images/logo.png';
 
 const Header = ({ classes }) => {
-    const LogoLink = React.forwardRef((props, ref) => <NavLink activeClassName={classes.primaryLinkActive} exact to="/" {...ref} {...props} />);
+    const LogoLink = forwardRef((props, ref) => <NavLink activeClassName={classes.primaryLinkActive} exact to="/" {...ref} {...props} />);
 
     return (
         <header className={`${classes.sectionWrapperPurple}`}>

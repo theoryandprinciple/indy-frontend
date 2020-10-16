@@ -3,8 +3,12 @@ import { cloneDeep } from 'lodash';
 import FormTypes from '../action-types/form';
 import WebClient from '../utils/web-client';
 
-export const ResetForm = () => ({
-    type: FormTypes.RESET_FORM,
+export const SoftResetForm = () => ({
+    type: FormTypes.SOFT_RESET_FORM,
+});
+
+export const HardResetForm = () => ({
+    type: FormTypes.HARD_RESET_FORM,
 });
 
 export const SaveAnswers = answers => ({
@@ -56,7 +60,7 @@ export const PostForm = (answerSet, onSuccess, onError, finalStep = false) => (
             const response = await WebClient.post('/declaration', payload);
             dispatch(PostFormSuccess(response.data.data));
             if (onSuccess) onSuccess();
-            if (finalStep) dispatch(ResetForm()); // clear everything but pdfLink
+            if (finalStep) dispatch(SoftResetForm()); // clear everything but pdfLink
         } catch (error) {
             dispatch(PostFormError());
             if (onError) onError();
