@@ -12,8 +12,8 @@ import GenderOptions from './wiring/gender-list';
 import RaceOptions from './wiring/race-list';
 import Select from '../../components/form/select';
 
-import { SaveAnswers, PostForm } from '../../actions/form';
-import { getAnswers } from '../../selectors/form';
+import { SaveAnswers, UpdateFormStep, PostForm } from '../../actions/form';
+import { getAnswers, getFormStepCleared } from '../../selectors/form';
 
 import CombineStyles from '../../utils/combine-styles';
 import LayoutStyles from '../../styles/layouts';
@@ -24,12 +24,12 @@ const FormStep5 = ({ classes }) => {
     const history = useHistory();
     const [open, setOpen] = useState(false);
     const currentAnswers = useSelector(getAnswers);
+    const formStepCleared = useSelector(getFormStepCleared);
     const {
         handleSubmit,
         errors,
         control,
     } = useForm({
-        reValidateMode: 'onChange',
         defaultValues: {
             race: currentAnswers.tenant.race,
             gender: currentAnswers.tenant.gender,
@@ -44,6 +44,7 @@ const FormStep5 = ({ classes }) => {
                 gender: values.gender,
             },
         };
+        dispatch(UpdateFormStep(5));
         dispatch(SaveAnswers(saveValues));
         let onSuccess;
         if (saveValues.sendMethod === 'usps') onSuccess = () => history.push('/form/done');
@@ -52,6 +53,10 @@ const FormStep5 = ({ classes }) => {
         const onError = (error) => { console.error(error); };
         dispatch(PostForm(saveValues, onSuccess, onError));
     }, [dispatch, history, currentAnswers]);
+
+    useEffect(() => {
+        if (formStepCleared < 4) history.push(`/form/${formStepCleared}`);
+    }, [formStepCleared, history]);
 
     useEffect(() => {
         if (open) document.getElementById('form5More').focus();

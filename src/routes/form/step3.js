@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { getAnswers } from '../../selectors/form';
+import { useDispatch, useSelector } from 'react-redux';
+import { UpdateFormStep } from '../../actions/form';
+import { getAnswers, getFormStepCleared } from '../../selectors/form';
 
 import CombineStyles from '../../utils/combine-styles';
 import LayoutStyles from '../../styles/layouts';
@@ -14,12 +15,18 @@ import Styles from './styles';
 
 const FormStep3 = ({ classes }) => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const currentAnswers = useSelector(getAnswers);
+    const formStepCleared = useSelector(getFormStepCleared);
     const {
         tenant,
         landlord,
         date,
     } = currentAnswers;
+
+    useEffect(() => {
+        if (formStepCleared < 2) history.push(`/form/${formStepCleared}`);
+    }, [formStepCleared, history]);
 
     return (
         <div className={`container ${classes.containerWrapper}`}>
@@ -93,7 +100,7 @@ const FormStep3 = ({ classes }) => {
                             <Button
                                 variant="contained"
                                 color="primary"
-                                onClick={() => history.push('/form/4')}
+                                onClick={() => { dispatch(UpdateFormStep(3)); history.push('/form/4'); }}
                             >
                                 Looks Good!
                             </Button>

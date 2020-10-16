@@ -11,8 +11,8 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { SaveAnswers } from '../../actions/intake';
-import { getAnswers } from '../../selectors/intake';
+import { SaveAnswers, UpdateIntakeStep } from '../../actions/intake';
+import { getAnswers, getIntakeStepCleared } from '../../selectors/intake';
 
 import RadioGroup from '../../components/form/radiogroup';
 import RadioButton from '../../components/form/radiobutton';
@@ -25,6 +25,7 @@ const IntakeStep5 = ({ classes }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const currentAnswers = useSelector(getAnswers);
+    const intakeStepCleared = useSelector(getIntakeStepCleared);
     const {
         handleSubmit,
         watch,
@@ -40,10 +41,17 @@ const IntakeStep5 = ({ classes }) => {
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
         if (values.tryingToPay === 'No') history.push('/intake/noqualify');
-        else history.push('/intake/qualify');
+        else {
+            dispatch(UpdateIntakeStep(5));
+            history.push('/intake/qualify');
+        }
     }, [dispatch, history]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
+
+    useEffect(() => {
+        if (intakeStepCleared < 4) history.push(`/intake/${intakeStepCleared}`);
+    }, [intakeStepCleared, history]);
 
     useEffect(() => {
         if (getValues('tryingToPay') !== '') setContinueActive(true);

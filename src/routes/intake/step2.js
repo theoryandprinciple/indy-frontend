@@ -11,8 +11,8 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { SaveAnswers } from '../../actions/intake';
-import { getAnswers } from '../../selectors/intake';
+import { SaveAnswers, UpdateIntakeStep } from '../../actions/intake';
+import { getAnswers, getIntakeStepCleared } from '../../selectors/intake';
 
 import RadioGroup from '../../components/form/radiogroup';
 import RadioButton from '../../components/form/radiobutton';
@@ -26,6 +26,7 @@ const IntakeStep2 = ({ classes }) => {
     const history = useHistory();
     const [open, setOpen] = useState(false);
     const currentAnswers = useSelector(getAnswers);
+    const intakeStepCleared = useSelector(getIntakeStepCleared);
     const {
         handleSubmit,
         watch,
@@ -41,10 +42,17 @@ const IntakeStep2 = ({ classes }) => {
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
         if (values.governmentAsst === 'No') history.push('/intake/noqualify');
-        else history.push('/intake/3');
+        else {
+            dispatch(UpdateIntakeStep(2));
+            history.push('/intake/3');
+        }
     }, [dispatch, history]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
+
+    useEffect(() => {
+        if (intakeStepCleared < 1) history.push(`/intake/${intakeStepCleared}`);
+    }, [intakeStepCleared, history]);
 
     useEffect(() => {
         if (getValues('governmentAsst') !== '') setContinueActive(true);

@@ -18,7 +18,7 @@ import ValidationSchema from './utils/validation-schema';
 import TextInput from '../../components/form/textinput';
 import Select from '../../components/form/select';
 
-import { SaveAnswers } from '../../actions/form';
+import { SaveAnswers, UpdateFormStep } from '../../actions/form';
 import { getAnswers } from '../../selectors/form';
 import StateOptions from './wiring/state-list';
 
@@ -51,9 +51,10 @@ const FormStep1 = ({ classes }) => {
         },
     });
     const onSubmit = useCallback((values) => {
-        dispatch(SaveAnswers({ tenant: values }));
+        dispatch(UpdateFormStep(1));
+        dispatch(SaveAnswers({ tenant: { ...currentAnswers.tenant, ...values } }));
         history.push('/form/2');
-    }, [dispatch, history]);
+    }, [dispatch, history, currentAnswers]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
 

@@ -6,7 +6,7 @@ import React, {
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
+// import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import { useForm } from 'react-hook-form';
 // eslint-disable-next-line import/no-unresolved
@@ -16,19 +16,20 @@ import { useHistory } from 'react-router-dom';
 
 import ValidationSchema from './utils/validation-schema';
 import TextInput from '../../components/form/textinput';
-import Select from '../../components/form/select';
-import ConditionalQuestions from '../../components/form/conditional-questions';
+// import Select from '../../components/form/select';
+// import ConditionalQuestions from '../../components/form/conditional-questions';
 
-import { SaveAnswers, PostForm } from '../../actions/form';
-import { getAnswers } from '../../selectors/form';
-import SendOptions from './wiring/send-options-list';
-import StateOptions from './wiring/state-list';
+import { SaveAnswers, UpdateFormStep, PostForm } from '../../actions/form';
+import { getAnswers, getFormStepCleared } from '../../selectors/form';
+// import SendOptions from './wiring/send-options-list';
+// import StateOptions from './wiring/state-list';
 
 import LayoutStyles from '../../styles/layouts';
 
 const FormStep2 = ({ classes }) => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const formStepCleared = useSelector(getFormStepCleared);
     const currentAnswers = useSelector(getAnswers);
     const {
         register,
@@ -36,7 +37,7 @@ const FormStep2 = ({ classes }) => {
         watch,
         getValues,
         errors,
-        control,
+        // control,
         formState,
     } = useForm({
         mode: 'onChange',
@@ -45,7 +46,7 @@ const FormStep2 = ({ classes }) => {
         defaultValues: {
             company: currentAnswers.landlord.company,
             name: currentAnswers.landlord.name,
-            sendMethod: currentAnswers.sendMethod,
+            // sendMethod: currentAnswers.sendMethod,
             address: currentAnswers.landlord.address,
             address2: currentAnswers.landlord.address2,
             city: currentAnswers.landlord.city,
@@ -55,6 +56,7 @@ const FormStep2 = ({ classes }) => {
     });
     const onSubmit = useCallback((values) => {
         const saveValues = {
+            ...currentAnswers,
             landlord: {
                 company: values.company,
                 name: values.name,
@@ -66,6 +68,7 @@ const FormStep2 = ({ classes }) => {
             },
             sendMethod: values.sendMethod,
         };
+        dispatch(UpdateFormStep(2));
         dispatch(SaveAnswers(saveValues));
         let onSuccess;
         if (saveValues.sendMethod === 'usps') onSuccess = () => history.push('/form/done');
@@ -73,10 +76,14 @@ const FormStep2 = ({ classes }) => {
         // TODO: we have no requirements for error handling so for now just log the error
         const onError = (error) => { console.error(error); };
         dispatch(PostForm(saveValues, onSuccess, onError));
-    }, [dispatch, history]);
+    }, [dispatch, history, currentAnswers]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
-    const watchSendMethod = watch('sendMethod');
+    // const watchSendMethod = watch('sendMethod');
+
+    useEffect(() => {
+        if (formStepCleared < 1) history.push(`/form/${formStepCleared}`);
+    }, [formStepCleared, history]);
 
     useEffect(() => {
         if (getValues('name') !== '' && formState.isValid) setContinueActive(true);
@@ -119,6 +126,7 @@ const FormStep2 = ({ classes }) => {
                                     />
                                 </div>
                             </div>
+                            {/* HIDDEN FOR MVP
                             <div className="row mt-3">
                                 <div className="col-md">
                                     <Select
@@ -143,8 +151,10 @@ const FormStep2 = ({ classes }) => {
                                     </Select>
                                 </div>
                             </div>
+                            */}
                         </div>
                     </div>
+                    {/* HIDDEN FOR MVP
                     <ConditionalQuestions condition={watchSendMethod === 'email'}>
                         <div className="row mt-3">
                             <div className="col-md">
@@ -157,6 +167,8 @@ const FormStep2 = ({ classes }) => {
                             </div>
                         </div>
                     </ConditionalQuestions>
+                    */}
+                    {/*
                     <ConditionalQuestions condition={watchSendMethod === 'usps'}>
                         <div className="row mt-3">
                             <div className="col-md-8">
@@ -222,6 +234,7 @@ const FormStep2 = ({ classes }) => {
                             </div>
                         </div>
                     </ConditionalQuestions>
+                    */}
                     <div className="row mt-5 mb-3">
                         <div className="col text-right">
                             <Button

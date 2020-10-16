@@ -28,7 +28,6 @@ export const PostForm = (answerSet, onSuccess, onError) => (
         try {
             // shallow clone, as produced by spread operator, is insufficant
             const payload = cloneDeep(answerSet);
-
             // dont send the sendMethod
             delete payload.sendMethod;
 
@@ -59,3 +58,9 @@ export const PostForm = (answerSet, onSuccess, onError) => (
         }
     }
 );
+
+// eslint-disable-next-line import/prefer-default-export
+export const UpdateFormStep = step => ({
+    type: FormTypes.UPDATE_FORM_STEP,
+    payload: step,
+});
