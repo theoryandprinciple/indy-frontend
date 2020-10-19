@@ -3,6 +3,7 @@ import React, {
     useCallback,
     useEffect,
 } from 'react';
+import { includes, remove } from 'lodash';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -28,6 +29,7 @@ const IntakeStep1 = ({ classes }) => {
         getValues,
         errors,
         control,
+        setValue,
     } = useForm({
         mode: 'onSubmit',
         defaultValues: {
@@ -36,16 +38,46 @@ const IntakeStep1 = ({ classes }) => {
     });
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
-        dispatch(UpdateIntakeStep(1));
-        history.push('/intake/2');
+        if (values.income[0] === '3') history.push('/intake/noqualify');
+        else {
+            dispatch(UpdateIntakeStep(1));
+            history.push('/intake/2');
+        }
     }, [dispatch, history]);
     const watchAll = watch();
     const [continueActive, setContinueActive] = useState(false);
+    const [incomePrevValues, setIncomePrevValues] = useState(currentAnswers.income);
+
 
     useEffect(() => {
+        const incomingValues = getValues('income');
+        // logic to manage 'None' option in list
+        if (incomingValues !== incomePrevValues) {
+            let newValues = [];
+            // infinite loop preventer
+            if (
+                // if selecting something other than 'none' and 'none' is currently selected, deselect it
+                incomingValues.length >= 1
+                && includes(incomingValues, '3')
+                && includes(incomePrevValues, '3')) {
+                // newValues are selections minus "none"
+                newValues = remove(incomingValues, choice => choice !== '3');
+                setValue('income', newValues);
+            } else if (
+                // if selecting "none" and others are already selected, deselect them
+                incomingValues.length > 1
+                && includes(incomingValues, '3')
+                && !includes(incomePrevValues, '3')) {
+                // newValues = 'none'
+                newValues = ['3'];
+                setValue('income', newValues);
+            } else newValues = incomingValues;
+            setIncomePrevValues(newValues);
+        }
+
         if (getValues('income').length > 0) setContinueActive(true);
         else setContinueActive(false);
-    }, [watchAll, getValues]);
+    }, [watchAll, getValues, setValue, incomePrevValues]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`container ${classes.containerWrapper}`}>

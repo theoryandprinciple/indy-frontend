@@ -82,6 +82,7 @@ const IntakeStep2 = ({ classes }) => {
                                 errors={errors}
                                 required
                                 control={control}
+                                hiddenLabel
                             >
                                 {Questions.step2.governmentAsst.options.map(option => (
                                     <RadioButton

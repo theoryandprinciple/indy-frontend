@@ -51,6 +51,7 @@ const IntakeStep3 = ({ classes }) => {
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
         if (values.affordRent === 'Yes') history.push('/intake/noqualify');
+        else if (values.affordRent === 'No' && values.affordRentProblems[0] === '5') history.push('/intake/noqualify');
         else {
             dispatch(UpdateIntakeStep(3));
             history.push('/intake/4');
