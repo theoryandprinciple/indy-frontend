@@ -20,22 +20,22 @@ const IntakeQualify = ({ classes }) => {
                                 If the answers you gave indicate you don&apos;t qualify, you can restart but please proceed with caution and remember that you must answer these questions truthfully. You could be subject to civil or criminal penalties if you lie on these forms. If you are in need of emergency housing, please dial 211. If you are in need of legal help, please see the resources provided by us and our partner legal aid organizations:
                             </Typography>
                             <Typography variant="body1" className="mt-3">
-                                <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
+                                <a href="https://www.nclegalclinic.org" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
                                     Neighborhood Christian Legal Clinic
                                 </a>
                             </Typography>
                             <Typography variant="body1" className="mt-1">
-                                <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
+                                <a href="https://www.indianalegalservices.org/" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
                                     Indiana Legal Services
                                 </a>
                             </Typography>
                             <Typography variant="body1" className="mt-1">
-                                <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
+                                <a href="https://www.indylas.org/" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
                                     Indianapolis Legal Aid Society
                                 </a>
                             </Typography>
                             <Typography variant="body1" className="mt-1">
-                                <a href="https://www.google.com" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
+                                <a href="https://indianalegalhelp.org/find-legal-help/" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
                                     Find Help in Your Area
                                 </a>
                             </Typography>
