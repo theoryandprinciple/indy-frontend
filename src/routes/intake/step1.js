@@ -29,7 +29,7 @@ const IntakeStep1 = ({ classes }) => {
         getValues,
         errors,
         control,
-        setValue
+        setValue,
     } = useForm({
         mode: 'onSubmit',
         defaultValues: {
