@@ -48,7 +48,6 @@ const IntakeQualify = ({ classes }) => {
                                 variant="outlined"
                                 color="primary"
                                 onClick={() => history.goBack()}
-                                className="mr-3"
                             >
                                 Previous
                             </Button>

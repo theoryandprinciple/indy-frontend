@@ -96,7 +96,6 @@ const FormStep3 = ({ classes }) => {
                                 variant="outlined"
                                 color="primary"
                                 onClick={() => history.push('/form/2')}
-                                className="mr-3"
                             >
                                 Previous
                             </Button>

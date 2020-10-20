@@ -87,7 +87,7 @@ const FormStep1 = ({ classes }) => {
                                         showError={false}
                                     />
                                 </div>
-                                <div className="col-md">
+                                <div className="col-md mt-3 mt-md-0">
                                     <TextInput
                                         name="lastName"
                                         label="Last Name"
@@ -110,7 +110,7 @@ const FormStep1 = ({ classes }) => {
                                         showError={false}
                                     />
                                 </div>
-                                <div className="col-md-4">
+                                <div className="col-md-4 mt-3 mt-md-0">
                                     <TextInput
                                         name="address2"
                                         label="Unit"
@@ -157,7 +157,7 @@ const FormStep1 = ({ classes }) => {
                                         ))}
                                     </Select>
                                 </div>
-                                <div className="col-md">
+                                <div className="col-md mt-3 mt-md-0">
                                     <TextInput
                                         name="zip"
                                         label="Zip"
@@ -176,7 +176,6 @@ const FormStep1 = ({ classes }) => {
                             <Button
                                 variant="outlined"
                                 color="primary"
-                                className="mr-3"
                                 onClick={() => history.push('/intake/qualify')}
                             >
                                 Previous

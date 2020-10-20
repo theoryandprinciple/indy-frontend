@@ -144,7 +144,6 @@ const FormStep5 = ({ classes }) => {
                             <Button
                                 variant="outlined"
                                 color="primary"
-                                className="mr-3"
                                 onClick={() => history.push('/form/4')}
                             >
                                 Previous
