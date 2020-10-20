@@ -119,7 +119,7 @@ const IntakeStep2 = ({ classes }) => {
                             <Button
                                 variant="outlined"
                                 color="primary"
-                                onClick={() => history.push('/intake/getstarted')}
+                                onClick={() => history.push('/intake/1')}
                             >
                                 Previous
                             </Button>
