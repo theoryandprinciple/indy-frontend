@@ -15,7 +15,7 @@ const IntakeQualify = ({ classes }) => {
                 <div className="col">
                     <div className="row mt-4">
                         <div className="col">
-                            <Typography variant="h1" color="primary">Sorry, you don’t qualify</Typography>
+                            <Typography variant="h1" color="primary">Sorry, it looks like you don’t qualify</Typography>
                             <Typography variant="body1" className="mt-3">
                                 If the answers you gave indicate you don&apos;t qualify, you can restart but please proceed with caution and remember that you must answer these questions truthfully. You could be subject to civil or criminal penalties if you lie on these forms. If you are in need of emergency housing, please dial 211. If you are in need of legal help, please see the resources provided by us and our partner legal aid organizations:
                             </Typography>
