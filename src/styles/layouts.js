@@ -5,7 +5,9 @@ const styles = theme => ({
         maxWidth: 700,
         marginTop: 60,
         [theme.breakpoints.down('sm')]: {
-            marginTop: 20,
+            marginTop: 0,
+            paddingRight: 0,
+            paddingLeft: 0,
         },
     },
     sectionWrapper: {
@@ -16,10 +18,12 @@ const styles = theme => ({
         marginTop: 15,
         borderRadius: 8,
         [theme.breakpoints.down('md')]: {
+            marginTop: 0,
             padding: 20,
             paddingBottom: 45,
             marginRight: 0,
             marginLeft: 0,
+            borderRadius: 0,
         },
     },
     sectionWrapperPurple: {
