@@ -14,7 +14,7 @@ const styles = () => ({
         borderRadius: 8,
         marginTop: 20,
         marginBottom: 10,
-        minWidth: 275,
+        minWidth: 250,
     },
 });
 

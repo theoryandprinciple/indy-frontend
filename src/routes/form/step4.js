@@ -114,17 +114,16 @@ const FormStep4 = ({ classes }) => {
                         </div>
                     </div>
                     <div className="row mt-2 align-items-center">
-                        <div className="col-4">
+                        <div className="col-md-4 mr-0 mr-md-3 text-right">
                             <Button
                                 variant="outlined"
                                 color="primary"
                                 onClick={() => onCancelClick()}
-                                className="mr-3"
                             >
                                 Clear
                             </Button>
                         </div>
-                        <div className="col-8 text-right">
+                        <div className="col-md-8 mt-3 mt-md-0 text-right">
                             <Typography variant="body1">
                                 Having Trouble Signing?
                                 &nbsp;<a href={pdfLink} target="_blank" rel="noopener noreferrer" className={classes.textLink}>Download form</a>
