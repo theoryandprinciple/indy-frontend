@@ -14,6 +14,11 @@ const styles = theme => ({
     },
     HIWImg: {
         height: 70,
+        marginBottom: 40,
+        [theme.breakpoints.down('md')]: {
+            marginTop: 30,
+            marginBottom: 15,
+        },
     },
 });
 

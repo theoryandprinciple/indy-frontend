@@ -113,16 +113,18 @@ const IntakeStep2 = ({ classes }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="row mt-5 mb-3">
-                        <div className="col text-right">
+                    <div className="row no-gutters mt-3 mt-sm-5 mb-3">
+                        <div className="col d-none d-sm-flex" />
+                        <div className="col-12 col-sm-auto text-right mt-3 mt-sm-0 mr-0 mr-sm-3 order-12 order-sm-1">
                             <Button
                                 variant="outlined"
                                 color="primary"
-                                className="mr-3"
                                 onClick={() => history.push('/intake/1')}
                             >
                                 Previous
                             </Button>
+                        </div>
+                        <div className="col-12 col-sm-auto text-right order-1 order-sm-12">
                             <Button
                                 variant="contained"
                                 color="primary"

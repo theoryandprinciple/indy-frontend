@@ -82,6 +82,7 @@ const theme = createMuiTheme({
                 paddingLeft: 5,
                 marginLeft: 0,
                 marginRight: 0,
+                paddingRight: 10,
                 '&[data-checked="true"]': {
                     border: `2px solid ${Colors.purple}`,
                     backgroundColor: Colors.lightTeal,

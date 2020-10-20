@@ -46,19 +46,19 @@ const Home = ({ classes }) => {
             <section>
                 <div className="container mt-5">
                     <div className="row">
-                        <div className="col text-center">
+                        <div className="col-md text-center">
                             <img src={HIW1} alt="" className={classes.HIWImg} />
-                            <Typography variant="h2" color="primary" className="mt-5">Fill out the form in 5 minutes</Typography>
+                            <Typography variant="h2" color="primary">Fill out the form in 5 minutes</Typography>
                             <Typography variant="body1" className="mt-2">Answer a few questions and provide your landlord&apos;s contact information</Typography>
                         </div>
-                        <div className="col text-center">
+                        <div className="col-md text-center">
                             <img src={HIW2} alt="" className={classes.HIWImg} />
-                            <Typography variant="h2" color="primary" className="mt-5">The tool will create a letter</Typography>
+                            <Typography variant="h2" color="primary">The tool will create a letter</Typography>
                             <Typography variant="body1" className="mt-2">The app will create a letter that is read to send based on your answers</Typography>
                         </div>
-                        <div className="col text-center">
+                        <div className="col-md text-center">
                             <img src={HIW3} alt="" className={classes.HIWImg} />
-                            <Typography variant="h2" color="primary" className="mt-5">Send the letter to your landlord</Typography>
+                            <Typography variant="h2" color="primary">Send the letter to your landlord</Typography>
                             <Typography variant="body1" className="mt-2">Send the letter via the app or download it and send  it to your landlord</Typography>
                         </div>
                     </div>
@@ -91,12 +91,14 @@ const Home = ({ classes }) => {
                         </div>
                     </div>
                     <div className="row mt-5">
-                        <div className="col text-right mr-4">
-                            <img src={Logo2} alt="Indy.gov" className={classes.HIWImg} />
+                        <div className="col d-none d-md-flex" />
+                        <div className="col-12 col-md-auto text-center mr-4">
+                            <img src={Logo2} alt="Neighborhood Chirstian Legal Clinic" className={classes.HIWImg} />
                         </div>
-                        <div className="col ml-4">
-                            <img src={Logo1} alt="Neighborhood Chirstian Legal Clinic" className={classes.HIWImg} />
+                        <div className="col-12 col-md-auto text-center ml-4">
+                            <img src={Logo1} alt="Indy.gov" className={classes.HIWImg} />
                         </div>
+                        <div className="col d-none d-md-flex" />
                     </div>
                 </div>
                 <div className="row mt-5">

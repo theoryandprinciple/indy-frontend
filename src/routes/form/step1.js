@@ -87,7 +87,7 @@ const FormStep1 = ({ classes }) => {
                                         showError={false}
                                     />
                                 </div>
-                                <div className="col-md">
+                                <div className="col-md mt-3 mt-md-0">
                                     <TextInput
                                         name="lastName"
                                         label="Last Name"
@@ -110,7 +110,7 @@ const FormStep1 = ({ classes }) => {
                                         showError={false}
                                     />
                                 </div>
-                                <div className="col-md-4">
+                                <div className="col-md-4 mt-3 mt-md-0">
                                     <TextInput
                                         name="address2"
                                         label="Unit"
@@ -157,7 +157,7 @@ const FormStep1 = ({ classes }) => {
                                         ))}
                                     </Select>
                                 </div>
-                                <div className="col-md">
+                                <div className="col-md mt-3 mt-md-0">
                                     <TextInput
                                         name="zip"
                                         label="Zip"
@@ -170,16 +170,18 @@ const FormStep1 = ({ classes }) => {
 
                         </div>
                     </div>
-                    <div className="row mt-5 mb-3">
-                        <div className="col text-right">
+                    <div className="row no-gutters mt-3 mt-sm-5 mb-3">
+                        <div className="col d-none d-sm-flex" />
+                        <div className="col-12 col-sm-auto text-right mt-3 mt-sm-0 mr-0 mr-sm-3 order-12 order-sm-1">
                             <Button
                                 variant="outlined"
                                 color="primary"
-                                className="mr-3"
                                 onClick={() => history.push('/intake/qualify')}
                             >
                                 Previous
                             </Button>
+                        </div>
+                        <div className="col-12 col-sm-auto text-right order-1 order-sm-12">
                             <Button
                                 variant="contained"
                                 color="primary"
