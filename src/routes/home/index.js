@@ -110,17 +110,17 @@ const Home = ({ classes }) => {
                             Other resources provided by our partner legal aid organizations:
                         </Typography>
                         <Typography variant="body1" className="mt-3">
-                            <a href="https://google.com" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
+                            <a href="https://www.indianalegalservices.org/" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
                                 Indiana Legal Services
                             </a>
                         </Typography>
                         <Typography variant="body1" className="mt-1">
-                            <a href="https://google.com" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
+                            <a href="https://www.indylas.org/" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
                                 Indianapolis Legal Aid Society
                             </a>
                         </Typography>
                         <Typography variant="body1" className="mt-1">
-                            <a href="https://google.com" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
+                            <a href="https://indianalegalhelp.org/find-legal-help/" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
                                 Find Help in Your Area
                             </a>
                         </Typography>
