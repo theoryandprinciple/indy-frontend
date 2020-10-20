@@ -48,6 +48,9 @@ const IntakeStart = ({ classes }) => {
                                     </Typography>
                                 </div>
                             </div>
+                            <Typography variant="body2" className="mt-4">
+                                You must tell the truth when answering these questions or you could face civil or criminal penalties.
+                            </Typography>
                         </div>
                     </div>
                     <div className="row mt-5">

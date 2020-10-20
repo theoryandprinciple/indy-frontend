@@ -15,25 +15,25 @@ const IntakeQualify = ({ classes }) => {
                 <div className="col">
                     <div className="row mt-4">
                         <div className="col">
-                            <Typography variant="h1" color="primary">Great, you qualify! Read the following info carefully</Typography>
-                            <Typography variant="body1" className="mt-3">
+                            <Typography variant="h1" color="primary">Great, you qualify!<br />Read the following info carefully</Typography>
+                            <Typography variant="body1" className="mt-4">
                                 When you sign the Declaration form, you are agreeing that you understand the following sentences and that they are true:
                             </Typography>
                             <Typography variant="body1" className="mt-3">
                                 Even though I am protected from eviction through December 31, 2020,
                             </Typography>
-                            <ol>
-                                <li className="mt-3">
+                            <ol className="pl-5 mb-0">
+                                <li className="mt-4 pl-2">
                                     <Typography variant="body1">
                                         I still am responsible to pay my rent and follow all other rules of my lease. My landlord may charge me fees or interest.
                                     </Typography>
                                 </li>
-                                <li className="mt-3">
+                                <li className="mt-3 pl-2">
                                     <Typography variant="body1">
                                         After December 31, 2020, I may be required to pay all of the rent due, in full.
                                     </Typography>
                                 </li>
-                                <li className="mt-3">
+                                <li className="mt-3 pl-2">
                                     <Typography variant="body1">
                                         I need to tell the truth on this form. If I do not, I may face civil or criminal penalties.
                                     </Typography>

@@ -34,18 +34,18 @@ const FormDownload = ({ classes }) => {
                             <Typography variant="h2" color="primary" className="mt-5">
                                 Next Steps
                             </Typography>
-                            <ol>
-                                <li className="mt-3">
+                            <ol className="pl-5 mb-0">
+                                <li className="mt-3 pl-2">
                                     <Typography variant="body1">
                                         Download a copy of this letter for your own records.
                                     </Typography>
                                 </li>
-                                <li className="mt-3">
+                                <li className="mt-3 pl-2">
                                     <Typography variant="body1">
                                         Send a copy to your landlord. You can send it by email or print a copy and mail it.
                                     </Typography>
                                 </li>
-                                <li className="mt-3">
+                                <li className="mt-3 pl-2">
                                     <Typography variant="body1">
                                         Follow up with your landlord to confirm they received it.
                                     </Typography>
