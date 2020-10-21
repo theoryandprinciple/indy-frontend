@@ -79,7 +79,6 @@ const FormStep4 = ({ classes }) => {
     }, [handleClear, setContinueActive]);
     const onSaveClick = useCallback(() => {
         const signatureImage = handleSave('image/png', 1); // Saves as PNG at 100% original quality
-        console.log('signatureImage',signatureImage)
         dispatch(UpdateFormStep(4));
         dispatch(SaveAnswers({ signature: signatureImage }));
         history.push('/form/5');
