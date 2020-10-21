@@ -8,11 +8,11 @@ const schemas = {
         address2: string(),
         city: string().required(),
         state: string().required(),
-        zip: string().required().matches(/[0-9]{5}/, { message: 'Zip Code must match "55555"' }),
+        zip: string().required().matches(/[0-9]{5}/, { message: 'Please provide a valid zip code' }),
     }),
     step2: object().shape({
         company: string(),
-        name: string().required(),
+        name: string().required('Landlord Name is Required'),
         // sendMethod: string().required(),
         email: string().when('sendMethod', {
             is: 'email',
@@ -37,7 +37,7 @@ const schemas = {
         }),
         zip: string().when('sendMethod', {
             is: 'usps',
-            then: string().required('Zip Code Required').matches(/[0-9]{5}/, { message: 'Zip Code must match "55555"' }),
+            then: string().required('Please provide a valid zip code').matches(/[0-9]{5}/, { message: 'Please provide a valid zip code' }),
             otherwise: string(),
         }),
     }),

@@ -122,7 +122,7 @@ const FormStep2 = ({ classes }) => {
                                         errors={errors}
                                         required
                                         inputRef={register()}
-                                        showError={false}
+                                        // showError={false}
                                     />
                                 </div>
                             </div>

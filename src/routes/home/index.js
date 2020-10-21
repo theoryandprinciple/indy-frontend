@@ -128,7 +128,7 @@ const Home = ({ classes }) => {
                             variant="outlined"
                             color="primary"
                             className="mt-5 mb-3"
-                            href="https://google.com"
+                            href="https://www.nclegalclinic.org/donate"
                             target="_blank"
                         >
                             Donate
