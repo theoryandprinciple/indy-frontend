@@ -103,7 +103,7 @@ const FormStep1 = ({ classes }) => {
                                 <div className="col-md-8">
                                     <TextInput
                                         name="address"
-                                        label="Address"
+                                        label="Current Address"
                                         errors={errors}
                                         required
                                         inputRef={register()}
@@ -113,7 +113,7 @@ const FormStep1 = ({ classes }) => {
                                 <div className="col-md-4 mt-3 mt-md-0">
                                     <TextInput
                                         name="address2"
-                                        label="Unit"
+                                        label="Unit (optional)"
                                         errors={errors}
                                         inputRef={register()}
                                         showError={false}
