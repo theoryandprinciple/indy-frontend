@@ -117,7 +117,7 @@ const FormStep4 = ({ classes }) => {
                         </div>
                     </div>
                     <div className="row mt-2 align-items-center">
-                        <div className="col-md-4 mr-3 mr-md-0 text-right">
+                        <div className="col-md-4 mr-md-0 text-right">
                             <Button
                                 variant="outlined"
                                 color="primary"
