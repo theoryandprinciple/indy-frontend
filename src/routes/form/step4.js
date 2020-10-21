@@ -67,16 +67,19 @@ const FormStep4 = ({ classes }) => {
         });
     }, [canvasContainerWidth, updateOptions]);
 
+    /*
     const onSignatureEnd = (event) => {
         event.preventDefault();
         setContinueActive(true);
     };
+    */
     const onCancelClick = useCallback(() => {
         handleClear();
         setContinueActive(false);
     }, [handleClear, setContinueActive]);
     const onSaveClick = useCallback(() => {
         const signatureImage = handleSave('image/png', 1); // Saves as PNG at 100% original quality
+        console.log('signatureImage',signatureImage)
         dispatch(UpdateFormStep(4));
         dispatch(SaveAnswers({ signature: signatureImage }));
         history.push('/form/5');
@@ -104,8 +107,8 @@ const FormStep4 = ({ classes }) => {
                                 <canvas
                                     {...canvasProps}
                                     style={{ minHeight: 150 }}
-                                    onPointerUp={onSignatureEnd}
-                                    onPointerOut={onSignatureEnd}
+                                    // onPointerUp={onSignatureEnd}
+                                    // onPointerOut={onSignatureEnd}
                                     tabIndex={0}
                                     aria-describedby="signatureTitle"
                                     id="signaturePad"
@@ -114,7 +117,7 @@ const FormStep4 = ({ classes }) => {
                         </div>
                     </div>
                     <div className="row mt-2 align-items-center">
-                        <div className="col-md-4 mr-0 mr-md-3 text-right">
+                        <div className="col-md-4 mr-3 mr-md-0 text-right">
                             <Button
                                 variant="outlined"
                                 color="primary"
@@ -145,7 +148,7 @@ const FormStep4 = ({ classes }) => {
                             <Button
                                 variant="contained"
                                 color="primary"
-                                disabled={!continueActive}
+                                // disabled={!continueActive}
                                 onClick={() => onSaveClick()}
                             >
                                 Next
