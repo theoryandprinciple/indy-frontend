@@ -42,7 +42,7 @@ const IntakeStep4 = ({ classes }) => {
     const watchAll = watch();
     const onSubmit = useCallback((values) => {
         dispatch(SaveAnswers(values));
-        if (values.evictionHealthRisks === '5') history.push('/intake/noqualify');
+        if (values.evictionHealthRisks[0] === '5') history.push('/intake/noqualify');
         else {
             dispatch(UpdateIntakeStep(4));
             history.push('/intake/5');
