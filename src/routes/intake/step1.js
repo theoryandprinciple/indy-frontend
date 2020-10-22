@@ -50,6 +50,7 @@ const IntakeStep1 = ({ classes }) => {
 
     useEffect(() => {
         const incomingValues = getValues('income');
+        const noneSelection = '3';
         // logic to manage 'None' option in list
         if (incomingValues !== incomePrevValues) {
             let newValues = [];
@@ -57,18 +58,18 @@ const IntakeStep1 = ({ classes }) => {
             if (
                 // if selecting something other than 'none' and 'none' is currently selected, deselect it
                 incomingValues.length >= 1
-                && includes(incomingValues, '3')
-                && includes(incomePrevValues, '3')) {
+                && includes(incomingValues, noneSelection)
+                && includes(incomePrevValues, noneSelection)) {
                 // newValues are selections minus "none"
-                newValues = remove(incomingValues, choice => choice !== '3');
+                newValues = remove(incomingValues, choice => choice !== noneSelection);
                 setValue('income', newValues);
             } else if (
                 // if selecting "none" and others are already selected, deselect them
                 incomingValues.length > 1
-                && includes(incomingValues, '3')
-                && !includes(incomePrevValues, '3')) {
+                && includes(incomingValues, noneSelection)
+                && !includes(incomePrevValues, noneSelection)) {
                 // newValues = 'none'
-                newValues = ['3'];
+                newValues = [noneSelection];
                 setValue('income', newValues);
             } else newValues = incomingValues;
             setIncomePrevValues(newValues);

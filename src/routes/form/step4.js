@@ -17,7 +17,6 @@ import { getPdfLink, getFormStepCleared } from '../../selectors/form';
 import { SaveAnswers, UpdateFormStep } from '../../actions/form';
 import CombineStyles from '../../utils/combine-styles';
 import LayoutStyles from '../../styles/layouts';
-import ButtonStyles from '../../styles/buttons';
 import Styles from './styles';
 
 const FormStep4 = ({ classes }) => {
@@ -164,5 +163,5 @@ FormStep4.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const combinedStyles = CombineStyles(LayoutStyles, ButtonStyles, Styles);
+const combinedStyles = CombineStyles(LayoutStyles, Styles);
 export default withStyles(combinedStyles)(FormStep4);

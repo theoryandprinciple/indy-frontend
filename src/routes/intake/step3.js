@@ -22,7 +22,6 @@ import ConditionalQuestions from '../../components/form/conditional-questions';
 
 import CombineStyles from '../../utils/combine-styles';
 import LayoutStyles from '../../styles/layouts';
-import ButtonStyles from '../../styles/buttons';
 import Questions from './questions';
 
 const IntakeStep3 = ({ classes }) => {
@@ -66,6 +65,7 @@ const IntakeStep3 = ({ classes }) => {
 
     useEffect(() => {
         const incomingValues = getValues('affordRentProblems');
+        const noneSelection = '5';
         // logic to manage 'None' option in list
         if (incomingValues !== affordRentProblemsPrevValues) {
             let newValues = [];
@@ -73,18 +73,18 @@ const IntakeStep3 = ({ classes }) => {
             if (
                 // if selecting something other than 'none' and 'none' is currently selected, deselect it
                 incomingValues.length >= 1
-                && includes(incomingValues, '5')
-                && includes(affordRentProblemsPrevValues, '5')) {
+                && includes(incomingValues, noneSelection)
+                && includes(affordRentProblemsPrevValues, noneSelection)) {
                 // newValues are selections minus "none"
-                newValues = remove(incomingValues, choice => choice !== '5');
+                newValues = remove(incomingValues, choice => choice !== noneSelection);
                 setValue('affordRentProblems', newValues);
             } else if (
                 // if selecting "none" and others are already selected, deselect them
                 incomingValues.length > 1
-                && includes(incomingValues, '5')
-                && !includes(affordRentProblemsPrevValues, '5')) {
+                && includes(incomingValues, noneSelection)
+                && !includes(affordRentProblemsPrevValues, noneSelection)) {
                 // newValues = 'none'
-                newValues = ['5'];
+                newValues = [noneSelection];
                 setValue('affordRentProblems', newValues);
             } else newValues = incomingValues;
             setAffordRentProblemsPrevValues(newValues);
@@ -189,5 +189,5 @@ IntakeStep3.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const combinedStyles = CombineStyles(LayoutStyles, ButtonStyles);
+const combinedStyles = CombineStyles(LayoutStyles);
 export default withStyles(combinedStyles)(IntakeStep3);

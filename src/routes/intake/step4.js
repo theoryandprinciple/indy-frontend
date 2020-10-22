@@ -55,6 +55,7 @@ const IntakeStep4 = ({ classes }) => {
 
     useEffect(() => {
         const incomingValues = getValues('evictionHealthRisks');
+        const noneSelection = '5';
         // logic to manage 'None' option in list
         if (incomingValues !== evictionHealthRisksPrevValues) {
             let newValues = [];
@@ -62,18 +63,18 @@ const IntakeStep4 = ({ classes }) => {
             if (
                 // if selecting something other than 'none' and 'none' is currently selected, deselect it
                 incomingValues.length >= 1
-                && includes(incomingValues, '5')
-                && includes(evictionHealthRisksPrevValues, '5')) {
+                && includes(incomingValues, noneSelection)
+                && includes(evictionHealthRisksPrevValues, noneSelection)) {
                 // newValues are selections minus "none"
-                newValues = remove(incomingValues, choice => choice !== '5');
+                newValues = remove(incomingValues, choice => choice !== noneSelection);
                 setValue('evictionHealthRisks', newValues);
             } else if (
                 // if selecting "none" and others are already selected, deselect them
                 incomingValues.length > 1
-                && includes(incomingValues, '5')
-                && !includes(evictionHealthRisksPrevValues, '5')) {
+                && includes(incomingValues, noneSelection)
+                && !includes(evictionHealthRisksPrevValues, noneSelection)) {
                 // newValues = 'none'
-                newValues = ['5'];
+                newValues = [noneSelection];
                 setValue('evictionHealthRisks', newValues);
             } else newValues = incomingValues;
             setEvictionHealthRisksPrevValues(newValues);

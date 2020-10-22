@@ -17,7 +17,6 @@ import { getAnswers, getFormStepCleared } from '../../selectors/form';
 
 import CombineStyles from '../../utils/combine-styles';
 import LayoutStyles from '../../styles/layouts';
-import ButtonStyles from '../../styles/buttons';
 
 const FormStep5 = ({ classes }) => {
     const dispatch = useDispatch();
@@ -169,5 +168,5 @@ FormStep5.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const combinedStyles = CombineStyles(LayoutStyles, ButtonStyles);
+const combinedStyles = CombineStyles(LayoutStyles);
 export default withStyles(combinedStyles)(FormStep5);

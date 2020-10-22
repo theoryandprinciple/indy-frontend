@@ -18,7 +18,6 @@ import RadioGroup from '../../components/form/radiogroup';
 import RadioButton from '../../components/form/radiobutton';
 import CombineStyles from '../../utils/combine-styles';
 import LayoutStyles from '../../styles/layouts';
-import ButtonStyles from '../../styles/buttons';
 import Questions from './questions';
 
 const IntakeStep5 = ({ classes }) => {
@@ -121,5 +120,5 @@ IntakeStep5.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const combinedStyles = CombineStyles(LayoutStyles, ButtonStyles);
+const combinedStyles = CombineStyles(LayoutStyles);
 export default withStyles(combinedStyles)(IntakeStep5);
