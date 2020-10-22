@@ -12,11 +12,11 @@ const Header = ({ classes }) => {
 
     return (
         <header className={`${classes.sectionWrapperPurple}`}>
-            <div className="container" style={{ height: 100 }}>
+            <div className="container" style={{ height: 70 }}>
                 <div className="row align-items-center" style={{ height: '100%' }}>
                     <div className="col">
                         <Button component={LogoLink} className={classes.primaryLink}>
-                            <img src={Logo} alt="" style={{ height: 40, paddingRight: 10, marginBottom: 10 }} />
+                            <img src={Logo} alt="" style={{ height: 40, paddingRight: 10 }} />
                         </Button>
                     </div>
                     <div className="col text-right" />
