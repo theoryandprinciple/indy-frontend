@@ -28,7 +28,7 @@ const FormStep4 = ({ classes }) => {
 
     const containerNode = useRef(null);
     const [canvasContainerWidth, setCanvasContainerWidth] = useState(null);
-    const [continueActive, setContinueActive] = useState(false);
+    // const [continueActive, setContinueActive] = useState(false);
 
     // measure the width of the canvas container on init and resize
     useLayoutEffect(() => {
@@ -75,8 +75,8 @@ const FormStep4 = ({ classes }) => {
     */
     const onCancelClick = useCallback(() => {
         handleClear();
-        setContinueActive(false);
-    }, [handleClear, setContinueActive]);
+        // setContinueActive(false);
+    }, [handleClear]);
     const onSaveClick = useCallback(() => {
         const signatureImage = handleSave('image/png', 1); // Saves as PNG at 100% original quality
         dispatch(UpdateFormStep(4));
