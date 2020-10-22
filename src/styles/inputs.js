@@ -8,6 +8,5 @@ const styles = () => ({
         textAlign: 'left',
         color: Colors.error,
     },
-
 });
 export default styles;

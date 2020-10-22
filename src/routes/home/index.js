@@ -17,7 +17,6 @@ import Logo2 from './images/NCLC_logo.png';
 
 import CombineStyles from '../../utils/combine-styles';
 import LayoutStyles from '../../styles/layouts';
-import ButtonStyles from '../../styles/buttons';
 import Styles from './styles';
 
 const Home = ({ classes }) => {
@@ -144,5 +143,5 @@ Home.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const combinedStyles = CombineStyles(LayoutStyles, ButtonStyles, Styles);
+const combinedStyles = CombineStyles(LayoutStyles, Styles);
 export default withStyles(combinedStyles)(Home);

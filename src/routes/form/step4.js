@@ -17,7 +17,6 @@ import { getPdfLink, getFormStepCleared } from '../../selectors/form';
 import { SaveAnswers, UpdateFormStep } from '../../actions/form';
 import CombineStyles from '../../utils/combine-styles';
 import LayoutStyles from '../../styles/layouts';
-import ButtonStyles from '../../styles/buttons';
 import Styles from './styles';
 
 const FormStep4 = ({ classes }) => {
@@ -28,7 +27,7 @@ const FormStep4 = ({ classes }) => {
 
     const containerNode = useRef(null);
     const [canvasContainerWidth, setCanvasContainerWidth] = useState(null);
-    const [continueActive, setContinueActive] = useState(false);
+    // const [continueActive, setContinueActive] = useState(false);
 
     // measure the width of the canvas container on init and resize
     useLayoutEffect(() => {
@@ -75,8 +74,8 @@ const FormStep4 = ({ classes }) => {
     */
     const onCancelClick = useCallback(() => {
         handleClear();
-        setContinueActive(false);
-    }, [handleClear, setContinueActive]);
+        // setContinueActive(false);
+    }, [handleClear]);
     const onSaveClick = useCallback(() => {
         const signatureImage = handleSave('image/png', 1); // Saves as PNG at 100% original quality
         dispatch(UpdateFormStep(4));
@@ -164,5 +163,5 @@ FormStep4.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const combinedStyles = CombineStyles(LayoutStyles, ButtonStyles, Styles);
+const combinedStyles = CombineStyles(LayoutStyles, Styles);
 export default withStyles(combinedStyles)(FormStep4);

@@ -86,6 +86,9 @@ const theme = createMuiTheme({
                 '&[data-checked="true"]': {
                     border: `2px solid ${Colors.purple}`,
                     backgroundColor: Colors.lightTeal,
+                    marginTop: 14,
+                    paddingBottom: 9,
+                    paddingLeft: 4,
                 },
             },
         },
