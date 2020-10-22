@@ -20,15 +20,10 @@ const Footer = ({ classes }) => (
         <div className="row mt-3">
             <div className="col text-center">
                 <Typography variant="body2">
-                    While this tool will produce and submit the declaration in English, the National Low Income Housing Coalition has provided translations in a variety of languages:&nbsp;
-                    <a href="https://google.com" target="_blank" rel="noopener noreferrer" className={classes.link}>
-                        Arabic
+                    While this tool will produce and submit the declaration in English, the National Low Income Housing Coalition has provided translations in a variety of languages.&nbsp;
+                    <a href="https://nlihc.org/coronavirus-and-housing-homelessness/national-eviction-moratorium" target="_blank" rel="noopener noreferrer" className={classes.link}>
+                        Find other languages here.
                     </a>
-                    &nbsp;|&nbsp;
-                    <a href="https://google.com" target="_blank" rel="noopener noreferrer" className={classes.link}>
-                        Burmese
-                    </a>
-                    &nbsp;|&nbsp;Simplified Chinese | Traditional Chinese | Creole | English | Hmong | Punjabi (Gurmukhī) | Russian | Somali | Spanish | Tagalog |  Vietnamese
                 </Typography>
             </div>
         </div>
