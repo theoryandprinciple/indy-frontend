@@ -1,10 +1,8 @@
 const list = [
-    /*
     {
         value: 'Send it for me USPS mail',
         key: 'usps',
     },
-    */
     {
         value: 'Email it for me',
         key: 'email',
