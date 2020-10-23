@@ -85,7 +85,7 @@ const FormStep5 = ({ classes }) => {
                                 control={control}
                                 displayEmpty
                             >
-                                <MenuItem disabled value="">
+                                <MenuItem value="">
                                     <em>Select</em>
                                 </MenuItem>
                                 {RaceOptions.map(option => (
@@ -108,7 +108,7 @@ const FormStep5 = ({ classes }) => {
                                 control={control}
                                 displayEmpty
                             >
-                                <MenuItem disabled value="">
+                                <MenuItem value="">
                                     <em>Select</em>
                                 </MenuItem>
                                 {GenderOptions.map(option => (
