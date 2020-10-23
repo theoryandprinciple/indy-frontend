@@ -35,9 +35,8 @@ const FormStep1 = ({ classes }) => {
         getValues,
         errors,
         control,
-        formState,
     } = useForm({
-        mode: 'onChange',
+        mode: 'onSubmit',
         reValidateMode: 'onChange',
         resolver: yupResolver(ValidationSchema.step1),
         defaultValues: {
@@ -59,9 +58,15 @@ const FormStep1 = ({ classes }) => {
     const [continueActive, setContinueActive] = useState(false);
 
     useEffect(() => {
-        if (getValues('firstName') !== '' && formState.isValid) setContinueActive(true);
+        if (
+            getValues('firstName') !== ''
+            && getValues('lastName') !== ''
+            && getValues('address') !== ''
+            && getValues('city') !== ''
+            && getValues('zip') !== ''
+        ) setContinueActive(true);
         else setContinueActive(false);
-    }, [watchAll, getValues, formState.isValid]);
+    }, [watchAll, getValues]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`container ${classes.containerWrapper}`}>
