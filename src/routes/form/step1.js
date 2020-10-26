@@ -32,12 +32,11 @@ const FormStep1 = ({ classes }) => {
         register,
         handleSubmit,
         watch,
-        getValues,
         errors,
         control,
         formState,
     } = useForm({
-        mode: 'onChange',
+        mode: 'onBlur',
         reValidateMode: 'onChange',
         resolver: yupResolver(ValidationSchema.step1),
         defaultValues: {
@@ -59,9 +58,9 @@ const FormStep1 = ({ classes }) => {
     const [continueActive, setContinueActive] = useState(false);
 
     useEffect(() => {
-        if (getValues('firstName') !== '' && formState.isValid) setContinueActive(true);
+        if (formState.isValid) setContinueActive(true);
         else setContinueActive(false);
-    }, [watchAll, getValues, formState.isValid]);
+    }, [watchAll, formState.isValid]);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={`container ${classes.containerWrapper}`}>

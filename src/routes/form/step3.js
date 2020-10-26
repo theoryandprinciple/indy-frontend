@@ -54,6 +54,7 @@ const FormStep3 = ({ classes }) => {
                                 </Typography>
                                 <Typography variant="body1" className="mt-3">
                                     {landlord.name}<br />
+                                    {landlord.company && <>{landlord.company}<br /></>}
                                     {landlord.address && <>{landlord.address}<br /></>}
                                     {landlord.address2 && <>{landlord.address2}<br /></>}
                                     {/* landlordState has a default value, so we check city */}
