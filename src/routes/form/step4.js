@@ -84,7 +84,7 @@ const FormStep4 = ({ classes }) => {
         const saveValues = { ...currentAnswers };
         saveValues.signature = signatureImage;
         if (currentAnswers.sendMethod === 'usps') saveValues.snail = true;
-        else if (currentAnswers.sendMethod === 'email') saveValues.email = true;
+        else if (currentAnswers.sendMethod === 'email') saveValues.sendEmail = true;
 
         dispatch(PostForm(saveValues, true));
         dispatch(SaveAnswers({ signature: signatureImage }));
