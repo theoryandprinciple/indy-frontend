@@ -103,6 +103,25 @@ const Home = ({ classes }) => {
                 <div className="row mt-5">
                     <div className="col text-center">
                         <Typography variant="h1" color="primary">
+                            Rental Assistance Programs
+                        </Typography>
+                        <Typography variant="body1" className="mt-3">
+                            Indianapolis and Marion County &mdash;&nbsp;
+                            <a href="https://indyrent.org" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
+                                indyrent.org
+                            </a>
+                        </Typography>
+                        <Typography variant="body1" className="mt-1">
+                            All other Indiana counties &mdash;&nbsp;
+                            <a href="https://www.indianahousingnow.org" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
+                                indianahousingnow.org
+                            </a>
+                        </Typography>
+                    </div>
+                </div>
+                <div className="row mt-5">
+                    <div className="col text-center">
+                        <Typography variant="h1" color="primary">
                             Other Resources
                         </Typography>
                         <Typography variant="body1" className="mt-2">
