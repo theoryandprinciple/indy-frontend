@@ -34,7 +34,7 @@ const Home = ({ classes }) => {
                     <div className="row">
                         <div className="col text-center">
                             <Typography component="h1" className={`mb-3 ${classes.title}`}>Are you facing an <span>eviction</span>? This tool can help.</Typography>
-                            <Typography variant="body1">If you&apos;re having trouble keeping up with your rent payments, the Federal Government has issued an order that prevents landlords in the US from evicting many of their tenants until December 31, 2020. Use this tool to see if you are covered, and to produce the right letter (called a &quot;Declaration&quot;) to send to your landlord, as required by the order.</Typography>
+                            <Typography variant="body1">If you&apos;re having trouble keeping up with your rent payments, the Federal Government has issued an order that prevents landlords in the US from evicting many of their tenants until <b><u>after</u></b> December 31, 2020. Use this tool to see if you are covered, and to produce the right letter (called a &quot;Declaration&quot;) to send to your landlord, as required by the order.</Typography>
                             <Button component={IntakeLink} variant="contained" color="secondary" className="mt-5 mb-5">
                                 Start Free Tool
                             </Button>
@@ -98,6 +98,25 @@ const Home = ({ classes }) => {
                             <img src={Logo1} alt="Indy.gov" className={classes.HIWImg} />
                         </div>
                         <div className="col d-none d-md-flex" />
+                    </div>
+                </div>
+                <div className="row mt-5">
+                    <div className="col text-center">
+                        <Typography variant="h1" color="primary">
+                            Rental Assistance Programs
+                        </Typography>
+                        <Typography variant="body1" className="mt-3">
+                            Indianapolis and Marion County &mdash;&nbsp;
+                            <a href="https://indyrent.org" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
+                                indyrent.org
+                            </a>
+                        </Typography>
+                        <Typography variant="body1" className="mt-1">
+                            All other Indiana counties &mdash;&nbsp;
+                            <a href="https://www.indianahousingnow.org" target="_blank" rel="noopener noreferrer" className={classes.textLink}>
+                                indianahousingnow.org
+                            </a>
+                        </Typography>
                     </div>
                 </div>
                 <div className="row mt-5">

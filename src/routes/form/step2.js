@@ -45,7 +45,7 @@ const FormStep2 = ({ classes }) => {
         control,
         formState,
     } = useForm({
-        mode: 'onBlur',
+        mode: 'onChange',
         reValidateMode: 'onChange',
         resolver: yupResolver(ValidationSchema.step2),
         defaultValues: {
@@ -57,6 +57,7 @@ const FormStep2 = ({ classes }) => {
             city: currentAnswers.landlord.city,
             state: currentAnswers.landlord.state,
             zip: currentAnswers.landlord.zip,
+            email: currentAnswers.landlord.email,
         },
     });
     const onSubmit = useCallback((values) => {
@@ -70,6 +71,7 @@ const FormStep2 = ({ classes }) => {
                 city: values.city,
                 state: values.state,
                 zip: values.zip,
+                email: values.email,
             },
             sendMethod: values.sendMethod,
         };

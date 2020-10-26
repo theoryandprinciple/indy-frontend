@@ -29,6 +29,7 @@ import Form4 from '../../routes/form/step4';
 import Form5 from '../../routes/form/step5';
 import FormSent from '../../routes/form/form-sent';
 import FormDownload from '../../routes/form/form-download';
+import FormEmail from '../../routes/form/form-email';
 
 import Error404 from '../../routes/error/404';
 
@@ -99,6 +100,9 @@ const PublicLayout = () => {
                     </Route>
                     <Route exact path="/form/download">
                         <FormDownload />
+                    </Route>
+                    <Route exact path="/form/email">
+                        <FormEmail />
                     </Route>
                     <Route path="/form">
                         <Redirect to="/form/1" />
