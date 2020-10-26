@@ -33,6 +33,7 @@ const internals = {
                 zip: null,
                 race: null,
                 gender: null,
+                email: null,
             },
             landlord: {
                 company: null,

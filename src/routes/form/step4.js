@@ -13,8 +13,8 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useSignaturePad from 'react-hook-signature';
 
-import { getPdfLink, getFormStepCleared } from '../../selectors/form';
-import { SaveAnswers, UpdateFormStep } from '../../actions/form';
+import { getPdfLink, getFormStepCleared, getAnswers } from '../../selectors/form';
+import { SaveAnswers, UpdateFormStep, PostForm } from '../../actions/form';
 import CombineStyles from '../../utils/combine-styles';
 import LayoutStyles from '../../styles/layouts';
 import Styles from './styles';
@@ -24,6 +24,7 @@ const FormStep4 = ({ classes }) => {
     const dispatch = useDispatch();
     const pdfLink = useSelector(getPdfLink);
     const formStepCleared = useSelector(getFormStepCleared);
+    const currentAnswers = useSelector(getAnswers);
 
     const containerNode = useRef(null);
     const [canvasContainerWidth, setCanvasContainerWidth] = useState(null);
@@ -79,6 +80,10 @@ const FormStep4 = ({ classes }) => {
     const onSaveClick = useCallback(() => {
         const signatureImage = handleSave('image/png', 1); // Saves as PNG at 100% original quality
         dispatch(UpdateFormStep(4));
+        const saveValues = { ...currentAnswers };
+        if (currentAnswers.sendMethod === 'usps') saveValues.snail = true;
+        else if (currentAnswers.sendMethod === 'email') saveValues.email = true;
+        dispatch(PostForm(saveValues, true));
         dispatch(SaveAnswers({ signature: signatureImage }));
         history.push('/form/5');
     }, [handleSave, history, dispatch]);
@@ -127,7 +132,7 @@ const FormStep4 = ({ classes }) => {
                         <div className="col-md-8 mt-3 mt-md-0 text-right">
                             <Typography variant="body1">
                                 Having Trouble Signing?
-                                &nbsp;<a href={pdfLink} target="_blank" rel="noopener noreferrer" className={classes.textLink}>Download form</a>
+                                &nbsp;<a href={pdfLink} rel="noopener noreferrer" className={classes.textLink}>Download form</a>
                             </Typography>
                         </div>
                     </div>
