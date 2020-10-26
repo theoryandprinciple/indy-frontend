@@ -75,9 +75,7 @@ const FormStep2 = ({ classes }) => {
         };
         dispatch(UpdateFormStep(2));
         dispatch(SaveAnswers(saveValues));
-        let onSuccess;
-        if (saveValues.sendMethod === 'usps') onSuccess = () => history.push('/form/done');
-        else onSuccess = () => history.push('/form/3');
+        const onSuccess = history.push('/form/3');
         // TODO: we have no requirements for error handling so for now just log the error
         const onError = (error) => { console.error(error); };
         dispatch(PostForm(saveValues, onSuccess, onError));
@@ -185,7 +183,7 @@ const FormStep2 = ({ classes }) => {
                             <div className="col-md-4">
                                 <TextInput
                                     name="address2"
-                                    label="Unit"
+                                    label="Unit (optional)"
                                     errors={errors}
                                     inputRef={register()}
                                     showError={false}
