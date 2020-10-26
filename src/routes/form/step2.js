@@ -57,7 +57,7 @@ const FormStep2 = ({ classes }) => {
             city: currentAnswers.landlord.city,
             state: currentAnswers.landlord.state,
             zip: currentAnswers.landlord.zip,
-            email: currentAnswers.tenant.email,
+            email: currentAnswers.landlord.email,
         },
     });
     const onSubmit = useCallback((values) => {
@@ -71,9 +71,6 @@ const FormStep2 = ({ classes }) => {
                 city: values.city,
                 state: values.state,
                 zip: values.zip,
-            },
-            tenant: {
-                ...currentAnswers.tenant,
                 email: values.email,
             },
             sendMethod: values.sendMethod,

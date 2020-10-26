@@ -80,9 +80,12 @@ const FormStep4 = ({ classes }) => {
     const onSaveClick = useCallback(() => {
         const signatureImage = handleSave('image/png', 1); // Saves as PNG at 100% original quality
         dispatch(UpdateFormStep(4));
+
         const saveValues = { ...currentAnswers };
+        saveValues.signature = signatureImage;
         if (currentAnswers.sendMethod === 'usps') saveValues.snail = true;
         else if (currentAnswers.sendMethod === 'email') saveValues.email = true;
+
         dispatch(PostForm(saveValues, true));
         dispatch(SaveAnswers({ signature: signatureImage }));
         history.push('/form/5');
