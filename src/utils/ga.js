@@ -4,7 +4,7 @@ import History from '../wiring/history';
 const GAUtils = {};
 const debug = true;
 GAUtils.initGA = () => {
-    ReactGA.initialize('UA-126197384-6', {
+    ReactGA.initialize(process.env.REACT_APP_GA, {
         debug,
         titleCase: false,
     });
@@ -15,20 +15,27 @@ GAUtils.initGA = () => {
 };
 export default GAUtils;
 
-export const EmailForm = () => {
+export const GAMailForm = () => {
+    ReactGA.event({
+        category: 'letter',
+        action: 'mail',
+    });
+};
+
+export const GAEmailForm = () => {
     ReactGA.event({
         category: 'letter',
         action: 'email',
     });
 };
 
-export const DownloadForm = () => {
+export const GADownloadForm = () => {
     ReactGA.event({
         category: 'letter',
         action: 'download',
     });
 };
-export const EarlyDownloadForm = () => {
+export const GAEarlyDownloadForm = () => {
     ReactGA.event({
         category: 'letter',
         action: 'download at signature',

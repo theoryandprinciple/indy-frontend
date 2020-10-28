@@ -15,7 +15,7 @@ import useSignaturePad from 'react-hook-signature';
 
 import { getPdfLink, getFormStepCleared, getAnswers } from '../../selectors/form';
 import { SaveAnswers, UpdateFormStep, PostForm } from '../../actions/form';
-import { EarlyDownloadForm } from '../../utils/ga';
+import { GAEarlyDownloadForm } from '../../utils/ga';
 import CombineStyles from '../../utils/combine-styles';
 import LayoutStyles from '../../styles/layouts';
 import Styles from './styles';
@@ -136,7 +136,7 @@ const FormStep4 = ({ classes }) => {
                         <div className="col-md-8 mt-3 mt-md-0 text-right">
                             <Typography variant="body1">
                                 Having Trouble Signing?
-                                &nbsp;<a href={pdfLink} onClick={() => EarlyDownloadForm()} rel="noopener noreferrer" className={classes.textLink}>Download form</a>
+                                &nbsp;<a href={pdfLink} onClick={() => GAEarlyDownloadForm()} rel="noopener noreferrer" className={classes.textLink}>Download form</a>
                             </Typography>
                         </div>
                     </div>

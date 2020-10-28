@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import LayoutStyles from '../../styles/layouts';
 import { getPdfLink } from '../../selectors/form';
 
-import { DownloadForm } from '../../utils/ga';
+import { GADownloadForm } from '../../utils/ga';
 
 const FormDownload = ({ classes }) => {
     const pdfLink = useSelector(getPdfLink);
@@ -30,7 +30,7 @@ const FormDownload = ({ classes }) => {
                                 href={pdfLink}
                                 target="_blank"
                                 className="mt-3"
-                                onClick={() => DownloadForm()}
+                                onClick={() => GADownloadForm()}
                             >
                                 Download complete form
                             </Button>
