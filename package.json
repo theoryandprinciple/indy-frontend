@@ -42,6 +42,7 @@
     "react-axe": "^3.5.4",
     "react-dom": "^16.14.0",
     "react-error-boundary": "^2.3.2",
+    "react-ga": "^3.2.0",
     "react-hook-form": "^6.9.5",
     "react-hook-signature": "git+ssh://git@github.com/theoryandprinciple/react-hook-signature.git#v1.0.0",
     "react-redux": "^7.1.3",

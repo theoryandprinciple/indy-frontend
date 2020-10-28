@@ -46,7 +46,12 @@ const FormStep5 = ({ classes }) => {
         dispatch(UpdateFormStep(5));
         dispatch(SaveAnswers(saveValues));
         let onSuccess;
-        if (saveValues.sendMethod === 'usps') onSuccess = () => history.push('/form/done');
+        if (saveValues.sendMethod === 'usps') {
+            onSuccess = () => {
+                history.push('/form/done');
+            };
+        }
+        else if (saveValues.sendMethod === 'sendEmail') onSuccess = () => history.push('/form/email');
         else onSuccess = () => history.push('/form/download');
         // TODO: we have no requirements for error handling so for now just log the error
         const onError = (error) => { console.error(error); };

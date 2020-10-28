@@ -13,6 +13,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
 
 import ScrollToTop from './utils/scroll-to-top';
+import GAUtils from './utils/ga';
 import ErrorFallback from './components/error-fallback';
 import * as serviceWorker from './service-worker';
 
@@ -56,6 +57,8 @@ const persistedStore = persistStore(store);
 browserHistory.listen(() => {
     ScrollToTop();
 });
+
+GAUtils.initGA();
 
 ReactDOM.render(
     <Provider store={store}>
