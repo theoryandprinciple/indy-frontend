@@ -2,7 +2,7 @@ import ReactGA from 'react-ga';
 import History from '../wiring/history';
 
 const GAUtils = {};
-const debug = true;
+const debug = false;
 GAUtils.initGA = () => {
     ReactGA.initialize('UA-126197384-6', {
         debug,
