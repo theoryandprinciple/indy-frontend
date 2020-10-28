@@ -2,7 +2,7 @@ import ReactGA from 'react-ga';
 import History from '../wiring/history';
 
 const GAUtils = {};
-const debug = true;
+const debug = false;
 GAUtils.initGA = () => {
     ReactGA.initialize(process.env.REACT_APP_GA, {
         debug,
