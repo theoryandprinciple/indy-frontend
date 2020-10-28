@@ -10,7 +10,7 @@ import { getPdfLink } from '../../selectors/form';
 
 import { DownloadForm } from '../../utils/ga';
 
-const FormDownload = ({ classes }) => {
+const FormEmail = ({ classes }) => {
     const pdfLink = useSelector(getPdfLink);
     return (
         <div className={`container ${classes.containerWrapper}`}>
@@ -18,12 +18,15 @@ const FormDownload = ({ classes }) => {
                 <div className="col">
                     <div className="row mt-3">
                         <div className="col text-center">
-                            <Typography variant="body1" color="primary">Almost done!</Typography>
+                            <Typography variant="body1" color="primary">All done!</Typography>
                         </div>
                     </div>
                     <div className="row mt-4">
                         <div className="col">
-                            <Typography variant="h1" color="primary">Download your letter to send to your landlord</Typography>
+                            <Typography variant="h1" color="primary">Your letter is being sent!</Typography>
+                            <Typography variant="body1" className="mt-3">
+                                We are sending your letter for you. Keep a copy for your records by downloading the form(s):
+                            </Typography>
                             <Button
                                 variant="contained"
                                 color="primary"
@@ -45,11 +48,6 @@ const FormDownload = ({ classes }) => {
                                 </li>
                                 <li className="mt-3 pl-2">
                                     <Typography variant="body1">
-                                        Send a copy to your landlord. You can send it by email or print a copy and mail it.
-                                    </Typography>
-                                </li>
-                                <li className="mt-3 pl-2">
-                                    <Typography variant="body1">
                                         Follow up with your landlord to confirm they received it.
                                     </Typography>
                                 </li>
@@ -62,8 +60,8 @@ const FormDownload = ({ classes }) => {
     );
 };
 
-FormDownload.propTypes = {
+FormEmail.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(LayoutStyles)(FormDownload);
+export default withStyles(LayoutStyles)(FormEmail);
