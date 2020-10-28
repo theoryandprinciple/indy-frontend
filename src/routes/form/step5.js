@@ -12,6 +12,8 @@ import GenderOptions from './wiring/gender-list';
 import RaceOptions from './wiring/race-list';
 import Select from '../../components/form/select';
 
+import { GAEmailForm, GAMailForm } from '../../utils/ga';
+
 import { SaveAnswers, UpdateFormStep, PostForm } from '../../actions/form';
 import { getAnswers, getFormStepCleared } from '../../selectors/form';
 
@@ -46,8 +48,17 @@ const FormStep5 = ({ classes }) => {
         dispatch(UpdateFormStep(5));
         dispatch(SaveAnswers(saveValues));
         let onSuccess;
-        if (saveValues.sendMethod === 'usps') onSuccess = () => history.push('/form/done');
-        else onSuccess = () => history.push('/form/download');
+        if (saveValues.sendMethod === 'usps') {
+            onSuccess = () => {
+                GAMailForm();
+                history.push('/form/done');
+            };
+        } else if (saveValues.sendMethod === 'sendEmail') {
+            onSuccess = () => {
+                GAEmailForm();
+                history.push('/form/email');
+            };
+        } else onSuccess = () => history.push('/form/download');
         // TODO: we have no requirements for error handling so for now just log the error
         const onError = (error) => { console.error(error); };
         dispatch(PostForm(saveValues, onSuccess, onError, true));
