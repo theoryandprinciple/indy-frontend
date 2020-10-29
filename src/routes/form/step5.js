@@ -51,7 +51,7 @@ const FormStep5 = ({ classes }) => {
         if (saveValues.sendMethod === 'usps') {
             onSuccess = () => {
                 GAMailForm();
-                history.push('/form/done');
+                history.push('/form/sent');
             };
         } else if (saveValues.sendMethod === 'sendEmail') {
             onSuccess = () => {
