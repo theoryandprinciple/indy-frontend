@@ -33,6 +33,10 @@ const IntakeReducer = (stateParam, action) => {
             ...state,
             intakeStepCleared: payload,
         };
+    case IntakeTypes.RESET_INTAKE:
+        return {
+            ...internals.initial(),
+        };
 
     default:
         // do nothing
