@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { HardResetForm } from '../../actions/form';
+import { ResetIntake } from '../../actions/intake';
 
 import HIW1 from './images/how-it-works-1.png';
 import HIW2 from './images/how-it-works-2.png';
@@ -25,6 +26,7 @@ const Home = ({ classes }) => {
     // we reset the form incase the user uses the logo link to get back here while PII is in the form
     useEffect(() => {
         dispatch(HardResetForm());
+        dispatch(ResetIntake());
     }, [dispatch]);
 
     return (
