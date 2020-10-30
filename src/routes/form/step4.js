@@ -113,7 +113,7 @@ const FormStep4 = ({ classes }) => {
                             <div ref={containerNode} className={classes.canvasContainer}>
                                 <canvas
                                     {...canvasProps}
-                                    style={{ minHeight: 150 }}
+                                    style={{ minHeight: 150, maxWidth: '100%' }}
                                     // onPointerUp={onSignatureEnd}
                                     // onPointerOut={onSignatureEnd}
                                     tabIndex={0}
