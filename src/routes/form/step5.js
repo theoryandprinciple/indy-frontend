@@ -53,7 +53,7 @@ const FormStep5 = ({ classes }) => {
                 GAMailForm();
                 history.push('/form/sent');
             };
-        } else if (saveValues.sendMethod === 'sendEmail') {
+        } else if (saveValues.sendMethod === 'email') {
             onSuccess = () => {
                 GAEmailForm();
                 history.push('/form/email');

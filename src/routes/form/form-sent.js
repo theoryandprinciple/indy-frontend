@@ -23,7 +23,7 @@ const FormSent = ({ classes }) => {
                         <div className="col">
                             <Typography variant="h1" color="primary">Your letter is being sent!</Typography>
                             <Typography variant="body1" className="mt-3">
-                                We are sending it via USPS mail for you. Keep a copy for your records by sending the form(s) to yourself:
+                                We are sending your letter for you. Keep a copy for your records by downloading the form(s):
                             </Typography>
                             <Button
                                 variant="contained"
