@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -8,18 +8,31 @@ import LayoutStyles from '../../styles/layouts';
 import Logo from './images/logo.png';
 
 const Header = ({ classes }) => {
-    const LogoLink = forwardRef((props, ref) => <NavLink activeClassName={classes.primaryLinkActive} exact to="/" {...ref} {...props} />);
+    const HomeLink = forwardRef((props, ref) => <NavLink exact to="/" {...ref} {...props} />);
+    const PrivacyLink = forwardRef((props, ref) => <NavLink exact to="/privacy" {...ref} {...props} />);
+    const privacyRoute = useRouteMatch('/privacy');
 
     return (
         <header className={`${classes.sectionWrapperPurple}`}>
             <div className="container" style={{ height: 70 }}>
                 <div className="row align-items-center" style={{ height: '100%' }}>
                     <div className="col">
-                        <Button component={LogoLink} className={classes.primaryLink}>
-                            <img src={Logo} alt="" style={{ height: 40, paddingRight: 10 }} />
+                        <Button component={HomeLink}>
+                            <img src={Logo} alt="" style={{ height: 40 }} />
                         </Button>
                     </div>
-                    <div className="col text-right" />
+                    <div className="col text-right">
+                        {!privacyRoute && (
+                            <Button component={PrivacyLink} style={{ color: 'white' }}>
+                                Privacy Policy
+                            </Button>
+                        )}
+                        {privacyRoute && (
+                            <Button component={HomeLink} style={{ color: 'white' }}>
+                                Go Home
+                            </Button>
+                        )}
+                    </div>
                 </div>
             </div>
         </header>
