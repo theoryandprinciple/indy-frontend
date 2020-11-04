@@ -7,7 +7,7 @@ import LayoutStyles from '../../styles/layouts';
 
 const Privacy = ({ classes }) => (
     <div className={`container ${classes.containerWrapper}`} style={{ maxWidth: 850 }}>
-        <div className="row pb-5">
+        <div className={`row ${classes.sectionWrapper} pb-5`}>
             <div className="col">
                 <Typography variant="h1" color="primary">
                     Privacy Policy Overview
