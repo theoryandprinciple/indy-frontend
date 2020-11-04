@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 
 import Styles from './styles';
@@ -13,7 +14,8 @@ const Footer = ({ classes }) => (
                 <Typography variant="body2">
                     &copy;
                     {currentYear}
-                    &nbsp;Indy Eviction Help
+                    &nbsp;Indy Eviction Help |&nbsp;
+                    <Link to="/privacy" style={{ color: 'black', fontWeight: 700, textDecoration: 'none' }}>Privacy Policy</Link>
                 </Typography>
             </div>
         </div>

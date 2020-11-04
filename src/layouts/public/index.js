@@ -31,6 +31,7 @@ import FormSent from '../../routes/form/form-sent';
 import FormDownload from '../../routes/form/form-download';
 import FormEmail from '../../routes/form/form-email';
 
+import Privacy from '../../routes/privacy';
 import Error404 from '../../routes/error/404';
 
 import themer from '../../styles/material-theme';
@@ -107,6 +108,11 @@ const PublicLayout = () => {
                     <Route path="/form">
                         <Redirect to="/form/1" />
                     </Route>
+
+                    <Route path="/privacy">
+                        <Privacy />
+                    </Route>
+
                     <Route path="/">
                         <Redirect to="/error/404" />
                     </Route>
