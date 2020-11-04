@@ -29,7 +29,7 @@ const Header = ({ classes }) => {
                         )}
                         {privacyRoute && (
                             <Button component={HomeLink} style={{ color: 'white' }}>
-                                Go Home
+                                Back to Home
                             </Button>
                         )}
                     </div>
