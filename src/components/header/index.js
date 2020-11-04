@@ -16,9 +16,9 @@ const Header = ({ classes }) => {
         <header className={`${classes.sectionWrapperPurple}`}>
             <div className="container" style={{ height: 70 }}>
                 <div className="row align-items-center" style={{ height: '100%' }}>
-                    <div className="col">
+                    <div className="col-6">
                         <Button component={HomeLink}>
-                            <img src={Logo} alt="" style={{ height: 40 }} />
+                            <img src={Logo} alt="" className={classes.logoHeader} />
                         </Button>
                     </div>
                     <div className="col text-right">

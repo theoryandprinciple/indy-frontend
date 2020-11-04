@@ -69,6 +69,13 @@ const styles = theme => ({
     footerLink: {
         color: Colors.black,
     },
+    logoHeader: {
+        height: 40,
+        [theme.breakpoints.down('sm')]: {
+            height: 30,
+            marginBottom: 6,
+        },
+    },
 });
 
 export default styles;
