@@ -1,23 +1,24 @@
-<p align="center">Theory and Principle Boilerplate></p>
+# Indy Renter Help
 
-## Creating New Project
-* Do you need redux?: If so, check out `redux-recipe` branch
-* Checkout the boilerplate:
-```bash
-git clone git@github.com:theoryandprinciple/TP-React-Boiler.git
-```
-* Duplicate boilerplate with new project name
-* [Change origin url](https://docs.github.com/en/github/using-git/changing-a-remotes-url) of copied boilerplate to new repo
-```bash
-git remote set-url origin git@github.com:USERNAME/REPOSITORY.git
-```
-* Push your first commit!
+This is the front end for [Indy Renter Help](https://indyrenterhelp.org/) which is a web app that will help struggling renters obatin protection they are entitled to under the current CDC Federal Eviction Moratorium.
 
-## Get started
+## Geting started
 
 ```bash
-npm install
-npm start
+$ git clone --depth=1 --origin=indy-original git@github.com:theoryandprinciple/indy-frontend.git my-project
+$ cd my-project
+$ git checkout --orphan master # New branch without history
+$ npm install
+$ echo REACT_APP_API_HOST=https://your-url-here.org/ > .env
+$ npm start
 ```
+
+## In order to run as a plugin under the API server
+```bash
+$ npm link
+$ npm run build
+```
+This will build a static version of the site that can be served by the API.
+
 ## More Info
 This boilerplate is built using [create-react-app](https://github.com/facebook/create-react-app) so you will want to read the User Guide for more goodies.
