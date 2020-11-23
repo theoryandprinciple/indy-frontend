@@ -4,6 +4,10 @@ const list = [
         key: 'White',
     },
     {
+        value: 'Hispanic',
+        key: 'Hispanic',
+    },
+    {
         value: 'Black or African American',
         key: 'Black or African American',
     },
