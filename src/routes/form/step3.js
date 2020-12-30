@@ -82,7 +82,7 @@ const FormStep3 = ({ classes }) => {
                                 <Typography variant="body2" className="mt-3">
                                     _______________________<br />
                                     _______________________<br />
-                                    <sup>1</sup> The original expiration of December 31, 2020 was extended to January 31, 2021 by the Coronavirus Response and Relief Supplemental Appropriations Act
+                                    <sup>1</sup> The original expiration of December 31, 2020 was extended to January 31, 2021 by the Coronavirus Response and Relief Supplemental Appropriations Act<br />
                                     <sup>2</sup> Center for Disease Control and Prevention&apos;s Order dated September 1, 2020. See:
                                     &nbsp;<a href="https://www.cdc.gov/coronavirus/2019-ncov/covid-eviction-declaration.html" target="_blank" rel="noopener noreferrer" className={classes.textLink}>https://www.cdc.gov/coronavirus/2019-ncov/covid-eviction-declaration.html</a>;
                                     &nbsp;see also <a href="https://www.federalregister.gov/documents/2020/09/04/2020-19654/temporary-halt-in-residential-evictions-to-prevent-the-further-spread-of-covid-19" target="_blank" rel="noopener noreferrer" className={classes.textLink}>https://www.federalregister.gov/documents/2020/09/04/2020-19654/temporary-halt-in-residential-evictions-to-prevent-the-further-spread-of-covid-19</a>
