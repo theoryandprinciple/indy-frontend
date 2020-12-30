@@ -24,7 +24,7 @@ const IntakeQualify = ({ classes }) => {
                                 When you sign the Declaration form, you are agreeing that you understand the following sentences and that they are true:
                             </Typography>
                             <Typography variant="body1" className="mt-3">
-                                Even though I am protected from eviction through December 31, 2020,
+                                Even though I am protected from eviction through January 31, 2021,
                             </Typography>
                             <ol className="pl-5 mb-0">
                                 <li className="mt-4 pl-2">
@@ -34,7 +34,7 @@ const IntakeQualify = ({ classes }) => {
                                 </li>
                                 <li className="mt-3 pl-2">
                                     <Typography variant="body1">
-                                        After December 31, 2020, I may be required to pay all of the rent due, in full.
+                                        After January 31, 2021, I may be required to pay all of the rent due, in full.
                                     </Typography>
                                 </li>
                                 <li className="mt-3 pl-2">
