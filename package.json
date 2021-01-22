@@ -3,6 +3,7 @@
   "private": true,
   "version": "2.0.2",
   "main": "plugin.js",
+  "license": "MIT",
   "homepage": "https://create-react-app-redux.now.sh",
   "scripts": {
     "deploy": "now && now alias",
