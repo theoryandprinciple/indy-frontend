@@ -1,10 +1,10 @@
 {
   "name": "indy-frontend",
   "private": true,
-  "version": "2.0.2",
+  "version": "4.0.2",
   "main": "plugin.js",
   "license": "MIT",
-  "homepage": "https://create-react-app-redux.now.sh",
+  "homepage": "https://indyrenterhelp.org/",
   "scripts": {
     "deploy": "now && now alias",
     "start": "react-scripts start",
