@@ -31,7 +31,7 @@ jobs:
           fields: repo,message,commit,author,took
           mention: 'Erin,Matt'
           if_mention: 'failure,cancelled'
-          channel: '#lift_dane_internal'
+          channel: '#indy'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
