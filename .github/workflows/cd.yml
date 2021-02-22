@@ -16,10 +16,10 @@ jobs:
           username: ${{ secrets.DEV_SERVER_USERNAME }}
           key: ${{ secrets.DEV_SERVER_KEY }}
           script: |
-            cd /app/indy-frontend
-            git checkout main
-            git pull
-            npm ci
+            cd /app/indy-frontend &&
+            git checkout main &&
+            git pull &&
+            npm ci &&
             npm run build
 
       - name: Slack Notify
@@ -28,9 +28,7 @@ jobs:
           username: 'GitHub Action'
           icon_url: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'
           status: ${{ job.status }}
-          fields: repo,message,commit,author,took
-          mention: 'Erin,Matt'
-          if_mention: 'failure,cancelled'
+          fields: repo,message
           channel: '#indy'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
