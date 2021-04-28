@@ -6,7 +6,7 @@ const questions = {
             options: [
                 { id: '0', name: 'I did not report any income to the I.R.S. for 2019' },
                 { id: '1', name: 'I got a stimulus check (Economic Impact Payment) in 2020' },
-                { id: '2', name: 'I either expect to earn no more than $99,000 in annual income for calendar year 2020 or no more than $198,000 if filing a joint tax return' },
+                { id: '2', name: 'In 2020 or 2021, I earned (or expect to earn) less than $99,000 as an individual or less than $198,000 as a joint filer.' },
                 { id: '3', name: 'None of the above' },
             ],
         },
