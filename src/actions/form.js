@@ -1,4 +1,5 @@
 import { cloneDeep } from 'lodash';
+import { getAnswers } from '../selectors/intake';
 
 import FormTypes from '../action-types/form';
 import WebClient from '../utils/web-client';
@@ -30,12 +31,14 @@ export const PostFormError = () => ({
 });
 
 export const PostForm = (answerSet, onSuccess, onError, finalStep = false) => (
-    async (dispatch) => {
+    async (dispatch, getState) => {
+        const intakeAnswers = getAnswers(getState());
         dispatch(PostFormBegin());
 
         try {
             // shallow clone, as produced by spread operator, is insufficant
             const payload = cloneDeep(answerSet);
+            payload.answers = intakeAnswers;
             // dont send the sendMethod
             delete payload.sendMethod;
 

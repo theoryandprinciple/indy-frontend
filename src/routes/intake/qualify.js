@@ -4,14 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 import LayoutStyles from '../../styles/layouts';
-import { ResetIntake } from '../../actions/intake';
 
 const IntakeQualify = ({ classes }) => {
     const history = useHistory();
-    const dispatch = useDispatch();
 
     return (
         <div className={`container ${classes.containerWrapper}`}>
@@ -66,7 +63,7 @@ const IntakeQualify = ({ classes }) => {
                             <Button
                                 variant="contained"
                                 color="primary"
-                                onClick={() => { dispatch(ResetIntake()); history.push('/form/1'); }}
+                                onClick={() => { history.push('/form/1'); }}
                             >
                                 I Understand
                             </Button>
