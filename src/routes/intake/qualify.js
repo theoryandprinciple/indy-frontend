@@ -24,20 +24,26 @@ const IntakeQualify = ({ classes }) => {
                                 When you sign the Declaration form, you are agreeing that you understand the following sentences and that they are true:
                             </Typography>
                             <Typography variant="body1" className="mt-3">
-                                Even though I am protected from eviction through June 30, 2021,
+                                Even though I am protected from eviction until this temporary halt of eviction ends,
                             </Typography>
                             <ol className="pl-5 mb-0">
                                 <li className="mt-4 pl-2">
                                     <Typography variant="body1">
-                                        I still am responsible to pay my rent and follow all other rules of my lease. My landlord may charge me fees or interest.
+                                        I am still responsible for my rent, back rent, and any fees, penalties or interest my landlord may charge me under my lease; unless, I have made a different agreement with my landlord,
                                     </Typography>
                                 </li>
                                 <li className="mt-3 pl-2">
                                     <Typography variant="body1">
-                                        After June 30, 2021, I may be required to pay all of the rent due, in full.
+                                        I must still follow the condition of my lease,
                                     </Typography>
                                 </li>
                                 <li className="mt-3 pl-2">
+                                    <Typography variant="body1">
+                                        If I fail to make required payments, I can be evicted when this temporary halt of eviction ends; unless, I have made a different agreement with my landlord,
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        I can still be evicted for reasons other than not paying my rent or house payment,
+                                    </Typography>
                                     <Typography variant="body1">
                                         I need to tell the truth on this form. If I do not, I may face civil or criminal penalties.
                                     </Typography>
