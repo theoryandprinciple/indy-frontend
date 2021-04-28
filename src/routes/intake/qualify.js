@@ -41,9 +41,13 @@ const IntakeQualify = ({ classes }) => {
                                     <Typography variant="body1">
                                         If I fail to make required payments, I can be evicted when this temporary halt of eviction ends; unless, I have made a different agreement with my landlord,
                                     </Typography>
+                                </li>
+                                <li className="mt-3 pl-2">
                                     <Typography variant="body1">
                                         I can still be evicted for reasons other than not paying my rent or house payment,
                                     </Typography>
+                                </li>
+                                <li className="mt-3 pl-2">
                                     <Typography variant="body1">
                                         I need to tell the truth on this form. If I do not, I may face civil or criminal penalties.
                                     </Typography>
