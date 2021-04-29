@@ -55,7 +55,7 @@ const Home = ({ classes }) => {
                         <div className="col-md text-center">
                             <img src={HIW2} alt="" className={classes.HIWImg} />
                             <Typography variant="h2" color="primary">The tool will create a letter</Typography>
-                            <Typography variant="body1" className="mt-2">The app will create a letter that is read to send based on your answers</Typography>
+                            <Typography variant="body1" className="mt-2">The app will create a letter that is ready to send based on your answers</Typography>
                         </div>
                         <div className="col-md text-center">
                             <img src={HIW3} alt="" className={classes.HIWImg} />
