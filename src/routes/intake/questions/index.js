@@ -29,7 +29,7 @@ const questions = {
             label: 'What is preventing you from paying rent',
             options: [
                 { id: '0', name: 'My household lost substantial income' },
-                { id: '1', name: 'I lost my job' },
+                { id: '1', name: 'I have been laid off from work' },
                 { id: '2', name: 'My hours were cut' },
                 { id: '3', name: 'My salary was reduced' },
                 { id: '4', name: 'I have extraordinary medical costs that I pay out of pocket that insurance does not cover' },
