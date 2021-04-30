@@ -36,7 +36,10 @@ const Home = ({ classes }) => {
                     <div className="row">
                         <div className="col text-center">
                             <Typography component="h1" className={`mb-3 ${classes.title}`}>Are you facing an <span>eviction</span>? This tool can help.</Typography>
-                            <Typography variant="body1">If you&apos;re having trouble keeping up with your rent payments, the Federal Government has issued an order that prevents landlords in the US from evicting many of their tenants until <b><u>after</u></b> June 30, 2021. Use this tool to see if you are covered, and to produce the right letter (called a &quot;Declaration&quot;) to send to your landlord, as required by the order.</Typography>
+                            <Typography variant="body1">
+                                If you&apos;re having trouble keeping up with your rent payments, the Federal Government has issued an order that prevents landlords in the US from evicting many of their tenants until <b><u>at least after</u></b> June 30, 2021<sup className={classes.footnote}>*</sup>. Use this tool to see if you are covered, and to produce the right letter (called a &quot;Declaration&quot;) to send to your landlord, as required by the order.
+                            </Typography>
+                            <Typography variant="body2" className={`pt-2 ${classes.footnote}`}><sup>*</sup>or until this temporary halt of eviction ends</Typography>
                             <Button component={IntakeLink} variant="contained" color="secondary" className="mt-5 mb-5">
                                 Start Free Tool
                             </Button>

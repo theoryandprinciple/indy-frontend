@@ -20,6 +20,10 @@ const styles = theme => ({
             marginBottom: 15,
         },
     },
+    footnote: {
+        color: Colors.teal,
+        fontStyle: 'italic',
+    },
 });
 
 export default styles;
