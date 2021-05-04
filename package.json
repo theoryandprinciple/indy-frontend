@@ -1,7 +1,7 @@
 {
   "name": "indy-frontend",
   "private": true,
-  "version": "4.0.2",
+  "version": "5.0.0",
   "main": "plugin.js",
   "license": "MIT",
   "homepage": "https://indyrenterhelp.org/",
